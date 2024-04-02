@@ -39,7 +39,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    'Meember Portal',
+                    'Member Portal',
                     style: TextStyle(
                         fontSize: 22,
                         color: Color(0xFF174486),
@@ -130,10 +130,10 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                       ),
                     ),
                     /*ProfileSighnIn()*/
-                    /*PostLoginCenter()*/
-                    /*CenterOfExcellence()*/
-                    /*CenterOfExcellenceArticle()*/
-                    MemberBenifits()
+                    PostLoginCenter()
+                    //CenterOfExcellence()
+                    //CenterOfExcellenceArticle()
+                  //  MemberBenifits()
                   ],
                 ),
               ],
