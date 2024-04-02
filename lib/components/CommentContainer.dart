@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/components/myutility.dart';
 
 class CommentContainer extends StatefulWidget {
@@ -42,8 +43,11 @@ class _CommentContainerState extends State<CommentContainer> {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage(widget.image),
+                    backgroundImage: NetworkImage(
+                      widget.image,
+                    ),
                   ),
+                  /**/
                   Row(
                     children: [
                       Text(

@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
+import 'package:intl/intl.dart';
 import 'package:sama/components/myutility.dart';
 
 class NewsContainer extends StatefulWidget {
   final String image;
   final String category;
-  final String date;
+  final Timestamp date;
   final String header;
   final VoidCallback onPressed;
 
@@ -21,10 +24,20 @@ class NewsContainer extends StatefulWidget {
 }
 
 class _NewsContainerState extends State<NewsContainer> {
+  String _formatDateTime(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    String dayNumber = DateFormat('dd').format(dateTime);
+
+    String month = DateFormat('MMMM').format(dateTime);
+    String year = DateFormat('yyyy').format(dateTime);
+
+    return '$dayNumber $month $year ';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.25,
+      width: MyUtility(context).width / 4.7,
       height: MyUtility(context).height * 0.6,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -38,25 +51,32 @@ class _NewsContainerState extends State<NewsContainer> {
             height: MyUtility(context).height * 0.035,
           ),
           Container(
-            width: MyUtility(context).width * 0.215,
+            width: MyUtility(context).width / 4.7,
             height: MyUtility(context).height * 0.25,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Color(0xFFD1D1D1),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
+                borderRadius: BorderRadius.circular(10),
+                child: ImageNetwork(
+                  image: widget.image,
+                  fitWeb: BoxFitWeb.contain,
+                  width: MyUtility(context).width / 5.2,
+                  height: MyUtility(context).height * 0.25,
+                )
+
+                /* Image.asset(
                 widget.image,
                 fit: BoxFit.cover,
-              ),
-            ),
+              ),*/
+                ),
           ),
           SizedBox(
             height: MyUtility(context).height * 0.035,
           ),
           SizedBox(
-            width: MyUtility(context).width / 4.5,
+            width: MyUtility(context).width / 4.7,
             child: RichText(
               text: TextSpan(
                 style: TextStyle(
@@ -74,7 +94,7 @@ class _NewsContainerState extends State<NewsContainer> {
                     text: ' | ',
                   ),
                   TextSpan(
-                    text: widget.date,
+                    text: _formatDateTime(widget.date),
                     style: TextStyle(
                       color: Color(0xFF3D3D3D),
                     ),
@@ -87,7 +107,7 @@ class _NewsContainerState extends State<NewsContainer> {
             height: MyUtility(context).height * 0.035,
           ),
           SizedBox(
-            width: MyUtility(context).width / 4.5,
+            width: MyUtility(context).width / 4.7,
             child: RichText(
               text: TextSpan(
                 style: TextStyle(
@@ -109,11 +129,11 @@ class _NewsContainerState extends State<NewsContainer> {
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: SizedBox(
-              width: MyUtility(context).width / 4.5,
+              width: MyUtility(context).width / 4.7,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  width: MyUtility(context).width * 0.3,
+                  width: MyUtility(context).width / 4.7,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),

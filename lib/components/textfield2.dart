@@ -4,6 +4,7 @@ import 'package:sama/components/myutility.dart';
 class TextField2 extends StatefulWidget {
   final String textfieldtitle;
   final String textfieldtitle2;
+  
 
   const TextField2(
       {super.key, required this.textfieldtitle, required this.textfieldtitle2});

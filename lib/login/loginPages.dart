@@ -40,7 +40,6 @@ class _LoginPagesState extends State<LoginPages> {
   Widget build(BuildContext context) {
     // pages to go to
     var pages = [
-     
       LoginWithEmail(changePage: changePage, getEmail: getEmail),
       LoginWithPassword(changePage: changePage, email: email),
       ResetPassword(changePage: changePage, getEmail: getEmail),
@@ -75,7 +74,7 @@ class _LoginPagesState extends State<LoginPages> {
                                 ? MyUtility(context).width / 1.5
                                 : MyUtility(context).width / 4,
                             height: MyUtility(context).height / 3.5,
-                            image: AssetImage('imges/sama_logo.png'))),
+                            image: AssetImage('images/sama_logo.png'))),
                     SizedBox(
                       width: pageIndex == 9
                           ? MyUtility(context).width / 1.5

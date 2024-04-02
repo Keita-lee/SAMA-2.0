@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/CheckCircle.dart';
 import 'package:sama/components/myutility.dart';
 
 class Security extends StatefulWidget {
-  const Security({super.key});
+  Function(int) changePage;
+  Security({super.key, required this.changePage});
 
   @override
   State<Security> createState() => _SecurityState();
@@ -12,6 +15,28 @@ class Security extends StatefulWidget {
 class _SecurityState extends State<Security> {
   @override
   Widget build(BuildContext context) {
+    // Text controllers
+    final password = TextEditingController();
+
+    // take email and get user details from, firebase
+    updatePassword() async {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+
+      _auth.currentUser!
+          .updatePassword(password.text)
+          .whenComplete(() => widget.changePage(0))
+          .catchError((e) {
+        print(e);
+      });
+
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .update({
+        'password': password.text,
+      });
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -34,6 +59,7 @@ class _SecurityState extends State<Security> {
             ),
           ),
           child: TextField(
+            controller: password,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,

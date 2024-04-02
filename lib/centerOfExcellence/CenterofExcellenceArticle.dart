@@ -1,10 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/components/CommentContainer.dart';
 import 'package:sama/components/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:intl/intl.dart';
 
 class CenterOfExcellenceArticle extends StatefulWidget {
-  const CenterOfExcellenceArticle({super.key});
+  Function(int?)? changePage;
+  String? articleId;
+  CenterOfExcellenceArticle({
+    super.key,
+    required this.articleId,
+    required this.changePage,
+  });
 
   @override
   State<CenterOfExcellenceArticle> createState() =>
@@ -12,6 +22,95 @@ class CenterOfExcellenceArticle extends StatefulWidget {
 }
 
 class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
+  String title = "";
+  String imageUrl = "";
+  String date = "";
+  String description = "";
+  String category = "";
+  List comments = [];
+  final comment = TextEditingController();
+  String profilePicUrl = "";
+  String userName = "";
+
+  String _formatDateTime(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    String dayNumber = DateFormat('dd').format(dateTime);
+
+    String month = DateFormat('MMMM').format(dateTime);
+    String year = DateFormat('yyyy').format(dateTime);
+
+    return '$dayNumber $month $year ';
+  }
+
+  String _formatTime(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    String time = DateFormat('HH:mm').format(dateTime);
+
+    return '$time ';
+  }
+
+  getData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('articles')
+        .doc(widget.articleId)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        title = data.get('title');
+        description = data.get('description');
+        imageUrl = data.get('image');
+        date = _formatDateTime(data.get('date'));
+        category = data.get('category');
+        comments.addAll(data.get('comments'));
+        print(data.get('comments'));
+      });
+    }
+  }
+
+  getUserProfilePic() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String currentUserID = auth.currentUser!.uid;
+    print(currentUserID);
+
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUserID)
+        .get();
+    if (data.exists) {
+      userName = data.get('firstName');
+      profilePicUrl = data.get('profilePic');
+    }
+    //  return data.get('profilePic');
+  }
+
+  addComment(value) {
+    comment.text = "";
+    DateTime now = DateTime.now();
+
+    setState(() {
+      comments.add({
+        "username": userName,
+        "image": profilePicUrl,
+        "date": now,
+        "comment": value
+      });
+    });
+
+    FirebaseFirestore.instance
+        .collection('articles')
+        .doc(widget.articleId)
+        .update({"comments": comments});
+  }
+
+  @override
+  void initState() {
+    getData();
+    getUserProfilePic();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,19 +130,26 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
           Row(
             children: [
               Container(
-                width: MyUtility(context).width * 0.17,
-                height: MyUtility(context).height * 0.22,
+                width: MyUtility(context).width / 4,
+                height: MyUtility(context).height * 0.25,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xFFD1D1D1),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'images/news1.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(10),
+                    child: ImageNetwork(
+                      image: imageUrl,
+                      fitWeb: BoxFitWeb.cover,
+                      width: MyUtility(context).width * 0.215,
+                      height: MyUtility(context).height * 0.25,
+                    )
+
+                    /* Image.asset(
+                widget.image,
+                fit: BoxFit.cover,
+              ),*/
+                    ),
               ),
               SizedBox(
                 width: MyUtility(context).width * 0.025,
@@ -56,7 +162,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Text(
-                        'WEBINAR | JUDASA - Reviving a Junior Doctors Movement',
+                        title,
                         style: TextStyle(
                             fontSize: 24,
                             color: Color(0xFF174486),
@@ -66,7 +172,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Text(
-                        'Med-e-mail',
+                        category,
                         style: TextStyle(
                             fontSize: 18,
                             color: Color(0xFF174486),
@@ -74,7 +180,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                       ),
                     ),
                     Text(
-                      '13 March 2024',
+                      date,
                       style: TextStyle(
                           fontSize: 18,
                           color: Color(0xFF3D3D3D),
@@ -97,21 +203,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit consectetur tenetur nihil voluptatum veniam asperiores atque placeat nostrum dicta, nesciunt vitae eligendi fuga odit doloremque quos odio ducimus, voluptate adipisci excepturi quia totam harum et necessitatibus aliquam. Earum rem reprehenderit, in delectus eaque voluptate incidunt quibusdam blanditiis quasi laboriosam amet mollitia impedit quisquam tenetur officia sint sed accusantium. Id repellendus doloribus, cumque laboriosam corporis odit! Sunt, odio harum nesciunt iure atque iusto aut esse, reprehenderit minus deserunt tempore commodi consequuntur quidem et assumenda quis cum quod eveniet suscipit at veniam. Deserunt at architecto maiores soluta nobis, error expedita aliquid ratione.',
-                    style: TextStyle(color: Color(0xFF3D3D3D), fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.025,
-                  ),
-                  Text(
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit consectetur tenetur nihil voluptatum veniam asperiores atque placeat nostrum dicta, nesciunt vitae eligendi fuga odit doloremque quos odio ducimus, voluptate adipisci excepturi quia totam harum et necessitatibus aliquam. Earum rem reprehenderit, impedit quisquam tenetur officia sint sed accusantium. Id repellendus doloribus, cumque laboriosam corporis odit! Sunt, odio harum nesciunt iure atque iusto aut esse, reprehenderit minus deserunt tempore commodi consequuntur quidem et assumenda quis cum quod eveniet suscipit at veniam. Deserunt at architecto maiores soluta nobis, error expedita aliquid ratione.',
-                    style: TextStyle(color: Color(0xFF3D3D3D), fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.025,
-                  ),
-                  Text(
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit consectetur tenetur nihil voluptatum veniam asperiores atque placeat nostrum dicta, nesciunt vitae eligendi fuga odit doloremque quos odio ducimus, voluptate adipisci excepturi quia totam harum et necessitatibus aliquam. Earum rem reprehenderit, in delectus eaque voluptate incidunt quibusdam blanditiis quasi laboriosam amet mollitia impedit quisquam tenetur officia sint sed accusantium. Id repellendus doloribus, cumque laboriosam corporis odit! Sunt, odio harum nesciunt iure atque iusto aut esse, reprehenderit minus deserunt tempore commodi consequuntur quidem et assumenda quis cum quod eveniet suscipit at veniam.',
+                    description,
                     style: TextStyle(color: Color(0xFF3D3D3D), fontSize: 16),
                   ),
                   SizedBox(
@@ -140,16 +232,19 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                   SizedBox(
                     height: MyUtility(context).height * 0.025,
                   ),
-                  CommentContainer(
-                    image: 'images/pfp.jpg',
-                    username: 'Example',
-                    time: '15:46',
-                    date: '13 September 2024',
-                    comment:
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam beatae nisi sed, minima sunt expedita quos aspernatur similique omnis corporis?",
-                    backgroundColor: Color(0xFFFFF4D9),
-                  ),
-                  CommentContainer(
+                  for (var i = 0; i < comments.length; i++)
+                    CommentContainer(
+                      image: comments[i]['username'],
+                      username: comments[i]['username'],
+                      time: _formatTime(comments[i]['date']),
+                      date: _formatDateTime(comments[i]['date']),
+                      comment: comments[i]['comment'],
+                      backgroundColor: i.isEven
+                          ? Color(0xFFFFF4D9)
+                          : Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  /* 
+                 CommentContainer(
                     image: 'images/pfp.jpg',
                     username: 'Example',
                     time: '15:46',
@@ -165,7 +260,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     comment:
                         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam beatae nisi sed, minima sunt expedita quos aspernatur similique omnis corporis?",
                     backgroundColor: Color(0xFFFFF4D9),
-                  ),
+                  ),*/
                   SizedBox(
                     height: MyUtility(context).height * 0.035,
                   ),
@@ -200,17 +295,15 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                       ),
                     ),
                     child: TextField(
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFEFEFEF),
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      ),
-                      controller:
-                          TextEditingController(text: 'Enter you comment here'),
-                    ),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEFEFEF),
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        ),
+                        controller: comment),
                   ),
                   SizedBox(
                     height: MyUtility(context).height * 0.035,
@@ -227,7 +320,9 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                           color: Color(0xFF174486),
                         ),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            addComment(comment.text);
+                          },
                           child: Text(
                             'Submit',
                             style: TextStyle(
@@ -244,7 +339,9 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     height: MyUtility(context).height * 0.035,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.changePage!(1);
+                    },
                     child: Text(
                       'Go back, view all articles',
                       style: TextStyle(

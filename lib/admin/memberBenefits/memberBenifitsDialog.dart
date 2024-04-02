@@ -55,58 +55,55 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
       "id": widget.id
     }; /*   */
 
-   
+    if (widget.id == "") {
+      final doc = FirebaseFirestore.instance.collection('memberBenefits').doc();
+      companyBenefitData["id"] = doc.id;
 
-
-
-if(widget.id == "")
-{
-  final doc = FirebaseFirestore.instance.collection('memberBenefits').doc();
-    companyBenefitData["id"] = doc.id;
-
-    final json = companyBenefitData;
-    doc.set(json);
-
-}else{
-FirebaseFirestore.instance.collection('memberBenefits').doc(widget.id).update(companyBenefitData);
-}
-
+      final json = companyBenefitData;
+      doc.set(json);
+    } else {
+      FirebaseFirestore.instance
+          .collection('memberBenefits')
+          .doc(widget.id)
+          .update(companyBenefitData);
+    }
 
     widget.closeDialog();
   }
 
-   //If editing call data
-getCompanyData() async{
- final data = await FirebaseFirestore.instance
+  //If editing call data
+  getCompanyData() async {
+    final data = await FirebaseFirestore.instance
         .collection('memberBenefits')
         .doc(widget.id)
         .get();
 
-        if(data.exists){
-          setState(() {
-companyName.text = data.get('companyName');
- companyDescription.text = data.get('companyDescription');
- companyBenifits.text = data.get('companyBenifits');
+    if (data.exists) {
+      setState(() {
+        companyName.text = data.get('companyName');
+        companyDescription.text = data.get('companyDescription');
+        companyBenifits.text = data.get('companyBenifits');
 
- phoneNumber.text = data.get('phoneNumber');
- email.text = data.get('email');
- web.text = data.get('web');
- address.text = data.get('address');
- facebook.text = data.get('facebook');
- twitter.text = data.get('twitter');
- linkedIn.text = data.get('linkedIn');
- benefitsImageUrl = data.get('logo');
-          });
-        }
-}
+        phoneNumber.text = data.get('phoneNumber');
+        email.text = data.get('email');
+        web.text = data.get('web');
+        address.text = data.get('address');
+        facebook.text = data.get('facebook');
+        twitter.text = data.get('twitter');
+        linkedIn.text = data.get('linkedIn');
+        benefitsImageUrl = data.get('logo');
+      });
+    }
+  }
 
-@override
+  @override
   void initState() {
-    if(widget.id != ""){
+    if (widget.id != "") {
       getCompanyData();
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(

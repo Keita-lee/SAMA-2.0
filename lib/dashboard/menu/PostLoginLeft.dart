@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/greybutton.dart';
 import 'package:sama/components/myutility.dart';
@@ -5,16 +7,34 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class PostLoginLeft extends StatefulWidget {
   Function(int) changePage;
-   PostLoginLeft({super.key, required this.changePage});
+  PostLoginLeft({super.key, required this.changePage});
 
   @override
   State<PostLoginLeft> createState() => _PostLoginLeftState();
 }
 
 class _PostLoginLeftState extends State<PostLoginLeft> {
-  
-  var pages= [];
+  var pages = [];
+  String userType = "";
 
+  getUserData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        userType = data.get('userType');
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +54,9 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
             height: MyUtility(context).height * 0.025,
           ),
           TextButton.icon(
-            onPressed: () {widget.changePage(1);},
+            onPressed: () {
+              widget.changePage(1);
+            },
             icon: Icon(Icons.star),
             label: Text(
               'Centre of Excellence',
@@ -45,7 +67,9 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
             ),
           ),
           TextButton.icon(
-            onPressed: () {widget.changePage(2);},
+            onPressed: () {
+              widget.changePage(2);
+            },
             icon: Icon(Icons.school),
             label: Text(
               'Professional Development & Mentorship',
@@ -77,10 +101,41 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   fontWeight: FontWeight.bold),
             ),
           ),
+          Visibility(
+            visible: userType == "Admin" ? true : false,
+            child: TextButton.icon(
+              onPressed: () {
+                widget.changePage(4);
+              },
+              icon: Icon(Icons.newspaper),
+              label: Text(
+                'Manage Articles',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF6A6A6A),
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: userType == "Admin" ? true : false,
+            child: TextButton.icon(
+              onPressed: () {
+                widget.changePage(5);
+              },
+              icon: Icon(Icons.newspaper),
+              label: Text(
+                'Manage Benifits',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF6A6A6A),
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
           SizedBox(
             height: MyUtility(context).height * 0.025,
           ),
-         
           SizedBox(
             height: MyUtility(context).height * 0.05,
           ),

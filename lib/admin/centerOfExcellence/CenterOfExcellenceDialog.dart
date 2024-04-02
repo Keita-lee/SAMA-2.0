@@ -5,7 +5,6 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
 
-
 enum SingingCharacter { active, inActive }
 
 class CenterOfExcellenceDialog extends StatefulWidget {
@@ -23,10 +22,11 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
   // Text controllers
   final title = TextEditingController();
   final description = TextEditingController();
-  List comments =[];
+  final category = TextEditingController();
+  List comments = [];
   //var
   String imageUrl = "";
-   SingingCharacter? _character = SingingCharacter.active;
+  SingingCharacter? _character = SingingCharacter.active;
 
 //Set value for benifits image
   setImageUrl(value) {
@@ -37,61 +37,61 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
 
 //Add or edit a article
   createEditArticle() async {
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
     var data = {
       "title": title.text,
       "description": description.text,
-      "logo": imageUrl,
+      "image": imageUrl,
       "comments": comments,
-      "status":_character == SingingCharacter.active ? "Active" : "InActive",
-      "id": widget.id
+      "status": _character == SingingCharacter.active ? "Active" : "InActive",
+      "id": widget.id,
+      "date": date,
+      "category": category.text
     }; /*   */
 
-if(widget.id == "")
-{
- final doc = FirebaseFirestore.instance.collection('articles').doc();
-    data["id"] = doc.id;
+    if (widget.id == "") {
+      final doc = FirebaseFirestore.instance.collection('articles').doc();
+      data["id"] = doc.id;
 
-  final json = data;
-    doc.set(json);
+      final json = data;
+      doc.set(json);
+    } else {
+      FirebaseFirestore.instance
+          .collection('articles')
+          .doc(widget.id)
+          .update(data);
+    }
 
-}else{
-FirebaseFirestore.instance.collection('articles').doc(widget.id).update(data);
-}
-
-   
-
-  
     widget.closeDialog();
   }
-   
-   //If editing call data
-getArticleData() async{
- final data = await FirebaseFirestore.instance
+
+  //If editing call data
+  getArticleData() async {
+    final data = await FirebaseFirestore.instance
         .collection('articles')
         .doc(widget.id)
         .get();
 
-        if(data.exists){
-          setState(() {
-            title.text = data.get('title');
-            description.text = data.get('description');
-            imageUrl = data.get('logo');
-            comments = data.get('comments');
-_character = data.get('status') == "Active" ? SingingCharacter.active :SingingCharacter.inActive;
-
-
-         
-          });
-        }
-}
-
-   @override
-  void initState() {
-  
-  if(widget.id != ""){
-    getArticleData();
-
+    if (data.exists) {
+      setState(() {
+        title.text = data.get('title');
+        description.text = data.get('description');
+        imageUrl = data.get('image');
+        category.text = data.get('category');
+        comments = data.get('comments');
+        _character = data.get('status') == "Active"
+            ? SingingCharacter.active
+            : SingingCharacter.inActive;
+      });
+    }
   }
+
+  @override
+  void initState() {
+    if (widget.id != "") {
+      getArticleData();
+    }
     super.initState();
   }
 
@@ -133,69 +133,78 @@ _character = data.get('status') == "Active" ? SingingCharacter.active :SingingCh
             SizedBox(
               height: 15,
             ),
-            
-
-   Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              
-              Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
-                value: SingingCharacter.active,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "Approved",
-                style: TextStyle(fontSize: 17, color: Colors.black),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
-                value: SingingCharacter.inActive,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "Not Approved",
-                style: TextStyle(fontSize: 17, color: Colors.black),
-              ),
-            ],
-          ),
-         
-SizedBox(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Radio<SingingCharacter>(
+                  activeColor: Color.fromARGB(255, 8, 55, 145),
+                  value: SingingCharacter.active,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter? value) {
+                    setState(() {
+                      _character = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Approved",
+                  style: TextStyle(fontSize: 17, color: Colors.black),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Radio<SingingCharacter>(
+                  activeColor: Color.fromARGB(255, 8, 55, 145),
+                  value: SingingCharacter.inActive,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter? value) {
+                    setState(() {
+                      _character = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Not Approved",
+                  style: TextStyle(fontSize: 17, color: Colors.black),
+                ),
+              ],
+            ),
+            SizedBox(
               height: 15,
             ),
-Text(
-              "Excellence title:",
+            Text(
+              "Title:",
               style: TextStyle(fontSize: 18, color: Colors.black),
             ),
             SizedBox(
               height: 15,
             ),
-
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextFieldStyling(
                 hintText: 'Add Title',
                 textfieldController: title,
+              ),
+            ),
+            Text(
+              "Category:",
+              style: TextStyle(fontSize: 18, color: Colors.black),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextFieldStyling(
+                hintText: 'Add Category',
+                textfieldController: category,
               ),
             ),
             SizedBox(

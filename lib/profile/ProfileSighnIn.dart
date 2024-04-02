@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/userState.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/profile/MyPreferences.dart';
 import 'package:sama/profile/Notifications.dart';
@@ -15,8 +18,60 @@ class ProfileSighnIn extends StatefulWidget {
 }
 
 class _ProfileSighnInState extends State<ProfileSighnIn> {
+  var pageIndex = 0;
+  String title = "";
+  String email = "";
+  String mobileNo = "";
+  String fullName = "";
+
+  getUserData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        title = data.get('title');
+        email = data.get('email');
+        fullName = data.get('firstName') + " " + data.get('lastName');
+        mobileNo = data.get('mobileNo');
+      });
+    }
+  }
+
+// logUserOut
+  logOut() {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    _auth.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UserState()),
+    );
+  }
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    //Change pageIndex value
+    changePage(value) {
+      setState(() {
+        pageIndex = value;
+      });
+    }
+
+    var pages = [
+      EditProfile(),
+      Notifications(),
+      MyPreferences(),
+      Security(changePage: changePage)
+    ];
+
     return Column(
       children: [
         SizedBox(
@@ -46,21 +101,21 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Dr. Robbert Naidoo',
+                            '${title}. ${fullName}',
                             style: TextStyle(
                                 fontSize: 24,
                                 color: Color(0xFF174486),
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            'Email: r.naidoo_fake@gmail.com',
+                            'Email: ${email}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Color(0xFF6A6A6A),
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            'Contact no: 082 123-4567',
+                            'Contact no: ${mobileNo}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Color(0xFF6A6A6A),
@@ -145,7 +200,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                         size: 8),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      changePage(0);
+                                    },
                                     child: Text(
                                       'Edit Profile',
                                       style: TextStyle(color: Colors.black),
@@ -170,7 +227,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                         size: 8),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      changePage(1);
+                                    },
                                     child: Text(
                                       'Notifications',
                                       style: TextStyle(color: Colors.black),
@@ -195,7 +254,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                         size: 8),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      changePage(2);
+                                    },
                                     child: Text(
                                       'My Preferences',
                                       style: TextStyle(color: Colors.black),
@@ -220,7 +281,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                         size: 8),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      changePage(3);
+                                    },
                                     child: Text(
                                       'Security',
                                       style: TextStyle(color: Colors.black),
@@ -245,7 +308,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                         size: 8),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      logOut();
+                                    },
                                     child: Text(
                                       'Logout',
                                       style: TextStyle(color: Colors.black),
@@ -260,7 +325,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                       SizedBox(
                         width: MyUtility(context).width * 0.015,
                       ),
-                      EditProfile()
+                      Center(
+                        child: pages[pageIndex],
+                      )
                       //*Notifications()*/
                       /*MyPreferences()*/
                       /*Security()*/

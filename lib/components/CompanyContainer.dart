@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/components/myutility.dart';
 
 class CompanyContainer extends StatefulWidget {
@@ -28,7 +29,13 @@ class _CompanyContainerState extends State<CompanyContainer> {
               Border(bottom: BorderSide(color: Color(0xFF3D3D3D), width: 1.0))),
       child: Row(
         children: [
-          Container(
+          ImageNetwork(
+            image: widget.image,
+            width: MyUtility(context).width * 0.12,
+            height: 100,
+            fitWeb: BoxFitWeb.cover,
+          ),
+          /*  Container(
             width: MyUtility(context).width * 0.12,
             height: 100,
             decoration: BoxDecoration(
@@ -38,7 +45,7 @@ class _CompanyContainerState extends State<CompanyContainer> {
                 fit: BoxFit.cover,
               ),
             ),
-          ),
+          ),*/
           SizedBox(width: MyUtility(context).width * 0.01),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

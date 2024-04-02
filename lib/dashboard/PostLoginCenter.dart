@@ -79,13 +79,13 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
             SizedBox(
               width: MyUtility(context).width * 0.15,
             ),
-            Text(
+            /*Text(
               'Welcome, Dr. Robbert',
               style: TextStyle(
                   fontSize: 16,
                   color: Color(0xFF174486),
                   fontWeight: FontWeight.bold),
-            ),
+            ),*/
           ],
         ),
         Row(

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
+import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/centerOfExcellence/CenterOfExcellence.dart';
 import 'package:sama/centerOfExcellence/CenterofExcellenceArticle.dart';
 import 'package:sama/memberBenifits/MemberBenifits.dart';
 import 'package:sama/dashboard/PostLoginCenter.dart';
 import 'package:sama/dashboard/menu/PostLoginLeft.dart';
+import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/profile/ProfileSighnIn.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/profile/profile.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
   String userId;
@@ -16,17 +20,32 @@ class PostLoginLandingPage extends StatefulWidget {
 }
 
 class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
-var pages =[PostLoginCenter(), CenterOfExcellence(), MemberBenifits()];
-var pageIndex = 0;
-
-changePage(value){
-  setState(() {
-    pageIndex = value;
-  });
-}
+  String articleId = "";
+  var pageIndex = 0;
+  getArticleId(value) {
+    setState(() {
+      articleId = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    changePage(value) {
+      setState(() {
+        pageIndex = value;
+      });
+    }
+
+    var pages = [
+      PostLoginCenter(),
+      CenterOfExcellence(getArticleId: getArticleId, changePage: changePage),
+      MemberBenifits(),
+      Profile(),
+      CenterOfExcellenceList(),
+      MemberBenefitsList(),
+      CenterOfExcellenceArticle(articleId: articleId, changePage: changePage),
+    ];
+
     return Container(
       color: Color(0xFFF8FAFF),
       child: SingleChildScrollView(
@@ -109,7 +128,9 @@ changePage(value){
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      changePage(3);
+                    },
                     icon: CircleAvatar(
                       radius: 17,
                       backgroundColor: Colors.grey,
@@ -131,7 +152,7 @@ changePage(value){
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PostLoginLeft(changePage:changePage),
+                    PostLoginLeft(changePage: changePage),
                     SizedBox(
                       width: MyUtility(context).width * 0.025,
                       child: Icon(
@@ -139,15 +160,15 @@ changePage(value){
                         size: 30,
                       ),
                     ),
-                 //   ProfileSighnIn()
-                   // PostLoginCenter(),
-                    Center(child: pages[pageIndex],)
+                    //   ProfileSighnIn()
+                    // PostLoginCenter(),
+                    Center(
+                      child: pages[pageIndex],
+                    )
 
-
-
-                  //  CenterOfExcellence()
+                    //  CenterOfExcellence()
                     //CenterOfExcellenceArticle()
-                  //  MemberBenifits()
+                    //  MemberBenifits()
                   ],
                 ),
               ],
@@ -158,5 +179,3 @@ changePage(value){
     );
   }
 }
-
-

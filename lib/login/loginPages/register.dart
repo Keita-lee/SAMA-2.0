@@ -98,8 +98,6 @@ class _RegisterState extends State<Register> {
 
   final password = TextEditingController();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   createClient() async {
     var clientData = {
       "title": title.text,
@@ -109,6 +107,7 @@ class _RegisterState extends State<Register> {
       "email": email.text,
       "mobileNo": mobileNo.text,
       "landline": landline.text,
+      "profilePic": "",
       "gender": gender.text,
       "race": race.text,
       "dob": dob.text,
@@ -161,221 +160,224 @@ class _RegisterState extends State<Register> {
           Image(
               width: MyUtility(context).width / 6,
               height: MyUtility(context).height / 3.5,
-              image: AssetImage('imges/sama_logo.png')),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Register",
-                  style: TextStyle(fontSize: 30, color: Colors.black),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Title",
-                      hintText: "Title",
-                      textfieldController: title,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Initials",
-                      hintText: "Initials",
-                      textfieldController: initials,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "First Name:",
-                      hintText: "First Name",
-                      textfieldController: firstName,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Last Name:",
-                      hintText: "Last Name",
-                      textfieldController: lastName,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Email",
-                      hintText: "Email",
-                      textfieldController: email,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Mobile Number:",
-                      hintText: "Mobile Number",
-                      textfieldController: mobileNo,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Landline",
-                      hintText: "Landline",
-                      textfieldController: landline,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Gender:",
-                      hintText: "gender",
-                      textfieldController: gender,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Race",
-                      hintText: "Race",
-                      textfieldController: race,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Date of Birth:",
-                      hintText: "DOB",
-                      textfieldController: dob,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Race",
-                      hintText: "Race",
-                      textfieldController: race,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Date of Birth:",
-                      hintText: "DOB",
-                      textfieldController: dob,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "ID Number:",
-                      hintText: "ID Number",
-                      textfieldController: idNumber,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Passport Number:",
-                      hintText: "Passport Number",
-                      textfieldController: passportNumber,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "HPCSA:",
-                      hintText: "HPCSA",
-                      textfieldController: hpcsa,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Practice Number:",
-                      hintText: "Practice Number",
-                      textfieldController: practiceNumber,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Univercity Qualification:",
-                      hintText: "Univercity Qualification",
-                      textfieldController: univercityQualification,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Qualification Year:",
-                      hintText: "Qualification Year",
-                      textfieldController: qualificationYear,
-                    )
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RegisterTextfieldStyle(
-                      description: "Qualification Month:",
-                      hintText: "Qualification Month",
-                      textfieldController: qualificationMonth,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    RegisterTextfieldStyle(
-                      description: "Password:",
-                      hintText: "Password",
-                      textfieldController: password,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Spacer(),
-                    StyleButton(
-                        description: "Register User",
-                        height: 55,
-                        width: 125,
-                        onTap: () {
-                          createClient();
-                        })
-                  ],
-                )
-              ]),
+              image: AssetImage('images/sama_logo.png')),
+          SizedBox(
+            width: MyUtility(context).width / 2,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Register",
+                    style: TextStyle(fontSize: 30, color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Title",
+                        hintText: "Title",
+                        textfieldController: title,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Initials",
+                        hintText: "Initials",
+                        textfieldController: initials,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "First Name:",
+                        hintText: "First Name",
+                        textfieldController: firstName,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Last Name:",
+                        hintText: "Last Name",
+                        textfieldController: lastName,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Email",
+                        hintText: "Email",
+                        textfieldController: email,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Mobile Number:",
+                        hintText: "Mobile Number",
+                        textfieldController: mobileNo,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Landline",
+                        hintText: "Landline",
+                        textfieldController: landline,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Gender:",
+                        hintText: "gender",
+                        textfieldController: gender,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Race",
+                        hintText: "Race",
+                        textfieldController: race,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Date of Birth:",
+                        hintText: "DOB",
+                        textfieldController: dob,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Race",
+                        hintText: "Race",
+                        textfieldController: race,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Date of Birth:",
+                        hintText: "DOB",
+                        textfieldController: dob,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "ID Number:",
+                        hintText: "ID Number",
+                        textfieldController: idNumber,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Passport Number:",
+                        hintText: "Passport Number",
+                        textfieldController: passportNumber,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "HPCSA:",
+                        hintText: "HPCSA",
+                        textfieldController: hpcsa,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Practice Number:",
+                        hintText: "Practice Number",
+                        textfieldController: practiceNumber,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Univercity Qualification:",
+                        hintText: "Univercity Qualification",
+                        textfieldController: univercityQualification,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Qualification Year:",
+                        hintText: "Qualification Year",
+                        textfieldController: qualificationYear,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RegisterTextfieldStyle(
+                        description: "Qualification Month:",
+                        hintText: "Qualification Month",
+                        textfieldController: qualificationMonth,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      RegisterTextfieldStyle(
+                        description: "Password:",
+                        hintText: "Password",
+                        textfieldController: password,
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      StyleButton(
+                          description: "Register User",
+                          height: 55,
+                          width: 125,
+                          onTap: () {
+                            createClient();
+                          })
+                    ],
+                  )
+                ]),
+          ),
         ],
       )),
     );
