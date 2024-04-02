@@ -4,13 +4,18 @@ import 'package:sama/components/myutility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PostLoginLeft extends StatefulWidget {
-  const PostLoginLeft({super.key});
+  Function(int) changePage;
+   PostLoginLeft({super.key, required this.changePage});
 
   @override
   State<PostLoginLeft> createState() => _PostLoginLeftState();
 }
 
 class _PostLoginLeftState extends State<PostLoginLeft> {
+  
+  var pages= [];
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +34,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
             height: MyUtility(context).height * 0.025,
           ),
           TextButton.icon(
-            onPressed: () {},
+            onPressed: () {widget.changePage(1);},
             icon: Icon(Icons.star),
             label: Text(
               'Centre of Excellence',
@@ -40,7 +45,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
             ),
           ),
           TextButton.icon(
-            onPressed: () {},
+            onPressed: () {widget.changePage(2);},
             icon: Icon(Icons.school),
             label: Text(
               'Professional Development & Mentorship',
@@ -75,18 +80,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
           SizedBox(
             height: MyUtility(context).height * 0.025,
           ),
-          /*GreyButton(buttonText: 'Dashboard', onPressed: () {}),
-          GreyButton(
-              buttonText: 'Student, Inters & Com Serv', onPressed: () {}),
-          GreyButton(buttonText: "Private & Public MP's", onPressed: () {}),
-          GreyButton(buttonText: "Private Practice MP's", onPressed: () {}),
-          GreyButton(buttonText: 'Registrars', onPressed: () {}),
-          GreyButton(buttonText: 'Specialists', onPressed: () {}),
-          GreyButton(
-              buttonText: 'Corportate & Entrepreneurial Doctors',
-              onPressed: () {}),
-          GreyButton(buttonText: 'Retirees', onPressed: () {}),
-          GreyButton(buttonText: 'Research and Academics', onPressed: () {}),*/
+         
           SizedBox(
             height: MyUtility(context).height * 0.05,
           ),

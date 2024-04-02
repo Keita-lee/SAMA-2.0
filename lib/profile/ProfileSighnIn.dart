@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sama/EditProfile.dart';
-import 'package:sama/MyPreferences.dart';
-import 'package:sama/Notifications.dart';
-import 'package:sama/Security.dart';
+import 'package:sama/profile/EditProfile.dart';
+import 'package:sama/profile/MyPreferences.dart';
+import 'package:sama/profile/Notifications.dart';
+import 'package:sama/profile/Security.dart';
 import 'package:sama/components/TextField3.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/textfield2.dart';

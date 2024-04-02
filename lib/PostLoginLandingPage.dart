@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:sama/CenterOfExcellence.dart';
-import 'package:sama/CenterofExcellenceArticle.dart';
-import 'package:sama/MemberBenifits.dart';
-import 'package:sama/PostLoginCenter.dart';
-import 'package:sama/PostLoginLeft.dart';
-import 'package:sama/ProfileSighnIn.dart';
+import 'package:sama/centerOfExcellence/CenterOfExcellence.dart';
+import 'package:sama/centerOfExcellence/CenterofExcellenceArticle.dart';
+import 'package:sama/memberBenifits/MemberBenifits.dart';
+import 'package:sama/dashboard/PostLoginCenter.dart';
+import 'package:sama/dashboard/menu/PostLoginLeft.dart';
+import 'package:sama/profile/ProfileSighnIn.dart';
 import 'package:sama/components/myutility.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
-  const PostLoginLandingPage({super.key});
+  String userId;
+  PostLoginLandingPage({super.key, required this.userId});
 
   @override
   State<PostLoginLandingPage> createState() => _PostLoginLandingPageState();
 }
 
 class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
+var pages =[PostLoginCenter(), CenterOfExcellence(), MemberBenifits()];
+var pageIndex = 0;
+
+changePage(value){
+  setState(() {
+    pageIndex = value;
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -121,7 +131,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PostLoginLeft(),
+                    PostLoginLeft(changePage:changePage),
                     SizedBox(
                       width: MyUtility(context).width * 0.025,
                       child: Icon(
@@ -129,9 +139,13 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         size: 30,
                       ),
                     ),
-                    /*ProfileSighnIn()*/
-                    PostLoginCenter()
-                    //CenterOfExcellence()
+                 //   ProfileSighnIn()
+                   // PostLoginCenter(),
+                    Center(child: pages[pageIndex],)
+
+
+
+                  //  CenterOfExcellence()
                     //CenterOfExcellenceArticle()
                   //  MemberBenifits()
                   ],
@@ -144,3 +158,5 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     );
   }
 }
+
+
