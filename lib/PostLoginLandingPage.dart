@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sama/CenterOfExcellence.dart';
 import 'package:sama/CenterofExcellenceArticle.dart';
+import 'package:sama/MemberBenifits.dart';
 import 'package:sama/PostLoginCenter.dart';
 import 'package:sama/PostLoginLeft.dart';
 import 'package:sama/ProfileSighnIn.dart';
@@ -131,7 +132,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                     /*ProfileSighnIn()*/
                     /*PostLoginCenter()*/
                     /*CenterOfExcellence()*/
-                    CenterOfExcellenceArticle()
+                    /*CenterOfExcellenceArticle()*/
+                    MemberBenifits()
                   ],
                 ),
               ],

@@ -261,7 +261,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                         width: MyUtility(context).width * 0.015,
                       ),
                       EditProfile()
-                      /* Notifications()*/
+                      //*Notifications()*/
                       /*MyPreferences()*/
                       /*Security()*/
                     ],
