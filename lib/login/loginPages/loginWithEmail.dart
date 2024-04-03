@@ -49,6 +49,22 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     }
   }
 
+  //Check if email exists and continue
+  checkMemberNumber() async {
+    widget.getEmail(email.text);
+    final users = await FirebaseFirestore.instance
+        .collection('users')
+        .where('practiceNumber', isEqualTo: email.text)
+        .get();
+
+    if (users.docs.length >= 1) {
+      for (int i = 0; i < users.docs.length; i++) {}
+      widget.changePage(1);
+    } else {
+      openValidateDialog();
+    }
+  }
+
   SingingCharacter? _character = SingingCharacter.memberNumber;
   @override
   Widget build(BuildContext context) {
@@ -147,7 +163,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 55,
             width: 100,
             onTap: () {
-              checkEmail();
+              if (_character == SingingCharacter.memberNumber) {
+              } else {
+                checkEmail();
+              }
             },
           )
         ],

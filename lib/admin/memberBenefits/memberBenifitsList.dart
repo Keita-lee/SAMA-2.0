@@ -27,9 +27,16 @@ class _MemberBenefitsListState extends State<MemberBenefitsList> {
         });
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            SizedBox(
+              width: 10,
+            ),
             StyleButton(
                 description: "Add Benefit",
                 height: 55,
@@ -70,16 +77,28 @@ class _MemberBenefitsListState extends State<MemberBenefitsList> {
                       onTap: () {
                         openMemberDialog(document['id']);
                       },
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Text(
-                              document['companyName'],
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black),
-                            ),
-                            Spacer(),
-                          ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF174486),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                document['companyName'],
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255)),
+                              ),
+                              Spacer(),
+                            ],
+                          ),
                         ),
                       ),
                     );

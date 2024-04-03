@@ -48,7 +48,6 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
         twitter = data.get('twitter');
         linkedIn = data.get('linkedIn');
         benefitsImageUrl = data.get('logo');
-        print(data.get('logo'));
       });
     }
   }
@@ -89,7 +88,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                   ),
                 ],
               ),
-              ImageNetwork(
+              /**/ ImageNetwork(
                 image: benefitsImageUrl,
                 width: MyUtility(context).width / 2.5 - 15,
                 height: 350,

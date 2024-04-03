@@ -29,7 +29,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
     if (userCredential.user != null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => UserState()),
+        MaterialPageRoute(
+            builder: (context) => Material(
+                  child: UserState(),
+                )),
       );
     }
   }

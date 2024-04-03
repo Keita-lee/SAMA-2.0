@@ -322,6 +322,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                         child: TextButton(
                           onPressed: () {
                             addComment(comment.text);
+                            widget.changePage!(1);
                           },
                           child: Text(
                             'Submit',

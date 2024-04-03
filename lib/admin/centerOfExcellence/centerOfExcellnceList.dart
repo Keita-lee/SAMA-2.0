@@ -26,6 +26,8 @@ class _CenterOfExcellenceListState extends State<CenterOfExcellenceList> {
         });
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
           padding: const EdgeInsets.all(15.0),
