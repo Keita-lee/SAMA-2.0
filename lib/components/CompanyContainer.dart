@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 
 class CompanyContainer extends StatefulWidget {
+  final String userType;
   final String image;
   final String companyname;
   final String discription;
+  final VoidCallback editCompanyDetails;
 
-  const CompanyContainer({
-    super.key,
-    required this.image,
-    required this.companyname,
-    required this.discription,
-  });
+  const CompanyContainer(
+      {super.key,
+      required this.userType,
+      required this.image,
+      required this.companyname,
+      required this.discription,
+      required this.editCompanyDetails});
 
   @override
   State<CompanyContainer> createState() => _CompanyContainerState();
@@ -22,18 +26,15 @@ class _CompanyContainerState extends State<CompanyContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 1.3,
+      width: MyUtility(context).width - MyUtility(context).width / 4,
       height: MyUtility(context).height * 0.2,
-      decoration: BoxDecoration(
-          border:
-              Border(bottom: BorderSide(color: Color(0xFF3D3D3D), width: 1.0))),
       child: Row(
         children: [
           ImageNetwork(
             image: widget.image,
             width: MyUtility(context).width * 0.12,
             height: 100,
-            fitWeb: BoxFitWeb.cover,
+            fitWeb: BoxFitWeb.contain,
           ),
           /*  Container(
             width: MyUtility(context).width * 0.12,
@@ -46,7 +47,7 @@ class _CompanyContainerState extends State<CompanyContainer> {
               ),
             ),
           ),*/
-          SizedBox(width: MyUtility(context).width * 0.01),
+          SizedBox(width: 15),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +70,17 @@ class _CompanyContainerState extends State<CompanyContainer> {
               ),
             ],
           ),
+          Spacer(),
+          Visibility(
+            visible: widget.userType == "Admin" ? true : false,
+            child: StyleButton(
+                description: "Edit",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.editCompanyDetails();
+                }),
+          )
         ],
       ),
     );

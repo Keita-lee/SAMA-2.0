@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sama/PostLoginLandingPage.dart';
 import 'package:sama/components/userState.dart';
+import 'package:sama/login/loginPages.dart';
+import 'package:sama/login/membershipCategory/memberCategory.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -13,9 +15,10 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: UserState()
-      ),
+      body: Center(child: LoginPages()),
     );
   }
 }
+
+
+// LoginPages()

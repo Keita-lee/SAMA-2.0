@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/PostLoginLandingPage.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/userState.dart';
@@ -22,7 +23,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   login() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final userCredential = await _auth.signInWithEmailAndPassword(
-      email: widget.email!.trim(),
+      email: widget.email!.toString(),
       password: password.text.trim(),
     );
 
@@ -31,7 +32,9 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         context,
         MaterialPageRoute(
             builder: (context) => Material(
-                  child: UserState(),
+                  child: Material(
+                      child: PostLoginLandingPage(
+                          userId: userCredential.user!.uid)),
                 )),
       );
     }

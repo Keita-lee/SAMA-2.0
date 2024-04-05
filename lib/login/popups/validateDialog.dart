@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/components/styleButton.dart';
 
 class ValidateDialog extends StatefulWidget {
   Function? closeDialog;
@@ -16,7 +17,7 @@ class _ValidateDialogState extends State<ValidateDialog> {
     return Container(
       color: Colors.white,
       width: 300,
-      height: 150,
+      height: 185,
       child: Column(
         children: [
           Row(
@@ -25,10 +26,13 @@ class _ValidateDialogState extends State<ValidateDialog> {
               GestureDetector(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "X",
-                    style: TextStyle(fontSize: 30, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -38,6 +42,15 @@ class _ValidateDialogState extends State<ValidateDialog> {
             widget.description!,
             style: TextStyle(fontSize: 20, color: Colors.black),
           ),
+          Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: StyleButton(
+                  description: "Ok",
+                  height: 45,
+                  width: 85,
+                  onTap: () {
+                    widget.closeDialog!();
+                  })),
         ],
       ),
     );

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
+import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:password_strength_checker/password_strength_checker.dart';
 
 enum SingingCharacter { memberNumber, email }
 
@@ -22,7 +24,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   BuildContext? dialogContext;
 
-  //Dialog for product form
+  //Dialog for validate  form
   Future openValidateDialog() => showDialog(
       context: context,
       builder: (context) {
@@ -49,9 +51,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     }
   }
 
-  //Check if email exists and continue
+  //Check if member exists and continue
   checkMemberNumber() async {
-    widget.getEmail(email.text);
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('practiceNumber', isEqualTo: email.text)
@@ -59,6 +60,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
     if (users.docs.length >= 1) {
       for (int i = 0; i < users.docs.length; i++) {}
+      widget.getEmail(users.docs[0].get("email"));
       widget.changePage(1);
     } else {
       openValidateDialog();
@@ -66,6 +68,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   }
 
   SingingCharacter? _character = SingingCharacter.memberNumber;
+ 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -147,10 +150,23 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           GestureDetector(
             onTap: () {
+              widget.changePage(11);
+            },
+            child: Text(
+              "Forgot SAMA Number? Help me",
+              style: TextStyle(
+                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          GestureDetector(
+            onTap: () {
               widget.changePage(9);
             },
             child: Text(
-              "Register",
+              "Not a member? Register Here.",
               style: TextStyle(
                   fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
             ),
@@ -164,11 +180,13 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             width: 100,
             onTap: () {
               if (_character == SingingCharacter.memberNumber) {
+                checkMemberNumber();
               } else {
                 checkEmail();
               }
             },
-          )
+          ),
+      
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/login/popups/validateDialog.dart';
 
 class RegisterTextfieldStyle extends StatefulWidget {
   String hintText;
@@ -98,7 +99,21 @@ class _RegisterState extends State<Register> {
 
   final password = TextEditingController();
 
-  createClient() async {
+  String checkEmailsText = "";
+
+  BuildContext? dialogContext;
+
+  //Dialog for product form
+  Future openValidateDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: ValidateDialog(
+                description: "Email not valid",
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
+  createClient(id) async {
     var clientData = {
       "title": title.text,
       "initials": initials.text,
@@ -120,23 +135,43 @@ class _RegisterState extends State<Register> {
       "qualificationMonth": qualificationMonth.text,
       "password": password.text,
       "userType": "user",
+      "membershipAdded": false,
       "id": ""
     }; /*   */
 
-    UserCredential result =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email.text.trim().toLowerCase(),
-      password: password.text.trim(),
-    );
-    User? user = result.user;
-
-    final doc =
-        FirebaseFirestore.instance.collection('users').doc(result.user?.uid);
-    clientData["id"] = doc.id;
+    final doc = FirebaseFirestore.instance.collection('users').doc(id);
+    clientData["id"] = id;
 
     final json = clientData;
     doc.set(json);
-    widget.changePage(0);
+  }
+
+  sendEmailVerificationLink() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email.text,
+        password: "Cp123456",
+      );
+
+      final User? user = _auth.currentUser;
+      final uid = user!.uid;
+      await user.sendEmailVerification().then((value) => {
+            setState(
+              () {
+                checkEmailsText =
+                    "Please check your email for verification link and come back to verify";
+              },
+            )
+          });
+    } catch (error) {}
+  }
+
+  verifyEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    widget.changePage(10);
+    createClient(user!.uid);
   }
 
   @override
@@ -149,7 +184,99 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+
+        /*  StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, userSnapshot) {
+          if (userSnapshot.data == null) {
+            return Container(
+              //     width: MyUtility(context).width / 1.5,
+              height: MyUtility(context).height / 2,
+              child: SingleChildScrollView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MyUtility(context).width / 3,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Register",
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RegisterTextfieldStyle(
+                                  description: "First Name:",
+                                  hintText: "First Name",
+                                  textfieldController: firstName,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                RegisterTextfieldStyle(
+                                  description: "Last Name:",
+                                  hintText: "Last Name",
+                                  textfieldController: lastName,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                RegisterTextfieldStyle(
+                                  description: "Email",
+                                  hintText: "Email",
+                                  textfieldController: email,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Row(
+                                    children: [
+                                      StyleButton(
+                                          description: "Register User",
+                                          height: 55,
+                                          width: 125,
+                                          onTap: () {
+                                            verifyEmail();
+                                          }),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      StyleButton(
+                                          description: "Back to Login",
+                                          height: 55,
+                                          width: 125,
+                                          onTap: () {
+                                            widget.changePage(0);
+                                          })
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]),
+                    )
+                  ],
+                ),
+              ),
+            );
+          } else {
+            User? user = FirebaseAuth.instance.currentUser;
+
+            return widget.changePage(1);
+          }
+        });*/
+
+        Container(
       //     width: MyUtility(context).width / 1.5,
       height: MyUtility(context).height / 2,
       child: SingleChildScrollView(
@@ -157,12 +284,12 @@ class _RegisterState extends State<Register> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image(
+          /*  Image(
               width: MyUtility(context).width / 6,
               height: MyUtility(context).height / 3.5,
-              image: AssetImage('images/sama_logo.png')),
+              image: AssetImage('images/sama_logo.png')),*/
           SizedBox(
-            width: MyUtility(context).width / 2,
+            width: MyUtility(context).width / 3,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +301,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 30,
                   ),
-                  Row(
+                  /* Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -192,8 +319,8 @@ class _RegisterState extends State<Register> {
                         textfieldController: initials,
                       )
                     ],
-                  ),
-                  Row(
+                  ),*/
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -203,25 +330,28 @@ class _RegisterState extends State<Register> {
                         textfieldController: firstName,
                       ),
                       SizedBox(
-                        width: 15,
+                        height: 15,
                       ),
                       RegisterTextfieldStyle(
                         description: "Last Name:",
                         hintText: "Last Name",
                         textfieldController: lastName,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
                       RegisterTextfieldStyle(
                         description: "Email",
                         hintText: "Email",
                         textfieldController: email,
                       ),
-                      SizedBox(
+                    ],
+                  ),
+                  /*       Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                        SizedBox(
                         width: 15,
                       ),
                       RegisterTextfieldStyle(
@@ -231,7 +361,7 @@ class _RegisterState extends State<Register> {
                       )
                     ],
                   ),
-                  Row(
+                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -364,18 +494,60 @@ class _RegisterState extends State<Register> {
                       )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Spacer(),
-                      StyleButton(
-                          description: "Register User",
-                          height: 55,
-                          width: 125,
-                          onTap: () {
-                            createClient();
-                          })
-                    ],
-                  )
+                */
+
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      children: [
+                        StyleButton(
+                            description: "Submit",
+                            height: 55,
+                            width: 125,
+                            onTap: () {
+                              sendEmailVerificationLink();
+                            }),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Visibility(
+                          visible: checkEmailsText == "" ? false : true,
+                          child: StyleButton(
+                              description: "Verify",
+                              height: 55,
+                              width: 125,
+                              onTap: () {
+                                verifyEmail();
+                              }),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      widget.changePage(0);
+                    },
+                    child: Text(
+                      "Already a member? Login here.",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 8, 55, 145),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    checkEmailsText,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ]),
           ),
         ],

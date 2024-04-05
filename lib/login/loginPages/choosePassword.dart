@@ -6,24 +6,30 @@ import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
+import 'package:sama/components/userState.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/login/membershipCategory/memberCategory.dart';
 
-class EnterNewPassword extends StatefulWidget {
-  String? email;
+class ChoosePassword extends StatefulWidget {
   Function(int) changePage;
-  EnterNewPassword({super.key, required this.email, required this.changePage});
+
+  ChoosePassword({super.key, required this.changePage});
 
   @override
-  State<EnterNewPassword> createState() => _EnterNewPasswordState();
+  State<ChoosePassword> createState() => _ChoosePasswordState();
 }
 
-class _EnterNewPasswordState extends State<EnterNewPassword> {
+class _ChoosePasswordState extends State<ChoosePassword> {
   // Text controllers
   final password = TextEditingController();
+  final passwordCheck = TextEditingController();
   final passNotifier = ValueNotifier<CustomPassStrength?>(null);
-  String changeEffect = "";
+
+//var
+  String passwordMatch = "";
 
   BuildContext? dialogContext;
+
   //Dialog for password Validate
   Future openValidateDialog() => showDialog(
       context: context,
@@ -35,53 +41,47 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
-  //Dialog for password change
-  Future openConfirmPasswordChangeDialog() => showDialog(
+  //Dialog for password match check
+  Future openValidatePasswordMatchDialog() => showDialog(
       context: context,
       builder: (context) {
         dialogContext = context;
         return Dialog(
             child: ValidateDialog(
-                description: "Passwords Updated",
+                description: "Passwords do not match",
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
   // take email and get user details from, firebase
   updatePassword() async {
-    print("reset");
+    if (password.text != passwordCheck.text) {
+      return openValidatePasswordMatchDialog();
+    }
+
     if (passNotifier.value == CustomPassStrength.weak) {
       openValidateDialog();
     } else {
       final FirebaseAuth _auth = FirebaseAuth.instance;
-      print(widget.email);
-      //Check if email exists and continue
-      final users = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: widget.email)
-          .get();
 
-//If user exist send link
-      if (users.docs.length >= 1) {
-        print(users.docs[0].get('password'));
-        final userCredential = await _auth.signInWithEmailAndPassword(
-            email: widget.email!, password: users.docs[0].get('password'));
-
-        if (userCredential.user != null) {
-          userCredential.user!
-              .updatePassword(password.text)
-              .whenComplete(() => setState(() {
-                    changeEffect = "true";
-                  }))
-              .catchError((e) {
-            print(e);
-          });
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(userCredential.user!.uid)
-              .update({
-            'password': password.text,
-          }).then((value) => openConfirmPasswordChangeDialog());
-        }
+      if (_auth.currentUser != null) {
+        _auth.currentUser!
+            .updatePassword(password.text)
+            .whenComplete(() => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: MemberCategory(),
+                          )),
+                ))
+            .catchError((e) {
+          print(e);
+        });
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(_auth.currentUser!.uid)
+            .update({
+          'password': password.text,
+        });
       }
     }
   }
@@ -95,30 +95,19 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Reset Password",
+            "Confirm Password",
             style: TextStyle(fontSize: 30, color: Colors.black),
           ),
           SizedBox(
             height: 30,
           ),
           Text(
-            "Thank you, validation succesful.",
+            "Password",
             style: TextStyle(fontSize: 16, color: Colors.black),
           ),
           SizedBox(
-            height: 30,
+            height: 15,
           ),
-          Text(
-            "Please enter your new password",
-            style: TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          /* TextFieldStyling(
-            hintText: 'Password',
-            textfieldController: password,
-          ),*/
           Container(
             width: MyUtility(context).width,
             height: 45,
@@ -140,7 +129,7 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
               },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "Password",
+                hintText: "Enter Here",
                 hintStyle: TextStyle(
                   color: Color.fromARGB(255, 199, 199, 199),
                   fontSize: 20,
@@ -152,36 +141,38 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
           SizedBox(
             height: 15,
           ),
+          TextFieldStyling(
+            hintText: 'Confirm Password',
+            textfieldController: passwordCheck,
+          ),
+          SizedBox(height: 20),
           PasswordStrengthChecker(
             strength: passNotifier,
           ),
           SizedBox(
-            height: 50,
+            height: 15,
           ),
           StyleButton(
-            description: "Reset",
-            height: 55,
-            width: 85,
+              description: "Submit & Login",
+              height: 55,
+              width: 125,
+              onTap: () {
+                updatePassword();
+              }),
+          SizedBox(
+            height: 15,
+          ),
+          /*   GestureDetector(
             onTap: () {
-              updatePassword();
+              widget.changePage(0);
             },
+            child: Text(
+              "Back to Login",
+              style: TextStyle(
+                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+            ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Visibility(
-            visible: changeEffect == "" ? false : true,
-            child: StyleButton(
-                description: "Back to Login",
-                height: 55,
-                width: 130,
-                onTap: () {
-                  widget.changePage(0);
-                }),
-          ),
-          SizedBox(
-            height: 15,
-          ),
+     */
         ],
       ),
     );

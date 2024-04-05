@@ -6,21 +6,24 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/userState.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/login/loginPages.dart';
 
-class ValidateByMobileOtp extends StatefulWidget {
-  String? email;
+class ValidateByMobileGetUsername extends StatefulWidget {
+  String? mobileNumber;
   Function(int) changePage;
-  ValidateByMobileOtp({
+  ValidateByMobileGetUsername({
     super.key,
-    required this.email,
+    required this.mobileNumber,
     required this.changePage,
   });
 
   @override
-  State<ValidateByMobileOtp> createState() => _ValidateByMobileOtpState();
+  State<ValidateByMobileGetUsername> createState() =>
+      _ValidateByMobileGetUsernameState();
 }
 
-class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
+class _ValidateByMobileGetUsernameState
+    extends State<ValidateByMobileGetUsername> {
   // Text controllers
   final otp = TextEditingController();
   //var
@@ -52,7 +55,7 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
     await confirmationResult
         .confirm(otp.text)
         .then((value) => {
-              widget.changePage(5),
+             widget.changePage(13)
             })
         .catchError((e) => {openValidateDialog()});
   }
@@ -62,17 +65,18 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
     //Check if email exists and continue
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('email', isEqualTo: widget.email)
+        .where('mobileNo', isEqualTo: widget.mobileNumber)
         .get();
 
-//If user exist send link
+//If user exist send otp
     if (users.docs.length >= 1) {
-      sendSmsForOtp(users.docs[0]['mobileNo']);
+      sendSmsForOtp(widget.mobileNumber);
     }
   }
 
   @override
   void initState() {
+    print(widget.mobileNumber);
     // sendSmsForOtp();
     getUserData();
     super.initState();

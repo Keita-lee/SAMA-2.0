@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sama/Login/loginPages.dart';
 import 'package:sama/PostLoginLandingPage.dart';
 
-
 class UserState extends StatefulWidget {
-  const UserState({super.key});
+  String? passwordReset;
+  UserState({super.key});
 
   @override
   State<UserState> createState() => _UserStateState();
@@ -15,18 +15,21 @@ class UserState extends StatefulWidget {
 class _UserStateState extends State<UserState> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return Placeholder();
+    /*   return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, userSnapshot) {
           if (userSnapshot.data == null) {
             print('Insert Login Details');
-            return const LoginPages();
+            return Material(
+              child: LoginPages(),
+            );
           } else if (userSnapshot.hasData) {
             print('Insert Login Detail123123s');
             User? user = FirebaseAuth.instance.currentUser;
 // user logged in
 
-            return PostLoginLandingPage(userId: user!.uid);
+            return Material(child: PostLoginLandingPage(userId: user!.uid));
           } else if (userSnapshot.hasError) {
             print('error on snapshot');
           } else if (userSnapshot.connectionState == ConnectionState.waiting) {
@@ -40,7 +43,8 @@ class _UserStateState extends State<UserState> {
           User? user = FirebaseAuth.instance.currentUser;
 // user logged in
 
-          return PostLoginLandingPage(userId: user!.uid);
+          return Material(child: PostLoginLandingPage(userId: user!.uid));
         });
+  */
   }
 }

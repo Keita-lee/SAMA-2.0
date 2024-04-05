@@ -8,11 +8,15 @@ import 'package:sama/Login/loginPages/register.dart';
 import 'package:sama/Login/loginPages/resetPassword.dart';
 import 'package:sama/Login/loginPages/sendUsername.dart';
 import 'package:sama/Login/loginPages/validateByEmail.dart';
-import 'package:sama/Login/loginPages/validateByMobile.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/login/loginPages/choosePassword.dart';
+import 'package:sama/login/loginPages/displayUsername.dart';
+import 'package:sama/login/loginPages/getUserName.dart';
+import 'package:sama/login/loginPages/validateByMobile.dart';
+import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
 
 class LoginPages extends StatefulWidget {
-  const LoginPages({super.key});
+  LoginPages({super.key});
 
   @override
   State<LoginPages> createState() => _LoginPagesState();
@@ -20,12 +24,20 @@ class LoginPages extends StatefulWidget {
 
 class _LoginPagesState extends State<LoginPages> {
   String? email;
+  String? mobileNumber;
   int pageIndex = 0;
 
 //set email state
   getEmail(value) {
     setState(() {
       email = value;
+    });
+  }
+
+//set email state
+  getMobileNumber(value) {
+    setState(() {
+      mobileNumber = value;
     });
   }
 
@@ -37,19 +49,34 @@ class _LoginPagesState extends State<LoginPages> {
   }
 
   @override
+  void initState() {
+   
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     // pages to go to
     var pages = [
       LoginWithEmail(changePage: changePage, getEmail: getEmail),
       LoginWithPassword(changePage: changePage, email: email),
       ResetPassword(changePage: changePage, getEmail: getEmail),
-      ValidateByMobile(changePage: changePage, email: email),
+      ValidateByMobileOtp(changePage: changePage, email: email),
       ForgotUserName(changePage: changePage),
       EnterNewPassword(changePage: changePage, email: email),
       SendUsername(changePage: changePage),
       ValidateByEmail(changePage: changePage),
       AccessDenied(changePage: changePage),
-      Register(changePage: changePage)
+      Register(changePage: changePage),
+      ChoosePassword(changePage: changePage),
+      GetUsername(
+          changePage: changePage,
+          getEmail: getEmail,
+          getMobileNumber: getMobileNumber),
+      ValidateByMobileGetUsername(
+          mobileNumber: mobileNumber, changePage: changePage),
+      DisplayUsername(
+        changePage: changePage,
+      )
     ];
 
     return Container(
@@ -67,19 +94,13 @@ class _LoginPagesState extends State<LoginPages> {
               children: [
                 Row(
                   children: [
-                    Visibility(
-                        visible: pageIndex == 9 ? false : true,
-                        child: Image(
-                            width: pageIndex == 9
-                                ? MyUtility(context).width / 1.5
-                                : MyUtility(context).width / 4,
-                            height: MyUtility(context).height / 3.5,
-                            image: AssetImage('images/sama_logo.png'))),
+                    Image(
+                        width: MyUtility(context).width / 4,
+                        height: MyUtility(context).height / 3.5,
+                        image: AssetImage('images/sama_logo.png')),
                     SizedBox(
-                      width: pageIndex == 9
-                          ? MyUtility(context).width / 1.5
-                          : MyUtility(context).width / 1.5 -
-                              MyUtility(context).width / 4,
+                      width: MyUtility(context).width / 1.5 -
+                          MyUtility(context).width / 4,
                       height: MyUtility(context).height / 1.2,
                       child: Center(
                         child: pages[pageIndex],

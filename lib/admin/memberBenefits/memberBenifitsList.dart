@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsDialog.dart';
 import 'package:sama/components/myutility.dart';
@@ -12,20 +13,25 @@ class MemberBenefitsList extends StatefulWidget {
 }
 
 class _MemberBenefitsListState extends State<MemberBenefitsList> {
+
+
+  BuildContext? dialogContext;
+  //Dialog for benifits
+  Future openMemberDialog(benifitId) => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: MemberBenifitsDialogState(
+                id: benifitId,
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
+
+ 
+
+
   @override
   Widget build(BuildContext context) {
-    BuildContext? dialogContext;
-    //Dialog for benifits
-    Future openMemberDialog(benifitId) => showDialog(
-        context: context,
-        builder: (context) {
-          dialogContext = context;
-          return Dialog(
-              child: MemberBenifitsDialogState(
-                  id: benifitId,
-                  closeDialog: () => Navigator.pop(dialogContext!)));
-        });
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,

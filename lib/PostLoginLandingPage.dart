@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
@@ -6,8 +8,7 @@ import 'package:sama/centerOfExcellence/CenterofExcellenceArticle.dart';
 import 'package:sama/memberBenifits/MemberBenifits.dart';
 import 'package:sama/dashboard/PostLoginCenter.dart';
 import 'package:sama/dashboard/menu/PostLoginLeft.dart';
-import 'package:sama/profile/EditProfile.dart';
-import 'package:sama/profile/ProfileSighnIn.dart';
+
 import 'package:sama/components/myutility.dart';
 import 'package:sama/profile/profile.dart';
 
@@ -21,11 +22,35 @@ class PostLoginLandingPage extends StatefulWidget {
 
 class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   String articleId = "";
+  String articleImage = "";
+
   var pageIndex = 0;
-  getArticleId(value) {
+  String userType = "";
+
+  getUserData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        userType = data.get('userType');
+      });
+    }
+  }
+
+  getArticleId(value, image) {
     setState(() {
       articleId = value;
+      articleImage = image;
     });
+  }
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
   }
 
   @override
@@ -43,7 +68,10 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       Profile(),
       CenterOfExcellenceList(),
       MemberBenefitsList(),
-      CenterOfExcellenceArticle(articleId: articleId, changePage: changePage),
+      CenterOfExcellenceArticle(
+          articleId: articleId,
+          changePage: changePage,
+          articleImage: articleImage),
     ];
 
     return Container(
@@ -68,7 +96,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    'Member Portal',
+                    userType == "Admin" ? 'Admin Portal' : 'Member Portal',
                     style: TextStyle(
                         fontSize: 22,
                         color: Color(0xFF174486),
@@ -107,26 +135,25 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                   ),
                   Spacer(),
                   SizedBox(width: 20),
-                  IconButton(
+
+                  //TODO add envelope
+                  /* IconButton(
                     onPressed: () {},
                     icon: Image.asset(
                       'images//dots.png',
                       width: 24,
                       height: 24,
                     ),
+                  ),*/
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.mail),
                   ),
                   IconButton(
                     onPressed: () {},
                     icon: Icon(Icons.notifications),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(
-                      'images/ukflag.png',
-                      width: 30,
-                      height: 30,
-                    ),
-                  ),
+
                   IconButton(
                     onPressed: () {
                       changePage(3);
@@ -160,15 +187,13 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         size: 30,
                       ),
                     ),
-                    //   ProfileSighnIn()
-                    // PostLoginCenter(),
-                    Center(
-                      child: pages[pageIndex],
+                    Visibility(
+                      visible:
+                          pageIndex == 0 && userType == "Admin" ? false : true,
+                      child: Center(
+                        child: pages[pageIndex],
+                      ),
                     )
-
-                    //  CenterOfExcellence()
-                    //CenterOfExcellenceArticle()
-                    //  MemberBenifits()
                   ],
                 ),
               ],

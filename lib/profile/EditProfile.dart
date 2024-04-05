@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/TextField3.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/textfield2.dart';
@@ -46,6 +47,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
             ),
           ),
           child: TextFormField(
+            
             controller: widget.textfieldController,
             style: TextStyle(
               color: Color.fromARGB(255, 153, 147, 147),
@@ -53,6 +55,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
               fontWeight: FontWeight.bold,
             ),
             decoration: InputDecoration(
+              contentPadding: new EdgeInsets.only(left: 12.0),
               border: InputBorder.none,
               hintText: "",
               hintStyle: TextStyle(
@@ -102,9 +105,22 @@ class _EditProfileState extends State<EditProfile> {
 
   final password = TextEditingController();
 
+  //var
+  String userType = "";
 
+
+ BuildContext? dialogContext;
+      //Dialog for profile Save
+  Future openUserCheckDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: ValidateDialog(
+                description: "User Data Saved",
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
   getUserData() async {
-
     final data = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -136,8 +152,40 @@ class _EditProfileState extends State<EditProfile> {
         qualificationMonth.text = data.get('qualificationMonth');
 
         password.text = data.get('password');
+        userType = data.get('userType');
       });
     }
+  }
+
+  updateProfile() {
+    var userData = {
+      "title": title.text,
+      "initials": initials.text,
+      "firstName": firstName.text,
+      "lastName": lastName.text,
+      "email": email.text,
+      "mobileNo": mobileNo.text,
+      "landline": landline.text,
+      "profilePic": "",
+      "gender": gender.text,
+      "race": race.text,
+      "dob": dob.text,
+      "idNumber": idNumber.text,
+      "passportNumber": passportNumber.text,
+      "hpcsa": hpcsa.text,
+      "practiceNumber": practiceNumber.text,
+      "univercityQualification": univercityQualification.text,
+      "qualificationYear": qualificationYear.text,
+      "qualificationMonth": qualificationMonth.text,
+      "password": password.text,
+      "userType": userType,
+      "id": FirebaseAuth.instance.currentUser!.uid
+    };
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(userData).whenComplete(() => openUserCheckDialog());
   }
 
   @override
@@ -148,6 +196,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+
+ 
     return Column(
       children: [
         Row(
@@ -416,7 +466,9 @@ class _EditProfileState extends State<EditProfile> {
                 color: Color(0xFF174486),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  updateProfile();
+                },
                 child: Text(
                   'Save',
                   style: TextStyle(

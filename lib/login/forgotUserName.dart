@@ -27,7 +27,7 @@ class _ForgotUserNameState extends State<ForgotUserName> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Forgot Username",
+                "Forgot SAMA Number",
                 style: TextStyle(fontSize: 30, color: Colors.black),
               ),
               SizedBox(
@@ -41,13 +41,13 @@ class _ForgotUserNameState extends State<ForgotUserName> {
                 "An OTP will be sent to validate details.",
                 style: TextStyle(fontSize: 17, color: Colors.black),
               ),
-              SizedBox(
+              /*  SizedBox(
                 height: 30,
               ),
               Text(
                 "Send OTP to:",
                 style: TextStyle(fontSize: 17, color: Colors.black),
-              ),
+              ),*/
               SizedBox(
                 height: 8,
               ),

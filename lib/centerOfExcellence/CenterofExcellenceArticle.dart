@@ -9,10 +9,12 @@ import 'package:intl/intl.dart';
 
 class CenterOfExcellenceArticle extends StatefulWidget {
   Function(int?)? changePage;
+  String? articleImage;
   String? articleId;
   CenterOfExcellenceArticle({
     super.key,
     required this.articleId,
+    required this.articleImage,
     required this.changePage,
   });
 
@@ -86,7 +88,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
 
   addComment(value) {
     comment.text = "";
-    DateTime now = DateTime.now();
+    Timestamp now = Timestamp.fromDate(DateTime.now());
 
     setState(() {
       comments.add({
@@ -94,7 +96,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
         "image": profilePicUrl,
         "date": now,
         "comment": value
-      });
+      }); /**/
     });
 
     FirebaseFirestore.instance
@@ -139,8 +141,8 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: ImageNetwork(
-                      image: imageUrl,
-                      fitWeb: BoxFitWeb.cover,
+                      image: widget.articleImage!,
+                      fitWeb: BoxFitWeb.fill,
                       width: MyUtility(context).width * 0.215,
                       height: MyUtility(context).height * 0.25,
                     )
@@ -297,7 +299,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     child: TextField(
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFFEFEFEF),
+                          color: Colors.black,
                         ),
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -322,7 +324,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                         child: TextButton(
                           onPressed: () {
                             addComment(comment.text);
-                            widget.changePage!(1);
+                            widget.changePage!(6);
                           },
                           child: Text(
                             'Submit',

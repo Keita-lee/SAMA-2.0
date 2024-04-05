@@ -1,6 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sama/components/userState.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/profile/MyPreferences.dart';
@@ -9,9 +15,12 @@ import 'package:sama/profile/Security.dart';
 import 'package:sama/components/TextField3.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/textfield2.dart';
+import 'package:sama/profile/logoutPopup.dart';
+import 'package:uuid/uuid.dart';
 
 class ProfileSighnIn extends StatefulWidget {
-  const ProfileSighnIn({super.key});
+  String profileImage;
+  ProfileSighnIn({super.key, required this.profileImage});
 
   @override
   State<ProfileSighnIn> createState() => _ProfileSighnInState();
@@ -23,7 +32,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
   String email = "";
   String mobileNo = "";
   String fullName = "";
-
+  String profileUrl = "";
   getUserData() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -36,19 +45,21 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
         email = data.get('email');
         fullName = data.get('firstName') + " " + data.get('lastName');
         mobileNo = data.get('mobileNo');
+        profileUrl = data.get('profilePic');
       });
     }
   }
 
-// logUserOut
-  logOut() {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    _auth.signOut();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => UserState()),
-    );
-  }
+  BuildContext? dialogContext;
+  //Dialog for logout
+  Future openLogoutDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child:
+                LogoutPopup(closeDialog: () => Navigator.pop(dialogContext!)));
+      });
 
   @override
   void initState() {
@@ -72,6 +83,54 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
       Security(changePage: changePage)
     ];
 
+    changeProfilePic() {}
+
+    Uint8List webImage = Uint8List(8);
+    String imageUrl = '';
+    UploadFile() async {
+      var uuid = Uuid();
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('images')
+          .child("${uuid.v1()}.png");
+      await ref.putData(webImage);
+      imageUrl = await ref.getDownloadURL();
+      final String newImage = imageUrl.toString();
+      // widget.setUrl(newImage);
+      setState(() {
+        imageUrl = newImage;
+        profileUrl = newImage;
+
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({"profilePic": newImage});
+      });
+    }
+
+    Future<void> _pickImageGallery() async {
+      setState(() {
+        // widget.networkImageUrl = "";
+      });
+      if (kIsWeb) {
+        final ImagePicker _picker = ImagePicker();
+        XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+        if (image != null) {
+          var f = await image.readAsBytes();
+          setState(() {
+            webImage = f;
+            UploadFile();
+            print('web Img success');
+          });
+        } else {
+          print('no Image has been picked');
+        }
+      } else {
+        print('Something went wrong');
+      }
+      //Navigator.pop(context);
+    }
+
     return Column(
       children: [
         SizedBox(
@@ -85,8 +144,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                   children: [
                     CircleAvatar(
                       radius: 62.5,
-                      backgroundImage: AssetImage('images/coffee.jpg'),
-                    ),
+                      //  backgroundImage: "",
+                    ), /*AssetImage('images/coffee.jpg')*/
                   ],
                 ),
                 SizedBox(
@@ -168,12 +227,17 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Everyone can see your picture Change',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF6A6A6A),
-                        fontWeight: FontWeight.normal),
+                  GestureDetector(
+                    onTap: () {
+                      _pickImageGallery();
+                    },
+                    child: Text(
+                      'Everyone can see your picture Change',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF6A6A6A),
+                          fontWeight: FontWeight.normal),
+                    ),
                   ),
                   SizedBox(
                     height: MyUtility(context).height * 0.02,
@@ -193,12 +257,6 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               height: MyUtility(context).height * 0.05,
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Icon(Icons.fiber_manual_record,
-                                        size: 8),
-                                  ),
                                   TextButton(
                                     onPressed: () {
                                       changePage(0);
@@ -220,12 +278,6 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               height: MyUtility(context).height * 0.05,
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Icon(Icons.fiber_manual_record,
-                                        size: 8),
-                                  ),
                                   TextButton(
                                     onPressed: () {
                                       changePage(1);
@@ -247,12 +299,6 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               height: MyUtility(context).height * 0.05,
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Icon(Icons.fiber_manual_record,
-                                        size: 8),
-                                  ),
                                   TextButton(
                                     onPressed: () {
                                       changePage(2);
@@ -274,12 +320,6 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               height: MyUtility(context).height * 0.05,
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Icon(Icons.fiber_manual_record,
-                                        size: 8),
-                                  ),
                                   TextButton(
                                     onPressed: () {
                                       changePage(3);
@@ -301,15 +341,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               height: MyUtility(context).height * 0.05,
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Icon(Icons.fiber_manual_record,
-                                        size: 8),
-                                  ),
                                   TextButton(
                                     onPressed: () {
-                                      logOut();
+                                      openLogoutDialog();
                                     },
                                     child: Text(
                                       'Logout',

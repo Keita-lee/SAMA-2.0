@@ -8,21 +8,26 @@ import 'package:sama/components/utility.dart';
 
 enum SingingCharacter { email, mobile }
 
-class ResetPassword extends StatefulWidget {
+class GetUsername extends StatefulWidget {
   Function(int) changePage;
   Function(String) getEmail;
-  ResetPassword({super.key, required this.getEmail, required this.changePage});
+  Function(String) getMobileNumber;
+  GetUsername(
+      {super.key,
+      required this.getEmail,
+      required this.changePage,
+      required this.getMobileNumber});
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<GetUsername> createState() => _GetUsernameState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _GetUsernameState extends State<GetUsername> {
+  String? retrieveType = "email";
+  String checkEmailsText = "";
+
   // Text controllers
   final email = TextEditingController();
-
-//var
-  String checkEmailsText = "";
 
   SingingCharacter? _character = SingingCharacter.email;
 
@@ -54,28 +59,42 @@ class _ResetPasswordState extends State<ResetPassword> {
   checkEmail() async {
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('practiceNumber', isEqualTo: email.text)
+        .where('email', isEqualTo: email.text)
         .get();
 
 //If user exist send link
     if (users.docs.length >= 1) {
       //Update email variable
-      widget.getEmail(users.docs[0].get("email"));
-      //Mobile OTP send
-      if (_character == SingingCharacter.mobile) {
-        widget.changePage(3);
-      } else {
-        //Send reset link to email
-        FirebaseAuth auth = FirebaseAuth.instance;
-        auth
-            .sendPasswordResetEmail(email: users.docs[0].get("email"))
-            .whenComplete(() => openValidateSuccessDialog);
-        setState(
-          () {
-            checkEmailsText = "Check your email for further instructions";
-          },
-        );
-      }
+      widget.getEmail(email.text);
+
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+
+      final userCredential = await _auth.signInWithEmailAndPassword(
+          email: email.text!, password: users.docs[0].get('password'));
+
+      userCredential.user!.sendEmailVerification().then((value) => {
+            setState(
+              () {
+                checkEmailsText =
+                    "Please check your email for verification link and click Retrieve SAMA Number button";
+              },
+            )
+          });
+    } else {
+      openValidateDialog();
+    }
+  }
+
+  checkMobileNumber() async {
+    widget.getMobileNumber(email.text);
+    final users = await FirebaseFirestore.instance
+        .collection('users')
+        .where('mobileNo', isEqualTo: email.text)
+        .get();
+
+//If user change page
+    if (users.docs.length >= 1) {
+      widget.changePage(12);
     } else {
       openValidateDialog();
     }
@@ -90,14 +109,14 @@ class _ResetPasswordState extends State<ResetPassword> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Reset Password",
+            "Retrieve SAMA Number",
             style: TextStyle(fontSize: 30, color: Colors.black),
           ),
           SizedBox(
             height: 30,
           ),
           Text(
-            "Enter your SAMA Number",
+            "Enter your ${retrieveType}",
             style: TextStyle(fontSize: 16, color: Colors.black),
           ),
           SizedBox(
@@ -111,7 +130,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             height: 15,
           ),
           Text(
-            "Send Password reset link to:",
+            "Send Email Verification link to:",
             style: TextStyle(fontSize: 17, color: Colors.black),
           ),
           SizedBox(
@@ -125,6 +144,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
                   setState(() {
+                    retrieveType = "email";
                     _character = value;
                   });
                 },
@@ -153,6 +173,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
                   setState(() {
+                    retrieveType = "mobile number";
                     _character = value;
                   });
                 },
@@ -167,11 +188,15 @@ class _ResetPasswordState extends State<ResetPassword> {
             height: 15,
           ),
           StyleButton(
-            description: "Reset Password",
+            description: "Send Verification",
             height: 55,
             width: 145,
             onTap: () {
-              checkEmail();
+              if (_character == SingingCharacter.email) {
+                checkEmail();
+              } else {
+                checkMobileNumber();
+              }
             },
           ),
           SizedBox(
@@ -181,6 +206,19 @@ class _ResetPasswordState extends State<ResetPassword> {
             checkEmailsText,
             style: TextStyle(
                 fontSize: 18, color: Colors.red, fontWeight: FontWeight.w800),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Visibility(
+            visible: checkEmailsText == "" ? false : true,
+            child: StyleButton(
+                description: "Retrieve SAMA Number",
+                height: 55,
+                width: 200,
+                onTap: () {
+                  widget.changePage(13);
+                }),
           ),
           SizedBox(
             height: 15,

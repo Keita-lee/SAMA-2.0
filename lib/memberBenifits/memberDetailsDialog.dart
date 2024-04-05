@@ -1,12 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/admin/memberBenefits/memberBenifitsDialog.dart';
 import 'package:sama/components/myutility.dart';
 
 class MemberDetailsDialog extends StatefulWidget {
   String? id;
+  String? logo;
+  String? userType;
   Function closeDialog;
-  MemberDetailsDialog({super.key, required this.id, required this.closeDialog});
+  MemberDetailsDialog(
+      {super.key,
+      required this.id,
+      required this.logo,
+      required this.userType,
+      required this.closeDialog});
 
   @override
   State<MemberDetailsDialog> createState() => _MemberDetailsDialogState();
@@ -47,11 +56,24 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
         facebook = data.get('facebook');
         twitter = data.get('twitter');
         linkedIn = data.get('linkedIn');
-        benefitsImageUrl = data.get('logo');
+        benefitsImageUrl = data.get('logo').toString();
+        print(data.get('logo'));
       });
     }
   }
 
+  BuildContext? dialogContext;
+
+  //Dialog for benifits
+  Future openMemberDialog(benifitId) => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: MemberBenifitsDialogState(
+                id: benifitId,
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
   @override
   void initState() {
     getCompanyData();
@@ -89,7 +111,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 ],
               ),
               /**/ ImageNetwork(
-                image: benefitsImageUrl,
+                image: widget.logo!,
                 width: MyUtility(context).width / 2.5 - 15,
                 height: 350,
                 fitWeb: BoxFitWeb.cover,
@@ -121,7 +143,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                         style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           height: 0,
                         ),
                       ),
@@ -169,88 +191,189 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
-              Text(
-                "PHONE NUMBER",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "EMAIL",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "WEB",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/phone.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    phoneNumber,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
-              Text(
-                "ADDRESS",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "FACEBOOK",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "TWITTER HANDLE",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/email.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    email,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
-              Text(
-                "LINKEDIN",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                  height: 0,
-                ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/web.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    web,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/address.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    address,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/facebook.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    facebook,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/twitter.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    twitter,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'images/linkedIn.svg',
+                    width: 35,
+                    height: 35,
+                    colorFilter: ColorFilter.mode(
+                        Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    linkedIn,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 8, 55, 145),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
               ),
             ],
           ),

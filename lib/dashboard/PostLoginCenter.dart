@@ -21,6 +21,25 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
       children: [
         Container(
           width: MyUtility(context).width / 1.3,
+          height: MyUtility(context).height / 3,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: Color(0xFFD1D1D1),
+            ),
+          ),
+          child: Text(
+            'Under Construction',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Color.fromRGBO(106, 106, 106, 1.0),
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        /*  Container(
+          width: MyUtility(context).width / 1.3,
           height: MyUtility(context).height * 0.4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -35,7 +54,8 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
               fit: BoxFit.cover,
             ),
           ),
-        ),
+        ),*/
+
         Row(
           children: [
             Container(
@@ -647,7 +667,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
                 Row(
                   children: [
                     MoreContainer(
-                        catagoryname: "podcast",
+                        catagoryname: "Podcast",
                         image: 'images/coffee.jpg',
                         catagorytitle: "Title goes here",
                         textbutton: "More",

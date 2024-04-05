@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/admin/centerOfExcellence/CenterOfExcellenceDialog.dart';
 import 'package:sama/components/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 
 class CenterOfExcellence extends StatefulWidget {
   Function(int?)? changePage;
-  Function(String?)? getArticleId;
+  Function(String?, String?)? getArticleId;
   CenterOfExcellence(
       {super.key, required this.changePage, required this.getArticleId});
 
@@ -15,6 +18,31 @@ class CenterOfExcellence extends StatefulWidget {
 
 class _CenterOfExcellenceState extends State<CenterOfExcellence> {
   List allArticles = [];
+  String userType = "";
+
+  BuildContext? dialogContext;
+  //Dialog for benifits
+  Future openArticleDialog(id) => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: CenterOfExcellenceDialog(
+                id: id, closeDialog: () => Navigator.pop(dialogContext!)));
+      });
+
+  getUserData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        userType = data.get('userType');
+      });
+    }
+  }
 
   getAllArticles() async {
     final data = await FirebaseFirestore.instance.collection('articles').get();
@@ -28,6 +56,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
   @override
   void initState() {
     getAllArticles();
+    getUserData();
     super.initState();
   }
 
@@ -113,6 +142,25 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
           ),
       */
 
+          Visibility(
+              visible: userType == "Admin" ? true : false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width:
+                        MyUtility(context).width - MyUtility(context).width / 4,
+                  ),
+                  StyleButton(
+                      description: "Add Article",
+                      height: 55,
+                      width: 125,
+                      onTap: () {
+                        openArticleDialog("");
+                      })
+                ],
+              )),
           Container(
             width: MyUtility(context).width - (MyUtility(context).width * 0.25),
             child: Wrap(
@@ -122,18 +170,24 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: NewsContainer(
-                      image: allArticles[i]['image'],
-                      category: allArticles[i]['category'],
-                      date: allArticles[i]['date'],
-                      header: allArticles[i]['title'],
-                      onPressed: () {
-                        setState(() {
-                          widget.getArticleId!(allArticles[i]['id']);
-                        });
+                        openArticleDialog: openArticleDialog,
+                        articleId: allArticles[i]['id'],
+                        userType: userType,
+                        image: allArticles[i]['image'],
+                        category: allArticles[i]['category'],
+                        date: allArticles[i]['date'],
+                        header: allArticles[i]['title'],
+                        onPressed: () {
+                          setState(() {
+                            widget.getArticleId!(
+                                allArticles[i]['id'], allArticles[i]['image']);
+                          });
 
-                        widget.changePage!(6);
-                      },
-                    ),
+                          widget.changePage!(6);
+                        },
+                        onArticleEdit: () {
+                          openArticleDialog(allArticles[i]['id']);
+                        }),
                   ),
               ],
             ),
