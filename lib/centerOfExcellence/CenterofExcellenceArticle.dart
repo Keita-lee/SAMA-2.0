@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
-import 'package:sama/components/CommentContainer.dart';
-import 'package:sama/components/NewsContainer.dart';
+import 'package:sama/centerOfExcellence/ui/CommentContainer.dart';
+import 'package:sama/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:intl/intl.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsDialog.dart';
 import 'package:sama/components/CompanyContainer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sama/components/NewsContainer.dart';
+import 'package:sama/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/memberBenifits/memberDetailsDialog.dart';

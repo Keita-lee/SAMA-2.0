@@ -61,13 +61,13 @@ class _RegisterFinishedState extends State<RegisterFinished> {
                 SizedBox(
                   height: 12,
                 ),
-                StyleButton(
+                /* StyleButton(
                     description: "Back to Login",
                     height: 55,
                     width: 175,
                     onTap: () {
                       backToLogin();
-                    }),
+                    }),*/
                 SizedBox(
                   height: 20,
                 ),

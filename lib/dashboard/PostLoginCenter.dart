@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sama/components/EventDate.dart';
-import 'package:sama/components/GeneralInfoContainer.dart';
+import 'package:sama/dashboard/ui/EventDate.dart';
+import 'package:sama/dashboard/ui/GeneralInfoContainer.dart';
 import 'package:sama/components/Morecontainers.dart';
 import 'package:sama/components/ReuseableButton.dart';
 import 'package:sama/components/myutility.dart';

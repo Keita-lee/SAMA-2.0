@@ -96,7 +96,7 @@ class _RegisterState extends State<Register> {
   final univercityQualification = TextEditingController();
   final qualificationYear = TextEditingController();
   final qualificationMonth = TextEditingController();
-
+  final univercityName = TextEditingController();
   final password = TextEditingController();
 
   String checkEmailsText = "";
@@ -131,6 +131,7 @@ class _RegisterState extends State<Register> {
       "hpcsa": hpcsa.text,
       "practiceNumber": practiceNumber.text,
       "univercityQualification": univercityQualification.text,
+      "univercityName": univercityName.text,
       "qualificationYear": qualificationYear.text,
       "qualificationMonth": qualificationMonth.text,
       "password": password.text,

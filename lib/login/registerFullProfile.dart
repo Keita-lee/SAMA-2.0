@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/PostLoginLandingPage.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/userState.dart';
 import 'package:sama/login/registerFinished.dart';
 import 'package:sama/profile/EditProfile.dart';
@@ -35,6 +36,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
   final hpcsa = TextEditingController();
   final practiceNumber = TextEditingController();
 
+  final univercityName = TextEditingController();
   final univercityQualification = TextEditingController();
   final qualificationYear = TextEditingController();
   final qualificationMonth = TextEditingController();
@@ -98,6 +100,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
       "hpcsa": hpcsa.text,
       "practiceNumber": practiceNumber.text,
       "univercityQualification": univercityQualification.text,
+      "univercityName": univercityName.text,
       "qualificationYear": qualificationYear.text,
       "qualificationMonth": qualificationMonth.text,
       "password": password.text,
@@ -124,255 +127,311 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final _formKey = GlobalKey<FormState>();
+
+    return Form(
+      key: _formKey,
+      child: Container(
         width: MyUtility(context).width,
         height: MyUtility(context).height,
         color: const Color.fromARGB(255, 8, 55, 145),
         child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(
-                      width: MyUtility(context).width / 4,
-                      height: MyUtility(context).height / 3.5,
-                      image: AssetImage('images/sama_logo.png')),
-                  SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ProfileTextField(
+          padding: const EdgeInsets.all(25.0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                    width: MyUtility(context).width / 4,
+                    height: MyUtility(context).height / 3.5,
+                    image: AssetImage('images/sama_logo.png')),
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ProfileTextField(
                                 customSize: MyUtility(context).width * 0.3,
                                 description: "Title",
                                 textfieldController: title,
-                              ),
-                              SizedBox(
-                                width: MyUtility(context).width * 0.015,
-                              ),
-                              ProfileTextField(
+                                textFieldType: "stringType"),
+                            SizedBox(
+                              width: MyUtility(context).width * 0.015,
+                            ),
+                            ProfileTextField(
                                 customSize: MyUtility(context).width * 0.3,
                                 description: "Initials",
                                 textfieldController: initials,
-                              )
-                            ],
-                          ),
+                                textFieldType: "stringType")
+                          ],
                         ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "First Name",
                               textfieldController: firstName,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
+                              textFieldType: "stringType"),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "Last Name",
                               textfieldController: lastName,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
+                              textFieldType: "stringType")
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.615,
                               description: "Email",
                               textfieldController: email,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
+                              textFieldType: "emailType"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "Mobile No",
                               textfieldController: mobileNo,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
+                              textFieldType: "stringType"),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "Landline",
                               textfieldController: landline,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
+                              textFieldType: "stringType")
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileDropDownField(
+                            description: "Gender",
+                            items: ["Male", "Female"],
+                            customSize: MyUtility(context).width * 0.195,
+                            textfieldController: gender,
+                          ),
+
+                          /*  ProfileTextField(
                               customSize: MyUtility(context).width * 0.195,
                               description: "Gender",
                               textfieldController: gender,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
+                              textFieldType: "stringType"),*/
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.195,
                               description: "Race",
                               textfieldController: race,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
+                              textFieldType: "stringType"),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.195,
                               description: "Date of birth",
                               textfieldController: dob,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
+                              textFieldType: "stringType")
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "ID number",
                               textfieldController: idNumber,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
+                              textFieldType: "intType"),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "Passport number",
                               textfieldController: passportNumber,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
+                              textFieldType: "intType")
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "HPCSA number",
                               textfieldController: hpcsa,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
+                              textFieldType: "intType"),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
                               customSize: MyUtility(context).width * 0.3,
                               description: "Practice number",
                               textfieldController: practiceNumber,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileTextField(
-                              customSize: MyUtility(context).width * 0.195,
+                              textFieldType: "intType")
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileDropDownField(
+                            description: "University Names",
+                            items: [
+                              "Sefako Makgatho Health Sciences University",
+                              "University of Cape Town",
+                              "University of KwaZulu-Natal",
+                              "University of Limpopo",
+                              "University of Pretoria",
+                              "University of Stellenbosch",
+                              "University of the Witwatersrand",
+                              "Walter Sisulu University",
+                              "Nelson Mandela University",
+                              "North-West University",
+                              "University of the Western Cape",
+                              "University of Johannesburg",
+                              "Other",
+                            ],
+                            customSize: MyUtility(context).width / 7,
+                            textfieldController: univercityName,
+                          ),
+                          /*    ProfileTextField(
+                              customSize: MyUtility(context).width / 7,
+                              description: "University Name",
+                              textfieldController: univercityName,
+                              textFieldType: "stringType"),*/
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileDropDownField(
+                            description: "University Qualification",
+                            items: [
+                              "Bachelor's Degree",
+                              "Honours Degree",
+                              "Master's Degree",
+                              "Doctoral Degree"
+                            ],
+                            customSize: MyUtility(context).width / 7,
+                            textfieldController: univercityQualification,
+                          ),
+
+                          /*    ProfileTextField(
+                              customSize: MyUtility(context).width / 7,
                               description: "University Qualification",
                               textfieldController: univercityQualification,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
-                              customSize: MyUtility(context).width * 0.195,
+                              textFieldType: "stringType"),*/
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 7,
                               description: "Qualification year",
                               textfieldController: qualificationYear,
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.015,
-                            ),
-                            ProfileTextField(
-                              customSize: MyUtility(context).width * 0.195,
+                              textFieldType: "stringType"),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.015,
+                          ),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 7,
                               description: "Qualification month",
                               textfieldController: qualificationMonth,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: MyUtility(context).width / 1.62,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  width: MyUtility(context).width * 0.05,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Color(0xFF174486),
-                                  ),
-                                  child: TextButton(
-                                    onPressed: () {
+                              textFieldType: "stringType")
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MyUtility(context).width / 1.62,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: MyUtility(context).width * 0.05,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xFF174486),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
                                       updateProfile();
-                                    },
-                                    child: Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
+                                    }
+                                  },
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.1,
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.1,
+                      )
+                    ],
                   ),
-                ],
-              ),
-            )));
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
