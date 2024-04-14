@@ -55,6 +55,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           SizedBox(
             height: 30,
           ),
+          Text(
+            "Please enter your password to continue",
+            style: TextStyle(fontSize: 15, color: Colors.black),
+          ),
           TextFieldStyling(
             hintText: 'Password',
             textfieldController: password,

@@ -29,7 +29,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
             ),
           ),
           child: Text(
-            'Under Construction',
+            'Dashboard: Under Construction',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -38,25 +38,8 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
             textAlign: TextAlign.center,
           ),
         ),
-        /*  Container(
-          width: MyUtility(context).width / 1.3,
-          height: MyUtility(context).height * 0.4,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-              color: Color(0xFFD1D1D1),
-            ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.asset(
-              'images/laptop.jpg',
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),*/
 
-        Row(
+        /*  Row(
           children: [
             Container(
               width: 25,
@@ -1041,6 +1024,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         SizedBox(
           height: MyUtility(context).height * 0.05,
         ),
+      */
       ],
     );
   }

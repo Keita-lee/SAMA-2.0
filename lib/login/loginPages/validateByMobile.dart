@@ -9,7 +9,9 @@ import 'package:sama/components/utility.dart';
 
 class ValidateByMobileOtp extends StatefulWidget {
   String? email;
+  String? validationType;
   Function(int) changePage;
+
   ValidateByMobileOtp({
     super.key,
     required this.email,

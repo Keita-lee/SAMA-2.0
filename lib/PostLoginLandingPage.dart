@@ -187,12 +187,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         size: 30,
                       ),
                     ),
-                    Visibility(
-                      visible:
-                          pageIndex == 0 && userType == "Admin" ? false : true,
-                      child: Center(
-                        child: pages[pageIndex],
-                      ),
+                    Center(
+                      child: pages[pageIndex],
                     )
                   ],
                 ),

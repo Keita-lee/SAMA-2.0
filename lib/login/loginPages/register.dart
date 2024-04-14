@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -66,7 +69,13 @@ class _RegisterTextfieldStyleState extends State<RegisterTextfieldStyle> {
 
 class Register extends StatefulWidget {
   Function(int) changePage;
-  Register({super.key, required this.changePage});
+  Function(String) getEmailChangeType;
+  Function(String) getEmail;
+  Register(
+      {super.key,
+      required this.changePage,
+      required this.getEmailChangeType,
+      required this.getEmail});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -99,8 +108,6 @@ class _RegisterState extends State<Register> {
   final univercityName = TextEditingController();
   final password = TextEditingController();
 
-  String checkEmailsText = "";
-
   BuildContext? dialogContext;
 
   //Dialog for product form
@@ -110,7 +117,7 @@ class _RegisterState extends State<Register> {
         dialogContext = context;
         return Dialog(
             child: ValidateDialog(
-                description: "Email not valid",
+                description: "Fields are Missing",
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
   createClient(id) async {
@@ -148,31 +155,31 @@ class _RegisterState extends State<Register> {
   }
 
   sendEmailVerificationLink() async {
+    widget.getEmail(email.text);
+    if (email.text == "" || lastName.text == "" || firstName.text == "") {
+      openValidateDialog();
+      return;
+    }
+
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email.text,
         password: "Cp123456",
       );
-
-      final User? user = _auth.currentUser;
-      final uid = user!.uid;
-      await user.sendEmailVerification().then((value) => {
-            setState(
-              () {
-                checkEmailsText =
-                    "Please check your email for verification link and come back to verify";
-              },
-            )
-          });
     } catch (error) {}
+
+    await createClient(_auth.currentUser!.uid);
+
+    sendOTPToUser();
   }
 
-  verifyEmail() async {
-    User? user = FirebaseAuth.instance.currentUser;
-
-    widget.changePage(10);
-    createClient(user!.uid);
+  sendOTPToUser() async {
+    String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+    print(randomOtp);
+    await sendOtp(otp: randomOtp, email: email.text);
+    widget.getEmailChangeType('registerPage');
+    widget.changePage(14);
   }
 
   @override
@@ -185,99 +192,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-        /*  StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (ctx, userSnapshot) {
-          if (userSnapshot.data == null) {
-            return Container(
-              //     width: MyUtility(context).width / 1.5,
-              height: MyUtility(context).height / 2,
-              child: SingleChildScrollView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MyUtility(context).width / 3,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Register",
-                              style:
-                                  TextStyle(fontSize: 30, color: Colors.black),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RegisterTextfieldStyle(
-                                  description: "First Name:",
-                                  hintText: "First Name",
-                                  textfieldController: firstName,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                RegisterTextfieldStyle(
-                                  description: "Last Name:",
-                                  hintText: "Last Name",
-                                  textfieldController: lastName,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                RegisterTextfieldStyle(
-                                  description: "Email",
-                                  hintText: "Email",
-                                  textfieldController: email,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Row(
-                                    children: [
-                                      StyleButton(
-                                          description: "Register User",
-                                          height: 55,
-                                          width: 125,
-                                          onTap: () {
-                                            verifyEmail();
-                                          }),
-                                      SizedBox(
-                                        width: 6,
-                                      ),
-                                      StyleButton(
-                                          description: "Back to Login",
-                                          height: 55,
-                                          width: 125,
-                                          onTap: () {
-                                            widget.changePage(0);
-                                          })
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ]),
-                    )
-                  ],
-                ),
-              ),
-            );
-          } else {
-            User? user = FirebaseAuth.instance.currentUser;
-
-            return widget.changePage(1);
-          }
-        });*/
-
-        Container(
+    return Container(
       //     width: MyUtility(context).width / 1.5,
       height: MyUtility(context).height / 2,
       child: SingleChildScrollView(
@@ -302,25 +217,6 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 30,
                   ),
-                  /* Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "Title",
-                        hintText: "Title",
-                        textfieldController: title,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Initials",
-                        hintText: "Initials",
-                        textfieldController: initials,
-                      )
-                    ],
-                  ),*/
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -348,155 +244,6 @@ class _RegisterState extends State<Register> {
                       ),
                     ],
                   ),
-                  /*       Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                        SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Mobile Number:",
-                        hintText: "Mobile Number",
-                        textfieldController: mobileNo,
-                      )
-                    ],
-                  ),
-                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "Landline",
-                        hintText: "Landline",
-                        textfieldController: landline,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Gender:",
-                        hintText: "gender",
-                        textfieldController: gender,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "Race",
-                        hintText: "Race",
-                        textfieldController: race,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Date of Birth:",
-                        hintText: "DOB",
-                        textfieldController: dob,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "Race",
-                        hintText: "Race",
-                        textfieldController: race,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Date of Birth:",
-                        hintText: "DOB",
-                        textfieldController: dob,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "ID Number:",
-                        hintText: "ID Number",
-                        textfieldController: idNumber,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Passport Number:",
-                        hintText: "Passport Number",
-                        textfieldController: passportNumber,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "HPCSA:",
-                        hintText: "HPCSA",
-                        textfieldController: hpcsa,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Practice Number:",
-                        hintText: "Practice Number",
-                        textfieldController: practiceNumber,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "Univercity Qualification:",
-                        hintText: "Univercity Qualification",
-                        textfieldController: univercityQualification,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Qualification Year:",
-                        hintText: "Qualification Year",
-                        textfieldController: qualificationYear,
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RegisterTextfieldStyle(
-                        description: "Qualification Month:",
-                        hintText: "Qualification Month",
-                        textfieldController: qualificationMonth,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Password:",
-                        hintText: "Password",
-                        textfieldController: password,
-                      )
-                    ],
-                  ),
-                */
-
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Row(
@@ -508,19 +255,6 @@ class _RegisterState extends State<Register> {
                             onTap: () {
                               sendEmailVerificationLink();
                             }),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Visibility(
-                          visible: checkEmailsText == "" ? false : true,
-                          child: StyleButton(
-                              description: "Verify",
-                              height: 55,
-                              width: 125,
-                              onTap: () {
-                                verifyEmail();
-                              }),
-                        )
                       ],
                     ),
                   ),
@@ -538,16 +272,6 @@ class _RegisterState extends State<Register> {
                           color: Color.fromARGB(255, 8, 55, 145),
                           fontWeight: FontWeight.w500),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    checkEmailsText,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w500),
                   ),
                 ]),
           ),

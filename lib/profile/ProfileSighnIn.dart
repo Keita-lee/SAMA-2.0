@@ -156,7 +156,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                     SizedBox(
                       height: MyUtility(context).height * 0.15,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -166,12 +166,18 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 color: Color(0xFF174486),
                                 fontWeight: FontWeight.normal),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             'Email: ${email}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Color(0xFF6A6A6A),
                                 fontWeight: FontWeight.normal),
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           Text(
                             'Contact no: ${mobileNo}',
@@ -186,10 +192,10 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                   ],
                 ),
                 SizedBox(
-                  width: MyUtility(context).width * 0.25,
+                  width: MyUtility(context).width * 0.3,
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
@@ -199,12 +205,18 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                           color: Color(0xFF6A6A6A),
                           fontWeight: FontWeight.normal),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       'Member since 2018 (good standing)',
                       style: TextStyle(
                           fontSize: 18,
                           color: Color(0xFF6A6A6A),
                           fontWeight: FontWeight.normal),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Text(
                       'Private Practice Medical Practitioners',
@@ -266,6 +278,15 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ),
+                                  Spacer(),
+                                  Visibility(
+                                    visible: pageIndex == 0 ? true : false,
+                                    child: Container(
+                                      width: 4,
+                                      height: MyUtility(context).height * 0.05,
+                                      color: Colors.amber,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -287,6 +308,15 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ),
+                                  Spacer(),
+                                  Visibility(
+                                    visible: pageIndex == 1 ? true : false,
+                                    child: Container(
+                                      width: 4,
+                                      height: MyUtility(context).height * 0.05,
+                                      color: Colors.amber,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -308,6 +338,15 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ),
+                                  Spacer(),
+                                  Visibility(
+                                    visible: pageIndex == 2 ? true : false,
+                                    child: Container(
+                                      width: 4,
+                                      height: MyUtility(context).height * 0.05,
+                                      color: Colors.amber,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -329,6 +368,15 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ),
+                                  Spacer(),
+                                  Visibility(
+                                    visible: pageIndex == 3 ? true : false,
+                                    child: Container(
+                                      width: 4,
+                                      height: MyUtility(context).height * 0.05,
+                                      color: Colors.amber,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),

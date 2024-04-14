@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
+import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -11,7 +14,12 @@ enum SingingCharacter { email, mobile }
 class ResetPassword extends StatefulWidget {
   Function(int) changePage;
   Function(String) getEmail;
-  ResetPassword({super.key, required this.getEmail, required this.changePage});
+  Function(String) getEmailChangeType;
+  ResetPassword(
+      {super.key,
+      required this.getEmail,
+      required this.changePage,
+      required this.getEmailChangeType});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -22,7 +30,6 @@ class _ResetPasswordState extends State<ResetPassword> {
   final email = TextEditingController();
 
 //var
-  String checkEmailsText = "";
 
   SingingCharacter? _character = SingingCharacter.email;
 
@@ -39,19 +46,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
-  //Dialog for product form
-  Future openValidateSuccessDialog() => showDialog(
-      context: context,
-      builder: (context) {
-        dialogContext = context;
-        return Dialog(
-            child: ValidateDialog(
-                description: "Reset Password Link sent",
-                closeDialog: () => Navigator.pop(dialogContext!)));
-      });
-
   //Check if email exists and continue
   checkEmail() async {
+    widget.getEmailChangeType("passwordResetPage");
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('practiceNumber', isEqualTo: email.text)
@@ -65,16 +62,9 @@ class _ResetPasswordState extends State<ResetPassword> {
       if (_character == SingingCharacter.mobile) {
         widget.changePage(3);
       } else {
-        //Send reset link to email
-        FirebaseAuth auth = FirebaseAuth.instance;
-        auth
-            .sendPasswordResetEmail(email: users.docs[0].get("email"))
-            .whenComplete(() => openValidateSuccessDialog);
-        setState(
-          () {
-            checkEmailsText = "Check your email for further instructions";
-          },
-        );
+        String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+        await sendOtp(otp: randomOtp, email: users.docs[0].get("email"));
+        widget.changePage(14);
       }
     } else {
       openValidateDialog();
@@ -111,7 +101,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             height: 15,
           ),
           Text(
-            "Send Password reset link to:",
+            "Send OTP to:",
             style: TextStyle(fontSize: 17, color: Colors.black),
           ),
           SizedBox(
@@ -134,16 +124,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                 style: TextStyle(fontSize: 17, color: Colors.black),
               ),
             ],
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            "Send OTP to:",
-            style: TextStyle(fontSize: 17, color: Colors.black),
-          ),
-          SizedBox(
-            height: 8,
           ),
           Row(
             children: [
@@ -173,14 +153,6 @@ class _ResetPasswordState extends State<ResetPassword> {
             onTap: () {
               checkEmail();
             },
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            checkEmailsText,
-            style: TextStyle(
-                fontSize: 18, color: Colors.red, fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: 15,

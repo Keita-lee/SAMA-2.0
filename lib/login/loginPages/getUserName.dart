@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
+import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -12,11 +15,13 @@ class GetUsername extends StatefulWidget {
   Function(int) changePage;
   Function(String) getEmail;
   Function(String) getMobileNumber;
+  Function(String) getEmailChangeType;
   GetUsername(
       {super.key,
       required this.getEmail,
       required this.changePage,
-      required this.getMobileNumber});
+      required this.getMobileNumber,
+      required this.getEmailChangeType});
 
   @override
   State<GetUsername> createState() => _GetUsernameState();
@@ -24,7 +29,6 @@ class GetUsername extends StatefulWidget {
 
 class _GetUsernameState extends State<GetUsername> {
   String? retrieveType = "email";
-  String checkEmailsText = "";
 
   // Text controllers
   final email = TextEditingController();
@@ -57,6 +61,7 @@ class _GetUsernameState extends State<GetUsername> {
 
   //Check if email exists and continue
   checkEmail() async {
+    widget.getEmailChangeType("usernamePage");
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: email.text)
@@ -66,20 +71,9 @@ class _GetUsernameState extends State<GetUsername> {
     if (users.docs.length >= 1) {
       //Update email variable
       widget.getEmail(email.text);
-
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-
-      final userCredential = await _auth.signInWithEmailAndPassword(
-          email: email.text!, password: users.docs[0].get('password'));
-
-      userCredential.user!.sendEmailVerification().then((value) => {
-            setState(
-              () {
-                checkEmailsText =
-                    "Please check your email for verification link and click Retrieve SAMA Number button";
-              },
-            )
-          });
+      String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+      await sendOtp(otp: randomOtp, email: users.docs[0].get("email"));
+      widget.changePage(14);
     } else {
       openValidateDialog();
     }
@@ -87,6 +81,7 @@ class _GetUsernameState extends State<GetUsername> {
 
   checkMobileNumber() async {
     widget.getMobileNumber(email.text);
+
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('mobileNo', isEqualTo: email.text)
@@ -130,7 +125,7 @@ class _GetUsernameState extends State<GetUsername> {
             height: 15,
           ),
           Text(
-            "Send Email Verification link to:",
+            "Send OTP to:",
             style: TextStyle(fontSize: 17, color: Colors.black),
           ),
           SizedBox(
@@ -146,6 +141,7 @@ class _GetUsernameState extends State<GetUsername> {
                   setState(() {
                     retrieveType = "email";
                     _character = value;
+                    email.text = "";
                   });
                 },
               ),
@@ -154,16 +150,6 @@ class _GetUsernameState extends State<GetUsername> {
                 style: TextStyle(fontSize: 17, color: Colors.black),
               ),
             ],
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            "Send OTP to:",
-            style: TextStyle(fontSize: 17, color: Colors.black),
-          ),
-          SizedBox(
-            height: 8,
           ),
           Row(
             children: [
@@ -175,6 +161,7 @@ class _GetUsernameState extends State<GetUsername> {
                   setState(() {
                     retrieveType = "mobile number";
                     _character = value;
+                    email.text = "+27 ";
                   });
                 },
               ),
@@ -198,27 +185,6 @@ class _GetUsernameState extends State<GetUsername> {
                 checkMobileNumber();
               }
             },
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            checkEmailsText,
-            style: TextStyle(
-                fontSize: 18, color: Colors.red, fontWeight: FontWeight.w800),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Visibility(
-            visible: checkEmailsText == "" ? false : true,
-            child: StyleButton(
-                description: "Retrieve SAMA Number",
-                height: 55,
-                width: 200,
-                onTap: () {
-                  widget.changePage(13);
-                }),
           ),
           SizedBox(
             height: 15,

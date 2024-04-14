@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sama/PostLoginLandingPage.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
@@ -117,6 +118,18 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
         context,
         MaterialPageRoute(
             builder: (context) => Material(child: RegisterFinished())));
+  }
+
+//Select a date popup
+  onTapFunction({required BuildContext context}) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      lastDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      initialDate: DateTime.now(),
+    );
+    if (pickedDate == null) return;
+    dob.text = DateFormat('yyyy-MM-dd').format(pickedDate);
   }
 
   @override
@@ -262,11 +275,48 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
-                          ProfileTextField(
+                          /* ProfileTextField(
                               customSize: MyUtility(context).width * 0.195,
                               description: "Date of birth",
                               textfieldController: dob,
-                              textFieldType: "stringType")
+                              textFieldType: "stringType"),
+*/
+                          SizedBox(
+                            width: MyUtility(context).width * 0.195,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Date of Birth",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Color(0xFF6A6A6A),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MyUtility(context).width * 0.195,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    child: TextField(
+                                      controller: dob,
+                                      readOnly: true,
+                                      decoration: const InputDecoration(
+                                          hintText:
+                                              "Click here to select date"),
+                                      onTap: () =>
+                                          onTapFunction(context: context),
+                                    ),
+                                  )
+                                ]),
+                          )
                         ],
                       ),
                       SizedBox(
@@ -302,7 +352,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "HPCSA number",
                               textfieldController: hpcsa,
-                              textFieldType: "intType"),
+                              textFieldType: "stringType"),
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
@@ -310,7 +360,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "Practice number",
                               textfieldController: practiceNumber,
-                              textFieldType: "intType")
+                              textFieldType: "stringType")
                         ],
                       ),
                       SizedBox(

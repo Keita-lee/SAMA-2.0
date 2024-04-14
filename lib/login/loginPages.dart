@@ -12,6 +12,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/login/loginPages/choosePassword.dart';
 import 'package:sama/login/loginPages/displayUsername.dart';
 import 'package:sama/login/loginPages/getUserName.dart';
+import 'package:sama/login/loginPages/validateByEmailOtp.dart';
 import 'package:sama/login/loginPages/validateByMobile.dart';
 import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
 
@@ -25,6 +26,7 @@ class LoginPages extends StatefulWidget {
 class _LoginPagesState extends State<LoginPages> {
   String? email;
   String? mobileNumber;
+  String? emailChangeType;
   int pageIndex = 0;
 
 //set email state
@@ -34,10 +36,17 @@ class _LoginPagesState extends State<LoginPages> {
     });
   }
 
-//set email state
+//set mobilenumber state
   getMobileNumber(value) {
     setState(() {
       mobileNumber = value;
+    });
+  }
+
+//set email change type
+  getEmailChangeType(value) {
+    setState(() {
+      emailChangeType = value;
     });
   }
 
@@ -50,7 +59,6 @@ class _LoginPagesState extends State<LoginPages> {
 
   @override
   void initState() {
-   
     super.initState();
   }
 
@@ -58,25 +66,42 @@ class _LoginPagesState extends State<LoginPages> {
     // pages to go to
     var pages = [
       LoginWithEmail(changePage: changePage, getEmail: getEmail),
-      LoginWithPassword(changePage: changePage, email: email),
-      ResetPassword(changePage: changePage, getEmail: getEmail),
+      LoginWithPassword(
+        changePage: changePage,
+        email: email,
+      ),
+      ResetPassword(
+        changePage: changePage,
+        getEmail: getEmail,
+        getEmailChangeType: getEmailChangeType,
+      ),
       ValidateByMobileOtp(changePage: changePage, email: email),
       ForgotUserName(changePage: changePage),
       EnterNewPassword(changePage: changePage, email: email),
       SendUsername(changePage: changePage),
       ValidateByEmail(changePage: changePage),
       AccessDenied(changePage: changePage),
-      Register(changePage: changePage),
+      Register(
+          changePage: changePage,
+          getEmailChangeType: getEmailChangeType,
+          getEmail: getEmail),
       ChoosePassword(changePage: changePage),
       GetUsername(
           changePage: changePage,
           getEmail: getEmail,
-          getMobileNumber: getMobileNumber),
+          getMobileNumber: getMobileNumber,
+          getEmailChangeType: getEmailChangeType),
       ValidateByMobileGetUsername(
-          mobileNumber: mobileNumber, changePage: changePage),
+          mobileNumber: mobileNumber, changePage: changePage,),
       DisplayUsername(
         changePage: changePage,
-      )
+        mobileNumber:mobileNumber
+        
+      ),
+      ValidateByEmailOtp(
+          changePage: changePage,
+          email: email,
+          emailChangeType: emailChangeType)
     ];
 
     return Container(

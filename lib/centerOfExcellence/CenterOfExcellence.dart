@@ -67,7 +67,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Center of Excellence',
+            'Centre of Excellence',
             style: TextStyle(
                 fontSize: 32,
                 color: Color(0xFF3D3D3D),

@@ -86,7 +86,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
               children: [
                 SizedBox(
                   width:
-                      MyUtility(context).width - MyUtility(context).width / 4,
+                      MyUtility(context).width - MyUtility(context).width / 3.7,
                 ),
                 StyleButton(
                     description: "Add Benefit",
@@ -132,7 +132,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                                   document['id'], document['logo']);
                             },
                             child: CompanyContainer(
-                              userType:userType,
+                                userType: userType,
                                 image: document['logo'],
                                 companyname: document['companyName'],
                                 discription: document['companyDescription'],

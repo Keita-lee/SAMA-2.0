@@ -7,7 +7,9 @@ import 'package:sama/components/styleTextfield.dart';
 
 class DisplayUsername extends StatefulWidget {
   Function(int) changePage;
-  DisplayUsername({super.key, required this.changePage});
+  String? mobileNumber;
+  DisplayUsername(
+      {super.key, required this.changePage, required this.mobileNumber});
 
   @override
   State<DisplayUsername> createState() => _DisplayUsernameState();
@@ -18,17 +20,31 @@ class _DisplayUsernameState extends State<DisplayUsername> {
   final username = TextEditingController();
 
   getUserName() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    print(_auth.currentUser!.uid);
-    final user = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(_auth.currentUser!.uid)
-        .get();
+    if (widget.mobileNumber != "") {
+      final users = await FirebaseFirestore.instance
+          .collection('users')
+          .where('mobileNo', isEqualTo: widget.mobileNumber)
+          .get();
 
-    if (user != null) {
-      setState(() {
-        username.text = user.get("practiceNumber");
-      });
+//If user change page
+      if (users.docs.length >= 1) {
+        setState(() {
+          username.text = users.docs[0].get("practiceNumber");
+        });
+      }
+    } else {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      print(_auth.currentUser!.uid);
+      final user = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .get();
+
+      if (user != null) {
+        setState(() {
+          username.text = user.get("practiceNumber");
+        });
+      }
     }
   }
 

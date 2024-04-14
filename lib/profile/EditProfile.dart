@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 
 import 'package:sama/components/myutility.dart';
@@ -45,6 +46,7 @@ class _EditProfileState extends State<EditProfile> {
 
   //var
   String userType = "";
+  final _formKey = GlobalKey<FormState>();
 
   BuildContext? dialogContext;
   //Dialog for profile Save
@@ -128,6 +130,18 @@ class _EditProfileState extends State<EditProfile> {
         .whenComplete(() => openUserCheckDialog());
   }
 
+//Select a date popup
+  onTapFunction({required BuildContext context}) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      lastDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      initialDate: DateTime.now(),
+    );
+    if (pickedDate == null) return;
+    dob.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+  }
+
   @override
   void initState() {
     getUserData();
@@ -136,237 +150,277 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Title",
-                textfieldController: title,
-                textFieldType: "stringType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Initials",
-                textfieldController: initials,
-                textFieldType: "stringType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "First Name",
-                textfieldController: firstName,
-                textFieldType: "stringType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Last Name",
-                textfieldController: lastName,
-                textFieldType: "stringType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.615,
-                description: "Email",
-                textfieldController: email,
-                textFieldType: "emailType"),
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Mobile No",
-                textfieldController: mobileNo,
-                textFieldType: "stringType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Landline",
-                textfieldController: landline,
-                textFieldType: "stringType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileDropDownField(
-              description: "Gender",
-              items: ["Male", "Female"],
-              customSize: MyUtility(context).width * 0.195,
-              textfieldController: gender,
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.195,
-                description: "Race",
-                textfieldController: race,
-                textFieldType: "stringType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.195,
-                description: "Date of birth",
-                textfieldController: dob,
-                textFieldType: "stringType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "ID number",
-                textfieldController: idNumber,
-                textFieldType: "intType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Passport number",
-                textfieldController: passportNumber,
-                textFieldType: "intType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "HPCSA number",
-                textfieldController: hpcsa,
-                textFieldType: "intType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width * 0.3,
-                description: "Practice number",
-                textfieldController: practiceNumber,
-                textFieldType: "intType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        Row(
-          children: [
-            ProfileDropDownField(
-              description: "University Names",
-              items: [
-                "Sefako Makgatho Health Sciences University",
-                "University of Cape Town",
-                "University of KwaZulu-Natal",
-                "University of Limpopo",
-                "University of Pretoria",
-                "University of Stellenbosch",
-                "University of the Witwatersrand",
-                "Walter Sisulu University",
-                "Nelson Mandela University",
-                "North-West University",
-                "University of the Western Cape",
-                "University of Johannesburg",
-                "Other",
-              ],
-              customSize: MyUtility(context).width / 7,
-              textfieldController: univercityName,
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileDropDownField(
-              description: "University Qualification",
-              items: [
-                "Bachelor's Degree",
-                "Honours Degree",
-                "Master's Degree",
-                "Doctoral Degree"
-              ],
-              customSize: MyUtility(context).width / 7,
-              textfieldController: univercityQualification,
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width / 7,
-                description: "Qualification year",
-                textfieldController: qualificationYear,
-                textFieldType: "stringType"),
-            SizedBox(
-              width: MyUtility(context).width * 0.015,
-            ),
-            ProfileTextField(
-                customSize: MyUtility(context).width / 7,
-                description: "Qualification month",
-                textfieldController: qualificationMonth,
-                textFieldType: "stringType")
-          ],
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.015,
-        ),
-        SizedBox(
-          width: MyUtility(context).width / 1.62,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              width: MyUtility(context).width * 0.05,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xFF174486),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Title",
+                  textfieldController: title,
+                  textFieldType: "stringType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
               ),
-              child: TextButton(
-                onPressed: () {
-                  updateProfile();
-                },
-                child: Text(
-                  'Save',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Initials",
+                  textfieldController: initials,
+                  textFieldType: "stringType")
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "First Name",
+                  textfieldController: firstName,
+                  textFieldType: "stringType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Last Name",
+                  textfieldController: lastName,
+                  textFieldType: "stringType")
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.615,
+                  description: "Email",
+                  textfieldController: email,
+                  textFieldType: "emailType"),
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Mobile No",
+                  textfieldController: mobileNo,
+                  textFieldType: "stringType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Landline",
+                  textfieldController: landline,
+                  textFieldType: "stringType")
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileDropDownField(
+                description: "Gender",
+                items: ["Male", "Female"],
+                customSize: MyUtility(context).width * 0.195,
+                textfieldController: gender,
+              ),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.195,
+                  description: "Race",
+                  textfieldController: race,
+                  textFieldType: "stringType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              SizedBox(
+                width: MyUtility(context).width * 0.195,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Date of Birth",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Color(0xFF6A6A6A),
+                        ),
+                      ),
+                      Container(
+                        width: MyUtility(context).width * 0.195,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                        ),
+                        child: TextField(
+                          controller: dob,
+                          readOnly: true,
+                          decoration: const InputDecoration(
+                              hintText: "Click here to select date"),
+                          onTap: () => onTapFunction(context: context),
+                        ),
+                      )
+                    ]),
+              )
+
+              /*  ProfileTextField(
+                  customSize: MyUtility(context).width * 0.195,
+                  description: "Date of birth",
+                  textfieldController: dob,
+                  textFieldType: "stringType")*/
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "ID number",
+                  textfieldController: idNumber,
+                  textFieldType: "intType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Passport number",
+                  textfieldController: passportNumber,
+                  textFieldType: "intType")
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "HPCSA number",
+                  textfieldController: hpcsa,
+                  textFieldType: "intType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width * 0.3,
+                  description: "Practice number",
+                  textfieldController: practiceNumber,
+                  textFieldType: "intType")
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          Row(
+            children: [
+              ProfileDropDownField(
+                description: "University Names",
+                items: [
+                  "Sefako Makgatho Health Sciences University",
+                  "University of Cape Town",
+                  "University of KwaZulu-Natal",
+                  "University of Limpopo",
+                  "University of Pretoria",
+                  "University of Stellenbosch",
+                  "University of the Witwatersrand",
+                  "Walter Sisulu University",
+                  "Nelson Mandela University",
+                  "North-West University",
+                  "University of the Western Cape",
+                  "University of Johannesburg",
+                  "Other",
+                ],
+                customSize: MyUtility(context).width / 7,
+                textfieldController: univercityName,
+              ),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileDropDownField(
+                description: "University Qualification",
+                items: [
+                  "Bachelor's Degree",
+                  "Honours Degree",
+                  "Master's Degree",
+                  "Doctoral Degree"
+                ],
+                customSize: MyUtility(context).width / 7,
+                textfieldController: univercityQualification,
+              ),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width / 7,
+                  description: "Qualification year",
+                  textfieldController: qualificationYear,
+                  textFieldType: "stringType"),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              ProfileTextField(
+                  customSize: MyUtility(context).width / 7,
+                  description: "Qualification month",
+                  textfieldController: qualificationMonth,
+                  textFieldType: "stringType")
+            ],
+          ),
+          SizedBox(
+            height: MyUtility(context).height * 0.015,
+          ),
+          SizedBox(
+            width: MyUtility(context).width / 1.62,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                width: MyUtility(context).width * 0.05,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFF174486),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      updateProfile();
+                    }
+                  },
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.1,
-        )
-      ],
+          SizedBox(
+            height: MyUtility(context).height * 0.1,
+          )
+        ],
+      ),
     );
   }
 }

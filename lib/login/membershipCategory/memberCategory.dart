@@ -24,7 +24,7 @@ class _ContainerStyleState extends State<ContainerStyle> {
       color: widget.applicationTypeSelected == widget.description
           ? Color.fromARGB(255, 8, 55, 145)
           : Color.fromARGB(255, 124, 127, 134),
-      width: MyUtility(context).width / 4.5,
+      width: MyUtility(context).width / 3.8,
       height: 60,
       child: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -59,7 +59,7 @@ class _PaymentContainerStylesState extends State<PaymentContainerStyles> {
       color: widget.paymentType == widget.description
           ? Color.fromARGB(255, 8, 55, 145)
           : Color.fromARGB(255, 124, 127, 134),
-      width: MyUtility(context).width / 4.5,
+      width: MyUtility(context).width / 3.8,
       height: 60,
       child: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -99,7 +99,7 @@ class _MemberShipTypeContainerState extends State<MemberShipTypeContainer> {
       color: widget.membershipType == widget.description
           ? Color.fromARGB(255, 8, 55, 145)
           : Color.fromARGB(255, 124, 127, 134),
-      width: MyUtility(context).width / 4.5,
+      width: MyUtility(context).width / 3.8,
       height: 60,
       child: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -155,7 +155,7 @@ class _MemberCategoryState extends State<MemberCategory> {
     'Private Practice',
     'Public Sector',
     'Doctors Employed Outside Public Service',
-    'Other'
+    'Not Sure'
   ];
 //,{"title":"","info":""}
   List paymentTypes = [
@@ -485,6 +485,18 @@ class _MemberCategoryState extends State<MemberCategory> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
+                        "Membership Fees",
+                        style: TextStyle(fontSize: 22, color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
                         "Application Type",
                         style: TextStyle(fontSize: 22, color: Colors.black),
                       ),
@@ -501,7 +513,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                     height: 25,
                   ),
                   Container(
-                    width: MyUtility(context).width / 2,
+                    width: MyUtility(context).width / 1.5,
                     child: Wrap(
                       alignment: WrapAlignment.center,
                       children: [
@@ -547,7 +559,8 @@ class _MemberCategoryState extends State<MemberCategory> {
                   SizedBox(
                     height: 12,
                   ),
-                  if (applicationTypeSelected != "Student")
+                  if (applicationTypeSelected != "Student" &&
+                      applicationTypeSelected != "Not Sure")
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -581,7 +594,8 @@ class _MemberCategoryState extends State<MemberCategory> {
                   SizedBox(
                     height: 12,
                   ),
-                  if (applicationTypeSelected != "Student")
+                  if (applicationTypeSelected != "Student" &&
+                      applicationTypeSelected != "Not Sure")
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -610,7 +624,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                     height: 12,
                   ),
                   Container(
-                    width: MyUtility(context).width / 2,
+                    width: MyUtility(context).width / 1.5,
                     child: Wrap(
                       alignment: WrapAlignment.center,
                       children: [

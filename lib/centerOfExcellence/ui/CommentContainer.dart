@@ -32,8 +32,69 @@ class _CommentContainerState extends State<CommentContainer> {
       height: MediaQuery.of(context).size.height * 0.2,
       color: widget.backgroundColor,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(
+                        widget.image,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.username,
+                            style: TextStyle(
+                                color: Color(0xFF174486),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            " ${widget.date} AT ${widget.time} ",
+                            style: TextStyle(
+                              color: Color(0xFF3D3D3D),
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20, top: 10),
+                      child: SizedBox(
+                        width: MyUtility(context).width / 1.75,
+                        child: Text(
+                          widget.comment,
+                          style:
+                              TextStyle(color: Color(0xFF3D3D3D), fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          )
+
+          /*  Row(
           children: [
             SizedBox(
               width: MyUtility(context).width * 0.13,
@@ -41,6 +102,8 @@ class _CommentContainerState extends State<CommentContainer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+
+
                   CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
@@ -109,7 +172,8 @@ class _CommentContainerState extends State<CommentContainer> {
             ),
           ],
         ),
-      ),
+    */
+          ),
     );
   }
 }

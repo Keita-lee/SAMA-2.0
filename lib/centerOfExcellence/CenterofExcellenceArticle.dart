@@ -225,7 +225,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     height: MyUtility(context).height * 0.05,
                   ),
                   Text(
-                    'Comments',
+                    '${comments.length.toString()} Comments',
                     style: TextStyle(
                         fontSize: 30,
                         color: Color(0xFF174486),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
+import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -22,7 +23,20 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   // Text controllers
   final email = TextEditingController();
 
+  String validateText = "";
+
+  bool showRegisterBorder = false;
+  bool showForgotPasswordBorder = false;
+  bool showForgotSamaBorder = false;
+
   BuildContext? dialogContext;
+
+//Update state of text
+  updateStateText(value) {
+    setState(() {
+      validateText = value;
+    });
+  }
 
   //Dialog for validate  form
   Future openValidateDialog() => showDialog(
@@ -42,12 +56,14 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .collection('users')
         .where('email', isEqualTo: email.text)
         .get();
-
-    if (users.docs.length >= 1) {
+    updateStateText("");
+    if (users.docs.length >= 1 && email.text != "") {
       for (int i = 0; i < users.docs.length; i++) {}
       widget.changePage(1);
     } else {
-      openValidateDialog();
+      updateStateText(
+          "Error: Unknown email address. Check again or try using your SAMA member number.");
+      // openValidateDialog();
     }
   }
 
@@ -57,18 +73,18 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .collection('users')
         .where('practiceNumber', isEqualTo: email.text)
         .get();
-
-    if (users.docs.length >= 1) {
+    updateStateText("");
+    if (users.docs.length >= 1 && email.text != "") {
       for (int i = 0; i < users.docs.length; i++) {}
       widget.getEmail(users.docs[0].get("email"));
       widget.changePage(1);
     } else {
-      openValidateDialog();
+      updateStateText(
+          "Error: The SAMA member number ${email.text}  is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
+      //openValidateDialog();
     }
   }
 
-  SingingCharacter? _character = SingingCharacter.memberNumber;
- 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,46 +100,9 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           SizedBox(
             height: 30,
           ),
-          Row(
-            children: [
-              Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
-                value: SingingCharacter.memberNumber,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "SAMA member no",
-                style: TextStyle(fontSize: 17, color: Colors.black),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
-                value: SingingCharacter.email,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "Email Address",
-                style: TextStyle(fontSize: 17, color: Colors.black),
-              ),
-            ],
+          Text(
+            "Please enter your SAMA number or your Email address to continue",
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           SizedBox(
             height: 15,
@@ -132,43 +111,83 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             hintText: 'Enter here',
             textfieldController: email,
           ),
+          Text(
+            validateText,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.red,
+            ),
+          ),
           SizedBox(
             height: 15,
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               widget.changePage(2);
+            },
+            onHover: (hovered) {
+              setState(() {
+                showForgotPasswordBorder = hovered;
+              });
             },
             child: Text(
               "Forgot Password? Help me",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+                  decoration: showForgotPasswordBorder == true
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: Color.fromARGB(255, 8, 55, 145),
+                  decorationThickness: 2,
+                  fontSize: 16,
+                  color: const Color.fromARGB(255, 8, 55, 145)),
             ),
           ),
           SizedBox(
             height: 15,
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               widget.changePage(11);
+            },
+            onHover: (hovered) {
+              setState(() {
+                showForgotSamaBorder = hovered;
+              });
             },
             child: Text(
               "Forgot SAMA Number? Help me",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+                  decoration: showForgotSamaBorder == true
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: Color.fromARGB(255, 8, 55, 145),
+                  decorationThickness: 2,
+                  fontSize: 16,
+                  color: const Color.fromARGB(255, 8, 55, 145)),
             ),
           ),
           SizedBox(
             height: 15,
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               widget.changePage(9);
+            },
+            onHover: (hovered) {
+              setState(() {
+                showRegisterBorder = hovered;
+              });
             },
             child: Text(
               "Not a member? Register Here.",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+                  decoration: showRegisterBorder == true
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: Color.fromARGB(255, 8, 55, 145),
+                  decorationThickness: 2,
+                  fontSize: 16,
+                  color: const Color.fromARGB(255, 8, 55, 145)),
             ),
           ),
           SizedBox(
@@ -179,14 +198,13 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 55,
             width: 100,
             onTap: () {
-              if (_character == SingingCharacter.memberNumber) {
-                checkMemberNumber();
-              } else {
+              if (email.text.contains("@")) {
                 checkEmail();
+              } else {
+                checkMemberNumber();
               }
             },
           ),
-      
         ],
       ),
     );

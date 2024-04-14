@@ -29,7 +29,8 @@ class _LogoutPopupState extends State<LogoutPopup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
       width: 315,
       height: 185,
       child: Column(

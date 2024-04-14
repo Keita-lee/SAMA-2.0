@@ -48,29 +48,31 @@ class _CompanyContainerState extends State<CompanyContainer> {
             ),
           ),*/
           SizedBox(width: 15),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.companyname,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF3D3D3D),
+          SizedBox(
+            width: MyUtility(context).width / 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.companyname,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF3D3D3D),
+                  ),
                 ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                widget.discription,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF3D3D3D),
-                ),
-              ),
-            ],
+                SizedBox(height: 4),
+                Text(
+                  widget.discription,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF3D3D3D),
+                  ),
+                )
+              ],
+            ),
           ),
-          Spacer(),
           Visibility(
             visible: widget.userType == "Admin" ? true : false,
             child: StyleButton(

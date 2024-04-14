@@ -46,7 +46,7 @@ class _NewsContainerState extends State<NewsContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 4.7,
-      height: MyUtility(context).height * 0.7,
+      height: widget.userType == "Admin" ? 585 : 500,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
@@ -57,9 +57,6 @@ class _NewsContainerState extends State<NewsContainer> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            SizedBox(
-              height: MyUtility(context).height * 0.035,
-            ),
             Container(
               width: MyUtility(context).width / 4.7,
               height: MyUtility(context).height * 0.25,
@@ -94,15 +91,6 @@ class _NewsContainerState extends State<NewsContainer> {
                     color: Colors.black,
                   ),
                   children: [
-                    TextSpan(
-                      text: widget.category,
-                      style: TextStyle(
-                        color: Color(0xFF174486),
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' | ',
-                    ),
                     TextSpan(
                       text: _formatDateTime(widget.date),
                       style: TextStyle(

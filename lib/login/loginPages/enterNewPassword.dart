@@ -20,6 +20,7 @@ class EnterNewPassword extends StatefulWidget {
 class _EnterNewPasswordState extends State<EnterNewPassword> {
   // Text controllers
   final password = TextEditingController();
+  final passwordCheck = TextEditingController();
   final passNotifier = ValueNotifier<CustomPassStrength?>(null);
   String changeEffect = "";
 
@@ -46,9 +47,23 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
+  //Dialog for password match check
+  Future openValidatePasswordMatchDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: ValidateDialog(
+                description: "Passwords do not match",
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
+
   // take email and get user details from, firebase
   updatePassword() async {
-    print("reset");
+    if (password.text != passwordCheck.text) {
+      return openValidatePasswordMatchDialog();
+    }
+
     if (passNotifier.value == CustomPassStrength.weak) {
       openValidateDialog();
     } else {
@@ -148,6 +163,16 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
                 ),
               ),
             ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextFieldStyling(
+            hintText: 'Confirm Password',
+            textfieldController: passwordCheck,
           ),
           SizedBox(
             height: 15,
