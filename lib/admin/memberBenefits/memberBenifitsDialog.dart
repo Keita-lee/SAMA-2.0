@@ -4,6 +4,7 @@ import 'package:sama/components/imageAdd.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/components/yesNoDialog.dart';
 
 class MemberBenifitsDialogState extends StatefulWidget {
   String? id;
@@ -96,6 +97,28 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
     }
   }
 
+//Remove member from db
+  removeMember() {
+    FirebaseFirestore.instance
+        .collection('memberBenefits')
+        .doc(widget.id)
+        .delete()
+        .whenComplete(() => widget.closeDialog!());
+  }
+
+  BuildContext? dialogContext;
+  //Dialog for password Validate
+  Future removeMemberPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to remove this item",
+          closeDialog: () => Navigator.pop(dialogContext!),
+          callFunction: removeMember,
+        ));
+      });
   @override
   void initState() {
     if (widget.id != "") {
@@ -271,6 +294,16 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
               child: Row(
                 children: [
                   Spacer(),
+                  StyleButton(
+                      description: "Remove",
+                      height: 55,
+                      width: 125,
+                      onTap: () {
+                        removeMemberPopup();
+                      }),
+                  SizedBox(
+                    width: 8,
+                  ),
                   StyleButton(
                       description: "Save Changes",
                       height: 55,

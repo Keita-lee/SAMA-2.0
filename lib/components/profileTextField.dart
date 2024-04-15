@@ -43,7 +43,11 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           ),
           child: TextFormField(
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (widget.textFieldType == "") {
+                return null;
+              }
+              if (value == null ||
+                  value.isEmpty && widget.textFieldType != "") {
                 return 'Please enter a value';
               }
 

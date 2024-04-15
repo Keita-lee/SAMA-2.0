@@ -27,12 +27,15 @@ class ProfileSighnIn extends StatefulWidget {
 }
 
 class _ProfileSighnInState extends State<ProfileSighnIn> {
+  String imageUrl = '';
   var pageIndex = 0;
   String title = "";
   String email = "";
   String mobileNo = "";
   String fullName = "";
   String profileUrl = "";
+    String profileView = "";
+      String profilePicView = "";
   getUserData() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -46,6 +49,10 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
         fullName = data.get('firstName') + " " + data.get('lastName');
         mobileNo = data.get('mobileNo');
         profileUrl = data.get('profilePic');
+        imageUrl = data.get('profilePic');
+profileView= data.get('profileView');
+profilePicView= data.get('profilePicView');
+        print(data.get('profilePic'));
       });
     }
   }
@@ -63,8 +70,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
 
   @override
   void initState() {
-    getUserData();
     super.initState();
+    getUserData();
   }
 
   @override
@@ -79,15 +86,15 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
     var pages = [
       EditProfile(),
       Notifications(),
-      MyPreferences(),
+      MyPreferences(profilePicView:profilePicView, profileView:profileView),
       Security(changePage: changePage)
     ];
 
     changeProfilePic() {}
 
     Uint8List webImage = Uint8List(8);
-    String imageUrl = '';
-    UploadFile() async {
+
+    UploadFile(fileType) async {
       var uuid = Uuid();
       final ref = FirebaseStorage.instance
           .ref()
@@ -110,7 +117,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
 
     Future<void> _pickImageGallery() async {
       setState(() {
-        // widget.networkImageUrl = "";
+        imageUrl = "";
       });
       if (kIsWeb) {
         final ImagePicker _picker = ImagePicker();
@@ -119,7 +126,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
           var f = await image.readAsBytes();
           setState(() {
             webImage = f;
-            UploadFile();
+            UploadFile(image.mimeType);
             print('web Img success');
           });
         } else {
@@ -142,10 +149,52 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
               children: [
                 Column(
                   children: [
-                    CircleAvatar(
-                      radius: 62.5,
-                      //  backgroundImage: "",
-                    ), /*AssetImage('images/coffee.jpg')*/
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Container(
+                        width: 110,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(0.0),
+                          child: imageUrl != ""
+                              ? ImageNetwork(
+                                  image: imageUrl!,
+                                  height: 110,
+                                  width: 110,
+                                )
+                              : Container(),
+                        ),
+                      ),
+                    ),
+
+                    /*      Center(
+                      child: ImageNetwork(
+                        image: widget.profileImage!,
+                        height: 150,
+                        width: 150,
+                        duration: 1500,
+                        curve: Curves.easeIn,
+                        onPointer: true,
+                        debugPrint: false,
+                        fullScreen: false,
+                        fitAndroidIos: BoxFit.cover,
+                        fitWeb: BoxFitWeb.cover,
+                        borderRadius: BorderRadius.circular(70),
+                        onLoading: const CircularProgressIndicator(
+                          color: Colors.indigoAccent,
+                        ),
+                        onError: const Icon(
+                          Icons.error,
+                          color: Colors.red,
+                        ),
+                        onTap: () {},
+                      ),
+                    )
+               */
                   ],
                 ),
                 SizedBox(
@@ -239,17 +288,28 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      _pickImageGallery();
-                    },
-                    child: Text(
-                      'Everyone can see your picture Change',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFF6A6A6A),
-                          fontWeight: FontWeight.normal),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Everyone can see your picture',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF6A6A6A),
+                            fontWeight: FontWeight.normal),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _pickImageGallery();
+                        },
+                        child: Text(
+                          ' Change',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xFF174486),
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: MyUtility(context).height * 0.02,

@@ -49,7 +49,7 @@ Future sendOtp({
         'template_id': templateId,
         'user_id': userId,
         'template_params': {
-          'to_otp': otp,
+          'otp': otp,
           'user_email': email,
         }
       }));

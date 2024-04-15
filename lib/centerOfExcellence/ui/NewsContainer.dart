@@ -55,127 +55,131 @@ class _NewsContainerState extends State<NewsContainer> {
           )),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            Container(
-              width: MyUtility(context).width / 4.7,
-              height: MyUtility(context).height * 0.25,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xFFD1D1D1),
-              ),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: ImageNetwork(
-                    image: widget.image,
-                    fitWeb: BoxFitWeb.cover,
-                    width: MyUtility(context).width / 5.2,
-                    height: MyUtility(context).height * 0.25,
-                  )
-
-                  /* Image.asset(
-                  widget.image,
-                  fit: BoxFit.cover,
-                ),*/
-                  ),
-            ),
-            SizedBox(
-              height: MyUtility(context).height * 0.035,
-            ),
-            SizedBox(
-              width: MyUtility(context).width / 4.7,
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: _formatDateTime(widget.date),
-                      style: TextStyle(
-                        color: Color(0xFF3D3D3D),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MyUtility(context).height * 0.035,
-            ),
-            SizedBox(
-              width: MyUtility(context).width / 4.7,
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Color(0xFF3D3D3D),
-                  ),
-                  children: [
-                    TextSpan(
-                      text: widget.header,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: SizedBox(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
                 width: MyUtility(context).width / 4.7,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: MyUtility(context).width / 4.7,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(0xFF174486),
+                height: MyUtility(context).height * 0.25,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFFD1D1D1),
+                ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: ImageNetwork(
+                      image: widget.image,
+                      fitWeb: BoxFitWeb.cover,
+                      width: MyUtility(context).width / 5.2,
+                      height: MyUtility(context).height * 0.25,
+                    )
+
+                    /* Image.asset(
+                    widget.image,
+                    fit: BoxFit.cover,
+                  ),*/
                     ),
-                    child: TextButton(
-                      onPressed: widget.onPressed,
-                      child: Text(
-                        'View',
+              ),
+              SizedBox(
+                height: MyUtility(context).height * 0.035,
+              ),
+              SizedBox(
+                width: MyUtility(context).width / 4.7,
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: _formatDateTime(widget.date),
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          color: Color(0xFF3D3D3D),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MyUtility(context).height * 0.035,
+              ),
+              SizedBox(
+                width: MyUtility(context).width / 4.7,
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Color(0xFF3D3D3D),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: widget.header,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: SizedBox(
+                  width: MyUtility(context).width / 4.7,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: MyUtility(context).width / 4.7,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF174486),
+                      ),
+                      child: TextButton(
+                        onPressed: widget.onPressed,
+                        child: Text(
+                          'View',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Visibility(
-              visible: widget.userType == "Admin" ? true : false,
-              child: GestureDetector(
-                onTap: () {
-                  widget.openArticleDialog(widget.articleId);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: SizedBox(
-                    width: MyUtility(context).width / 4.7,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: MyUtility(context).width / 4.7,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xFF174486),
-                        ),
-                        child: TextButton(
-                          onPressed: widget.onArticleEdit,
-                          child: Text(
-                            'Edit',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+              Visibility(
+                visible: widget.userType == "Admin" ? true : false,
+                child: GestureDetector(
+                  onTap: () {
+                    widget.openArticleDialog(widget.articleId);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: SizedBox(
+                      width: MyUtility(context).width / 4.7,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: MyUtility(context).width / 4.7,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF174486),
+                          ),
+                          child: TextButton(
+                            onPressed: widget.onArticleEdit,
+                            child: Text(
+                              'Edit',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
@@ -184,8 +188,8 @@ class _NewsContainerState extends State<NewsContainer> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -21,6 +21,17 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
   String userType = "";
 
   BuildContext? dialogContext;
+
+  getAllArticles() async {
+    allArticles.clear();
+    final data = await FirebaseFirestore.instance.collection('articles').get();
+    setState(() {
+      for (var i = 0; i < data.docs.length; i++) {
+        allArticles.add(data.docs[i]);
+      }
+    });
+  }
+
   //Dialog for benifits
   Future openArticleDialog(id) => showDialog(
       context: context,
@@ -28,7 +39,10 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
         dialogContext = context;
         return Dialog(
             child: CenterOfExcellenceDialog(
-                id: id, closeDialog: () => Navigator.pop(dialogContext!)));
+          id: id,
+          closeDialog: () => Navigator.pop(dialogContext!),
+          getAllArticles: getAllArticles,
+        ));
       });
 
   getUserData() async {
@@ -42,15 +56,6 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
         userType = data.get('userType');
       });
     }
-  }
-
-  getAllArticles() async {
-    final data = await FirebaseFirestore.instance.collection('articles').get();
-    setState(() {
-      for (var i = 0; i < data.docs.length; i++) {
-        allArticles.add(data.docs[i]);
-      }
-    });
   }
 
   @override
@@ -149,8 +154,8 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width:
-                        MyUtility(context).width - MyUtility(context).width / 4,
+                    width: MyUtility(context).width -
+                        MyUtility(context).width / 3.5,
                   ),
                   StyleButton(
                       description: "Add Article",

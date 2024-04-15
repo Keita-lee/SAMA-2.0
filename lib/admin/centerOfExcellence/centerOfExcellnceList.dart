@@ -22,28 +22,28 @@ class _CenterOfExcellenceListState extends State<CenterOfExcellenceList> {
           dialogContext = context;
           return Dialog(
               child: CenterOfExcellenceDialog(
-                  id: id, closeDialog: () => Navigator.pop(dialogContext!)));
+            id: id,
+            closeDialog: () => Navigator.pop(dialogContext!),
+            getAllArticles: () {},
+          ));
         });
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              StyleButton(
-                  description: "Add Article",
-                  height: 55,
-                  width: 125,
-                  onTap: () {
-                    openArticleDialog("");
-                  })
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            StyleButton(
+                description: "Add Article",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  openArticleDialog("");
+                })
+          ],
         ),
         StreamBuilder<QuerySnapshot>(
             stream:

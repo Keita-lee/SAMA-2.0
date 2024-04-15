@@ -114,14 +114,14 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 image: widget.logo!,
                 width: MyUtility(context).width / 2.5 - 15,
                 height: 350,
-                fitWeb: BoxFitWeb.cover,
+                fitWeb: BoxFitWeb.contain,
               ),
               SizedBox(
                 height: 10,
               ),
               Container(
                 color: Color.fromARGB(255, 8, 55, 145),
-                height: 80,
+                //   height: 80,
                 width: MyUtility(context).width / 2.5 - 45,
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -137,6 +137,9 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                           fontWeight: FontWeight.bold,
                           height: 0,
                         ),
+                      ),
+                      SizedBox(
+                        height: 6,
                       ),
                       Text(
                         companyDescription,
@@ -343,7 +346,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                      'images/twitter.svg',
+                      'images/twitter_x_new_logo_x_rounded_icon_256078.svg',
                       width: 35,
                       height: 35,
                       colorFilter: ColorFilter.mode(

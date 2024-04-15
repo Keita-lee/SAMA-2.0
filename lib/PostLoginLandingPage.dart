@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/centerOfExcellence/CenterOfExcellence.dart';
@@ -23,7 +24,7 @@ class PostLoginLandingPage extends StatefulWidget {
 class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   String articleId = "";
   String articleImage = "";
-
+  String profileUrl = "";
   var pageIndex = 0;
   String userType = "";
 
@@ -36,6 +37,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     if (data.exists) {
       setState(() {
         userType = data.get('userType');
+        profileUrl = data.get('profilePic');
       });
     }
   }
@@ -154,19 +156,31 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                     icon: Icon(Icons.notifications),
                   ),
 
-                  IconButton(
-                    onPressed: () {
-                      changePage(3);
-                    },
-                    icon: CircleAvatar(
-                      radius: 17,
-                      backgroundColor: Colors.grey,
-                      child: Icon(
-                        Icons.person,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Container(
+                      width: 55,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
                         color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(0.0),
+                        child: profileUrl != ""
+                            ? ImageNetwork(
+                                onTap: () {
+                                  changePage(3);
+                                },
+                                image: profileUrl!,
+                                height: 55,
+                                width: 55,
+                              )
+                            : Container(),
                       ),
                     ),
                   ),
+
                   SizedBox(
                     width: MyUtility(context).width * 0.04,
                   )

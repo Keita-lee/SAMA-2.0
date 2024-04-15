@@ -4,14 +4,19 @@ import 'package:sama/components/imageAdd.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/components/yesNoDialog.dart';
 
 enum SingingCharacter { active, inActive }
 
 class CenterOfExcellenceDialog extends StatefulWidget {
   String? id;
   Function closeDialog;
+  Function getAllArticles;
   CenterOfExcellenceDialog(
-      {super.key, required this.id, required this.closeDialog});
+      {super.key,
+      required this.id,
+      required this.closeDialog,
+      required this.getAllArticles});
 
   @override
   State<CenterOfExcellenceDialog> createState() =>
@@ -64,7 +69,34 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
     }
 
     widget.closeDialog();
+    widget.getAllArticles();
   }
+
+//Remove Article from db
+  removeArticle() {
+    FirebaseFirestore.instance
+        .collection('articles')
+        .doc(widget.id)
+        .delete()
+        .whenComplete(() => {
+              widget.closeDialog!(),
+              widget.getAllArticles(),
+            });
+  }
+
+  BuildContext? dialogContext;
+  //Dialog for password Validate
+  Future removeArticlepopup() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to remove this item",
+          closeDialog: () => Navigator.pop(dialogContext!),
+          callFunction: removeArticle,
+        ));
+      });
 
   //If editing call data
   getArticleData() async {
@@ -255,6 +287,16 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
               child: Row(
                 children: [
                   Spacer(),
+                  StyleButton(
+                      description: "Remove",
+                      height: 55,
+                      width: 125,
+                      onTap: () {
+                        removeArticlepopup();
+                      }),
+                  SizedBox(
+                    width: 8,
+                  ),
                   StyleButton(
                       description: "Save Changes",
                       height: 55,

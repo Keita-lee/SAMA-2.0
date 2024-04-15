@@ -104,9 +104,23 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextButton.icon(
+                    HoverItem(
+                      description: 'Centre of Excellence',
+                      iconPath: "images/student.svg",
                       onPressed: () {
                         widget.changePage(1);
+                      },
+                    ),
+                    HoverItem(
+                      description: 'Member Benefits',
+                      iconPath: "images/star.svg",
+                      onPressed: () {
+                        widget.changePage(2);
+                      },
+                    ),
+                    /*         TextButton.icon(
+                      onPressed: () {
+                        widget.changePage(2);
                       },
                       icon: Icon(
                         Icons.star,
@@ -142,6 +156,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         ),
                       ),
                     ),
+               */
                   ],
                 )),
             Visibility(
@@ -200,7 +215,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   ),
                   HoverItem(
                     description: """Professional Development
-                     and Membership""",
+and Membership""",
                     iconPath: "",
                     onPressed: () {},
                   ),
@@ -210,7 +225,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     onPressed: () {},
                   ),
                   HoverItem(
-                    description: "Member Benifits",
+                    description: "Member Benefits",
                     iconPath: "images/star.svg",
                     onPressed: () {
                       widget.changePage(2);

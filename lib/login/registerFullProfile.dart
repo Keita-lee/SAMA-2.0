@@ -242,7 +242,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "Landline",
                               textfieldController: landline,
-                              textFieldType: "stringType")
+                              textFieldType: "")
                         ],
                       ),
                       SizedBox(
@@ -330,7 +330,8 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "ID number",
                               textfieldController: idNumber,
-                              textFieldType: "intType"),
+                              textFieldType:
+                                  passportNumber.text == "" ? "" : "intType"),
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
@@ -338,7 +339,8 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "Passport number",
                               textfieldController: passportNumber,
-                              textFieldType: "intType")
+                              textFieldType:
+                                  idNumber.text == "" ? "" : "intType")
                         ],
                       ),
                       SizedBox(

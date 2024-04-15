@@ -212,7 +212,7 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     height: MyUtility(context).height * 0.025,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {  widget.changePage!(1);},
                     child: Text(
                       'Go back, view all articles',
                       style: TextStyle(

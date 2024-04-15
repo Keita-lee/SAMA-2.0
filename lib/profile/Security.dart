@@ -7,6 +7,8 @@ import 'package:sama/components/CheckCircle.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 
+import '../components/styleTextfield.dart';
+
 class Security extends StatefulWidget {
   Function(int) changePage;
   Security({super.key, required this.changePage});
@@ -21,6 +23,7 @@ class _SecurityState extends State<Security> {
     // Text controllers
     final password = TextEditingController();
     final passNotifier = ValueNotifier<CustomPassStrength?>(null);
+    final passwordCheck = TextEditingController();
 
     BuildContext? dialogContext;
 
@@ -45,8 +48,21 @@ class _SecurityState extends State<Security> {
                   closeDialog: () => Navigator.pop(dialogContext!)));
         });
 
+    //Dialog for password match check
+    Future openValidatePasswordMatchDialog() => showDialog(
+        context: context,
+        builder: (context) {
+          dialogContext = context;
+          return Dialog(
+              child: ValidateDialog(
+                  description: "Passwords do not match",
+                  closeDialog: () => Navigator.pop(dialogContext!)));
+        });
+
     updatePassword() {
-      print("pass");
+      if (password.text != passwordCheck.text) {
+        return openValidatePasswordMatchDialog();
+      }
       if (passNotifier.value == CustomPassStrength.weak) {
         openValidatePasswordDialog();
       } else {
@@ -100,7 +116,7 @@ class _SecurityState extends State<Security> {
           ),
         ),*/
         Container(
-          width: MyUtility(context).width / 3,
+          width: MyUtility(context).width / 4,
           height: 45,
           decoration: BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
@@ -130,6 +146,19 @@ class _SecurityState extends State<Security> {
           ),
         ),
         SizedBox(height: 20),
+        SizedBox(
+          height: 15,
+        ),
+        SizedBox(
+          width: MyUtility(context).width / 4,
+          child: TextFieldStyling(
+            hintText: 'Confirm Password',
+            textfieldController: passwordCheck,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
         SizedBox(
           width: MyUtility(context).width / 4,
           child: PasswordStrengthChecker(
