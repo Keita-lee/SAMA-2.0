@@ -27,7 +27,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   String profileUrl = "";
   var pageIndex = 0;
   String userType = "";
-
+  double menuSize = 6.5;
   getUserData() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -57,6 +57,16 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    changeSideMenuSize() {
+      setState(() {
+        if (menuSize == 18) {
+          menuSize = 6.5;
+        } else {
+          menuSize = 18;
+        }
+      });
+    }
+
     changePage(value) {
       setState(() {
         pageIndex = value;
@@ -193,12 +203,35 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PostLoginLeft(changePage: changePage),
-                    SizedBox(
-                      width: MyUtility(context).width * 0.025,
-                      child: Icon(
-                        Icons.arrow_circle_left,
-                        size: 30,
+                    PostLoginLeft(changePage: changePage, menuSize: menuSize),
+                    Visibility(
+                      visible: menuSize == 6.5 ? true : false,
+                      child: GestureDetector(
+                        onTap: () {
+                          changeSideMenuSize();
+                        },
+                        child: SizedBox(
+                          width: MyUtility(context).width * 0.025,
+                          child: Icon(
+                            Icons.arrow_circle_left,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: menuSize != 6.5 ? true : false,
+                      child: GestureDetector(
+                        onTap: () {
+                          changeSideMenuSize();
+                        },
+                        child: SizedBox(
+                          width: MyUtility(context).width * 0.025,
+                          child: Icon(
+                            Icons.arrow_circle_right,
+                            size: 30,
+                          ),
+                        ),
                       ),
                     ),
                     Center(
