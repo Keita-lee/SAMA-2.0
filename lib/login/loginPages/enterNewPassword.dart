@@ -77,7 +77,7 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
 
 //If user exist send link
       if (users.docs.length >= 1) {
-        print(users.docs[0].get('password'));
+      
         final userCredential = await _auth.signInWithEmailAndPassword(
             email: widget.email!, password: users.docs[0].get('password'));
 

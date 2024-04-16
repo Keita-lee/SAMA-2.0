@@ -132,6 +132,23 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
           Row(
             children: [
               Container(
+                width: MyUtility(context).width / 4.7,
+                height: MyUtility(context).height * 0.25,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFFD1D1D1),
+                ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: ImageNetwork(
+                      image: widget.articleImage!,
+                      fitWeb: BoxFitWeb.cover,
+                      width: MyUtility(context).width / 5.2,
+                      height: MyUtility(context).height * 0.25,
+                    )),
+              ),
+
+              /* Container(
                 width: MyUtility(context).width / 4,
                 height: MyUtility(context).height * 0.25,
                 decoration: BoxDecoration(
@@ -142,17 +159,17 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     borderRadius: BorderRadius.circular(10),
                     child: ImageNetwork(
                       image: widget.articleImage!,
-                      fitWeb: BoxFitWeb.fill,
+                      fitWeb: BoxFitWeb,
                       width: MyUtility(context).width * 0.215,
                       height: MyUtility(context).height * 0.25,
-                    )
+                    )*/
 
-                    /* Image.asset(
+              /* Image.asset(
                 widget.image,
                 fit: BoxFit.cover,
-              ),*/
-                    ),
               ),
+                    ),
+              ),*/
               SizedBox(
                 width: MyUtility(context).width * 0.025,
               ),
@@ -212,7 +229,9 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                     height: MyUtility(context).height * 0.025,
                   ),
                   TextButton(
-                    onPressed: () {  widget.changePage!(1);},
+                    onPressed: () {
+                      widget.changePage!(1);
+                    },
                     child: Text(
                       'Go back, view all articles',
                       style: TextStyle(

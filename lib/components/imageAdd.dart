@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/styleButtonYellow.dart';
 import 'package:sama/components/utility.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
@@ -78,25 +79,17 @@ class _ImageAddState extends State<ImageAdd> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          widget.description!,
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-            fontFamily: "RegularMontserratBold",
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        StyleButton(
+      
+        StylrButtonYellow(
           description: "Pick Image",
           height: 55,
-          width: 85,
+          width: 95,
           onTap: () {
             _pickImageGallery();
           },
+        ),
+        SizedBox(
+          height: 8,
         ),
         GestureDetector(
           onTap: () {

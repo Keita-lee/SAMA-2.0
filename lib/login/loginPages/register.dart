@@ -144,7 +144,9 @@ class _RegisterState extends State<Register> {
       "password": password.text,
       "userType": "user",
       "membershipAdded": false,
-      "id": ""
+      "id": "",
+      "profilePicView":"",
+"profileView":""
     }; /*   */
 
     final doc = FirebaseFirestore.instance.collection('users').doc(id);

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/imageAdd.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/styleButtonYellow.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/components/yesNoDialog.dart';
@@ -132,7 +133,9 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
     return Container(
       width: 450,
       height: 680,
-      color: Colors.white,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Color.fromARGB(255, 8, 55, 145)),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -149,7 +152,10 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
                         "X",
-                        style: TextStyle(fontSize: 30, color: Colors.black),
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ),
                   ),
@@ -165,12 +171,19 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
             SizedBox(
               height: 15,
             ),
-            Text(
-              "Company Name:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            SizedBox(
-              height: 15,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Company Name:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -179,12 +192,19 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
                 textfieldController: companyName,
               ),
             ),
-            Text(
-              "Company Description:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            SizedBox(
-              height: 15,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Company Description:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -193,15 +213,19 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
                 textfieldController: companyDescription,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "Company Benefits:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            SizedBox(
-              height: 15,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Company Benefits:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
             Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -233,12 +257,19 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
                         ),
                       ),
                     ))),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "Contact:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Contact:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -294,7 +325,7 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
               child: Row(
                 children: [
                   Spacer(),
-                  StyleButton(
+                  StylrButtonYellow(
                       description: "Remove",
                       height: 55,
                       width: 125,
@@ -304,7 +335,7 @@ class _MemberBenifitsDialogStateState extends State<MemberBenifitsDialogState> {
                   SizedBox(
                     width: 8,
                   ),
-                  StyleButton(
+                  StylrButtonYellow(
                       description: "Save Changes",
                       height: 55,
                       width: 125,

@@ -85,7 +85,8 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
     return Container(
       width: MyUtility(context).width / 2.5 - 15,
       height: MyUtility(context).height / 1.4,
-      color: Colors.white,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -346,7 +347,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                      'images/twitter_x_new_logo_x_rounded_icon_256078.svg',
+                      'images/twitter2.svg',
                       width: 35,
                       height: 35,
                       colorFilter: ColorFilter.mode(

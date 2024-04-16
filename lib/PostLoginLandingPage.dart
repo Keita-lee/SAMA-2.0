@@ -147,16 +147,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                   ),
                   Spacer(),
                   SizedBox(width: 20),
-
-                  //TODO add envelope
-                  /* IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(
-                      'images//dots.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),*/
                   IconButton(
                     onPressed: () {},
                     icon: Icon(Icons.mail),
@@ -165,7 +155,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                     onPressed: () {},
                     icon: Icon(Icons.notifications),
                   ),
-
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Container(
@@ -190,7 +179,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                       ),
                     ),
                   ),
-
                   SizedBox(
                     width: MyUtility(context).width * 0.04,
                   )

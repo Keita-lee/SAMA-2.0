@@ -43,9 +43,12 @@ class _EditProfileState extends State<EditProfile> {
   final qualificationMonth = TextEditingController();
 
   final password = TextEditingController();
+  var profilePicView = "";
+  var profileView = "";
 
   //var
   String userType = "";
+  String profilePicIrl = "";
   final _formKey = GlobalKey<FormState>();
 
   BuildContext? dialogContext;
@@ -78,7 +81,7 @@ class _EditProfileState extends State<EditProfile> {
 
         gender.text = data.get('gender');
         race.text = data.get('race');
-        dob.text = data.get('dob');
+        dob.text = "  ${data.get('dob')}";
 
         idNumber.text = data.get('idNumber');
         passportNumber.text = data.get('passportNumber');
@@ -93,6 +96,9 @@ class _EditProfileState extends State<EditProfile> {
 
         password.text = data.get('password');
         userType = data.get('userType');
+        profilePicView = data.get('profilePicView');
+        profileView = data.get('profileView');
+        profilePicIrl = data.get('profilePic');
       });
     }
   }
@@ -106,7 +112,7 @@ class _EditProfileState extends State<EditProfile> {
       "email": email.text,
       "mobileNo": mobileNo.text,
       "landline": landline.text,
-      "profilePic": "",
+      "profilePic": profilePicIrl,
       "gender": gender.text,
       "race": race.text,
       "dob": dob.text,
@@ -120,7 +126,9 @@ class _EditProfileState extends State<EditProfile> {
       "qualificationMonth": qualificationMonth.text,
       "password": password.text,
       "userType": userType,
-      "id": FirebaseAuth.instance.currentUser!.uid
+      "id": FirebaseAuth.instance.currentUser!.uid,
+      'profilePicView': profilePicView,
+      'profileView': profileView,
     };
 
     FirebaseFirestore.instance
@@ -220,7 +228,7 @@ class _EditProfileState extends State<EditProfile> {
                   customSize: MyUtility(context).width * 0.3,
                   description: "Landline",
                   textfieldController: landline,
-                  textFieldType: "stringType")
+                  textFieldType: "")
             ],
           ),
           SizedBox(
@@ -296,7 +304,8 @@ class _EditProfileState extends State<EditProfile> {
                   customSize: MyUtility(context).width * 0.3,
                   description: "ID number",
                   textfieldController: idNumber,
-                  textFieldType: "intType"),
+                  textFieldType:"intType"),
+              // passportNumber.text.length > 1 ? "" : "intType"),
               SizedBox(
                 width: MyUtility(context).width * 0.015,
               ),

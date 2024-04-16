@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/styleButton.dart';
-import 'package:sama/components/userState.dart';
 import 'package:sama/login/loginPages.dart';
 
 class LogoutPopup extends StatefulWidget {

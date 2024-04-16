@@ -92,7 +92,8 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
       "email": email.text,
       "mobileNo": mobileNo.text,
       "landline": landline.text,
-      "profilePic": "",
+      "profilePic":
+          "https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Fistockphoto-1495088043-612x612.jpg?alt=media&token=6355d1a2-7572-4221-99a3-a2823af52372",
       "gender": gender.text,
       "race": race.text,
       "dob": dob.text,
@@ -106,6 +107,8 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
       "qualificationMonth": qualificationMonth.text,
       "password": password.text,
       "userType": userType,
+      "profilePicView": "",
+      "profileView": "",
       "id": FirebaseAuth.instance.currentUser!.uid
     };
 
@@ -330,8 +333,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "ID number",
                               textfieldController: idNumber,
-                              textFieldType:
-                                  passportNumber.text == "" ? "" : "intType"),
+                              textFieldType: "intType"),
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
@@ -339,8 +341,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               customSize: MyUtility(context).width * 0.3,
                               description: "Passport number",
                               textfieldController: passportNumber,
-                              textFieldType:
-                                  idNumber.text == "" ? "" : "intType")
+                              textFieldType: "intType")
                         ],
                       ),
                       SizedBox(

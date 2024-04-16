@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/imageAdd.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/styleButtonYellow.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/components/yesNoDialog.dart';
@@ -130,11 +131,15 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 2,
+      width: MyUtility(context).width / 3,
       height: 680,
-      color: Colors.white,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Color.fromARGB(255, 8, 55, 145)),
       child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -149,7 +154,10 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
                         "X",
-                        style: TextStyle(fontSize: 30, color: Colors.black),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: const Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ),
                   ),
@@ -159,18 +167,18 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
             ImageAdd(
                 customWidth: MyUtility(context).width / 4,
                 customHeight: MyUtility(context).height / 3.5,
-                description: "Excellence Image",
+                description: "",
                 networkImageUrl: imageUrl,
                 setUrl: setImageUrl),
             SizedBox(
-              height: 15,
+              height: 7,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Radio<SingingCharacter>(
-                  activeColor: Color.fromARGB(255, 8, 55, 145),
+                  activeColor: Color.fromARGB(255, 255, 255, 255),
                   value: SingingCharacter.active,
                   groupValue: _character,
                   onChanged: (SingingCharacter? value) {
@@ -184,13 +192,15 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                 ),
                 Text(
                   "Approved",
-                  style: TextStyle(fontSize: 17, color: Colors.black),
+                  style: TextStyle(
+                      fontSize: 17,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Radio<SingingCharacter>(
-                  activeColor: Color.fromARGB(255, 8, 55, 145),
+                  activeColor: Color.fromARGB(255, 255, 255, 255),
                   value: SingingCharacter.inActive,
                   groupValue: _character,
                   onChanged: (SingingCharacter? value) {
@@ -204,19 +214,28 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                 ),
                 Text(
                   "Not Approved",
-                  style: TextStyle(fontSize: 17, color: Colors.black),
+                  style: TextStyle(
+                      fontSize: 17,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
                 ),
               ],
             ),
             SizedBox(
               height: 15,
             ),
-            Text(
-              "Title:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            SizedBox(
-              height: 15,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Title:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -225,12 +244,19 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                 textfieldController: title,
               ),
             ),
-            Text(
-              "Category:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            SizedBox(
-              height: 15,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Category:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -239,15 +265,19 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                 textfieldController: category,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "Description:",
-              style: TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            SizedBox(
-              height: 15,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Row(
+                children: [
+                  Text(
+                    "Description:",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -287,7 +317,7 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
               child: Row(
                 children: [
                   Spacer(),
-                  StyleButton(
+                  StylrButtonYellow(
                       description: "Remove",
                       height: 55,
                       width: 125,
@@ -297,7 +327,7 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                   SizedBox(
                     width: 8,
                   ),
-                  StyleButton(
+                  StylrButtonYellow(
                       description: "Save Changes",
                       height: 55,
                       width: 125,

@@ -74,10 +74,7 @@ class _NewsContainerState extends State<NewsContainer> {
                       height: MyUtility(context).height * 0.25,
                     )
 
-                    /* Image.asset(
-                    widget.image,
-                    fit: BoxFit.cover,
-                  ),*/
+                  
                     ),
               ),
               SizedBox(
@@ -107,6 +104,7 @@ class _NewsContainerState extends State<NewsContainer> {
               ),
               SizedBox(
                 width: MyUtility(context).width / 4.7,
+                height: 60,
                 child: RichText(
                   text: TextSpan(
                     style: TextStyle(
