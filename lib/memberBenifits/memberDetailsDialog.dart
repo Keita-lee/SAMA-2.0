@@ -347,7 +347,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                      'images/twitter2.svg',
+                      'images/twitter3.svg',
                       width: 35,
                       height: 35,
                       colorFilter: ColorFilter.mode(
@@ -376,7 +376,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                      'images/linkedIn.svg',
+                      'images/linkedin_icon_135436.svg',
                       width: 35,
                       height: 35,
                       colorFilter: ColorFilter.mode(

@@ -298,7 +298,7 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: MyUtility(context).height * 0.015,
           ),
-          Row(
+          /*  Row(
             children: [
               ProfileTextField(
                   customSize: MyUtility(context).width * 0.3,
@@ -315,6 +315,129 @@ class _EditProfileState extends State<EditProfile> {
                   textfieldController: passportNumber,
                   textFieldType: "intType")
             ],
+          ),*/
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "ID number",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF6A6A6A),
+                    ),
+                  ),
+                  Container(
+                    width: MyUtility(context).width * 0.3,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                    ),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (passportNumber.text == "") {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a value';
+                          }
+
+                          if (num.tryParse(value) == null) {
+                            return 'Please enter number value';
+                          }
+                        } else {
+                          return null;
+                        }
+
+                        return null;
+                      },
+                      controller: idNumber,
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 153, 147, 147),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: new EdgeInsets.only(left: 12.0),
+                        border: InputBorder.none,
+                        hintText: "",
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 199, 199, 199),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: MyUtility(context).width * 0.015,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Passport Number",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF6A6A6A),
+                    ),
+                  ),
+                  Container(
+                    width: MyUtility(context).width * 0.3,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                    ),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (idNumber.text == "") {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a value';
+                          }
+
+                          if (num.tryParse(value) == null) {
+                            return 'Please enter number value';
+                          }
+                        } else {
+                          return null;
+                        }
+
+                        return null;
+                      },
+                      controller: passportNumber,
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 153, 147, 147),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: new EdgeInsets.only(left: 12.0),
+                        border: InputBorder.none,
+                        hintText: "",
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 199, 199, 199),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           SizedBox(
             height: MyUtility(context).height * 0.015,
@@ -325,7 +448,7 @@ class _EditProfileState extends State<EditProfile> {
                   customSize: MyUtility(context).width * 0.3,
                   description: "HPCSA number",
                   textfieldController: hpcsa,
-                  textFieldType: "intType"),
+                  textFieldType: "stringType"),
               SizedBox(
                 width: MyUtility(context).width * 0.015,
               ),
@@ -333,7 +456,7 @@ class _EditProfileState extends State<EditProfile> {
                   customSize: MyUtility(context).width * 0.3,
                   description: "Practice number",
                   textfieldController: practiceNumber,
-                  textFieldType: "intType")
+                  textFieldType: "stringType")
             ],
           ),
           SizedBox(

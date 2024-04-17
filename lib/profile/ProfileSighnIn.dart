@@ -34,8 +34,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
   String mobileNo = "";
   String fullName = "";
   String profileUrl = "";
-    String profileView = "";
-      String profilePicView = "";
+  String profileView = "";
+  String profilePicView = "";
   getUserData() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -50,8 +50,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
         mobileNo = data.get('mobileNo');
         profileUrl = data.get('profilePic');
         imageUrl = data.get('profilePic');
-profileView= data.get('profileView');
-profilePicView= data.get('profilePicView');
+        profileView = data.get('profileView');
+        profilePicView = data.get('profilePicView');
         print(data.get('profilePic'));
       });
     }
@@ -86,7 +86,7 @@ profilePicView= data.get('profilePicView');
     var pages = [
       EditProfile(),
       Notifications(),
-      MyPreferences(profilePicView:profilePicView, profileView:profileView),
+      MyPreferences(profilePicView: profilePicView, profileView: profileView),
       Security(changePage: changePage)
     ];
 
@@ -291,7 +291,7 @@ profilePicView= data.get('profilePicView');
                   Row(
                     children: [
                       Text(
-                        'Everyone can see your picture',
+                        'Your image is visible to the public',
                         style: TextStyle(
                             fontSize: 18,
                             color: Color(0xFF6A6A6A),
