@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -14,6 +15,16 @@ class ValidateByEmail extends StatefulWidget {
 class _ValidateByEmailState extends State<ValidateByEmail> {
   // Text controllers
   final otp = TextEditingController();
+
+  //Dialog for contruction popup
+  Future OpenContructionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Under Construction",
+                closeDialog: () => Navigator.pop(context!)));
+      });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,17 +76,21 @@ class _ValidateByEmailState extends State<ValidateByEmail> {
                 description: "Validate",
                 height: 55,
                 width: 100,
-                onTap: () {
-                  
-                },
+                onTap: () {},
               ),
               SizedBox(
                 height: 15,
               ),
-              Text(
-                "Need help? CONTACT SAMA",
-                style: TextStyle(
-                    fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+              InkWell(
+                onTap: () {
+                  OpenContructionPopup();
+                },
+                child: Text(
+                  "Need help? CONTACT SAMA",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 8, 55, 145)),
+                ),
               ),
             ]));
   }

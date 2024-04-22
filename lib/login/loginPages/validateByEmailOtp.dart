@@ -32,6 +32,15 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
 
   BuildContext? dialogContext;
 
+  //Dialog for contruction popup
+  Future OpenContructionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Under Construction",
+                closeDialog: () => Navigator.pop(context!)));
+      });
   //Dialog for wrong otp
   Future openValidateDialog() => showDialog(
       context: context,
@@ -123,7 +132,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                 height: 30,
               ),
               Text(
-                "Please go look at your emails for a OTP",
+                "Please check your email for an OTP pin",
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
               SizedBox(
@@ -157,10 +166,16 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
               SizedBox(
                 height: 15,
               ),
-              Text(
-                "Need help? CONTACT SAMA",
-                style: TextStyle(
-                    fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+              InkWell(
+                onTap: () {
+                  OpenContructionPopup();
+                },
+                child: Text(
+                  "Need help? CONTACT SAMA",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 8, 55, 145)),
+                ),
               ),
             ]));
   }

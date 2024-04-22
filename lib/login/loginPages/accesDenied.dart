@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/utility.dart';
 
 class AccessDenied extends StatefulWidget {
@@ -10,6 +11,15 @@ class AccessDenied extends StatefulWidget {
 }
 
 class _AccessDeniedState extends State<AccessDenied> {
+  //Dialog for contruction popup
+  Future OpenContructionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Under Construction",
+                closeDialog: () => Navigator.pop(context!)));
+      });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,10 +50,16 @@ class _AccessDeniedState extends State<AccessDenied> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                "Need help? CONTACT SAMA",
-                style: TextStyle(
-                    fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+              InkWell(
+                onTap: () {
+                  OpenContructionPopup();
+                },
+                child: Text(
+                  "Need help? CONTACT SAMA",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 8, 55, 145)),
+                ),
               ),
             ]));
   }

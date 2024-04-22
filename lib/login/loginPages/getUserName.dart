@@ -36,7 +36,15 @@ class _GetUsernameState extends State<GetUsername> {
   SingingCharacter? _character = SingingCharacter.email;
 
   BuildContext? dialogContext;
-
+  //Dialog for contruction popup
+  Future OpenContructionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Under Construction",
+                closeDialog: () => Navigator.pop(context!)));
+      });
   //Dialog for product form
   Future openValidateDialog() => showDialog(
       context: context,
@@ -189,10 +197,15 @@ class _GetUsernameState extends State<GetUsername> {
           SizedBox(
             height: 15,
           ),
-          Text(
-            "Need help? CONTACT SAMA",
-            style: TextStyle(
-                fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+          InkWell(
+            onTap: () {
+              OpenContructionPopup();
+            },
+            child: Text(
+              "Need help? CONTACT SAMA",
+              style: TextStyle(
+                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+            ),
           ),
           SizedBox(
             height: 15,

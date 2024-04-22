@@ -8,6 +8,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 
 import 'package:sama/components/userState.dart';
+import 'package:sama/components/constants.dart' as constants;
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -47,6 +48,8 @@ class _EditProfileState extends State<EditProfile> {
   var profileView = "";
 
   //var
+  var allUniversities = constants.availableUniversities;
+  var universityQualifications = constants.qualifications;
   String userType = "";
   String profilePicIrl = "";
   final _formKey = GlobalKey<FormState>();
@@ -245,11 +248,26 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(
                 width: MyUtility(context).width * 0.015,
               ),
-              ProfileTextField(
+              ProfileDropDownField(
+                description: "Race",
+                items: [
+                  "White/Caucasian",
+                  "Hispanic/Latino",
+                  "Black",
+                  "Asian",
+                  "Native American",
+                  "Pacific Islander",
+                  "Middle Eastern/North African",
+                  "Other",
+                ],
+                customSize: MyUtility(context).width / 7,
+                textfieldController: race,
+              ),
+              /*  ProfileTextField(
                   customSize: MyUtility(context).width * 0.195,
                   description: "Race",
                   textfieldController: race,
-                  textFieldType: "stringType"),
+                  textFieldType: "stringType"),*/
               SizedBox(
                 width: MyUtility(context).width * 0.015,
               ),
@@ -344,6 +362,11 @@ class _EditProfileState extends State<EditProfile> {
                     child: TextFormField(
                       validator: (value) {
                         if (passportNumber.text == "") {
+                          if (value != null && value.isEmpty) {
+                            if (value.length == 13) {
+                              return "Id length should be 13 characters";
+                            }
+                          }
                           if (value == null || value.isEmpty) {
                             return 'Please enter a value';
                           }
@@ -466,21 +489,7 @@ class _EditProfileState extends State<EditProfile> {
             children: [
               ProfileDropDownField(
                 description: "University Names",
-                items: [
-                  "Sefako Makgatho Health Sciences University",
-                  "University of Cape Town",
-                  "University of KwaZulu-Natal",
-                  "University of Limpopo",
-                  "University of Pretoria",
-                  "University of Stellenbosch",
-                  "University of the Witwatersrand",
-                  "Walter Sisulu University",
-                  "Nelson Mandela University",
-                  "North-West University",
-                  "University of the Western Cape",
-                  "University of Johannesburg",
-                  "Other",
-                ],
+                items: allUniversities,
                 customSize: MyUtility(context).width / 7,
                 textfieldController: univercityName,
               ),
@@ -489,12 +498,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               ProfileDropDownField(
                 description: "University Qualification",
-                items: [
-                  "Bachelor's Degree",
-                  "Honours Degree",
-                  "Master's Degree",
-                  "Doctoral Degree"
-                ],
+                items: universityQualifications,
                 customSize: MyUtility(context).width / 7,
                 textfieldController: univercityQualification,
               ),

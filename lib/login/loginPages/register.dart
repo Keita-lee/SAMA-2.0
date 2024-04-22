@@ -26,6 +26,8 @@ class RegisterTextfieldStyle extends StatefulWidget {
 }
 
 class _RegisterTextfieldStyleState extends State<RegisterTextfieldStyle> {
+  //var
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -110,6 +112,8 @@ class _RegisterState extends State<Register> {
 
   BuildContext? dialogContext;
 
+  bool showAlreadyAMemberBorder = false;
+
   //Dialog for product form
   Future openValidateDialog() => showDialog(
       context: context,
@@ -145,8 +149,8 @@ class _RegisterState extends State<Register> {
       "userType": "user",
       "membershipAdded": false,
       "id": "",
-      "profilePicView":"",
-"profileView":""
+      "profilePicView": "",
+      "profileView": ""
     }; /*   */
 
     final doc = FirebaseFirestore.instance.collection('users').doc(id);
@@ -263,16 +267,25 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 10,
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       widget.changePage(0);
+                    },
+                    onHover: (hovered) {
+                      setState(() {
+                        showAlreadyAMemberBorder = hovered;
+                      });
                     },
                     child: Text(
                       "Already a member? Login here.",
                       style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 8, 55, 145),
-                          fontWeight: FontWeight.w500),
+                          decoration: showAlreadyAMemberBorder == true
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                          decorationColor: Color.fromARGB(255, 8, 55, 145),
+                          decorationThickness: 2,
+                          fontSize: 16,
+                          color: const Color.fromARGB(255, 8, 55, 145)),
                     ),
                   ),
                 ]),

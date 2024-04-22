@@ -31,7 +31,15 @@ class _ValidateByMobileGetUsernameState
   late UserCredential userCredential;
 
   BuildContext? dialogContext;
-
+  //Dialog for contruction popup
+  Future OpenContructionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Under Construction",
+                closeDialog: () => Navigator.pop(context!)));
+      });
   //Dialog for wrong otp
   Future openValidateDialog() => showDialog(
       context: context,
@@ -54,9 +62,7 @@ class _ValidateByMobileGetUsernameState
   validate() async {
     await confirmationResult
         .confirm(otp.text)
-        .then((value) => {
-             widget.changePage(13)
-            })
+        .then((value) => {widget.changePage(13)})
         .catchError((e) => {openValidateDialog()});
   }
 
@@ -140,10 +146,16 @@ class _ValidateByMobileGetUsernameState
               SizedBox(
                 height: 15,
               ),
-              Text(
-                "Need help? CONTACT SAMA",
-                style: TextStyle(
-                    fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+              InkWell(
+                onTap: () {
+                  OpenContructionPopup();
+                },
+                child: Text(
+                  "Need help? CONTACT SAMA",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 8, 55, 145)),
+                ),
               ),
             ]));
   }

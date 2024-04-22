@@ -90,8 +90,6 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
       Security(changePage: changePage)
     ];
 
-    changeProfilePic() {}
-
     Uint8List webImage = Uint8List(8);
 
     UploadFile(fileType) async {

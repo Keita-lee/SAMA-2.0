@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sama/PostLoginLandingPage.dart';
+
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/userState.dart';
 import 'package:sama/login/registerFinished.dart';
 import 'package:sama/profile/EditProfile.dart';
+import 'package:sama/components/constants.dart' as constants;
 
 class RegisterFullProfile extends StatefulWidget {
   const RegisterFullProfile({super.key});
@@ -45,6 +47,8 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
   final password = TextEditingController();
 
   //var
+  var allUniversities = constants.availableUniversities;
+  var universityQualifications = constants.qualifications;
   String userType = "";
   getUserData() async {
     final data = await FirebaseFirestore.instance
@@ -270,11 +274,21 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
-                          ProfileTextField(
-                              customSize: MyUtility(context).width * 0.195,
-                              description: "Race",
-                              textfieldController: race,
-                              textFieldType: "stringType"),
+                          ProfileDropDownField(
+                            description: "Race",
+                            items: [
+                              "White/Caucasian",
+                              "Hispanic/Latino",
+                              "Black",
+                              "Asian",
+                              "Native American",
+                              "Pacific Islander",
+                              "Middle Eastern/North African",
+                              "Other",
+                            ],
+                            customSize: MyUtility(context).width / 7,
+                            textfieldController: race,
+                          ),
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
@@ -329,8 +343,6 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                         
-
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -355,6 +367,12 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                                 child: TextFormField(
                                   validator: (value) {
                                     if (passportNumber.text == "") {
+                                      if (value != null && value.isEmpty) {
+                                        if (value.length == 13) {
+                                          return "Id length should be 13 characters";
+                                        }
+                                      }
+
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter a value';
                                       }
@@ -450,8 +468,6 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                               ),
                             ],
                           ),
-
-                        
                         ],
                       ),
                       SizedBox(
@@ -485,21 +501,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                         children: [
                           ProfileDropDownField(
                             description: "University Names",
-                            items: [
-                              "Sefako Makgatho Health Sciences University",
-                              "University of Cape Town",
-                              "University of KwaZulu-Natal",
-                              "University of Limpopo",
-                              "University of Pretoria",
-                              "University of Stellenbosch",
-                              "University of the Witwatersrand",
-                              "Walter Sisulu University",
-                              "Nelson Mandela University",
-                              "North-West University",
-                              "University of the Western Cape",
-                              "University of Johannesburg",
-                              "Other",
-                            ],
+                            items: allUniversities,
                             customSize: MyUtility(context).width / 7,
                             textfieldController: univercityName,
                           ),
@@ -513,12 +515,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                           ),
                           ProfileDropDownField(
                             description: "University Qualification",
-                            items: [
-                              "Bachelor's Degree",
-                              "Honours Degree",
-                              "Master's Degree",
-                              "Doctoral Degree"
-                            ],
+                            items: universityQualifications,
                             customSize: MyUtility(context).width / 7,
                             textfieldController: univercityQualification,
                           ),
