@@ -200,12 +200,12 @@ class _MemberCategoryState extends State<MemberCategory> {
         ],
         "Annually": [
           {
-            "title": '4th Year After Qualification - R 4 853.20',
+            "title": '4th Year After Qualification - R 4 853.16',
             "info":
                 "After two years of Internship and one year of Community\n service. Can be employed by Government,\n working in Private Practice or\n fall under EDOPS. SAMJ included."
           },
           {
-            "title": "Private Practice - R 6 550.41",
+            "title": "Private Practice - R 6180.00",
             "info":
                 "Private Practice or\n Private and Hospital \nSessions. SAMJ included."
           },
@@ -215,12 +215,12 @@ class _MemberCategoryState extends State<MemberCategory> {
                 "Working part time in Private\n Practice, Government or\n EDOPS. SAMJ included."
           },
           {
-            "title": "Spouse of Member - R 3 843.28",
+            "title": "Spouse of Member - R 3 843.24",
             "info":
                 "The spouse of a full SAMA member will\n pay a reduced member rate. The spouse\n will not receive a separate journal\n as the SAMJ will be posted \nto the main member only.\n Should a spouse like to\n receive his/her own \ncopy of the SAMJ, a special reduced \nmember rate will apply for\n the 2nd copy. Can be employed\n by Government, working in Private \nPractice or fall under EDOPS (Employed \nDoctors Outside Public Sector)."
           },
           {
-            "title": "Retired - R 1 472.79",
+            "title": "Retired - R 1 472.76",
             "info":
                 "Retired members only. SAMJ not included.\n If a member would like to participate\n in the CPD programme, they need to subscribe to\n the SAMJ. A special reduced\n member rate will apply."
           },
@@ -284,42 +284,42 @@ class _MemberCategoryState extends State<MemberCategory> {
         ],
         "Annually": [
           {
-            "title": "Intern - R2664.00",
+            "title": "Intern - 2818.92",
             "info":
                 "After completing 6 years of study\n becomes 1st year Intern then 2nd year Intern. \nQualifying month can vary. Government employed.\n SAMJ (SA Medical Journal) included."
           },
           {
-            "title": "Community Service - R3624.00",
+            "title": "Community Service - R3843.24",
             "info":
                 "One year Community service - \nafter two years \nInternship. SAMJ include"
           },
           {
-            "title": "4th Year After Qualification - R4584.00",
+            "title": "4th Year After Qualification - R4853.16",
             "info":
                 "After two years of Internship\n and one year of Community service. \nCan be employed by Government, \nworking in Private Practice \nor fall under EDOPS. SAMJ included."
           },
           {
-            "title": "Registrar - R4584.00",
+            "title": "Registrar - R4853.16",
             "info":
                 "Studying for a Speciality. Full time in Government or Military Hospital. SAMJ included."
           },
           {
-            "title": "Full Time MP - R6180.00",
+            "title": "Full Time MP - R6550.44",
             "info":
                 "Full time employed by Government or Full time\n employed and doing RWOPS (Remuneration\n outside Public Service) or employed by NHLS \n(National Health Lab \nServices). SAMJ Included."
           },
           {
-            "title": "Part Time MP - R3624.00",
+            "title": "Part Time MP - R3843.24",
             "info":
                 "Working part time in \nPrivate Practice, Government or\n EDOPS. SAMJ included."
           },
           {
-            "title": "Spouse of Member - R3576.00",
+            "title": "Spouse of Member - R3787.2",
             "info":
                 "The spouse of a full SAMA \nmember will pay a reduced member \nrate. The spouse will not receive\n a separate journal as the SAMJ will\n be posted to the main member only.\n Should a spouse like to receive \nhis/her own copy of the SAMJ, \na special reduced member rate \nwill apply for the 2nd copy. Can be employed \nby Government, working in Private Practice \nor fall under EDOPS (Employed \nDoctors Outside Public Sector)."
           },
           {
-            "title": "Retired - R1380.00",
+            "title": "Retired - 1472.76",
             "info":
                 "Retired members only. \nSAMJ not included. If a member\n would like to participate in the CPD\n programme, they need to subscribe\n to the SAMJ. A special\n reduced member rate will apply."
           },
@@ -520,7 +520,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                         for (var i = 0; i < applicationTypes.length; i++)
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
+                            child: InkWell(
                               onTap: () {
                                 updateApplicationTypeSelected(
                                     applicationTypes[i]);
@@ -581,7 +581,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             updatePaymentTypeSelected("Free Membership");
                           },
@@ -599,7 +599,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             updatePaymentTypeSelected("Monthly");
                           },
@@ -610,7 +610,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                         SizedBox(
                           width: 8,
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             updatePaymentTypeSelected("Annually");
                           },
@@ -639,7 +639,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                                 j++)
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
+                                child: InkWell(
                                   onTap: () {
                                     updateMembershipTypeSelected(paymentTypes[i]
                                         ['paymentType']['Monthly'][j]['title']);
@@ -664,7 +664,7 @@ class _MemberCategoryState extends State<MemberCategory> {
                                 j++)
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
+                                child: InkWell(
                                   onTap: () {
                                     updateMembershipTypeSelected(paymentTypes[i]
                                             ['paymentType']['Annually'][j]

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/login/registerFullProfile.dart';
@@ -15,6 +16,16 @@ class Payments extends StatefulWidget {
 }
 
 class _PaymentsState extends State<Payments> {
+  //Dialog for contruction popup
+  Future OpenContructionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "To be implemented in a later milestone",
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
   continueToRegisterUser() {
     Navigator.push(
         context,
@@ -171,7 +182,9 @@ class _PaymentsState extends State<Payments> {
                         description: "EFT",
                         height: 45,
                         width: 125,
-                        onTap: () {}),
+                        onTap: () {
+                          OpenContructionPopup();
+                        }),
                     SizedBox(
                       width: 8,
                     ),
@@ -179,14 +192,16 @@ class _PaymentsState extends State<Payments> {
                         description: "Debit Order",
                         height: 45,
                         width: 125,
-                        onTap: () {}),
+                        onTap: () {
+                          OpenContructionPopup();
+                        }),
                   ],
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 Center(
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       continueToRegisterUser();
                     },

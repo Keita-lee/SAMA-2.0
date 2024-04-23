@@ -5,6 +5,7 @@ import 'package:sama/components/pageUnderContruction.dart';
 import 'package:sama/components/userState.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/login/membershipCategory/memberCategory.dart';
+import 'package:sama/login/payments/payments.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
