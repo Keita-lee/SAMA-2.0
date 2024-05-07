@@ -147,29 +147,6 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                       height: MyUtility(context).height * 0.25,
                     )),
               ),
-
-              /* Container(
-                width: MyUtility(context).width / 4,
-                height: MyUtility(context).height * 0.25,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFFD1D1D1),
-                ),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: ImageNetwork(
-                      image: widget.articleImage!,
-                      fitWeb: BoxFitWeb,
-                      width: MyUtility(context).width * 0.215,
-                      height: MyUtility(context).height * 0.25,
-                    )*/
-
-              /* Image.asset(
-                widget.image,
-                fit: BoxFit.cover,
-              ),
-                    ),
-              ),*/
               SizedBox(
                 width: MyUtility(context).width * 0.025,
               ),
@@ -264,24 +241,6 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                           ? Color(0xFFFFF4D9)
                           : Color.fromARGB(255, 255, 255, 255),
                     ),
-                  /* 
-                 CommentContainer(
-                    image: 'images/pfp.jpg',
-                    username: 'Example',
-                    time: '15:46',
-                    date: ' 10 March 2024',
-                    comment:
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, deleniti vel quam error voluptatibus accusamus sapiente odit placeat a repellat aliquid aliquam sint reprehenderit laudantium dolores corporis consequatur nulla officia in maxime rem et ducimus odio officiis. Esse unde assumenda, consectetur maiores pariatur nobis cum temporibus facere? Impedit praesentium eligendi incidunt, itaque adipisci voluptas, corrupti ipsum pariatur, ut soluta eveniet?",
-                  ),
-                  CommentContainer(
-                    image: 'images/pfp.jpg',
-                    username: 'Example',
-                    time: '15:46',
-                    date: '9 March 2024',
-                    comment:
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam beatae nisi sed, minima sunt expedita quos aspernatur similique omnis corporis?",
-                    backgroundColor: Color(0xFFFFF4D9),
-                  ),*/
                   SizedBox(
                     height: MyUtility(context).height * 0.035,
                   ),

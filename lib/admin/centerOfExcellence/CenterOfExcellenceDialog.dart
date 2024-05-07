@@ -61,16 +61,16 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
       data["id"] = doc.id;
 
       final json = data;
-      doc.set(json);
+      doc.set(json).whenComplete(() => widget.getAllArticles());
     } else {
       FirebaseFirestore.instance
           .collection('articles')
           .doc(widget.id)
-          .update(data);
+          .update(data)
+          .whenComplete(() => widget.getAllArticles());
     }
 
     widget.closeDialog();
-    widget.getAllArticles();
   }
 
 //Remove Article from db
@@ -79,10 +79,10 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
         .collection('articles')
         .doc(widget.id)
         .delete()
-        .whenComplete(() => {
-              widget.closeDialog!(),
-              widget.getAllArticles(),
-            });
+        .whenComplete(
+          () => widget.getAllArticles(),
+        );
+    widget.closeDialog();
   }
 
   BuildContext? dialogContext;

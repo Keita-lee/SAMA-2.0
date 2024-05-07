@@ -92,12 +92,10 @@ class _LoginPagesState extends State<LoginPages> {
           getMobileNumber: getMobileNumber,
           getEmailChangeType: getEmailChangeType),
       ValidateByMobileGetUsername(
-          mobileNumber: mobileNumber, changePage: changePage,),
-      DisplayUsername(
+        mobileNumber: mobileNumber,
         changePage: changePage,
-        mobileNumber:mobileNumber
-        
       ),
+      DisplayUsername(changePage: changePage, mobileNumber: mobileNumber),
       ValidateByEmailOtp(
           changePage: changePage,
           email: email,

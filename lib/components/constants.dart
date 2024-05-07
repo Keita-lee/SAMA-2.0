@@ -411,6 +411,15 @@ const qualifications = [
 ];
 
 const availableUniversities = [
+  "Univ  Cape Town",
+  "Univ  Free State",
+  "Univ  Medunsa/Limpopo/Sefako Makgatho",
+  "Univ  Natal",
+  "Univ  Nelson Mandela  PE",
+  "Univ  Pretoria",
+  "Univ  Stellenbosch",
+  "Univ  Transkei/Walter Sisulu",
+  "Univ  WITS",
   "Aarhus",
   "Academy of Lublin Poland",
   "Addis Ababa",
@@ -790,15 +799,6 @@ const availableUniversities = [
   "Unirhemos",
   "United Kingdom",
   "United State of America",
-  "Univ  Cape Town",
-  "Univ  Free State"
-      "Univ  Medunsa/Limpopo/Sefako Makgatho",
-  "Univ  Natal",
-  "Univ  Nelson Mandela  PE",
-  "Univ  Pretoria",
-  "Univ  Stellenbosch",
-  "Univ  Transkei/Walter Sisulu",
-  "Univ  WITS",
   "Univ Bahawalpur Pakistan",
   "Univ Lausanne Switzerland",
   "Univ Melbourne Australia",
@@ -856,5 +856,7 @@ const availableUniversities = [
   "Zambia",
   "Zimbabwe",
   "Zugansu",
-  " Zululand",
+  "Zululand",
 ];
+
+const primary1 = Color.fromARGB(255, 119, 115, 101);

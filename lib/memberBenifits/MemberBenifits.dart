@@ -7,6 +7,7 @@ import 'package:sama/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/memberBenifits/memberDetailsDialog.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class MemberBenifits extends StatefulWidget {
   const MemberBenifits({super.key});
@@ -16,6 +17,7 @@ class MemberBenifits extends StatefulWidget {
 }
 
 class _MemberBenifitsState extends State<MemberBenifits> {
+  final ScrollController _scrollController = ScrollController();
   String userType = "";
 
   getUserData() async {
@@ -80,22 +82,25 @@ class _MemberBenifitsState extends State<MemberBenifits> {
           ),
           Visibility(
             visible: userType == "Admin" ? true : false,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width:
-                      MyUtility(context).width - MyUtility(context).width / 3.7,
-                ),
-                StyleButton(
-                    description: "Add Benefit",
-                    height: 55,
-                    width: 125,
-                    onTap: () {
-                      openMemberDialog("");
-                    })
-              ],
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width -
+                        MyUtility(context).width / 3.7,
+                  ),
+                  StyleButton(
+                      description: "Add Benefit",
+                      height: 55,
+                      width: 125,
+                      onTap: () {
+                        openMemberDialog("");
+                      })
+                ],
+              ),
             ),
           ),
           StreamBuilder<QuerySnapshot>(
@@ -117,11 +122,17 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                 }
 
                 return Container(
-                    width:
-                        MyUtility(context).width - MyUtility(context).width / 4,
-                    height: 500,
-                    //color: Colors.transparent,
+                  width:
+                      MyUtility(context).width - MyUtility(context).width / 4,
+                  height: MyUtility(context).height / 1.4,
+                  //color: Colors.transparent,
+                  child: DraggableScrollbar.rrect(
+                    alwaysVisibleScrollThumb: true,
+                    backgroundColor: Color.fromARGB(255, 8, 55, 145),
+                    controller: _scrollController,
+                    padding: EdgeInsets.zero,
                     child: ListView.builder(
+                        controller: _scrollController,
                         itemCount: documents.length,
                         itemBuilder: (BuildContext context, int index) {
                           final DocumentSnapshot document = documents[index];
@@ -140,7 +151,9 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                                   openMemberDialog(document['id']);
                                 }),
                           );
-                        }));
+                        }),
+                  ),
+                );
               })
 
           /*  CompanyContainer(
