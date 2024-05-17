@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sama/components/userState.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/profile/MyPreferences.dart';
 import 'package:sama/profile/Notifications.dart';

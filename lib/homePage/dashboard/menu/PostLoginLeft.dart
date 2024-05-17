@@ -169,6 +169,14 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         widget.changePage(2);
                       },
                     ),
+                    HoverItem(
+                      menuSize: widget.menuSize,
+                      description: 'Media  & Podcast',
+                      iconPath: "images/videoCamera.svg",
+                      onPressed: () {
+                        widget.changePage(7);
+                      },
+                    ),
                   ],
                 )),
             Visibility(
@@ -223,15 +231,15 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     menuSize: widget.menuSize,
                     description: "Publications",
                     iconPath: "",
-                    onPressed: () {
-                      widget.changePage(1);
-                    },
+                    onPressed: () {},
                   ),
                   HoverItem(
                     menuSize: widget.menuSize,
                     description: "Podcast",
-                    iconPath: "",
-                    onPressed: () {},
+                    iconPath: "images/videoCamera.svg",
+                    onPressed: () {
+                      widget.changePage(8);
+                    },
                   ),
                   HoverItem(
                     menuSize: widget.menuSize,

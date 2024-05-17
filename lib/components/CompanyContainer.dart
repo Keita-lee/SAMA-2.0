@@ -9,6 +9,7 @@ class CompanyContainer extends StatefulWidget {
   final String companyname;
   final String discription;
   final VoidCallback editCompanyDetails;
+  final VoidCallback openMemberDetails;
 
   const CompanyContainer(
       {super.key,
@@ -16,7 +17,8 @@ class CompanyContainer extends StatefulWidget {
       required this.image,
       required this.companyname,
       required this.discription,
-      required this.editCompanyDetails});
+      required this.editCompanyDetails,
+      required this.openMemberDetails});
 
   @override
   State<CompanyContainer> createState() => _CompanyContainerState();
@@ -31,6 +33,9 @@ class _CompanyContainerState extends State<CompanyContainer> {
       child: Row(
         children: [
           ImageNetwork(
+            onTap: () {
+              widget.openMemberDetails();
+            },
             image: widget.image,
             width: MyUtility(context).width * 0.12,
             height: 100,

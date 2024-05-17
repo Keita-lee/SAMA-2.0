@@ -6,8 +6,6 @@ import 'package:sama/Login/popups/validateDialog.dart';
 
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
-
-import 'package:sama/components/userState.dart';
 import 'package:sama/components/constants.dart' as constants;
 
 class EditProfile extends StatefulWidget {

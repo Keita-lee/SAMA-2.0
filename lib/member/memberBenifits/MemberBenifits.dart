@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsDialog.dart';
 import 'package:sama/components/CompanyContainer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sama/centerOfExcellence/ui/NewsContainer.dart';
+import 'package:sama/member/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
-import 'package:sama/memberBenifits/memberDetailsDialog.dart';
+import 'package:sama/member/memberBenifits/memberDetailsDialog.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class MemberBenifits extends StatefulWidget {
@@ -137,19 +137,24 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                         itemBuilder: (BuildContext context, int index) {
                           final DocumentSnapshot document = documents[index];
 
-                          return GestureDetector(
+                          return InkWell(
                             onTap: () {
                               openMemberDetailsDialog(
                                   document['id'], document['logo']);
                             },
                             child: CompanyContainer(
-                                userType: userType,
-                                image: document['logo'],
-                                companyname: document['companyName'],
-                                discription: document['companyDescription'],
-                                editCompanyDetails: () {
-                                  openMemberDialog(document['id']);
-                                }),
+                              userType: userType,
+                              image: document['logo'],
+                              companyname: document['companyName'],
+                              discription: document['companyDescription'],
+                              editCompanyDetails: () {
+                                openMemberDialog(document['id']);
+                              },
+                              openMemberDetails: () {
+                                openMemberDetailsDialog(
+                                    document['id'], document['logo']);
+                              },
+                            ),
                           );
                         }),
                   ),

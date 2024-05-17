@@ -2,14 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
-import 'package:sama/PostLoginLandingPage.dart';
+
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
-import 'package:sama/components/userState.dart';
+
 import 'package:sama/components/utility.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
+import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/loginPages.dart';
 
 enum SingingCharacter { memberNumber, email }

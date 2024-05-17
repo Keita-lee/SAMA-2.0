@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sama/PostLoginLandingPage.dart';
+
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
-import 'package:sama/components/userState.dart';
+
 import 'package:sama/components/utility.dart';
+import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/popups/validateDialog.dart';
 
 class LoginWithPassword extends StatefulWidget {

@@ -6,7 +6,6 @@ import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
-import 'package:sama/components/userState.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/login/membershipCategory/memberCategory.dart';
 

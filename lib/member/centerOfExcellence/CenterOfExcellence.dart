@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/centerOfExcellence/CenterOfExcellenceDialog.dart';
-import 'package:sama/centerOfExcellence/ui/NewsContainer.dart';
+import 'package:sama/member/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 
@@ -23,6 +23,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
   BuildContext? dialogContext;
 
   getAllArticles() async {
+    setState(() {});
     allArticles.clear();
     final data = await FirebaseFirestore.instance.collection('articles').get();
     setState(() {
@@ -81,72 +82,6 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
           SizedBox(
             height: MyUtility(context).height * 0.05,
           ),
-          /* StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection('articles').snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: snapshot error');
-                }
-                if (!snapshot.hasData) {
-                  return const Text('Loading...');
-                }
-
-                final List<DocumentSnapshot> documents = snapshot.data!.docs;
-                if (documents.isEmpty) {
-                  return Center(child: Text('No class yet'));
-                }
-
-                return Container(
-                    width: MyUtility(context).width -
-                        (MyUtility(context).width * 0.25),
-                    height: 500,
-                    //color: Colors.transparent,
-                    child: ListView.builder(
-                        itemCount: documents.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final DocumentSnapshot document = documents[index];
-                          return SizedBox(
-                            width: 200,
-                            child: NewsContainer(
-                              image: document['image'],
-                              category: document['category'],
-                              date: document['date'],
-                              header: document['title'],
-                              onPressed: () {
-                                setState(() {
-                                  widget.getArticleId!(document['id']);
-                                });
-
-                                widget.changePage!(6);
-                              },
-                            ),
-                          );
-                        }));
-              }),
-        */ /*    Row(
-            children: [
-              NewsContainer(
-                  image: 'images/news1.jpg',
-                  category: 'Category ',
-                  date: '13 March 2024',
-                  header: 'Header',
-                  onPressed: () {}),
-              SizedBox(
-                width: MyUtility(context).width * 0.025,
-              ),
-              NewsContainer(
-                  image: 'images/news2.jpg',
-                  category: 'Med-e-mail',
-                  date: '13 March 2024',
-                  header:
-                      'WEBINAR | JUDASA - Reviving a Junior Doctors Movement',
-                  onPressed: () {}),
-            ],
-          ),
-      */
-
           Visibility(
               visible: userType == "Admin" ? true : false,
               child: Row(

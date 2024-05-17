@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sama/PostLoginLandingPage.dart';
+import 'package:sama/homePage/PostLoginLandingPage.dart';
 
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
-import 'package:sama/components/userState.dart';
 import 'package:sama/login/registerFinished.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/components/constants.dart' as constants;
@@ -505,11 +504,6 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                             customSize: MyUtility(context).width / 7,
                             textfieldController: univercityName,
                           ),
-                          /*    ProfileTextField(
-                              customSize: MyUtility(context).width / 7,
-                              description: "University Name",
-                              textfieldController: univercityName,
-                              textFieldType: "stringType"),*/
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
@@ -519,12 +513,6 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                             customSize: MyUtility(context).width / 7,
                             textfieldController: univercityQualification,
                           ),
-
-                          /*    ProfileTextField(
-                              customSize: MyUtility(context).width / 7,
-                              description: "University Qualification",
-                              textfieldController: univercityQualification,
-                              textFieldType: "stringType"),*/
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),

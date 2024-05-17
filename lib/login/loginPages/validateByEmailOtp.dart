@@ -5,7 +5,7 @@ import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/email/sendSAMANumber.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
-import 'package:sama/components/userState.dart';
+
 import 'package:sama/components/utility.dart';
 
 class ValidateByEmailOtp extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sama/PostLoginLandingPage.dart';
+import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/pageUnderContruction.dart';
-import 'package:sama/components/userState.dart';
+
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/login/membershipCategory/memberCategory.dart';
 import 'package:sama/login/payments/payments.dart';
@@ -19,8 +19,9 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     var width = MyUtility(context).width;
     return Scaffold(
-      body: Center(child: width < 800 ? PageUnderConstruction() : LoginPages()),
-    );
+        body: Stack(children: <Widget>[
+      Center(child: width < 800 ? PageUnderConstruction() : LoginPages()),
+    ]));
   }
 }
 
