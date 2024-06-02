@@ -137,9 +137,12 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           SizedBox(
             height: 15,
           ),
-          TextFieldStyling(
-            hintText: 'Enter here',
-            textfieldController: email,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFieldStyling(
+              hintText: 'Enter here',
+              textfieldController: email,
+            ),
           ),
           Text(
             validateText,
