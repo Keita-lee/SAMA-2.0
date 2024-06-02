@@ -85,6 +85,16 @@ class _AdminMediaState extends State<AdminMedia> {
                               duration: document['duration'],
                               releaseDate: document['releaseDate'],
                               category: document['category'],
+                            ),
+                            MediaContainerStyle(
+                              onpress: () {
+                                openMediaDialog((document['id']));
+                              },
+                              adminType: "true",
+                              image: document['mediaImageUrl'],
+                              duration: document['duration'],
+                              releaseDate: document['releaseDate'],
+                              category: document['category'],
                             )
                           ],
                         );

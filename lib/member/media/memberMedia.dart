@@ -64,8 +64,20 @@ class _MemberMediaState extends State<MemberMedia> {
                         direction: Axis.horizontal,
                         children: [
                           MediaContainerStyle(
+                            view: () {
+                              openMediaDialog(document["id"]);
+                            },
                             onpress: () {
-                              //     openMediaDialog((document['id']));
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MediaPopup(
+                                    closeDialog: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
+                                },
+                              );
                             },
                             adminType: "false",
                             image: document['mediaImageUrl'],

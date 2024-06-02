@@ -177,6 +177,14 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         widget.changePage(7);
                       },
                     ),
+                    HoverItem(
+                      menuSize: widget.menuSize,
+                      description: 'Events List',
+                      iconPath: "images/star.svg",
+                      onPressed: () {
+                        widget.changePage(8);
+                      },
+                    ),
                   ],
                 )),
             Visibility(
@@ -216,8 +224,10 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   HoverItem(
                     menuSize: widget.menuSize,
                     description: "Events",
-                    iconPath: "",
-                    onPressed: () {},
+                    iconPath: "images/star.svg",
+                    onPressed: () {
+                      widget.changePage(10);
+                    },
                   ),
                   HoverItem(
                     menuSize: widget.menuSize,
@@ -238,7 +248,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Podcast",
                     iconPath: "images/videoCamera.svg",
                     onPressed: () {
-                      widget.changePage(8);
+                      widget.changePage(9);
                     },
                   ),
                   HoverItem(

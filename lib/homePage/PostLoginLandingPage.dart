@@ -2,9 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/admin/Events/AdminEvents/Event.dart';
+import 'package:sama/admin/Events/EventDetails/EventDetails.dart';
+import 'package:sama/admin/Events/EventDetails/Ui/EventMemberList.dart';
+import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
+import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
+import 'package:sama/member/Events/MemberEvents/MemberEvents.dart';
 import 'package:sama/member/centerOfExcellence/CenterOfExcellence.dart';
 import 'package:sama/member/centerOfExcellence/CenterofExcellenceArticle.dart';
 import 'package:sama/member/media/memberMedia.dart';
@@ -87,7 +93,14 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
           changePage: changePage,
           articleImage: articleImage),
       AdminMedia(),
+      AdminEvents(),
       MemberMedia(),
+      MemberEvents()
+
+      /*AdminEventDetails(),*/
+      /*AdminEvents(),*/
+      /*MemberEvents()*/
+      /*MemberEventDetails()*/
     ];
 
     return Scaffold(
