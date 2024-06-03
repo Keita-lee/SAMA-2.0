@@ -227,7 +227,10 @@ class _AdminEventsState extends State<AdminEvents> {
                                                     location:
                                                         document['_location']!,
                                                     area: document['_area']!,
-                                                    attending: "",
+                                                    attending:
+                                                        document['attending']
+                                                            .length
+                                                            .toString(),
                                                   ),
                                                 ),
                                               )
