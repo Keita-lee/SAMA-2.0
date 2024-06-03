@@ -23,7 +23,7 @@ class MediaContainerStyle extends StatefulWidget {
       required this.releaseDate,
       required this.category,
       required this.onpress,
-      this.view});
+      required this.view});
 
   @override
   State<MediaContainerStyle> createState() => _MediaContainerStyleState();
@@ -46,18 +46,19 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-          width: MyUtility(context).width / 4.7,
-          height: MyUtility(context).height * 0.55,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: Color(0xFFD1D1D1),
-              )),
-          child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                  child: Column(children: [
+        width: MyUtility(context).width / 4.7,
+        height: MyUtility(context).height * 0.55,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: Color(0xFFD1D1D1),
+            )),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
                 Container(
                   width: MyUtility(context).width / 4.7,
                   height: MyUtility(context).height * 0.25,
@@ -105,7 +106,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   height: 10,
                 ),
                 Visibility(
-                  visible: widget.adminType == "true" ? false : true,
+                  //visible: widget.adminType == "true" ? false : true,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: SizedBox(
@@ -170,7 +171,11 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                     ),
                   ),
                 ),
-              ])))),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

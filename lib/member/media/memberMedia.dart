@@ -21,6 +21,7 @@ class _MemberMediaState extends State<MemberMedia> {
           closeDialog: () => Navigator.pop(context!),
         ));
       });
+
   @override
   Widget build(BuildContext context) {
     return Container(

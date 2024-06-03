@@ -6,6 +6,7 @@ import 'package:sama/admin/media/ui/mediaHeaderSection.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
 
 class AdminMedia extends StatefulWidget {
   const AdminMedia({super.key});
@@ -25,9 +26,19 @@ class _AdminMediaState extends State<AdminMedia> {
         return Dialog(
             child: MediaForm(
           id: id,
+          closeDialog: () => Navigator.pop(context),
+        ));
+      });
+
+  Future viewMediaDialog(id) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: MediaPopup(
           closeDialog: () => Navigator.pop(context!),
         ));
       });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,35 +79,32 @@ class _AdminMediaState extends State<AdminMedia> {
                   width: MyUtility(context).width -
                       (MyUtility(context).width * 0.25),
                   height: 500,
-                  //color: Colors.transparent,
                   child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
                       itemCount: documents.length,
                       itemBuilder: (BuildContext context, int index) {
                         final DocumentSnapshot document = documents[index];
-                        return Wrap(
-                          direction: Axis.horizontal,
-                          children: [
-                            MediaContainerStyle(
-                              onpress: () {
-                                openMediaDialog((document['id']));
-                              },
-                              adminType: "true",
-                              image: document['mediaImageUrl'],
-                              duration: document['duration'],
-                              releaseDate: document['releaseDate'],
-                              category: document['category'],
-                            ),
-                            MediaContainerStyle(
-                              onpress: () {
-                                openMediaDialog((document['id']));
-                              },
-                              adminType: "true",
-                              image: document['mediaImageUrl'],
-                              duration: document['duration'],
-                              releaseDate: document['releaseDate'],
-                              category: document['category'],
-                            )
-                          ],
+                        return Container(
+                          child: Wrap(
+                            //mainAxisAlignment: MainAxisAlignment.start,
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: [
+                              MediaContainerStyle(
+                                onpress: () {
+                                  openMediaDialog(document['id']);
+                                },
+                                view: () {
+                                  viewMediaDialog(document['id']);
+                                },
+                                adminType: "true",
+                                image: document['mediaImageUrl'],
+                                duration: document['duration'],
+                                releaseDate: document['releaseDate'],
+                                category: document['category'],
+                              ),
+                            ],
+                          ),
                         );
                       }));
             }),
