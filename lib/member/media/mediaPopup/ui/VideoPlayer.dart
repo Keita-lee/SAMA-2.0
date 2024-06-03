@@ -65,114 +65,116 @@ class _VideoContainerState extends State<VideoContainer> {
           width: 1.0,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.subjectName,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Release Date: ${widget.releaseDate}',
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          Container(
-            width: MyUtility(context).width * 0.5,
-            height: MyUtility(context).height * 0.4,
-            color: Colors.black,
-            child: Stack(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FutureBuilder(
-                  future: _initializeVideoPlayerFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
-                      );
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
+                Text(
+                  widget.subjectName,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Release Date: ${widget.releaseDate}',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            Container(
+              width: MyUtility(context).width * 0.5,
+              height: MyUtility(context).height * 0.4,
+              color: Colors.black,
+              child: Stack(
+                children: [
+                  FutureBuilder(
+                    future: _initializeVideoPlayerFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        );
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: Icon(
+                        _controller.value.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        size: 50.0,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (_controller.value.isPlaying) {
+                            _controller.pause();
+                          } else {
+                            _controller.play();
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    _controller.value.volume == 0
+                        ? Icons.volume_off
+                        : Icons.volume_up,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _volume = _controller.value.volume == 0 ? 1 : 0;
+                      _controller.setVolume(_volume);
+                    });
                   },
                 ),
-                Center(
-                  child: IconButton(
-                    icon: Icon(
-                      _controller.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      size: 50.0,
+                SizedBox(
+                  width: MyUtility(context).width * 0.2,
+                  child: Expanded(
+                    child: Slider(
+                      value: _volume,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _volume = newValue;
+                          _controller.setVolume(newValue);
+                        });
+                      },
+                      min: 0,
+                      max: 1,
+                      divisions: 10,
+                      label: _volume.toStringAsFixed(1),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        if (_controller.value.isPlaying) {
-                          _controller.pause();
-                        } else {
-                          _controller.play();
-                        }
-                      });
-                    },
                   ),
                 ),
               ],
             ),
-          ),
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  _controller.value.volume == 0
-                      ? Icons.volume_off
-                      : Icons.volume_up,
+            Row(
+              children: [
+                Text(
+                  _formatDuration(
+                      _controller.value.duration - _controller.value.position),
                 ),
-                onPressed: () {
-                  setState(() {
-                    _volume = _controller.value.volume == 0 ? 1 : 0;
-                    _controller.setVolume(_volume);
-                  });
-                },
-              ),
-              SizedBox(
-                width: MyUtility(context).width * 0.2,
-                child: Expanded(
-                  child: Slider(
-                    value: _volume,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _volume = newValue;
-                        _controller.setVolume(newValue);
-                      });
-                    },
-                    min: 0,
-                    max: 1,
-                    divisions: 10,
-                    label: _volume.toStringAsFixed(1),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                _formatDuration(
-                    _controller.value.duration - _controller.value.position),
-              ),
-            ],
-          ),
-          Text(
-            'Duration: ${widget.duration}',
-            style: TextStyle(fontSize: 16),
-          ),
-        ],
+              ],
+            ),
+            Text(
+              'Duration: ${widget.duration}',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/Events/AdminEvents/UI/EventsHeaderSection.dart';
+import 'package:sama/admin/Events/AdminEvents/UI/EventsList.dart';
 import 'package:sama/admin/Events/AdminEvents/UI/UpcommingEvents.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
@@ -40,9 +42,11 @@ class _AdminEventsState extends State<AdminEvents> {
                     backgroundColor: Colors.transparent,
                     insetPadding: EdgeInsets.all(10),
                     child: Container(
-                      color: Colors
-                          .transparent, // Ensure content's background is transparent
-                      child: NewEvent(),
+                      color: Colors.transparent,
+                      child: NewEvent(
+                        id: "",
+                        closeDialog: () => Navigator.pop(context!),
+                      ),
                     ),
                   );
                 },
@@ -80,9 +84,161 @@ class _AdminEventsState extends State<AdminEvents> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Align(
-                alignment: Alignment.topCenter,
-                child: UpcommingEvents(),
-              ),
+                  alignment: Alignment.topCenter,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Event Name',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Date',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Location',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Area',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Attending',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('events')
+                                .snapshots(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Error: snapshot error');
+                              }
+                              if (!snapshot.hasData) {
+                                return const Text('Loading...');
+                              }
+
+                              final List<DocumentSnapshot> documents =
+                                  snapshot.data!.docs;
+                              if (documents.isEmpty) {
+                                return Center(
+                                    child: Text('No Media Podcast yet'));
+                              }
+
+                              return Container(
+                                  width: MyUtility(context).width -
+                                      (MyUtility(context).width * 0.25),
+                                  height: 500,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: documents.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final DocumentSnapshot document =
+                                            documents[index];
+                                        return Container(
+                                          child: Column(
+                                            //mainAxisAlignment: MainAxisAlignment.start,
+
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: true,
+                                                      barrierColor: Colors.black
+                                                          .withOpacity(0.5),
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Dialog(
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          insetPadding:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child: Container(
+                                                            color: Colors
+                                                                .transparent,
+                                                            child: NewEvent(
+                                                              id: document[
+                                                                  'id'],
+                                                              closeDialog: () =>
+                                                                  Navigator.pop(
+                                                                      context!),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: EventsList(
+                                                    eventName:
+                                                        document['title']!,
+                                                    date: document['date']!,
+                                                    location:
+                                                        document['_location']!,
+                                                    area: document['_area']!,
+                                                    attending: "",
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      }));
+                            }),
+                      ],
+                    ),
+                  )),
             ),
           ),
         ],

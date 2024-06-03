@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/admin/Events/AdminEvents/UI/eventsCategory/category.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
@@ -15,6 +16,16 @@ class EventsHeaderSection extends StatefulWidget {
 }
 
 class _EventsHeaderSectionState extends State<EventsHeaderSection> {
+  //Open dialog for media
+  Future openCategoryDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: Categories(
+          categoryType: "event",
+          closeDialog: () => Navigator.pop(context),
+        ));
+      });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,11 +37,17 @@ class _EventsHeaderSectionState extends State<EventsHeaderSection> {
           SizedBox(
             width: MyUtility(context).width / 1.8,
           ),
-          ProfileDropDownField(
-            description: "Select a Category",
-            items: [],
-            customSize: 250,
-            textfieldController: widget.controller,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: StyleButton(
+                  description: "View Categories",
+                  height: 55,
+                  width: 125,
+                  onTap: () {
+                    openCategoryDialog();
+                  }),
+            ),
           ),
           SizedBox(
             width: 15,

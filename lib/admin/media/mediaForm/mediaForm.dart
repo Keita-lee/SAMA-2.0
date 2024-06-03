@@ -5,6 +5,7 @@ import 'package:sama/admin/media/ui/addMediaImage.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButtonYellow.dart';
+import 'package:sama/components/yesNoDialog.dart';
 
 class MediaForm extends StatefulWidget {
   Function closeDialog;
@@ -46,7 +47,7 @@ class _MediaFormState extends State<MediaForm> {
       "urlLink": urlLink.text,
       "mediaImageUrl": mediaImageUrl,
       "releaseDate": releaseDate,
-      "id": "",
+      "id": widget.id,
     };
 
     if (widget.id == "") {
@@ -64,6 +65,58 @@ class _MediaFormState extends State<MediaForm> {
           .update(mediaData)
           .whenComplete(() => widget.closeDialog());
     }
+  }
+
+  getMediaData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('media')
+        .doc(widget.id)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        title.text = data.get('title');
+        duration.text = data.get('duration');
+        author.text = data.get('author');
+        category.text = data.get('category');
+        description.text = data.get('description');
+        urlLink.text = data.get('urlLink');
+        mediaImageUrl = data.get('mediaImageUrl');
+        releaseDate = data.get('releaseDate');
+      });
+    }
+  }
+
+  //Remove member from db
+  removeMedia() {
+    FirebaseFirestore.instance
+        .collection('media')
+        .doc(widget.id)
+        .delete()
+        .whenComplete(() => widget.closeDialog!());
+  }
+
+  BuildContext? dialogContext;
+  //Dialog for password Validate
+  Future removeMediaPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to remove this item",
+          closeDialog: () => Navigator.pop(dialogContext!),
+          callFunction: removeMedia,
+        ));
+      });
+
+  @override
+  void initState() {
+    //get data when Id availble
+    if (widget.id != "") {
+      getMediaData();
+    }
+    super.initState();
   }
 
   @override
@@ -171,7 +224,20 @@ class _MediaFormState extends State<MediaForm> {
                       width: 110,
                       onTap: () {
                         saveData();
-                      })
+                      }),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Visibility(
+                    visible: widget.id != "" ? true : false,
+                    child: StylrButtonYellow(
+                        description: "Remove",
+                        height: 45,
+                        width: 110,
+                        onTap: () {
+                          removeMediaPopup();
+                        }),
+                  )
                 ],
               ),
             )

@@ -29,7 +29,7 @@ class EventsList extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.only(left: 0),
           child: Row(
             children: [
               Expanded(

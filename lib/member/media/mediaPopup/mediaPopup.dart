@@ -40,7 +40,7 @@ class _MediaPopupState extends State<MediaPopup> {
       return Video(
         subjectName: data['title'],
         duration: data['duration'],
-        releaseDate: data['releaseDate'],
+        releaseDate: "",
         videoUrl: data['urlLink'],
       );
     }).toList();
