@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/components/utility.dart';
 
 class MemberContainer extends StatefulWidget {
@@ -48,7 +49,7 @@ class _MemberContainerState extends State<MemberContainer> {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
-              Container(
+              /*   Container(
                 width: MyUtility(context).width * 0.15,
                 height: MyUtility(context).height * 0.22,
                 decoration: BoxDecoration(
@@ -62,6 +63,11 @@ class _MemberContainerState extends State<MemberContainer> {
                     fit: BoxFit.cover,
                   ),
                 ),
+              ),*/
+              ImageNetwork(
+                image: widget.eventImage,
+                width: MyUtility(context).width * 0.15,
+                height: MyUtility(context).height * 0.22,
               ),
               SizedBox(
                 width: MyUtility(context).width * 0.01,
@@ -76,7 +82,7 @@ class _MemberContainerState extends State<MemberContainer> {
                       child: Text(
                         widget.eventName,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           color: Color(0xFF3D3D3D),
                           fontWeight: FontWeight.bold,
                         ),
@@ -87,16 +93,16 @@ class _MemberContainerState extends State<MemberContainer> {
                       child: Text(
                         widget.location,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           color: Color(0xFF3D3D3D),
                           fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
                     Text(
-                      '${widget.dateFrom} - ${widget.dateTill}',
+                      '${widget.dateFrom}',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Color(0xFF3D3D3D),
                         fontWeight: FontWeight.normal,
                       ),

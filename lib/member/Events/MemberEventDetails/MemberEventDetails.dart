@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventText.dart';
 import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventsImage.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventTextField.dart';
@@ -6,15 +9,32 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
 
 class MemberEventDetails extends StatefulWidget {
+  String id;
   Function closeDialog;
 
-  MemberEventDetails({Key? key, required this.closeDialog}) : super(key: key);
+  MemberEventDetails({Key? key, required this.closeDialog, required this.id})
+      : super(key: key);
 
   @override
   _MemberEventDetailsState createState() => _MemberEventDetailsState();
 }
 
 class _MemberEventDetailsState extends State<MemberEventDetails> {
+  TextEditingController bookingnumber = TextEditingController();
+  TextEditingController _title = TextEditingController();
+  TextEditingController _date = TextEditingController();
+  TextEditingController _times = TextEditingController();
+  TextEditingController _event = TextEditingController();
+  TextEditingController _description = TextEditingController();
+  TextEditingController _location = TextEditingController();
+  TextEditingController _area = TextEditingController();
+
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController email = TextEditingController();
+
+  String eventsImage = "";
+  List attending = [];
   final List<String> imagePaths = [
     'images/coffee.jpg',
     'images/coffee.jpg',
@@ -33,7 +53,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
     super.dispose();
   }
 
-  void _previousImage() {
+  /*void _previousImage() {
     if (_currentPage > 0) {
       _pageController.previousPage(
         duration: Duration(milliseconds: 300),
@@ -49,17 +69,84 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         curve: Curves.easeInOut,
       );
     }
+  }*/
+
+  getEventData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('events')
+        .doc(widget.id)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        _title.text = data.get('title');
+        _date.text = data.get('date');
+        _times.text = data.get('_times');
+        _event.text = data.get('_event');
+        _description.text = data.get('_description');
+        _location.text = data.get('_location');
+        _area.text = data.get('_area');
+        eventsImage = data.get('eventsImage');
+
+        attending = data.get('attending');
+      });
+    }
+    setState(() {});
+  }
+
+  getUserData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        firstName.text = data.get('firstName');
+        lastName.text = data.get('lastName');
+        email.text = data.get('email');
+      });
+    }
+  }
+
+  confirmBooking() async {
+    var bookingData = {
+      "email": email.text,
+      "firstName": firstName.text,
+      "lastName": lastName.text,
+      "peopleAmmount": bookingnumber.text
+    };
+    attending.add(bookingData);
+
+    final data = await FirebaseFirestore.instance
+        .collection('events')
+        .doc(widget.id)
+        .update({"attending": attending}).whenComplete(widget.closeDialog());
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.id != "") {
+      getEventData();
+      getUserData();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController bookingnumber = TextEditingController();
     return Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            ImageNetwork(
+              image: eventsImage,
+              width: MyUtility(context).width * 0.2,
+              height: MyUtility(context).height * 0.35,
+            ),
+            /*  SizedBox(
               width: MyUtility(context).width * 0.75,
               height: MyUtility(context).height * 0.3,
               child: Stack(
@@ -119,7 +206,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   ),
                 ],
               ),
-            ),
+            ),*/
             Text(
               'Events Details',
               style: TextStyle(
@@ -156,10 +243,10 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                       SizedBox(
                           width: MyUtility(context).width * 0.15,
                           child: EventText(
-                              title: 'Event Name',
-                              date: 'Date Here',
-                              timeFrom: 'Time',
-                              timeTill: 'Time')),
+                              title: _title.text,
+                              date: _date.text,
+                              timeFrom: _times.text,
+                              timeTill: '')),
                       SizedBox(
                         width: MyUtility(context).width * 0.55,
                         child: Column(
@@ -175,7 +262,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                               ),
                             ),
                             Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl condimentum id venenatis a condimentum vitae sapien',
+                              _description.text,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Color(0xFF3D3D3D),
@@ -205,12 +292,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      MediaPopup(
-                        id: 'id',
-                        closeDialog: () {
-                          Navigator.of(context).pop();
-                        },
-                      );
+                      confirmBooking();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.yellow,

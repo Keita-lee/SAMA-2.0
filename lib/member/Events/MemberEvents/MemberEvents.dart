@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/myutility.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEventsComp/MemberContainer.dart';
 
@@ -61,6 +63,7 @@ class _MemberEventsState extends State<MemberEvents> {
       builder: (context) {
         return Dialog(
             child: MemberEventDetails(
+          id: id,
           closeDialog: () => Navigator.pop(context!),
         ));
       });
@@ -88,7 +91,52 @@ class _MemberEventsState extends State<MemberEvents> {
             ),
           ),
         ),
-        Row(
+        StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('events').snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: snapshot error');
+              }
+              if (!snapshot.hasData) {
+                return const Text('Loading...');
+              }
+
+              final List<DocumentSnapshot> documents = snapshot.data!.docs;
+              if (documents.isEmpty) {
+                return Center(child: Text('No Media Podcast yet'));
+              }
+
+              return Container(
+                  width: MyUtility(context).width -
+                      (MyUtility(context).width * 0.25),
+                  height: 500,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: documents.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final DocumentSnapshot document = documents[index];
+                        return Container(
+                          child: Wrap(
+                            //mainAxisAlignment: MainAxisAlignment.start,
+
+                            children: [
+                              MemberContainer(
+                                eventImage: document['eventsImage']!,
+                                eventName: document['title']!,
+                                location: document['_location']!,
+                                dateFrom: document['date']!,
+                                dateTill: document['date']!,
+                                onPressed: () {
+                                  OpenMemberEventsDialog(document['id']);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }));
+            }),
+        /*     Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
@@ -121,6 +169,7 @@ class _MemberEventsState extends State<MemberEvents> {
             ),
           ],
         )
+    */
       ],
     );
   }
