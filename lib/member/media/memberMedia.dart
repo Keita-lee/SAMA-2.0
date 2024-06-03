@@ -18,6 +18,7 @@ class _MemberMediaState extends State<MemberMedia> {
       builder: (context) {
         return Dialog(
             child: MediaPopup(
+          id: id,
           closeDialog: () => Navigator.pop(context!),
         ));
       });
@@ -73,6 +74,7 @@ class _MemberMediaState extends State<MemberMedia> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return MediaPopup(
+                                    id: document["id"],
                                     closeDialog: () {
                                       Navigator.of(context).pop();
                                     },

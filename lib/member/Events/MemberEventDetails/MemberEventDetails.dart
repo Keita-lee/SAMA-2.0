@@ -206,6 +206,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   ElevatedButton(
                     onPressed: () {
                       MediaPopup(
+                        id: 'id',
                         closeDialog: () {
                           Navigator.of(context).pop();
                         },

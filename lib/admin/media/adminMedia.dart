@@ -35,6 +35,7 @@ class _AdminMediaState extends State<AdminMedia> {
       builder: (context) {
         return Dialog(
             child: MediaPopup(
+          id: id,
           closeDialog: () => Navigator.pop(context!),
         ));
       });
