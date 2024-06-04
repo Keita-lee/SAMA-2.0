@@ -25,14 +25,14 @@ class EventsList extends StatelessWidget {
         width: MyUtility(context).width * 0.8,
         height: MyUtility(context).height * 0.06,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 218, 218, 218),
+          color: Color.fromARGB(255, 235, 234, 234),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 0),
-          child: Row(
-            children: [
-              Expanded(
+        child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   eventName,
                   style: TextStyle(
@@ -43,52 +43,52 @@ class EventsList extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  date,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal,
-                  ),
-                  textAlign: TextAlign.left,
+            ),
+            Expanded(
+              child: Text(
+                date,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal,
                 ),
+                textAlign: TextAlign.left,
               ),
-              Expanded(
-                child: Text(
-                  location,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal,
-                  ),
-                  textAlign: TextAlign.left,
+            ),
+            Expanded(
+              child: Text(
+                location,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal,
                 ),
+                textAlign: TextAlign.left,
               ),
-              Expanded(
-                child: Text(
-                  area,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal,
-                  ),
-                  textAlign: TextAlign.left,
+            ),
+            Expanded(
+              child: Text(
+                area,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal,
                 ),
+                textAlign: TextAlign.left,
               ),
-              Expanded(
-                child: Text(
-                  attending,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal,
-                  ),
-                  textAlign: TextAlign.left,
+            ),
+            Expanded(
+              child: Text(
+                attending,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal,
                 ),
+                textAlign: TextAlign.left,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

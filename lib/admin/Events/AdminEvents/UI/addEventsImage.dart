@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleButtonYellow.dart';
 import 'package:uuid/uuid.dart';
 
@@ -91,10 +92,10 @@ class _AddEventsImageState extends State<AddEventsImage> {
         SizedBox(
           height: 8,
         ),
-        StylrButtonYellow(
+        StyleButton(
           description: "Add Image",
           height: 55,
-          width: 95,
+          width: 150,
           onTap: () {
             _pickImageGallery();
           },
