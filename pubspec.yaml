@@ -49,6 +49,11 @@ dependencies:
   draggable_scrollbar: ^0.1.0
   just_audio: ^0.9.37
   video_player: ^2.8.6
+  # youtube_player_flutter: ^9.0.1
+  # youtube_parser: ^2.1.4
+  # flutter_youtube_view: ^2.0.4
+  youtube_player_iframe: ^5.1.2
+
 
 dev_dependencies:
   flutter_test:
