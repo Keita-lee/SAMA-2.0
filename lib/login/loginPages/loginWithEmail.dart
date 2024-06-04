@@ -138,7 +138,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 15,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 8.0),
             child: TextFieldStyling(
               hintText: 'Enter here',
               textfieldController: email,

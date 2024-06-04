@@ -114,15 +114,19 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                   Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: 75,
-                          height: 75,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('images/sama_logo.png'),
-                              fit: BoxFit.cover,
+                        Transform.scale(
+                          scale: 0.8,
+                          child: Container(
+                            width: 75,
+                            height: 75,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage('images/sama_logo.png'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -132,73 +136,85 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                               ? 'Admin Portal'
                               : 'Member Portal',
                           style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 18,
                               color: Color(0xFF174486),
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: MyUtility(context).width * 0.037),
-                        Container(
-                          width: 175,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0),
-                            border: Border.all(
-                                color: Color.fromRGBO(170, 170, 170, 1.0)),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              children: [
-                                Icon(Icons.search, color: Colors.grey),
-                                SizedBox(width: 8),
-                                Expanded(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Search SAMA', // Example text
-                                      border: InputBorder
-                                          .none, // Hide the default border
-                                      hintStyle: TextStyle(
-                                          color: Color.fromRGBO(
-                                              170, 170, 170, 1.0)),
+                        Transform.scale(
+                          scale: 0.8,
+                          child: Container(
+                            width: 175,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.0),
+                              border: Border.all(
+                                  color: Color.fromRGBO(170, 170, 170, 1.0)),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.search, color: Colors.grey),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        hintText: 'Search SAMA', // Example text
+                                        border: InputBorder
+                                            .none, // Hide the default border
+                                        hintStyle: TextStyle(
+                                            color: Color.fromRGBO(
+                                                170, 170, 170, 1.0)),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         Spacer(),
                         SizedBox(width: 20),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.mail),
+                        Transform.scale(
+                          scale: 0.8,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.mail),
+                          ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.notifications),
+                        Transform.scale(
+                          scale: 0.8,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.notifications),
+                          ),
                         ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Container(
-                            width: 55,
-                            height: 55,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(0.0),
-                              child: profileUrl != ""
-                                  ? ImageNetwork(
-                                      onTap: () {
-                                        changePage(3);
-                                      },
-                                      image: profileUrl!,
-                                      height: 55,
-                                      width: 55,
-                                    )
-                                  : Container(),
+                        Transform.scale(
+                          scale: 0.8,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: profileUrl != ""
+                                    ? ImageNetwork(
+                                        onTap: () {
+                                          changePage(3);
+                                        },
+                                        image: profileUrl!,
+                                        height: 55,
+                                        width: 55,
+                                      )
+                                    : Container(),
+                              ),
                             ),
                           ),
                         ),
@@ -214,8 +230,11 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PostLoginLeft(
-                              changePage: changePage, menuSize: menuSize),
+                          Transform.scale(
+                            scale: 0.8,
+                            child: PostLoginLeft(
+                                changePage: changePage, menuSize: menuSize),
+                          ),
                           Visibility(
                             visible: menuSize == 6.5 ? true : false,
                             child: GestureDetector(
@@ -246,8 +265,11 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                               ),
                             ),
                           ),
-                          Center(
-                            child: pages[pageIndex],
+                          Transform.scale(
+                            scale: 0.8,
+                            child: Center(
+                              child: pages[pageIndex],
+                            ),
                           )
                         ],
                       ),

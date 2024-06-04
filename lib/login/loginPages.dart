@@ -106,33 +106,36 @@ class _LoginPagesState extends State<LoginPages> {
       color: const Color.fromARGB(255, 8, 55, 145),
       width: MyUtility(context).width,
       height: MyUtility(context).height,
-      child: Center(
-        child: Container(
-            width: MyUtility(context).width / 1.5,
-            height: MyUtility(context).height / 1.2,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Image(
-                        width: MyUtility(context).width / 4,
-                        height: MyUtility(context).height / 3.5,
-                        image: AssetImage('images/sama_logo.png')),
-                    SizedBox(
-                      width: MyUtility(context).width / 1.5 -
-                          MyUtility(context).width / 4,
-                      height: MyUtility(context).height / 1.2,
-                      child: Center(
-                        child: pages[pageIndex],
+      child: Transform.scale(
+        scale: 0.8,
+        child: Center(
+          child: Container(
+              width: MyUtility(context).width / 1.5,
+              height: MyUtility(context).height / 1.2,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Image(
+                          width: MyUtility(context).width / 4,
+                          height: MyUtility(context).height / 3.5,
+                          image: AssetImage('images/sama_logo.png')),
+                      SizedBox(
+                        width: MyUtility(context).width / 1.5 -
+                            MyUtility(context).width / 4,
+                        height: MyUtility(context).height / 1.2,
+                        child: Center(
+                          child: pages[pageIndex],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            )),
+                    ],
+                  ),
+                ],
+              )),
+        ),
       ),
     );
   }
