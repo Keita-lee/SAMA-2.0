@@ -24,6 +24,3 @@ class _MyHomeState extends State<MyHome> {
     ]));
   }
 }
-
-
-// LoginPages()

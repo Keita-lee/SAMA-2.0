@@ -9,12 +9,13 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-             apiKey: "AIzaSyCVtEWeZAl8jvB2Xj_A1_48cuSankMxUAQ",
-  authDomain: "sama-959a2.firebaseapp.com",
-  projectId: "sama-959a2",
-  storageBucket: "sama-959a2.appspot.com",
-  messagingSenderId: "393242211465",
-  appId: "1:393242211465:web:b6c2d02f372dc9ec138258",));
+      apiKey: "AIzaSyCVtEWeZAl8jvB2Xj_A1_48cuSankMxUAQ",
+      authDomain: "sama-959a2.firebaseapp.com",
+      projectId: "sama-959a2",
+      storageBucket: "sama-959a2.appspot.com",
+      messagingSenderId: "393242211465",
+      appId: "1:393242211465:web:b6c2d02f372dc9ec138258",
+    ));
   } else {
     await Firebase.initializeApp();
   }
@@ -27,8 +28,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHome(),
+    return Transform.scale(
+      scale: 1,
+      child: MaterialApp(
+        home: MyHome(),
+      ),
     );
   }
 }
