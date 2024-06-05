@@ -22,6 +22,7 @@ class _EventDescriptionTextFieldState extends State<EventDescriptionTextField> {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 8),

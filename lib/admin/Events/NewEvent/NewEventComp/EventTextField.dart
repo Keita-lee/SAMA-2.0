@@ -17,10 +17,11 @@ class _EventTxtFieldState extends State<EventTxtField> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.25,
-      height: MediaQuery.of(context).size.height * 0.05,
+      height: MediaQuery.of(context).size.height * 0.07,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 8),

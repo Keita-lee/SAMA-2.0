@@ -88,157 +88,119 @@ class _AdminEventsState extends State<AdminEvents> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Event Name',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Date',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Location',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Area',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Attending',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('events')
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('Error: snapshot error');
-                              }
-                              if (!snapshot.hasData) {
-                                return const Text('Loading...');
-                              }
+                          stream: FirebaseFirestore.instance
+                              .collection('events')
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Error: snapshot error');
+                            }
+                            if (!snapshot.hasData) {
+                              return const Text('Loading...');
+                            }
 
-                              final List<DocumentSnapshot> documents =
-                                  snapshot.data!.docs;
-                              if (documents.isEmpty) {
-                                return Center(
-                                    child: Text('No Media Podcast yet'));
-                              }
+                            final List<DocumentSnapshot> documents =
+                                snapshot.data!.docs;
+                            if (documents.isEmpty) {
+                              return Center(
+                                  child: Text('No Media Podcast yet'));
+                            }
 
-                              return Container(
-                                  width: MyUtility(context).width -
-                                      (MyUtility(context).width * 0.25),
-                                  height: 500,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: documents.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        final DocumentSnapshot document =
-                                            documents[index];
-                                        return Container(
-                                          child: Column(
-                                            //mainAxisAlignment: MainAxisAlignment.start,
-
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      barrierDismissible: true,
-                                                      barrierColor: Colors.black
-                                                          .withOpacity(0.5),
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return Dialog(
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          insetPadding:
-                                                              EdgeInsets.all(
-                                                                  10),
-                                                          child: Container(
-                                                            color: Colors
-                                                                .transparent,
-                                                            child: NewEvent(
-                                                              id: document[
-                                                                  'id'],
-                                                              closeDialog: () =>
-                                                                  Navigator.pop(
-                                                                      context!),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                  child: EventsList(
-                                                    eventName:
-                                                        document['title']!,
-                                                    date: document['date']!,
-                                                    location:
-                                                        document['_location']!,
-                                                    area: document['_area']!,
-                                                    attending:
-                                                        document['attending']
-                                                            .length
-                                                            .toString(),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
+                            return Container(
+                              width: MyUtility(context).width -
+                                  (MyUtility(context).width * 0.25),
+                              height: 500,
+                              child: Table(
+                                columnWidths: {
+                                  0: FlexColumnWidth(1),
+                                  1: FlexColumnWidth(1),
+                                  2: FlexColumnWidth(1),
+                                  3: FlexColumnWidth(1),
+                                  4: FlexColumnWidth(1),
+                                },
+                                children: [
+                                  TableRow(
+                                    children: [
+                                      Text('Event Name',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                      Text('Date',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                      Text('Location',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                      Text('Area',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                      Text('Attending',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                    ],
+                                  ),
+                                  ...documents.map((DocumentSnapshot document) {
+                                    return TableRow(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Color(0xFFD1D1D1),
                                           ),
-                                        );
-                                      }));
-                            }),
+                                        ),
+                                      ),
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: true,
+                                              barrierColor:
+                                                  Colors.black.withOpacity(0.5),
+                                              builder: (BuildContext context) {
+                                                return Dialog(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  insetPadding:
+                                                      EdgeInsets.all(10),
+                                                  child: Container(
+                                                    color: Colors.transparent,
+                                                    child: NewEvent(
+                                                      id: document['id'],
+                                                      closeDialog: () =>
+                                                          Navigator.pop(
+                                                              context),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Text(document['title'] ??
+                                              'N/A'), // Assuming 'title' exists; use 'N/A' if not
+                                        ),
+                                        Text(document['date'] ??
+                                            'N/A'), // Assuming 'date' exists; use 'N/A' if not
+                                        Text(document['_location'] ??
+                                            'N/A'), // Assuming '_location' exists; use 'N/A' if not
+                                        Text(document['_area'] ??
+                                            'N/A'), // Assuming '_area' exists; use 'N/A' if not
+                                        Text(document['attending']
+                                            .length
+                                            .toString()), // Assuming 'attending' is a list; convert to string if not
+                                      ],
+                                    );
+                                  }).toList(),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   )),
