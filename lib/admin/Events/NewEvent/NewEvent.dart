@@ -86,7 +86,7 @@ class _NewEventState extends State<NewEvent> {
         _location.text = data.get('_location');
         _area.text = data.get('_area');
         eventsImage = data.get('eventsImage');
-        releaseDate = data.get('releaseDate'); /**/
+        releaseDate = data.get('releaseDate');
         attending.addAll(data.get('attending'));
       });
     }
@@ -253,28 +253,32 @@ class _NewEventState extends State<NewEvent> {
                       ),
                       for (int i = 0; i < attending.length; i++)
                         Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                                width: MyUtility(context).width * 0.8,
-                                height: MyUtility(context).height * 0.06,
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 218, 218, 218),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    child: Row(children: [
-                                      Text(
-                                        "${attending[i]['firstName']} ${attending[i]['lastName']}",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xFF3D3D3D),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ])))),
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Container(
+                            width: MyUtility(context).width * 0.8,
+                            height: MyUtility(context).height * 0.06,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 218, 218, 218),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${attending[i]['firstName']} ${attending[i]['lastName']}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xFF3D3D3D),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
