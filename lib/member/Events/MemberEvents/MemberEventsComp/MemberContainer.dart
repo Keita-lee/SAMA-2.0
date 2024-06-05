@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/utility.dart';
 
 class MemberContainer extends StatefulWidget {
@@ -114,25 +115,16 @@ class _MemberContainerState extends State<MemberContainer> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton(
-                    onPressed: widget.onPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      'Learn More',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                  StyleButton(
+                    onTap: () {
+                      widget.onPressed();
+                    },
+                    description: 'Learn More',
+                    height: 55,
+                    width: 150,
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

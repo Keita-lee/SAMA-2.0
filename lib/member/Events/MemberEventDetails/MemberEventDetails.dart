@@ -6,6 +6,7 @@ import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventText.dart';
 import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventsImage.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventTextField.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
 
 class MemberEventDetails extends StatefulWidget {
@@ -290,24 +291,11 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                     controller: bookingnumber,
                     textSection: 'How many people',
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      confirmBooking();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      'Confirm Booking',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                  StyleButton(
+                    description: 'Confirm Booking',
+                    height: 55,
+                    width: 150,
+                    onTap: confirmBooking(),
                   ),
                 ],
               ),
