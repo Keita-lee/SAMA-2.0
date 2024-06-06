@@ -37,18 +37,18 @@ class _EventsHeaderSectionState extends State<EventsHeaderSection> {
           SizedBox(
             width: MyUtility(context).width / 1.8,
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: StyleButton(
-                  description: "View Categories",
-                  height: 55,
-                  width: 125,
-                  onTap: () {
-                    openCategoryDialog();
-                  }),
-            ),
-          ),
+          // Center(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(top: 20),
+          //     child: StyleButton(
+          //         description: "View Categories",
+          //         height: 55,
+          //         width: 125,
+          //         onTap: () {
+          //           openCategoryDialog();
+          //         }),
+          //   ),
+          // ),
           SizedBox(
             width: 15,
           ),

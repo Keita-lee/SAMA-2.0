@@ -13,6 +13,7 @@ class MediaContainerStyle extends StatefulWidget {
   String duration;
   String releaseDate;
   String category;
+  String title;
   VoidCallback onpress;
   final VoidCallback? view;
   MediaContainerStyle(
@@ -23,6 +24,7 @@ class MediaContainerStyle extends StatefulWidget {
       required this.releaseDate,
       required this.category,
       required this.onpress,
+      required this.title,
       required this.view});
 
   @override
@@ -44,10 +46,10 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(20),
       child: Container(
         width: MyUtility(context).width / 4.7,
-        height: MyUtility(context).height * 0.75,
+        height: MyUtility(context).height * 0.85,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
@@ -57,7 +59,19 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                height: 80,
+                child: Text(
+                  (widget.title),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.normal),
+                ),
+              ),
               Container(
                 width: MyUtility(context).width / 4.7,
                 //height: MyUtility(context).height * 0.25,
@@ -75,6 +89,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                       height: MyUtility(context).height * 0.25,
                     )),
               ),
+
               Text(
                 (widget.category),
                 style: TextStyle(
@@ -92,9 +107,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
               //       color: Color(0xFF3D3D3D),
               //       fontWeight: FontWeight.normal),
               // ),
-              SizedBox(
-                height: 10,
-              ),
+
               Text(
                 (widget.duration),
                 style: TextStyle(
@@ -171,6 +184,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   ),
                 ),
               ),
+              SizedBox(height: 20)
             ],
           ),
         ),

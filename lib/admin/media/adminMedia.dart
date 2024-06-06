@@ -100,10 +100,11 @@ class _AdminMediaState extends State<AdminMedia> {
                                   viewMediaDialog(document['id']);
                                 },
                                 adminType: "true",
-                                image: document['mediaImageUrl'],
+                                image: document['mediaImageUrl'] ?? '',
                                 duration: document['duration'],
                                 releaseDate: '',
                                 category: document['category'],
+                                title: document['title'],
                               ),
                             ],
                           ),

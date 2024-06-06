@@ -30,6 +30,18 @@ class _MediaFormState extends State<MediaForm> {
   final description = TextEditingController();
   final urlLink = TextEditingController();
 
+  List<String> categories = [
+    'Webinar',
+    'SAMA News',
+    'General',
+    'Conferences',
+    'Virtual Meeting',
+    'Office of the Chair',
+    'Corona Virus - COVID-19',
+    'Courses',
+  ];
+  String? selectedCategory;
+
 //getUrlForMediaImae
   getUrlForMediaImage(value) {
     setState(() {
@@ -43,7 +55,7 @@ class _MediaFormState extends State<MediaForm> {
       "title": title.text,
       "duration": duration.text,
       "author": author.text,
-      "category": category.text,
+      "category": selectedCategory ?? 'No Category',
       "description": description.text,
       "urlLink": urlLink.text,
       "mediaImageUrl": mediaImageUrl,
@@ -123,8 +135,8 @@ class _MediaFormState extends State<MediaForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 2,
-      height: MyUtility(context).height / 1,
+      width: MyUtility(context).width / 1.8,
+      height: MyUtility(context).height / 1.4,
       decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -163,7 +175,7 @@ class _MediaFormState extends State<MediaForm> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(10.0),
               child: Transform.scale(
                 scale: 0.8,
                 child: Row(
@@ -177,7 +189,43 @@ class _MediaFormState extends State<MediaForm> {
                       width: 25,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // ProfileTextField(
+                        //     customSize: MyUtility(context).width / 4,
+                        //     description: "Category:",
+                        //     textfieldController: category,
+                        //     textFieldType: "stringType"),
+                        Container(
+                          width: MyUtility(context).width / 4,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: DropdownButtonFormField(
+                            value: selectedCategory,
+                            items: categories.map((category) {
+                              return DropdownMenuItem(
+                                value: category,
+                                child: Text(category),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedCategory = value!;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Category',
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         ProfileTextField(
                             customSize: MyUtility(context).width / 4,
                             description: "Title:",
@@ -190,91 +238,112 @@ class _MediaFormState extends State<MediaForm> {
                             textFieldType: "stringType"),
                         ProfileTextField(
                             customSize: MyUtility(context).width / 4,
-                            description: "Author:",
-                            textfieldController: author,
+                            description: "Description:",
+                            textfieldController: description,
                             textFieldType: "stringType"),
                         ProfileTextField(
                             customSize: MyUtility(context).width / 4,
-                            description: "Category",
-                            textfieldController: category,
+                            description: "Youtube Link",
+                            textfieldController: urlLink,
                             textFieldType: "stringType"),
+                        SizedBox(height: 20),
+                        StyleButton(
+                            description: "Save",
+                            height: 55,
+                            width: 150,
+                            onTap: () {
+                              saveData();
+                            }),
+                        Visibility(
+                          visible: widget.id != "" ? true : false,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: StyleButton(
+                                description: "Remove",
+                                height: 55,
+                                width: 150,
+                                onTap: () {
+                                  removeMediaPopup();
+                                }),
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 0.8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: ProfileTextField(
-                        customSize: MyUtility(context).width / 2.5,
-                        description: "Description",
-                        textfieldController: description,
-                        textFieldType: "stringType"),
-                  ),
-                ],
-              ),
-            ),
-            Transform.scale(
-              scale: 0.8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 35),
-                    child: ProfileTextField(
-                        customSize: MyUtility(context).width / 2.5,
-                        description: "Youtube Link",
-                        textfieldController: urlLink,
-                        textFieldType: "stringType"),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: Transform.scale(
-                scale: 0.8,
-                child: Container(
-                  //width: MyUtility(context).width / 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      StyleButton(
-                          description: "Save",
-                          height: 55,
-                          width: 150,
-                          onTap: () {
-                            saveData();
-                          }),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Visibility(
-                        visible: widget.id != "" ? true : false,
-                        child: StyleButton(
-                            description: "Remove",
-                            height: 55,
-                            width: 150,
-                            onTap: () {
-                              removeMediaPopup();
-                            }),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
+            // Transform.scale(
+            //   scale: 0.8,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     //crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Padding(
+            //         padding: const EdgeInsets.only(left: 20),
+            //         child: ProfileTextField(
+            //             customSize: MyUtility(context).width / 2.5,
+            //             description: "Description",
+            //             textfieldController: description,
+            //             textFieldType: "stringType"),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Transform.scale(
+            //   scale: 0.8,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     //crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Padding(
+            //         padding: const EdgeInsets.only(left: 35),
+            //         child: ProfileTextField(
+            //             customSize: MyUtility(context).width / 2.5,
+            //             description: "Youtube Link",
+            //             textfieldController: urlLink,
+            //             textFieldType: "stringType"),
+            //       ),
+            //       SizedBox(
+            //         width: 15,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            //SizedBox(height: 20),
+            // Center(
+            //   child: Transform.scale(
+            //     scale: 0.8,
+            //     child: Container(
+            //       //width: MyUtility(context).width / 2,
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           StyleButton(
+            //               description: "Save",
+            //               height: 55,
+            //               width: 150,
+            //               onTap: () {
+            //                 saveData();
+            //               }),
+            //           SizedBox(
+            //             width: 15,
+            //           ),
+            //           Visibility(
+            //             visible: widget.id != "" ? true : false,
+            //             child: StyleButton(
+            //                 description: "Remove",
+            //                 height: 55,
+            //                 width: 150,
+            //                 onTap: () {
+            //                   removeMediaPopup();
+            //                 }),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

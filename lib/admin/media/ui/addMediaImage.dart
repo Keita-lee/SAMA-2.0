@@ -76,8 +76,8 @@ class _AddMediaImageState extends State<AddMediaImage> {
                 fit: BoxFit.cover,
               ),
             ),
-            width: MyUtility(context).width / 7,
-            height: 200,
+            width: MyUtility(context).width / 4,
+            height: 300,
           ),
         ),
         Visibility(

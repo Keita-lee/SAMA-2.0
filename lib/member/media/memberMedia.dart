@@ -85,8 +85,10 @@ class _MemberMediaState extends State<MemberMedia> {
                             adminType: "false",
                             image: document['mediaImageUrl'],
                             duration: document['duration'],
-                            releaseDate: document['releaseDate'],
+                            releaseDate: '',
+                            //document['releaseDate'],
                             category: document['category'],
+                            title: document['title'],
                           )
                         ],
                       );

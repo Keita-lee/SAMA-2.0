@@ -20,8 +20,8 @@ class _MediaHeaderSectionState extends State<MediaHeaderSection> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: MyUtility(context).width / 1.8,
