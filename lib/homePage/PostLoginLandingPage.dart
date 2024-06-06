@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/admin/ElectionsAdmin/NominationAcceptance/NominationAcceptance.dart';
 import 'package:sama/admin/Events/AdminEvents/Event.dart';
 import 'package:sama/admin/Events/EventDetails/EventDetails.dart';
 import 'package:sama/admin/Events/EventDetails/Ui/EventMemberList.dart';
@@ -95,8 +96,11 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       AdminMedia(),
       AdminEvents(),
       MemberMedia(),
-      MemberEvents()
-
+      MemberEvents(),
+      NominationAcceptance()
+      /*ElectionsManageEvent(),*/
+      /*ElectionSetup(), */
+      /*BranchMembers(),*/
       /*AdminEventDetails(),*/
       /*AdminEvents(),*/
       /*MemberEvents()*/

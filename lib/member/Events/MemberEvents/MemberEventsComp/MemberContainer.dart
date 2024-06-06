@@ -28,10 +28,10 @@ class _MemberContainerState extends State<MemberContainer> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10, right: 10),
+      padding: const EdgeInsets.all(10),
       child: Container(
-        width: MyUtility(context).width * 0.4,
-        height: MyUtility(context).height * 0.2,
+        width: MyUtility(context).width * 0.22,
+        height: MyUtility(context).height * 0.5,
         decoration: ShapeDecoration(
           color: Color(0xFFFFF5F5),
           shape: RoundedRectangleBorder(
@@ -48,7 +48,7 @@ class _MemberContainerState extends State<MemberContainer> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Row(
+          child: Column(
             children: [
               /*   Container(
                 width: MyUtility(context).width * 0.15,
@@ -65,55 +65,69 @@ class _MemberContainerState extends State<MemberContainer> {
                   ),
                 ),
               ),*/
-              ImageNetwork(
-                image: widget.eventImage,
-                width: MyUtility(context).width * 0.15,
-                height: MyUtility(context).height * 0.22,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: ImageNetwork(
+                      image: widget.eventImage,
+                      width: MyUtility(context).width * 0.2,
+                      height: MyUtility(context).height * 0.25,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
-                width: MyUtility(context).width * 0.01,
+                width: MyUtility(context).height * 0.01,
               ),
-              Expanded(
+              SizedBox(
+                width: MyUtility(context).width * 0.2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        widget.eventName,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFF3D3D3D),
-                          fontWeight: FontWeight.bold,
+                    SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          widget.eventName,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color(0xFF3D3D3D),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: Text(
                         widget.location,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           color: Color(0xFF3D3D3D),
                           fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
-                    Text(
-                      '${widget.dateFrom}',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: SizedBox(
+                        child: Text(
+                          '${widget.dateFrom}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF3D3D3D),
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   StyleButton(
                     onTap: () {

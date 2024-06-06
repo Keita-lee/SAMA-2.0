@@ -80,13 +80,13 @@ class _MemberEventsState extends State<MemberEvents> {
         Text(
           'Events',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 36,
             color: Color(0xFF3D3D3D),
             fontWeight: FontWeight.normal,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 10),
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
           child: Text(
             'Upcoming',
             style: TextStyle(
@@ -115,9 +115,13 @@ class _MemberEventsState extends State<MemberEvents> {
               return Container(
                   width: MyUtility(context).width -
                       (MyUtility(context).width * 0.25),
-                  height: 500,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
+                  height: 550,
+                  child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10.0,
+                        childAspectRatio: 0.9,
+                      ),
                       itemCount: documents.length,
                       itemBuilder: (BuildContext context, int index) {
                         final DocumentSnapshot document = documents[index];

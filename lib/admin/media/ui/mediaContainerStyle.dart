@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:image_network/image_network.dart';
 import 'package:intl/intl.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 
 class MediaContainerStyle extends StatefulWidget {
   String adminType;
@@ -45,105 +46,132 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Container(
-        width: MyUtility(context).width / 4.7,
-        height: MyUtility(context).height * 0.85,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-              color: Color(0xFFD1D1D1),
-            )),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                height: 80,
-                child: Text(
-                  (widget.title),
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.normal),
-                ),
-              ),
-              Container(
-                width: MyUtility(context).width / 4.7,
-                //height: MyUtility(context).height * 0.25,
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFFD1D1D1),
-                ),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: ImageNetwork(
-                      image: widget.image,
-                      fitWeb: BoxFitWeb.cover,
-                      width: MyUtility(context).width / 5.2,
-                      height: MyUtility(context).height * 0.25,
-                    )),
-              ),
-
-              Text(
-                (widget.category),
+    return Container(
+      width: MyUtility(context).width / 4.4,
+      height: MyUtility(context).height * 0.7,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: Color(0xFFD1D1D1),
+          )),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              height: 75,
+              child: Text(
+                (widget.title),
                 style: TextStyle(
                     fontSize: 20,
                     color: Color(0xFF3D3D3D),
                     fontWeight: FontWeight.normal),
               ),
-              SizedBox(
-                height: 10,
+            ),
+            Container(
+              width: MyUtility(context).width / 4.0,
+              height: 250,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color(0xFFD1D1D1),
               ),
-              // Text(
-              //   _formatDateTime(widget.releaseDate),
-              //   style: TextStyle(
-              //       fontSize: 20,
-              //       color: Color(0xFF3D3D3D),
-              //       fontWeight: FontWeight.normal),
-              // ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: ImageNetwork(
+                  image: widget.image,
+                  fitWeb: BoxFitWeb.fill,
+                  width: MyUtility(context).width / 4.0,
+                  height: 250,
+                ),
+              ),
+            ),
 
-              Text(
-                (widget.duration),
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Visibility(
-                //visible: widget.adminType == "true" ? false : true,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: SizedBox(
-                    width: MyUtility(context).width / 4.7,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: MyUtility(context).width / 4.7,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xFF174486),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            widget.view!();
-                          },
-                          child: Text(
-                            'View',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              (widget.category),
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            // Text(
+            //   _formatDateTime(widget.releaseDate),
+            //   style: TextStyle(
+            //       fontSize: 20,
+            //       color: Color(0xFF3D3D3D),
+            //       fontWeight: FontWeight.normal),
+            // ),
+
+            Text(
+              (widget.duration),
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    StyleButton(
+                      onTap: () {
+                        widget.view!();
+                      },
+                      description: 'View',
+                      height: 55,
+                      width: MyUtility(context).width * 0.17,
+                    ),
+                    SizedBox(height: 10),
+                    StyleButton(
+                      onTap: () {
+                        widget.onpress!();
+                      },
+                      description: 'Edit',
+                      height: 55,
+                      width: MyUtility(context).width * 0.17,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            /* Visibility(
+              //visible: widget.adminType == "true" ? false : true,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: SizedBox(
+                  width: MyUtility(context).width / 4.7,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: MyUtility(context).width / 4.7,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF174486),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          widget.view!();
+                        },
+                        child: Text(
+                          'View',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -151,32 +179,32 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Visibility(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: SizedBox(
-                    width: MyUtility(context).width / 4.7,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: MyUtility(context).width / 4.7,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xFF174486),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
+            ),*/
+
+            /*Visibility(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: SizedBox(
+                  width: MyUtility(context).width / 4.7,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: MyUtility(context).width / 4.7,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF174486),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
                             widget.onpress!();
                           },
-                          child: Text(
-                            'Edit',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                        child: Text(
+                          'Edit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -184,9 +212,9 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   ),
                 ),
               ),
-              SizedBox(height: 20)
-            ],
-          ),
+            ),*/
+            SizedBox(height: 10)
+          ],
         ),
       ),
     );

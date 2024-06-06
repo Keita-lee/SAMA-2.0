@@ -56,9 +56,12 @@ class _MemberMediaState extends State<MemberMedia> {
             return Container(
                 width: MyUtility(context).width -
                     (MyUtility(context).width * 0.25),
-                height: 500,
-                //color: Colors.transparent,
-                child: ListView.builder(
+                height: 550,
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.75,
+                    ),
                     itemCount: documents.length,
                     itemBuilder: (BuildContext context, int index) {
                       final DocumentSnapshot document = documents[index];
