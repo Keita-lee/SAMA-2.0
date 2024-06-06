@@ -48,7 +48,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 4.4,
-      height: MyUtility(context).height * 0.7,
+      height: MyUtility(context).height * 0.8,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
@@ -135,51 +135,54 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                       width: MyUtility(context).width * 0.17,
                     ),
                     SizedBox(height: 10),
-                    StyleButton(
-                      onTap: () {
-                        widget.onpress!();
-                      },
-                      description: 'Edit',
-                      height: 55,
-                      width: MyUtility(context).width * 0.17,
+                    Visibility(
+                      visible: widget.adminType == "true" ? true : false,
+                      child: StyleButton(
+                        onTap: () {
+                          widget.onpress!();
+                        },
+                        description: 'Edit',
+                        height: 55,
+                        width: MyUtility(context).width * 0.17,
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-            /* Visibility(
-              //visible: widget.adminType == "true" ? false : true,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: SizedBox(
-                  width: MyUtility(context).width / 4.7,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      width: MyUtility(context).width / 4.7,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFF174486),
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          widget.view!();
-                        },
-                        child: Text(
-                          'View',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),*/
+            // Visibility(
+            //   //visible: widget.adminType == "true" ? false : true,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(bottom: 10),
+            //     child: SizedBox(
+            //       width: MyUtility(context).width / 4.7,
+            //       child: Align(
+            //         alignment: Alignment.centerLeft,
+            //         child: Container(
+            //           width: MyUtility(context).width / 4.7,
+            //           height: 50,
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(10),
+            //             color: Color(0xFF174486),
+            //           ),
+            //           child: TextButton(
+            //             onPressed: () {
+            //               widget.view!();
+            //             },
+            //             child: Text(
+            //               'View',
+            //               style: TextStyle(
+            //                 color: Colors.white,
+            //                 fontWeight: FontWeight.bold,
+            //                 fontSize: 16,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             /*Visibility(
               child: Padding(

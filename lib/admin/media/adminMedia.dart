@@ -37,7 +37,7 @@ class _AdminMediaState extends State<AdminMedia> {
         return Dialog(
             child: MediaPopup(
           id: id,
-          closeDialog: () => Navigator.pop(context!),
+          closeDialog: () => Navigator.pop(context),
         ));
       });
 
@@ -62,7 +62,12 @@ class _AdminMediaState extends State<AdminMedia> {
           },
         ),
         StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('media').snapshots(),
+            stream: selectCategory.text.isEmpty
+                ? FirebaseFirestore.instance.collection('media').snapshots()
+                : FirebaseFirestore.instance
+                    .collection('media')
+                    .where('category', isEqualTo: selectCategory.text)
+                    .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -78,69 +83,73 @@ class _AdminMediaState extends State<AdminMedia> {
               }
 
               return Container(
-                  width: MyUtility(context).width -
-                      (MyUtility(context).width * 0.25),
-                  height: 550,
-                  child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.75,
-                      ),
-                      itemCount: documents.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final DocumentSnapshot document = documents[index];
+                width: MyUtility(context).width -
+                    (MyUtility(context).width * 0.25),
+                height: 550,
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.75,
+                    ),
+                    itemCount: documents.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final DocumentSnapshot document = documents[index];
 
-                        if (selectCategory.text == "") {
-                          return Container(
-                            child: Wrap(
-                              //mainAxisAlignment: MainAxisAlignment.start,
-                              spacing: 10,
-                              runSpacing: 10,
-                              children: [
-                                MediaContainerStyle(
-                                  onpress: () {
-                                    openMediaDialog(document['id']);
-                                  },
-                                  view: () {
-                                    viewMediaDialog(document['id']);
-                                  },
-                                  adminType: "true",
-                                  image: document['mediaImageUrl'] ?? '',
-                                  duration: document['duration'],
-                                  releaseDate: '',
-                                  category: document['category'],
-                                  title: document['title'],
-                                ),
-                              ],
+                      // if (selectCategory.text == "") {
+                      return Container(
+                        child: Wrap(
+                          //mainAxisAlignment: MainAxisAlignment.start,
+                          spacing: 10,
+                          runSpacing: 10,
+                          children: [
+                            MediaContainerStyle(
+                              onpress: () {
+                                openMediaDialog(document['id']);
+                              },
+                              view: () {
+                                viewMediaDialog(document['id']);
+                              },
+                              adminType: "true",
+                              image: document['mediaImageUrl'] ?? '',
+                              duration: document['duration'],
+                              releaseDate: '',
+                              category: document['category'],
+                              title: document['title'],
                             ),
-                          );
-                        } else if (document['category']
-                            .contains(selectCategory.text)) {
-                          return Container(
-                            child: Wrap(
-                              //mainAxisAlignment: MainAxisAlignment.start,
-                              spacing: 10,
-                              runSpacing: 10,
-                              children: [
-                                MediaContainerStyle(
-                                  onpress: () {
-                                    openMediaDialog(document['id']);
-                                  },
-                                  view: () {
-                                    viewMediaDialog(document['id']);
-                                  },
-                                  adminType: "true",
-                                  image: document['mediaImageUrl'] ?? '',
-                                  duration: document['duration'],
-                                  releaseDate: '',
-                                  category: document['category'],
-                                  title: document['title'],
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }));
+                          ],
+                        ),
+                      );
+                    }
+                    // }
+                    //   else if (document['category']
+                    //       .contains(selectCategory.text)) {
+                    //     return Container(
+                    //       child: Wrap(
+                    //         //mainAxisAlignment: MainAxisAlignment.start,
+                    //         spacing: 10,
+                    //         runSpacing: 10,
+                    //         children: [
+                    //           MediaContainerStyle(
+                    //             onpress: () {
+                    //               openMediaDialog(document['id']);
+                    //             },
+                    //             view: () {
+                    //               viewMediaDialog(document['id']);
+                    //             },
+                    //             adminType: "true",
+                    //             image: document['mediaImageUrl'] ?? '',
+                    //             duration: document['duration'],
+                    //             releaseDate: '',
+                    //             category: document['category'],
+                    //             title: document['title'],
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }
+                    // },
+                    ),
+              );
             }),
       ]),
     );

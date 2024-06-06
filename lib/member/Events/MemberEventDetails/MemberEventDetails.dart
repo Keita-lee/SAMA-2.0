@@ -21,7 +21,7 @@ class MemberEventDetails extends StatefulWidget {
 }
 
 class _MemberEventDetailsState extends State<MemberEventDetails> {
-  TextEditingController bookingnumber = TextEditingController();
+  TextEditingController bookings = TextEditingController();
   TextEditingController _title = TextEditingController();
   TextEditingController _date = TextEditingController();
   TextEditingController _times = TextEditingController();
@@ -47,6 +47,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
 
   int _currentPage = 0;
   final PageController _pageController = PageController(viewportFraction: .33);
+  int _selectedNumber = 1;
 
   @override
   void dispose() {
@@ -88,7 +89,6 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         _location.text = data.get('_location');
         _area.text = data.get('_area');
         eventsImage = data.get('eventsImage');
-
         attending = data.get('attending');
       });
     }
@@ -115,7 +115,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       "email": email.text,
       "firstName": firstName.text,
       "lastName": lastName.text,
-      "peopleAmmount": bookingnumber.text
+      "peopleAmmount": _selectedNumber
     };
     attending.add(bookingData);
 
@@ -137,111 +137,188 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            ImageNetwork(
-              image: eventsImage,
-              width: MyUtility(context).width * 0.2,
-              height: MyUtility(context).height * 0.35,
-            ),
-            Text(
-              'Events Details',
-              style: TextStyle(
-                fontSize: 32,
-                color: Color(0xFF3D3D3D),
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-            SizedBox(height: MyUtility(context).height * 0.02),
+    return Container(
+      width: MyUtility(context).width * 0.75,
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Container(
-              width: MyUtility(context).width * 0.75,
-              height: MyUtility(context).height * 0.2,
-              decoration: ShapeDecoration(
-                color: Color(0xFFFFF5F5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                shadows: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                          width: MyUtility(context).width * 0.15,
-                          child: EventText(
-                              title: _title.text,
-                              date: _date.text,
-                              timeFrom: _times.text,
-                              timeTill: '')),
-                      SizedBox(
-                        width: MyUtility(context).width * 0.55,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Description:',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xFF3D3D3D),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              _description.text,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFF3D3D3D),
-                                fontWeight: FontWeight.normal,
-                              ),
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MyUtility(context).height * 0.025,
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.75,
+              padding: const EdgeInsets.only(top: 5, bottom: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  EventTxtField(
-                    controller: bookingnumber,
-                    textSection: 'How many people',
+                  Text(
+                    'Events Details',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                  StyleButton(
-                    description: 'Confirm Booking',
-                    height: 55,
-                    width: 150,
-                    onTap: () {
-                      confirmBooking();
+                  IconButton(
+                    onPressed: () {
+                      widget.closeDialog();
                     },
+                    icon: Icon(Icons.close),
                   ),
                 ],
               ),
             ),
-          ]),
-        ));
+            // ImageNetwork(
+            //   image: eventsImage,
+            //   width: MyUtility(context).width * 0.2,
+            //   height: MyUtility(context).height * 0.35,
+            // ),
+
+            //SizedBox(height: MyUtility(context).height * 0.02),
+            Transform.scale(
+              scale: 0.8,
+              child: Container(
+                width: MyUtility(context).width * 0.75,
+                height: MyUtility(context).height * 0.15,
+                decoration: ShapeDecoration(
+                  color: Color.fromARGB(255, 245, 249, 255),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            //width: MyUtility(context).width * 0.15,
+                            child: EventText(
+                                title: _title.text,
+                                date: _date.text,
+                                timeFrom: _times.text,
+                                timeTill: '')),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Transform.scale(
+              scale: 0.8,
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Description:',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    width: MyUtility(context).width * 0.75,
+                    decoration: ShapeDecoration(
+                      color: Color.fromARGB(255, 245, 249, 255),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Expanded(
+                        child: Text(
+                          _description.text,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF3D3D3D),
+                            fontWeight: FontWeight.normal,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: MyUtility(context).height * 0.025,
+            // ),
+            Transform.scale(
+              scale: 0.8,
+              child: SizedBox(
+                width: MyUtility(context).width * 0.75,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 300,
+                      child: Row(
+                        children: [
+                          Text(
+                            'How many people:',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          DropdownButton<int>(
+                            value: _selectedNumber,
+                            items: List.generate(10, (index) {
+                              return DropdownMenuItem<int>(
+                                value: index + 1,
+                                child: Text((index + 1).toString()),
+                              );
+                            }),
+                            onChanged: (int? newValue) {
+                              setState(() {
+                                _selectedNumber = newValue!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    // EventTxtField(
+                    //   controller: bookingnumber,
+                    //   textSection: 'How many people',
+                    // ),
+                    StyleButton(
+                      description: 'Confirm Booking',
+                      height: 55,
+                      width: 150,
+                      onTap: () {
+                        confirmBooking();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -15,95 +15,43 @@ class EventText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MyUtility(context).height * 0.2,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            children: [
-              Text(
-                'Title: ',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Title: ' + title,
+            style: TextStyle(
+              fontSize: 20,
+              color: Color(0xFF3D3D3D),
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Date: ',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                date,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Date: ' + date,
+            style: TextStyle(
+              fontSize: 20,
+              color: Color(0xFF3D3D3D),
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Time: ',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: timeFrom,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' - ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    TextSpan(
-                      text: timeTill,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Time: ' + timeFrom + ' - ' + timeTill,
+            style: TextStyle(
+              fontSize: 20,
+              color: Color(0xFF3D3D3D),
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -27,69 +27,69 @@ class MemberContainer extends StatefulWidget {
 class _MemberContainerState extends State<MemberContainer> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        width: MyUtility(context).width * 0.22,
-        height: MyUtility(context).height * 0.5,
-        decoration: ShapeDecoration(
-          color: Color(0xFFFFF5F5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          shadows: [
-            BoxShadow(
-              color: Color(0x3F000000),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-              spreadRadius: 0,
-            )
-          ],
+    return Container(
+      width: MyUtility(context).width * 0.22,
+      height: MyUtility(context).height * 0.53,
+      decoration: ShapeDecoration(
+        color: Color(0xFFFFF5F5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              /*   Container(
-                width: MyUtility(context).width * 0.15,
-                height: MyUtility(context).height * 0.22,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.grey[300]!,
-                    width: 1,
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage(widget.eventImage),
-                    fit: BoxFit.cover,
-                  ),
+        shadows: [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            /*   Container(
+              width: MyUtility(context).width * 0.15,
+              height: MyUtility(context).height * 0.22,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Colors.grey[300]!,
+                  width: 1,
                 ),
-              ),*/
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: ImageNetwork(
-                      image: widget.eventImage,
-                      width: MyUtility(context).width * 0.2,
-                      height: MyUtility(context).height * 0.25,
-                    ),
+                image: DecorationImage(
+                  image: AssetImage(widget.eventImage),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),*/
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: ImageNetwork(
+                    image: widget.eventImage,
+                    width: MyUtility(context).width * 0.2,
+                    height: MyUtility(context).height * 0.25,
                   ),
                 ),
               ),
-              SizedBox(
-                width: MyUtility(context).height * 0.01,
-              ),
-              SizedBox(
-                width: MyUtility(context).width * 0.2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
+            ),
+            SizedBox(
+              width: MyUtility(context).height * 0.01,
+            ),
+            SizedBox(
+              width: MyUtility(context).width * 0.2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Container(
+                        height: 30,
                         child: Text(
                           widget.eventName,
                           style: TextStyle(
@@ -100,8 +100,11 @@ class _MemberContainerState extends State<MemberContainer> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Container(
+                      height: 30,
                       child: Text(
                         widget.location,
                         style: TextStyle(
@@ -111,9 +114,12 @@ class _MemberContainerState extends State<MemberContainer> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: SizedBox(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: SizedBox(
+                      child: Container(
+                        height: 30,
                         child: Text(
                           '${widget.dateFrom}',
                           style: TextStyle(
@@ -124,24 +130,20 @@ class _MemberContainerState extends State<MemberContainer> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  StyleButton(
-                    onTap: () {
-                      print("Pressed");
-                      widget.onPressed();
-                    },
-                    description: 'Learn More',
-                    height: 55,
-                    width: 150,
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            StyleButton(
+              onTap: () {
+                print("Pressed");
+                widget.onPressed();
+              },
+              description: 'Learn More',
+              height: 55,
+              width: 150,
+            ),
+          ],
         ),
       ),
     );

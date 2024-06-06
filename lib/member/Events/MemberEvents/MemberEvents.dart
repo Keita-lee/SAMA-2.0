@@ -115,11 +115,11 @@ class _MemberEventsState extends State<MemberEvents> {
               return Container(
                   width: MyUtility(context).width -
                       (MyUtility(context).width * 0.25),
-                  height: 550,
+                  height: 500,
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10.0,
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 6.0,
                         childAspectRatio: 0.9,
                       ),
                       itemCount: documents.length,
@@ -130,15 +130,18 @@ class _MemberEventsState extends State<MemberEvents> {
                             //mainAxisAlignment: MainAxisAlignment.start,
 
                             children: [
-                              MemberContainer(
-                                eventImage: document['eventsImage']!,
-                                eventName: document['title']!,
-                                location: document['_location']!,
-                                dateFrom: document['date']!,
-                                dateTill: document['date']!,
-                                onPressed: () {
-                                  openMemberEventsDialog(document['id']);
-                                },
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MemberContainer(
+                                  eventImage: document['eventsImage']!,
+                                  eventName: document['title']!,
+                                  location: document['_location']!,
+                                  dateFrom: document['date']!,
+                                  dateTill: document['date']!,
+                                  onPressed: () {
+                                    openMemberEventsDialog(document['id']);
+                                  },
+                                ),
                               ),
                             ],
                           ),
