@@ -109,16 +109,14 @@ class _MediaFormState extends State<MediaForm> {
         .whenComplete(() => widget.closeDialog!());
   }
 
-  BuildContext? dialogContext;
   //Dialog for password Validate
   Future removeMediaPopup() => showDialog(
       context: context,
       builder: (context) {
-        dialogContext = context;
         return Dialog(
             child: YesNoDialog(
           description: "Are you sure you want to remove this item",
-          closeDialog: () => Navigator.pop(dialogContext!),
+          closeDialog: () => Navigator.pop(context!),
           callFunction: removeMedia,
         ));
       });

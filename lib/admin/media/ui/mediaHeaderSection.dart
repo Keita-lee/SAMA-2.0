@@ -28,7 +28,16 @@ class _MediaHeaderSectionState extends State<MediaHeaderSection> {
           ),
           ProfileDropDownField(
             description: "Select a Category",
-            items: [],
+            items: [
+              'Webinar',
+              'SAMA News',
+              'General',
+              'Conferences',
+              'Virtual Meeting',
+              'Office of the Chair',
+              'Corona Virus - COVID-19',
+              'Courses',
+            ],
             customSize: 250,
             textfieldController: widget.controller,
           ),

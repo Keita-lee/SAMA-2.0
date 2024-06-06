@@ -14,7 +14,7 @@ class MediaContainerStyle extends StatefulWidget {
   String releaseDate;
   String category;
   String title;
-  VoidCallback onpress;
+  final VoidCallback? onpress;
   final VoidCallback? view;
   MediaContainerStyle(
       {super.key,
@@ -151,10 +151,10 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
               Visibility(
-                visible: widget.adminType == "true" ? true : false,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: EdgeInsets.only(bottom: 15),
                   child: SizedBox(
                     width: MyUtility(context).width / 4.7,
                     child: Align(
@@ -168,7 +168,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                         ),
                         child: TextButton(
                           onPressed: () {
-                            widget.onpress();
+                            widget.onpress!();
                           },
                           child: Text(
                             'Edit',

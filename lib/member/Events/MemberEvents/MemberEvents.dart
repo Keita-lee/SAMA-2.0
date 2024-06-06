@@ -57,8 +57,12 @@ class MemberEvents extends StatefulWidget {
 }
 
 class _MemberEventsState extends State<MemberEvents> {
+  test(id) {
+    print(id);
+  }
+
   //Popup Events dialog
-  Future OpenMemberEventsDialog(id) => showDialog(
+  Future openMemberEventsDialog(id) => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
@@ -67,6 +71,7 @@ class _MemberEventsState extends State<MemberEvents> {
           closeDialog: () => Navigator.pop(context!),
         ));
       });
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -128,7 +133,7 @@ class _MemberEventsState extends State<MemberEvents> {
                                 dateFrom: document['date']!,
                                 dateTill: document['date']!,
                                 onPressed: () {
-                                  OpenMemberEventsDialog(document['id']);
+                                  openMemberEventsDialog(document['id']);
                                 },
                               ),
                             ],

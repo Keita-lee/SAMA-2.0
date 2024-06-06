@@ -117,6 +117,7 @@ class _MemberContainerState extends State<MemberContainer> {
                 children: [
                   StyleButton(
                     onTap: () {
+                      print("Pressed");
                       widget.onPressed();
                     },
                     description: 'Learn More',

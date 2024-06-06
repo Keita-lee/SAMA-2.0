@@ -147,67 +147,6 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
               width: MyUtility(context).width * 0.2,
               height: MyUtility(context).height * 0.35,
             ),
-            /*  SizedBox(
-              width: MyUtility(context).width * 0.75,
-              height: MyUtility(context).height * 0.3,
-              child: Stack(
-                children: [
-                  PageView.builder(
-                    controller: _pageController,
-                    itemCount: imagePaths.length,
-                    onPageChanged: (int index) {
-                      setState(() {
-                        _currentPage = index;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: EventImage(eventImage: imagePaths[index]),
-                      );
-                    },
-                  ),
-                  Positioned(
-                    bottom: 10.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(imagePaths.length, (index) {
-                        return Container(
-                          width: 8.0,
-                          height: 8.0,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 2.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _currentPage == index
-                                ? Colors.blue
-                                : Colors.grey,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.75,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: _previousImage,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.arrow_forward),
-                    onPressed: _nextImage,
-                  ),
-                ],
-              ),
-            ),*/
             Text(
               'Events Details',
               style: TextStyle(
@@ -295,7 +234,9 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                     description: 'Confirm Booking',
                     height: 55,
                     width: 150,
-                    onTap: confirmBooking(),
+                    onTap: () {
+                      confirmBooking();
+                    },
                   ),
                 ],
               ),

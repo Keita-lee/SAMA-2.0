@@ -86,29 +86,57 @@ class _AdminMediaState extends State<AdminMedia> {
                       itemCount: documents.length,
                       itemBuilder: (BuildContext context, int index) {
                         final DocumentSnapshot document = documents[index];
-                        return Container(
-                          child: Wrap(
-                            //mainAxisAlignment: MainAxisAlignment.start,
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: [
-                              MediaContainerStyle(
-                                onpress: () {
-                                  openMediaDialog(document['id']);
-                                },
-                                view: () {
-                                  viewMediaDialog(document['id']);
-                                },
-                                adminType: "true",
-                                image: document['mediaImageUrl'] ?? '',
-                                duration: document['duration'],
-                                releaseDate: '',
-                                category: document['category'],
-                                title: document['title'],
-                              ),
-                            ],
-                          ),
-                        );
+
+                        if (selectCategory.text == "") {
+                          return Container(
+                            child: Wrap(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: [
+                                MediaContainerStyle(
+                                  onpress: () {
+                                    openMediaDialog(document['id']);
+                                  },
+                                  view: () {
+                                    viewMediaDialog(document['id']);
+                                  },
+                                  adminType: "true",
+                                  image: document['mediaImageUrl'] ?? '',
+                                  duration: document['duration'],
+                                  releaseDate: '',
+                                  category: document['category'],
+                                  title: document['title'],
+                                ),
+                              ],
+                            ),
+                          );
+                        } else if (document['category']
+                            .contains(selectCategory.text)) {
+                          return Container(
+                            child: Wrap(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: [
+                                MediaContainerStyle(
+                                  onpress: () {
+                                    openMediaDialog(document['id']);
+                                  },
+                                  view: () {
+                                    viewMediaDialog(document['id']);
+                                  },
+                                  adminType: "true",
+                                  image: document['mediaImageUrl'] ?? '',
+                                  duration: document['duration'],
+                                  releaseDate: '',
+                                  category: document['category'],
+                                  title: document['title'],
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       }));
             }),
       ]),
