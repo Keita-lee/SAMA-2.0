@@ -19,7 +19,7 @@ class LoginWithPassword extends StatefulWidget {
 
 class _LoginWithPasswordState extends State<LoginWithPassword> {
   // Text controllers
-  final password = TextEditingController();
+  final password = TextEditingController(text: 'Cp123456'); //REMOVE AFTER TEST
 
   BuildContext? dialogContext;
 

@@ -26,7 +26,8 @@ class LoginWithEmail extends StatefulWidget {
 
 class _LoginWithEmailState extends State<LoginWithEmail> {
   // Text controllers
-  final email = TextEditingController();
+  final email = TextEditingController(
+      text: 'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)');
 
   String validateText = "";
 
