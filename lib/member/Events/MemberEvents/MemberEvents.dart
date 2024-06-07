@@ -4,51 +4,6 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEventsComp/MemberContainer.dart';
 
-final List<Map<String, String>> events = [
-  {
-    'eventImage': 'images/coffee.jpg',
-    'eventName': 'Event1',
-    'location': 'Caesars Palace',
-    'dateFrom': '13 June',
-    'dateTill': '15 June',
-  },
-  {
-    'eventImage': 'images/coffee.jpg',
-    'eventName': 'Event2',
-    'location': 'Sun Arena',
-    'dateFrom': '20 June',
-    'dateTill': '22 June',
-  },
-  {
-    'eventImage': 'images/coffee.jpg',
-    'eventName': 'Event3',
-    'location': 'Caesars Palace',
-    'dateFrom': '24 June',
-    'dateTill': '26 June',
-  },
-  {
-    'eventImage': 'images/coffee.jpg',
-    'eventName': 'Event4',
-    'location': 'Caesars Palace',
-    'dateFrom': '13 June',
-    'dateTill': '15 June',
-  },
-  {
-    'eventImage': 'images/coffee.jpg',
-    'eventName': 'Event5',
-    'location': 'Sun Arena',
-    'dateFrom': '20 June',
-    'dateTill': '22 June',
-  },
-  {
-    'eventImage': 'images/coffee.jpg',
-    'eventName': 'Event6',
-    'location': 'Caesars Palace',
-    'dateFrom': '24 June',
-    'dateTill': '26 June',
-  },
-];
-
 class MemberEvents extends StatefulWidget {
   const MemberEvents({Key? key}) : super(key: key);
 

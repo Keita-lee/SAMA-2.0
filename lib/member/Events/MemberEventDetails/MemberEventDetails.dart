@@ -173,147 +173,138 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
             // ),
 
             //SizedBox(height: MyUtility(context).height * 0.02),
-            Transform.scale(
-              scale: 0.8,
-              child: Container(
-                width: MyUtility(context).width * 0.75,
-                height: MyUtility(context).height * 0.15,
-                decoration: ShapeDecoration(
-                  color: Color.fromARGB(255, 245, 249, 255),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
+            Container(
+              width: MyUtility(context).width * 0.75,
+              height: MyUtility(context).height * 0.15,
+              decoration: ShapeDecoration(
+                color: Color.fromARGB(255, 245, 249, 255),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            //width: MyUtility(context).width * 0.15,
-                            child: EventText(
-                                title: _title.text,
-                                date: _date.text,
-                                timeFrom: _times.text,
-                                timeTill: '')),
-                      ],
-                    ),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          //width: MyUtility(context).width * 0.15,
+                          child: EventText(
+                              title: _title.text,
+                              date: _date.text,
+                              timeFrom: _times.text,
+                              timeTill: '')),
+                    ],
                   ),
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 0.8,
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Description:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
-                    ),
+            Column(
+              //mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Description:',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF3D3D3D),
+                    fontWeight: FontWeight.bold,
                   ),
-                  Container(
-                    width: MyUtility(context).width * 0.75,
-                    decoration: ShapeDecoration(
-                      color: Color.fromARGB(255, 245, 249, 255),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        )
-                      ],
+                ),
+                Container(
+                  width: MyUtility(context).width * 0.75,
+                  decoration: ShapeDecoration(
+                    color: Color.fromARGB(255, 245, 249, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Expanded(
-                        child: Text(
-                          _description.text,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFF3D3D3D),
-                            fontWeight: FontWeight.normal,
-                          ),
-                          textAlign: TextAlign.start,
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Expanded(
+                      child: Text(
+                        _description.text,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF3D3D3D),
+                          fontWeight: FontWeight.normal,
                         ),
+                        textAlign: TextAlign.start,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             // SizedBox(
             //   height: MyUtility(context).height * 0.025,
             // ),
-            Transform.scale(
-              scale: 0.8,
-              child: SizedBox(
-                width: MyUtility(context).width * 0.75,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 300,
-                      child: Row(
-                        children: [
-                          Text(
-                            'How many people:',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.bold,
-                            ),
+            SizedBox(
+              width: MyUtility(context).width * 0.75,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 300,
+                    child: Row(
+                      children: [
+                        Text(
+                          'How many people:',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color(0xFF3D3D3D),
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(width: 10),
-                          DropdownButton<int>(
-                            value: _selectedNumber,
-                            items: List.generate(10, (index) {
-                              return DropdownMenuItem<int>(
-                                value: index + 1,
-                                child: Text((index + 1).toString()),
-                              );
-                            }),
-                            onChanged: (int? newValue) {
-                              setState(() {
-                                _selectedNumber = newValue!;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 10),
+                        DropdownButton<int>(
+                          value: _selectedNumber,
+                          items: List.generate(10, (index) {
+                            return DropdownMenuItem<int>(
+                              value: index + 1,
+                              child: Text((index + 1).toString()),
+                            );
+                          }),
+                          onChanged: (int? newValue) {
+                            setState(() {
+                              _selectedNumber = newValue!;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                    // EventTxtField(
-                    //   controller: bookingnumber,
-                    //   textSection: 'How many people',
-                    // ),
-                    StyleButton(
-                      description: 'Confirm Booking',
-                      height: 55,
-                      width: 150,
-                      onTap: () {
-                        confirmBooking();
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                  // EventTxtField(
+                  //   controller: bookingnumber,
+                  //   textSection: 'How many people',
+                  // ),
+                  StyleButton(
+                    description: 'Confirm Booking',
+                    height: 55,
+                    width: 150,
+                    onTap: () {
+                      confirmBooking();
+                    },
+                  ),
+                ],
               ),
             ),
           ],
