@@ -21,24 +21,29 @@ class StyleButton extends StatefulWidget {
 class _StyleButtonState extends State<StyleButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          //elevation: 10,
-          minimumSize:
-              Size(widget.width!, widget.height!), // Size(width, height)
-          backgroundColor: Color.fromARGB(255, 8, 55, 145),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-      child: Text(
-        widget.description!,
-        style: TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
-          fontSize: 16,
-          //  fontWeight: FontWeight.w900,
-          //height: 0,
+    return InkWell(
+      onTap: () {
+        widget.onTap!();
+      },
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            //elevation: 10,
+            minimumSize:
+                Size(widget.width!, widget.height!), // Size(width, height)
+            backgroundColor: Color.fromARGB(255, 8, 55, 145),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15))),
+        child: Text(
+          widget.description!,
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontSize: 16,
+            //  fontWeight: FontWeight.w900,
+            //height: 0,
+          ),
         ),
+        onPressed: widget.onTap,
       ),
-      onPressed: widget.onTap,
     );
 
 /*

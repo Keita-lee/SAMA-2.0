@@ -29,7 +29,7 @@ class _MemberContainerState extends State<MemberContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.22,
-      height: MyUtility(context).height * 0.53,
+      height: MyUtility(context).height * 0.50,
       decoration: ShapeDecoration(
         color: Color(0xFFFFF5F5),
         shape: RoundedRectangleBorder(
