@@ -15,43 +15,46 @@ class EventText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Title: ' + title,
-            style: TextStyle(
-              fontSize: 20,
-              color: Color(0xFF3D3D3D),
-              fontWeight: FontWeight.bold,
+    return Container(
+      height: 200,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Title: ' + title,
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xFF3D3D3D),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Date: ' + date,
-            style: TextStyle(
-              fontSize: 20,
-              color: Color(0xFF3D3D3D),
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Date: ' + date,
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xFF3D3D3D),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Time: ' + timeFrom + ' - ' + timeTill,
-            style: TextStyle(
-              fontSize: 20,
-              color: Color(0xFF3D3D3D),
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Time: ' + timeFrom + ' - ' + timeTill,
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xFF3D3D3D),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

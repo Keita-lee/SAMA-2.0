@@ -104,8 +104,7 @@ class _AdminEventsState extends State<AdminEvents> {
                             final List<DocumentSnapshot> documents =
                                 snapshot.data!.docs;
                             if (documents.isEmpty) {
-                              return Center(
-                                  child: Text('No Media Podcast yet'));
+                              return Center(child: Text('No Events listed'));
                             }
 
                             return Container(

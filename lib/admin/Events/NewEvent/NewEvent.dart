@@ -49,7 +49,7 @@ class _NewEventState extends State<NewEvent> {
       "_area": _area.text,
       "id": widget.id,
       "eventsImage": eventsImage,
-      "releaseDate": releaseDate,
+      //"releaseDate": releaseDate,
       "attending": attending
     };
 
@@ -59,7 +59,6 @@ class _NewEventState extends State<NewEvent> {
 
       FirebaseFirestore.instance.collection("events").doc(myNewDoc.id).update({
         "id": myNewDoc.id,
-        "releaseDate": DateTime.now()
       }).whenComplete(() => widget.closeDialog());
     } else {
       FirebaseFirestore.instance
@@ -86,7 +85,7 @@ class _NewEventState extends State<NewEvent> {
         _location.text = data.get('_location');
         _area.text = data.get('_area');
         eventsImage = data.get('eventsImage');
-        releaseDate = data.get('releaseDate');
+        //releaseDate = data.get('releaseDate');
         attending.addAll(data.get('attending'));
       });
     }
@@ -111,7 +110,7 @@ class _NewEventState extends State<NewEvent> {
           scale: 0.8,
           child: Container(
             width: MyUtility(context).width * 0.55,
-            //  height: MyUtility(context).height * 0.7,
+            height: MyUtility(context).height * 2,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
@@ -126,163 +125,164 @@ class _NewEventState extends State<NewEvent> {
                 )
               ],
             ),
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Events',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color: Color(0xFF174486),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Spacer(),
-                            MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onTap: () {
-                                  widget.closeDialog();
-                                },
-                                child: Icon(Icons.cancel),
-                              ),
-                            ),
-                          ],
+            child: Container(
+              height: MyUtility(context).height * 1.8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Events',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Color(0xFF174486),
+                              fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: AddEventsImage(
-                          networkImageUrl: eventsImage,
-                          updateUrl: getEventsImageUrl,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            EventTxtField(
-                              controller: _title,
-                              textSection: 'Title',
-                            ),
-                            EventTxtField(
-                              controller: _date,
-                              textSection: 'Date',
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            EventTxtField(
-                              controller: _times,
-                              textSection: 'Start-EndTime',
-                            ),
-                            EventTxtField(
-                              controller: _event,
-                              textSection: 'Type of Event',
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            EventTxtField(
-                              controller: _location,
-                              textSection: 'Location',
-                            ),
-                            EventTxtField(
-                              controller: _area,
-                              textSection: 'Area',
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: EventDescriptionTextField(
-                          controller: _description,
-                          textSection: 'Description',
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: StyleButton(
-                          description: 'Save Event',
-                          onTap: () {
-                            createUpdateEvent();
-                          },
-                          height: 55,
-                          width: 150,
-                        ),
-                      ),
-                      Visibility(
-                        visible: widget.id != "" ? true : false,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Member Name',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            ],
+                        Spacer(),
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              widget.closeDialog();
+                            },
+                            child: Icon(Icons.cancel),
                           ),
                         ),
-                      ),
-                      for (int i = 0; i < attending.length; i++)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Container(
-                            width: MyUtility(context).width * 0.8,
-                            height: MyUtility(context).height * 0.06,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 218, 218, 218),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "${attending[i]['firstName']} ${attending[i]['lastName']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xFF3D3D3D),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AddEventsImage(
+                      networkImageUrl: eventsImage,
+                      updateUrl: getEventsImageUrl,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        EventTxtField(
+                          controller: _title,
+                          textSection: 'Title',
+                        ),
+                        EventTxtField(
+                          controller: _date,
+                          textSection: 'Date',
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        EventTxtField(
+                          controller: _times,
+                          textSection: 'Start-EndTime',
+                        ),
+                        EventTxtField(
+                          controller: _event,
+                          textSection: 'Type of Event',
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        EventTxtField(
+                          controller: _location,
+                          textSection: 'Location',
+                        ),
+                        EventTxtField(
+                          controller: _area,
+                          textSection: 'Area',
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: EventDescriptionTextField(
+                      controller: _description,
+                      textSection: 'Description',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: StyleButton(
+                      description: 'Save Event',
+                      onTap: () {
+                        createUpdateEvent();
+                      },
+                      height: 55,
+                      width: 150,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  // Visibility(
+                  //   visible: widget.id != "" ? true : false,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(left: 10),
+                  //     child: Row(
+                  //       children: [
+                  //         Expanded(
+                  //           child: Text(
+                  //             'Member Name',
+                  //             style: TextStyle(
+                  //               fontSize: 20,
+                  //               color: Color(0xFF3D3D3D),
+                  //               fontWeight: FontWeight.normal,
+                  //             ),
+                  //             textAlign: TextAlign.left,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // for (int i = 0; i < attending.length; i++)
+                  //   Padding(
+                  //     padding: const EdgeInsets.only(bottom: 5),
+                  //     child: Container(
+                  //       width: MyUtility(context).width * 0.8,
+                  //       height: MyUtility(context).height * 0.06,
+                  //       decoration: BoxDecoration(
+                  //         color: const Color.fromARGB(255, 218, 218, 218),
+                  //         borderRadius: BorderRadius.circular(10),
+                  //       ),
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.only(left: 0),
+                  //         child: Row(
+                  //           children: [
+                  //             Text(
+                  //               "${attending[i]['firstName']} ${attending[i]['lastName']}",
+                  //               style: TextStyle(
+                  //                 fontSize: 20,
+                  //                 color: Color(0xFF3D3D3D),
+                  //                 fontWeight: FontWeight.bold,
+                  //               ),
+                  //               textAlign: TextAlign.left,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                ],
+              ),
             ),
           ),
         ),

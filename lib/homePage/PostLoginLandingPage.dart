@@ -148,7 +148,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         Transform.scale(
                           scale: 0.8,
                           child: Container(
-                            width: 175,
+                            width: 180,
                             height: 35,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -159,6 +159,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(Icons.search, color: Colors.grey),
                                   SizedBox(width: 8),

@@ -239,6 +239,16 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               }
             },
           ),
+          // SizedBox(
+          //   height: 150,
+          // ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "SAMA Beta Version 1.1.0",
+              style: TextStyle(fontSize: 13, color: Colors.black),
+            ),
+          ),
         ],
       ),
     );

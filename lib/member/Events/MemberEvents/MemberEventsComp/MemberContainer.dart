@@ -29,7 +29,8 @@ class _MemberContainerState extends State<MemberContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.22,
-      height: MyUtility(context).height * 0.50,
+      //height: MyUtility(context).height * 0.70,
+      //height: 1000,
       decoration: ShapeDecoration(
         color: Color(0xFFFFF5F5),
         shape: RoundedRectangleBorder(
@@ -44,8 +45,8 @@ class _MemberContainerState extends State<MemberContainer> {
           )
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
+      child: Container(
+        height: 600,
         child: Column(
           children: [
             /*   Container(
@@ -78,32 +79,32 @@ class _MemberContainerState extends State<MemberContainer> {
               ),
             ),
             SizedBox(
-              width: MyUtility(context).height * 0.01,
+              width: MyUtility(context).height * 0.10,
             ),
-            SizedBox(
-              width: MyUtility(context).width * 0.2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Container(
-                        height: 30,
-                        child: Text(
-                          widget.eventName,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFF3D3D3D),
-                            fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: MyUtility(context).width * 0.2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          height: 30,
+                          child: Text(
+                            widget.eventName,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Container(
+                    Container(
                       height: 30,
                       child: Text(
                         widget.location,
@@ -114,24 +115,35 @@ class _MemberContainerState extends State<MemberContainer> {
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: SizedBox(
-                      child: Container(
-                        height: 30,
-                        child: Text(
-                          '${widget.dateFrom}',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFF3D3D3D),
-                            fontWeight: FontWeight.normal,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: SizedBox(
+                        child: Container(
+                          height: 30,
+                          child: Text(
+                            '${widget.dateFrom}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: 30,
+              child: Text(
+                'TEST',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
             StyleButton(
