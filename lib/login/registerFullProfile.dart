@@ -92,7 +92,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
       "initials": initials.text,
       "firstName": firstName.text,
       "lastName": lastName.text,
-      "email": email.text,
+      "email": (email.text).toLowerCase(),
       "mobileNo": mobileNo.text,
       "landline": landline.text,
       "profilePic":

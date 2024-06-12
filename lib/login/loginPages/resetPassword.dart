@@ -59,7 +59,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     widget.getEmailChangeType("passwordResetPage");
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('practiceNumber', isEqualTo: email.text)
+        .where('practiceNumber', isEqualTo: email.text.toLowerCase())
         .get();
 
 //If user exist send link

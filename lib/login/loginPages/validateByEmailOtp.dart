@@ -59,8 +59,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
         await FirebaseFirestore.instance.collection('validateEmailOtp').get();
 
     for (var i = 0; i < validationList.docs.length; i++) {
-      print(widget.email);
-      if (validationList.docs[i]['email'] == widget.email) {
+      if (validationList.docs[i]['email'] == ((widget.email!).toLowerCase())) {
         setState(() {
           print(validationList.docs[i]['email']);
           correctOtp = validationList.docs[i]['otpCode'];
@@ -74,7 +73,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
     //Check if email exists and continue
     final userList = await FirebaseFirestore.instance
         .collection('users')
-        .where('email', isEqualTo: widget.email)
+        .where('email', isEqualTo: ((widget.email!).toLowerCase()))
         .get();
 
     //If user exist get data
@@ -94,7 +93,8 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
       if (widget.emailChangeType == "passwordResetPage") {
         widget.changePage(5); // reset password
       } else if (widget.emailChangeType == "usernamePage") {
-        sendSamaNumber(samaNumber: samaNumber, email: widget.email!);
+        sendSamaNumber(
+            samaNumber: samaNumber, email: ((widget.email!).toLowerCase()));
         setState(() {
           messageText = "Please check your email for SAMA number";
         });

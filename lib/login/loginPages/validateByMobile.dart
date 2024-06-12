@@ -73,7 +73,7 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
     //Check if email exists and continue
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('email', isEqualTo: widget.email)
+        .where('email', isEqualTo: ((widget.email!).toLowerCase()))
         .get();
 
 //If user exist send link

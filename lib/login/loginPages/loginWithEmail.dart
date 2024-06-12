@@ -57,7 +57,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
 //Check if email exists and continue
   checkEmail() async {
-    widget.getEmail(email.text);
+    widget.getEmail(email.text.toLowerCase());
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: email.text)
@@ -77,10 +77,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   checkMemberNumber() async {
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('practiceNumber', isEqualTo: email.text)
+        .where('practiceNumber', isEqualTo: email.text.toLowerCase())
         .get();
     updateStateText("");
-    if (users.docs.length >= 1 && email.text != "") {
+    if (users.docs.length >= 1 && email.text.toLowerCase() != "") {
       for (int i = 0; i < users.docs.length; i++) {}
       widget.getEmail(users.docs[0].get("email"));
       widget.changePage(1);

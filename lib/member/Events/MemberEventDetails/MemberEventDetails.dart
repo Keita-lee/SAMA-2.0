@@ -95,7 +95,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
 
   confirmBooking() async {
     var bookingData = {
-      "email": email.text,
+      "email": email.text.toLowerCase(),
       "firstName": firstName.text,
       "lastName": lastName.text,
       "peopleAmmount": _selectedNumber
