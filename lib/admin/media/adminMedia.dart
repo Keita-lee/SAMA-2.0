@@ -7,6 +7,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
+import 'package:sama/member/media/mediaPopup/ui/youtubeVideoPlayer.dart';
 
 class AdminMedia extends StatefulWidget {
   const AdminMedia({super.key});
@@ -62,7 +63,7 @@ class _AdminMediaState extends State<AdminMedia> {
           },
         ),
         StreamBuilder<QuerySnapshot>(
-            stream: selectCategory.text.isEmpty
+            stream: selectCategory.text == ""
                 ? FirebaseFirestore.instance.collection('media').snapshots()
                 : FirebaseFirestore.instance
                     .collection('media')
@@ -102,19 +103,26 @@ class _AdminMediaState extends State<AdminMedia> {
                           spacing: 10,
                           runSpacing: 10,
                           children: [
-                            MediaContainerStyle(
-                              onpress: () {
-                                openMediaDialog(document['id']);
-                              },
-                              view: () {
-                                viewMediaDialog(document['id']);
-                              },
-                              adminType: "true",
-                              image: document['mediaImageUrl'] ?? '',
-                              duration: document['duration'],
-                              releaseDate: '',
-                              category: document['category'],
-                              title: document['title'],
+                            Visibility(
+                              visible: document['category']
+                                      .contains(selectCategory.text)
+                                  ? true
+                                  : false,
+                              child: MediaContainerStyle(
+                                onpress: () {
+                                  openMediaDialog(document['id']);
+                                },
+                                view: () {
+                                  viewMediaDialog(document['id']);
+                                },
+                                adminType: "true",
+                                image: document['mediaImageUrl'] ?? '',
+                                duration: document['duration'],
+                                releaseDate: '',
+                                category: document['category'],
+                                title: document['title'],
+                                id: document['id'],
+                              ),
                             ),
                           ],
                         ),

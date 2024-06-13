@@ -4,11 +4,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sama/admin/Events/AdminEvents/UI/addEventsImage.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventDescriptionTextField.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventTextField.dart';
+import 'package:sama/admin/Events/NewEvent/NewEventComp/eventAttendees.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/utility.dart';
 import 'dart:io';
-
-List attending = [];
 
 class NewEvent extends StatefulWidget {
   Function closeDialog;
@@ -21,6 +20,7 @@ class NewEvent extends StatefulWidget {
 }
 
 class _NewEventState extends State<NewEvent> {
+  //Text controllers
   TextEditingController _title = TextEditingController();
   TextEditingController _date = TextEditingController();
   TextEditingController _times = TextEditingController();
@@ -28,8 +28,13 @@ class _NewEventState extends State<NewEvent> {
   TextEditingController _description = TextEditingController();
   TextEditingController _location = TextEditingController();
   TextEditingController _area = TextEditingController();
-  String eventsImage = "";
+  TextEditingController _memberPricing = TextEditingController();
+  TextEditingController _eventProvider = TextEditingController();
+  TextEditingController _CPDAccreditation = TextEditingController();
 
+  //var
+  String eventsImage = "";
+  List attending = [];
   getEventsImageUrl(value) {
     setState(() {
       eventsImage = value;
@@ -38,6 +43,7 @@ class _NewEventState extends State<NewEvent> {
 
   DateTime? releaseDate;
 
+//create new event / update
   createUpdateEvent() async {
     var eventData = {
       "title": _title.text,
@@ -50,7 +56,10 @@ class _NewEventState extends State<NewEvent> {
       "id": widget.id,
       "eventsImage": eventsImage,
       //"releaseDate": releaseDate,
-      "attending": attending
+      "attending": attending,
+      "memberPricing": _memberPricing.text,
+      "eventProvider": _eventProvider.text,
+      "CPDAccreditation": _CPDAccreditation.text
     };
 
     if (widget.id == "") {
@@ -69,6 +78,7 @@ class _NewEventState extends State<NewEvent> {
     }
   }
 
+//get event data
   getEventData() async {
     final data = await FirebaseFirestore.instance
         .collection('events')
@@ -87,10 +97,24 @@ class _NewEventState extends State<NewEvent> {
         eventsImage = data.get('eventsImage');
         //releaseDate = data.get('releaseDate');
         attending.addAll(data.get('attending'));
+
+        _memberPricing.text = data.get('memberPricing');
+        _eventProvider.text = data.get('eventProvider');
+        _CPDAccreditation.text = data.get('CPDAccreditation');
       });
     }
   }
 
+//Popup view atten
+  Future openViewEventAtt() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: EventAttendees(
+          attendeesList: attending,
+          closeDialog: () => Navigator.pop(context!),
+        ));
+      });
   @override
   void initState() {
     super.initState();
@@ -127,161 +151,214 @@ class _NewEventState extends State<NewEvent> {
             ),
             child: Container(
               height: MyUtility(context).height * 1.8,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Events',
-                          style: TextStyle(
-                              fontSize: 25,
-                              color: Color(0xFF174486),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Spacer(),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              widget.closeDialog();
-                            },
-                            child: Icon(Icons.cancel),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Events',
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: Color(0xFF174486),
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
+                          Spacer(),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                widget.closeDialog();
+                              },
+                              child: Icon(Icons.cancel),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AddEventsImage(
-                      networkImageUrl: eventsImage,
-                      updateUrl: getEventsImageUrl,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AddEventsImage(
+                        networkImageUrl: eventsImage,
+                        updateUrl: getEventsImageUrl,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        EventTxtField(
-                          controller: _title,
-                          textSection: 'Title',
-                        ),
-                        EventTxtField(
-                          controller: _date,
-                          textSection: 'Date',
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          EventTxtField(
+                            controller: _title,
+                            textSection: 'Title',
+                          ),
+                          EventTxtField(
+                            controller: _date,
+                            textSection: 'Date',
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        EventTxtField(
-                          controller: _times,
-                          textSection: 'Start-EndTime',
-                        ),
-                        EventTxtField(
-                          controller: _event,
-                          textSection: 'Type of Event',
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          EventTxtField(
+                            controller: _times,
+                            textSection: 'Start-EndTime',
+                          ),
+                          EventTxtField(
+                            controller: _event,
+                            textSection: 'Type of Event',
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        EventTxtField(
-                          controller: _location,
-                          textSection: 'Location',
-                        ),
-                        EventTxtField(
-                          controller: _area,
-                          textSection: 'Area',
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          EventTxtField(
+                            controller: _location,
+                            textSection: 'Location',
+                          ),
+                          EventTxtField(
+                            controller: _area,
+                            textSection: 'Area',
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: EventDescriptionTextField(
-                      controller: _description,
-                      textSection: 'Description',
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          EventTxtField(
+                            controller: _memberPricing,
+                            textSection: 'Member Pricing',
+                          ),
+                          EventTxtField(
+                            controller: _eventProvider,
+                            textSection: 'Event Provider',
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: StyleButton(
-                      description: 'Save Event',
-                      onTap: () {
-                        createUpdateEvent();
-                      },
-                      height: 55,
-                      width: 150,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          EventTxtField(
+                            controller: _CPDAccreditation,
+                            textSection: 'CPD Accreditation',
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: EventDescriptionTextField(
+                        controller: _description,
+                        textSection: 'Description',
+                      ),
+                    ),
 
-                  // Visibility(
-                  //   visible: widget.id != "" ? true : false,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.only(left: 10),
-                  //     child: Row(
-                  //       children: [
-                  //         Expanded(
-                  //           child: Text(
-                  //             'Member Name',
-                  //             style: TextStyle(
-                  //               fontSize: 20,
-                  //               color: Color(0xFF3D3D3D),
-                  //               fontWeight: FontWeight.normal,
-                  //             ),
-                  //             textAlign: TextAlign.left,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // for (int i = 0; i < attending.length; i++)
-                  //   Padding(
-                  //     padding: const EdgeInsets.only(bottom: 5),
-                  //     child: Container(
-                  //       width: MyUtility(context).width * 0.8,
-                  //       height: MyUtility(context).height * 0.06,
-                  //       decoration: BoxDecoration(
-                  //         color: const Color.fromARGB(255, 218, 218, 218),
-                  //         borderRadius: BorderRadius.circular(10),
-                  //       ),
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.only(left: 0),
-                  //         child: Row(
-                  //           children: [
-                  //             Text(
-                  //               "${attending[i]['firstName']} ${attending[i]['lastName']}",
-                  //               style: TextStyle(
-                  //                 fontSize: 20,
-                  //                 color: Color(0xFF3D3D3D),
-                  //                 fontWeight: FontWeight.bold,
-                  //               ),
-                  //               textAlign: TextAlign.left,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          StyleButton(
+                            description: 'Save Event',
+                            onTap: () {
+                              createUpdateEvent();
+                            },
+                            height: 55,
+                            width: 150,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Visibility(
+                            visible: widget.id != "" ? true : false,
+                            child: StyleButton(
+                              description: 'View Attendees',
+                              onTap: () {
+                                openViewEventAtt();
+                              },
+                              height: 55,
+                              width: 150,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+
+                    // Visibility(
+                    //   visible: widget.id != "" ? true : false,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(left: 10),
+                    //     child: Row(
+                    //       children: [
+                    //         Expanded(
+                    //           child: Text(
+                    //             'Member Name',
+                    //             style: TextStyle(
+                    //               fontSize: 20,
+                    //               color: Color(0xFF3D3D3D),
+                    //               fontWeight: FontWeight.normal,
+                    //             ),
+                    //             textAlign: TextAlign.left,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // for (int i = 0; i < attending.length; i++)
+                    //   Padding(
+                    //     padding: const EdgeInsets.only(bottom: 5),
+                    //     child: Container(
+                    //       width: MyUtility(context).width * 0.8,
+                    //       height: MyUtility(context).height * 0.06,
+                    //       decoration: BoxDecoration(
+                    //         color: const Color.fromARGB(255, 218, 218, 218),
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.only(left: 0),
+                    //         child: Row(
+                    //           children: [
+                    //             Text(
+                    //               "${attending[i]['firstName']} ${attending[i]['lastName']}",
+                    //               style: TextStyle(
+                    //                 fontSize: 20,
+                    //                 color: Color(0xFF3D3D3D),
+                    //                 fontWeight: FontWeight.bold,
+                    //               ),
+                    //               textAlign: TextAlign.left,
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                  ],
+                ),
               ),
             ),
           ),

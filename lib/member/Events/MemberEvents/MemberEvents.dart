@@ -12,11 +12,7 @@ class MemberEvents extends StatefulWidget {
 }
 
 class _MemberEventsState extends State<MemberEvents> {
-  test(id) {
-    print(id);
-  }
-
-  //Popup Events dialog
+  //Popup member dialog
   Future openMemberEventsDialog(id) => showDialog(
       context: context,
       builder: (context) {
@@ -110,14 +106,6 @@ class _MemberEventsState extends State<MemberEvents> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
-                            )
-                          ],
                         ),
                         child: MemberContainer(
                           eventImage: document['eventsImage']!,

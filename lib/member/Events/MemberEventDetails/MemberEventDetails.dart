@@ -7,6 +7,7 @@ import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventsImage.dart'
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventTextField.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/login/popups/validateDialog.dart';
 import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
 
 class MemberEventDetails extends StatefulWidget {
@@ -29,6 +30,9 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
   TextEditingController _description = TextEditingController();
   TextEditingController _location = TextEditingController();
   TextEditingController _area = TextEditingController();
+  TextEditingController _memberPricing = TextEditingController();
+  TextEditingController _eventProvider = TextEditingController();
+  TextEditingController _CPDAccreditation = TextEditingController();
 
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
@@ -70,6 +74,9 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         _description.text = data.get('_description');
         _location.text = data.get('_location');
         _area.text = data.get('_area');
+        _memberPricing.text = data.get('memberPricing');
+        _eventProvider.text = data.get('eventProvider');
+        _CPDAccreditation.text = data.get('CPDAccreditation');
         eventsImage = data.get('eventsImage');
         attending = data.get('attending');
       });
@@ -93,7 +100,27 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
     }
   }
 
+  //Dialog  already made booking
+  Future validateBooking() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Booking already made",
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
   confirmBooking() async {
+    var checkIfExist = false;
+
+    for (int i = 0; i < attending.length; i++) {
+      if (attending[i]["email"] == email.text) {
+        setState(() {
+          checkIfExist = true;
+        });
+      }
+    }
+
     var bookingData = {
       "email": email.text.toLowerCase(),
       "firstName": firstName.text,
@@ -101,11 +128,14 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       "peopleAmmount": _selectedNumber
     };
     attending.add(bookingData);
-
-    final data = await FirebaseFirestore.instance
-        .collection('events')
-        .doc(widget.id)
-        .update({"attending": attending}).whenComplete(widget.closeDialog());
+    if (checkIfExist) {
+      validateBooking();
+    } else {
+      final data = await FirebaseFirestore.instance
+          .collection('events')
+          .doc(widget.id)
+          .update({"attending": attending}).whenComplete(widget.closeDialog());
+    }
   }
 
   @override
@@ -206,6 +236,85 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                       textAlign: TextAlign.start,
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Member Pricing:',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      _memberPricing.text,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Event Provider:',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            _eventProvider.text,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.normal,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'CPD Accreditation:',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            _CPDAccreditation.text,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xFF3D3D3D),
+                              fontWeight: FontWeight.normal,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
+                      )
+                    ],
+                  )
                 ],
               ),
             ),

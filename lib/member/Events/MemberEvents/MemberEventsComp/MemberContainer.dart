@@ -29,22 +29,12 @@ class _MemberContainerState extends State<MemberContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.22,
-      //height: MyUtility(context).height * 0.70,
-      //height: 1000,
-      decoration: ShapeDecoration(
-        color: Color(0xFFFFF5F5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        shadows: [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 0,
-          )
-        ],
-      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: Color(0xFFD1D1D1),
+          )),
       child: Container(
         height: 600,
         child: Column(

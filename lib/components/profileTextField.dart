@@ -121,8 +121,6 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
           ),
           DropdownMenu<String>(
             width: widget.customSize,
-            // height: 50,
-
             controller: widget.textfieldController,
             requestFocusOnTap: true,
             label: const Text(''),

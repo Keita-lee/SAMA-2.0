@@ -6,6 +6,7 @@ import 'package:image_network/image_network.dart';
 import 'package:intl/intl.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/member/media/mediaPopup/ui/youtubeVideoPlayer.dart';
 
 class MediaContainerStyle extends StatefulWidget {
   String adminType;
@@ -15,6 +16,7 @@ class MediaContainerStyle extends StatefulWidget {
   String releaseDate;
   String category;
   String title;
+  String id;
   final VoidCallback? onpress;
   final VoidCallback? view;
   MediaContainerStyle(
@@ -26,6 +28,7 @@ class MediaContainerStyle extends StatefulWidget {
       required this.category,
       required this.onpress,
       required this.title,
+      required this.id,
       required this.view});
 
   @override
@@ -48,7 +51,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 4.4,
-      height: MyUtility(context).height * 0.8,
+      height: widget.adminType == "true" ? 425 : 380,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
@@ -60,18 +63,75 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Youtubevideoplayer(
+              id: widget.id,
+            ),
+
             Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               height: 75,
               child: Text(
                 (widget.title),
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Color(0xFF3D3D3D),
                     fontWeight: FontWeight.normal),
               ),
             ),
-            Container(
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: Row(
+                children: [
+                  Text(
+                    (widget.category),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal),
+                  ),
+                  Spacer(),
+                  Text(
+                    (widget.duration),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: 10,
+            ),
+
+            Visibility(
+              visible: widget.adminType == "true" ? true : false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StyleButton(
+                    onTap: () {
+                      widget.onpress!();
+                    },
+                    description: 'Edit',
+                    height: 55,
+                    width: MyUtility(context).width * 0.17,
+                  ),
+                ],
+              ),
+            ),
+
+            /*    StyleButton(
+                      onTap: () {
+                        widget.view!();
+                      },
+                      description: 'View',
+                      height: 55,
+                      width: MyUtility(context).width * 0.17,
+                    ),*/
+            /*  Container(
               width: MyUtility(context).width / 4.0,
               height: 250,
               decoration: BoxDecoration(
@@ -87,69 +147,8 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   height: 250,
                 ),
               ),
-            ),
+            ),*/
 
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              (widget.category),
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.normal),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            // Text(
-            //   _formatDateTime(widget.releaseDate),
-            //   style: TextStyle(
-            //       fontSize: 20,
-            //       color: Color(0xFF3D3D3D),
-            //       fontWeight: FontWeight.normal),
-            // ),
-
-            Text(
-              (widget.duration),
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.normal),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    StyleButton(
-                      onTap: () {
-                        widget.view!();
-                      },
-                      description: 'View',
-                      height: 55,
-                      width: MyUtility(context).width * 0.17,
-                    ),
-                    SizedBox(height: 10),
-                    Visibility(
-                      visible: widget.adminType == "true" ? true : false,
-                      child: StyleButton(
-                        onTap: () {
-                          widget.onpress!();
-                        },
-                        description: 'Edit',
-                        height: 55,
-                        width: MyUtility(context).width * 0.17,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
             // Visibility(
             //   //visible: widget.adminType == "true" ? false : true,
             //   child: Padding(
@@ -216,7 +215,6 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                 ),
               ),
             ),*/
-            SizedBox(height: 10)
           ],
         ),
       ),

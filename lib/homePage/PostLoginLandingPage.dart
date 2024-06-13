@@ -10,6 +10,7 @@ import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
+import 'package:sama/login/loginPages.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEvents.dart';
 import 'package:sama/member/centerOfExcellence/CenterOfExcellence.dart';
@@ -20,6 +21,7 @@ import 'package:sama/homePage/dashboard/PostLoginCenter.dart';
 import 'package:sama/homePage/dashboard/menu/PostLoginLeft.dart';
 
 import 'package:sama/components/myutility.dart';
+import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
@@ -31,6 +33,8 @@ class PostLoginLandingPage extends StatefulWidget {
 }
 
 class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
+  //var
+  final GlobalKey _menuKey = GlobalKey();
   String articleId = "";
   String articleImage = "";
   String profileUrl = "";
@@ -107,6 +111,26 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       /*MemberEventDetails()*/
     ];
 
+    //Dialog for logout
+    Future openLogoutDialog() => showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              child: LogoutPopup(closeDialog: () => Navigator.pop(context!)));
+        });
+// logUserOut
+    logOut() {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      _auth.signOut();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Material(
+                  child: LoginPages(),
+                )),
+      );
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -166,9 +190,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                   Expanded(
                                     child: TextField(
                                       decoration: InputDecoration(
-                                        hintText: 'Search SAMA', // Example text
-                                        border: InputBorder
-                                            .none, // Hide the default border
+                                        hintText: 'Search SAMA',
+                                        border: InputBorder.none,
                                         hintStyle: TextStyle(
                                             color: Color.fromRGBO(
                                                 170, 170, 170, 1.0)),
@@ -197,32 +220,68 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                           ),
                         ),
                         Transform.scale(
-                          scale: 0.8,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Container(
-                              width: 55,
-                              height: 55,
-                              decoration: BoxDecoration(
+                            scale: 0.8,
+                            child: PopupMenuButton(
+                              key: _menuKey,
+                              onSelected: (value) {
+                                if (value == "viewProfile") {
+                                  changePage(3);
+                                } else if (value == "logout") {
+                                  openLogoutDialog();
+                                }
+                              },
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry>[
+                                PopupMenuItem(
+                                  height: 22,
+                                  value: "viewProfile",
+                                  child: const Text(
+                                    'View Profile',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xFF174486),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  height: 22,
+                                  value: "logout",
+                                  child: const Text(
+                                    'Logout',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xFF174486),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
-                                color: Colors.white,
+                                child: Container(
+                                  width: 55,
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.white,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(0.0),
+                                    child: profileUrl != ""
+                                        ? ImageNetwork(
+                                            onTap: () {
+                                              dynamic state =
+                                                  _menuKey.currentState;
+                                              state.showButtonMenu();
+                                            },
+                                            image: profileUrl!,
+                                            height: 55,
+                                            width: 55,
+                                          )
+                                        : Container(),
+                                  ),
+                                ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.all(0.0),
-                                child: profileUrl != ""
-                                    ? ImageNetwork(
-                                        onTap: () {
-                                          changePage(3);
-                                        },
-                                        image: profileUrl!,
-                                        height: 55,
-                                        width: 55,
-                                      )
-                                    : Container(),
-                              ),
-                            ),
-                          ),
-                        ),
+                            )),
                         SizedBox(
                           width: MyUtility(context).width * 0.04,
                         )

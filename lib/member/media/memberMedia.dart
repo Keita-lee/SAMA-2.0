@@ -91,7 +91,7 @@ class _MemberMediaState extends State<MemberMedia> {
                             releaseDate: '',
                             //document['releaseDate'],
                             category: document['category'],
-                            title: document['title'],
+                            title: document['title'], id: document['id'],
                           )
                         ],
                       );
