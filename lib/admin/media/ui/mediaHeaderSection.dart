@@ -7,14 +7,28 @@ import 'package:sama/components/styleButton.dart';
 class MediaHeaderSection extends StatefulWidget {
   TextEditingController controller;
   VoidCallback openMediaForm;
+  Function(String) getCategoryValue;
   MediaHeaderSection(
-      {super.key, required this.controller, required this.openMediaForm});
+      {super.key,
+      required this.controller,
+      required this.openMediaForm,
+      required this.getCategoryValue});
 
   @override
   State<MediaHeaderSection> createState() => _MediaHeaderSectionState();
 }
 
 class _MediaHeaderSectionState extends State<MediaHeaderSection> {
+  List items = [
+    'Webinar',
+    'SAMA News',
+    'General',
+    'Conferences',
+    'Virtual Meeting',
+    'Office of the Chair',
+    'Corona Virus - COVID-19',
+    'Courses',
+  ];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,20 +40,36 @@ class _MediaHeaderSectionState extends State<MediaHeaderSection> {
           SizedBox(
             width: MyUtility(context).width / 1.8,
           ),
-          ProfileDropDownField(
-            description: "Select a Category",
-            items: [
-              'Webinar',
-              'SAMA News',
-              'General',
-              'Conferences',
-              'Virtual Meeting',
-              'Office of the Chair',
-              'Corona Virus - COVID-19',
-              'Courses',
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Select a Category",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color(0xFF6A6A6A),
+                ),
+              ),
+              DropdownMenu<String>(
+                width: 250,
+                controller: widget.controller,
+                requestFocusOnTap: true,
+                label: const Text(''),
+                onSelected: (value) {
+                  setState(() {
+                    widget.getCategoryValue(value!);
+                  });
+                },
+                dropdownMenuEntries:
+                    items.map<DropdownMenuEntry<String>>((value) {
+                  return DropdownMenuEntry<String>(
+                    value: value,
+                    label: value,
+                  );
+                }).toList(),
+              ),
             ],
-            customSize: 250,
-            textfieldController: widget.controller,
           ),
           SizedBox(
             width: 15,

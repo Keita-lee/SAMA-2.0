@@ -42,6 +42,12 @@ class _AdminMediaState extends State<AdminMedia> {
         ));
       });
 
+  getCategoryValue(value) {
+    setState(() {
+      selectCategory.text = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,11 +63,11 @@ class _AdminMediaState extends State<AdminMedia> {
           height: 25,
         ),
         MediaHeaderSection(
-          controller: selectCategory,
-          openMediaForm: () {
-            openMediaDialog("");
-          },
-        ),
+            controller: selectCategory,
+            openMediaForm: () {
+              openMediaDialog("");
+            },
+            getCategoryValue: getCategoryValue),
         StreamBuilder<QuerySnapshot>(
             stream: selectCategory.text == ""
                 ? FirebaseFirestore.instance.collection('media').snapshots()
