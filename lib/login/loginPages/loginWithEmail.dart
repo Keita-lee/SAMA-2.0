@@ -26,8 +26,7 @@ class LoginWithEmail extends StatefulWidget {
 
 class _LoginWithEmailState extends State<LoginWithEmail> {
   // Text controllers
-  final email = TextEditingController(
-      text: 'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)');
+  final email = TextEditingController(text: '');
 
   String validateText = "";
 
@@ -141,7 +140,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: TextFieldStyling(
-              hintText: 'Enter here',
+              hintText:
+                  'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)',
               textfieldController: email,
             ),
           ),
