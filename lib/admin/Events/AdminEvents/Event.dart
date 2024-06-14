@@ -67,20 +67,7 @@ class _AdminEventsState extends State<AdminEvents> {
           Container(
             width: MyUtility(context).width * 0.8,
             height: MyUtility(context).height * 0.4,
-            decoration: ShapeDecoration(
-              color: Color(0xFFFFF5F5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0x3F000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
+            color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Align(
@@ -180,18 +167,29 @@ class _AdminEventsState extends State<AdminEvents> {
                                               },
                                             );
                                           },
-                                          child: Text(document['title'] ??
-                                              'N/A'), // Assuming 'title' exists; use 'N/A' if not
+                                          child: Text(
+                                            document['title'] ?? 'N/A',
+                                            style: TextStyle(fontSize: 18),
+                                          ), // Assuming 'title' exists; use 'N/A' if not
                                         ),
-                                        Text(document['date'] ??
-                                            'N/A'), // Assuming 'date' exists; use 'N/A' if not
-                                        Text(document['_location'] ??
-                                            'N/A'), // Assuming '_location' exists; use 'N/A' if not
-                                        Text(document['_area'] ??
-                                            'N/A'), // Assuming '_area' exists; use 'N/A' if not
-                                        Text(document['attending']
-                                            .length
-                                            .toString()), // Assuming 'attending' is a list; convert to string if not
+                                        Text(
+                                          document['date'] ?? 'N/A',
+                                          style: TextStyle(fontSize: 18),
+                                        ), // Assuming 'date' exists; use 'N/A' if not
+                                        Text(
+                                          document['_location'] ?? 'N/A',
+                                          style: TextStyle(fontSize: 18),
+                                        ), // Assuming '_location' exists; use 'N/A' if not
+                                        Text(
+                                          document['_area'] ?? 'N/A',
+                                          style: TextStyle(fontSize: 18),
+                                        ), // Assuming '_area' exists; use 'N/A' if not
+                                        Text(
+                                          document['attending']
+                                              .length
+                                              .toString(),
+                                          style: TextStyle(fontSize: 18),
+                                        ), // Assuming 'attending' is a list; convert to string if not
                                       ],
                                     );
                                   }).toList(),

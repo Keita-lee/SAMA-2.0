@@ -144,7 +144,7 @@ class _NominationFromState extends State<NominationFrom> {
   Widget build(BuildContext context) {
     return Container(
         width: MyUtility(context).width / 1.6,
-        height: MyUtility(context).height / 1.4,
+        height: MyUtility(context).height / 1.2,
         decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
@@ -155,10 +155,12 @@ class _NominationFromState extends State<NominationFrom> {
             borderRadius: BorderRadius.circular(15),
             color: Color.fromARGB(255, 255, 255, 255)),
         child: SingleChildScrollView(
-            child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Row(
+            child: Transform.scale(
+          scale: 0.8,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   'Branch Nominations and Elections - New Event',
@@ -180,313 +182,326 @@ class _NominationFromState extends State<NominationFrom> {
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-            width: MyUtility(context).width / 1.8,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ProfileDropDownField(
-                  customSize: 300,
-                  description: 'Please Select a Branch',
-                  items: [
-                    'Border Coastal (BCB)',
-                    'Cape Western (CWB)',
-                    'Eastern Highveld (ETB)',
-                    'Eastern Province(EPB)',
-                    'Free State (OFS)',
-                    'Gauteng (STB)',
-                    'Gauteng North (NTB)',
-                    'GoldFields (GFB)',
-                    'GoldFields (GFB)',
-                    'Griqualand West (GWB)',
-                    'KZN Coastal (NCB)',
-                    'KZN Midlands (NIB)',
-                    'KZN Northen (NNB)',
-                    'Limpopo (SPB)',
-                    'Lowveld (LVB)',
-                    'North West (WTB)',
-                    'Outeniqua (OQB)',
-                    'Transkei (TRB)',
-                    'Tygerberg Boland (TBB)',
-                    'Vaal River (VR)',
-                  ],
-                  textfieldController: selectBranch,
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                CheckBoxExample(
-                    name: 'Include Branch Chair Person',
-                    value: includeBranchChairPerson),
-              ],
+            SizedBox(
+              height: 50,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-            width: MyUtility(context).width / 1.8,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Nomination Dates (Round 1):",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
+            // Container(
+            //   //color: Colors.grey,
+            //   height: 1,
+            //   width: MyUtility(context).width / 1.8,
+            //   padding: EdgeInsets.only(bottom: 30),
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ProfileDropDownField(
+                    customSize: 300,
+                    description: 'Please Select a Branch',
+                    items: [
+                      'Border Coastal (BCB)',
+                      'Cape Western (CWB)',
+                      'Eastern Highveld (ETB)',
+                      'Eastern Province(EPB)',
+                      'Free State (OFS)',
+                      'Gauteng (STB)',
+                      'Gauteng North (NTB)',
+                      'GoldFields (GFB)',
+                      'GoldFields (GFB)',
+                      'Griqualand West (GWB)',
+                      'KZN Coastal (NCB)',
+                      'KZN Midlands (NIB)',
+                      'KZN Northen (NNB)',
+                      'Limpopo (SPB)',
+                      'Lowveld (LVB)',
+                      'North West (WTB)',
+                      'Outeniqua (OQB)',
+                      'Transkei (TRB)',
+                      'Tygerberg Boland (TBB)',
+                      'Vaal River (VR)',
+                    ],
+                    textfieldController: selectBranch,
                   ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 11,
-                ),
-                DateSelecter(
-                  customSize: MyUtility(context).width / 7,
-                  description: 'Start Date',
-                  controller: nominateStartDate,
-                  refresh: refresh,
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                DateSelecter(
-                    customSize: MyUtility(context).width / 7,
-                    description: 'End Date',
-                    controller: nominateEndDate,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "${getDaysAmount(nominateStartDate.text, nominateEndDate.text)}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
+                  SizedBox(
+                    width: 15,
                   ),
-                ),
-              ],
+                  CheckBoxExample(
+                      name: 'Include Branch Chair Person',
+                      value: includeBranchChairPerson),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-            width: MyUtility(context).width / 1.8,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Nomination Acceptance Dates:",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 230,
+                    child: Text(
+                      "Nomination Dates (Round 1):",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6A6A6A),
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 11.7,
-                ),
-                DateSelecter(
+                  SizedBox(
+                    width: MyUtility(context).width / 11,
+                  ),
+                  DateSelecter(
                     customSize: MyUtility(context).width / 7,
                     description: 'Start Date',
-                    controller: nominateAcceptStartDate,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                DateSelecter(
-                    customSize: MyUtility(context).width / 7,
-                    description: 'End Date',
-                    controller: nominateAcceptEndDate,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "${getDaysAmount(nominateAcceptStartDate.text, nominateAcceptEndDate.text)}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
+                    controller: nominateStartDate,
+                    refresh: refresh,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 15,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'End Date',
+                      controller: nominateEndDate,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    "${getDaysAmount(nominateStartDate.text, nominateEndDate.text)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF6A6A6A),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-            width: MyUtility(context).width / 1.8,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Election Dates (Round 2):",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
-                  ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 9.8,
-                ),
-                DateSelecter(
-                    customSize: MyUtility(context).width / 7,
-                    description: 'Start Date',
-                    controller: electionDateStart,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                DateSelecter(
-                    customSize: MyUtility(context).width / 7,
-                    description: 'End Date',
-                    controller: electionDateEnd,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "${getDaysAmount(electionDateStart.text, electionDateEnd.text)}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 5,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-            width: MyUtility(context).width / 1.8,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Branch ChairPerson Voting:",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
-                  ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 11,
-                ),
-                DateSelecter(
-                    customSize: MyUtility(context).width / 7,
-                    description: 'Start Date',
-                    controller: chairPersonStart,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                DateSelecter(
-                    customSize: MyUtility(context).width / 7,
-                    description: 'End Date',
-                    controller: chairPersonEnd,
-                    refresh: refresh),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "${getDaysAmount(chairPersonStart.text, chairPersonEnd.text)}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF6A6A6A),
-                  ),
-                ),
-              ],
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-            width: MyUtility(context).width / 1.8,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                StyleButton(
-                    description: "Save Event",
-                    height: 55,
-                    width: 150,
-                    onTap: () {
-                      saveData();
-                    }),
-                SizedBox(
-                  width: 8,
-                ),
-                Visibility(
-                  visible: widget.id != "" ? true : false,
-                  child: StyleButton(
-                      description: "Results",
-                      height: 55,
-                      width: 150,
-                      onTap: () {}),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Visibility(
-                  visible: widget.id != "" ? true : false,
-                  child: StyleButton(
-                      description: "Remove",
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 240,
+                    child: Text(
+                      "Nomination Acceptance Dates:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6A6A6A),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 11.7,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'Start Date',
+                      controller: nominateAcceptStartDate,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'End Date',
+                      controller: nominateAcceptEndDate,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    "${getDaysAmount(nominateAcceptStartDate.text, nominateAcceptEndDate.text)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF6A6A6A),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 215,
+                    child: Text(
+                      "Election Dates (Round 2):",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6A6A6A),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 9.8,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'Start Date',
+                      controller: electionDateStart,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'End Date',
+                      controller: electionDateEnd,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    "${getDaysAmount(electionDateStart.text, electionDateEnd.text)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF6A6A6A),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 230,
+                    child: Text(
+                      "Branch ChairPerson Voting:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6A6A6A),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 11,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'Start Date',
+                      controller: chairPersonStart,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  DateSelecter(
+                      customSize: MyUtility(context).width / 7,
+                      description: 'End Date',
+                      controller: chairPersonEnd,
+                      refresh: refresh),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    "${getDaysAmount(chairPersonStart.text, chairPersonEnd.text)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF6A6A6A),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  StyleButton(
+                      description: "Save Event",
                       height: 55,
                       width: 150,
                       onTap: () {
-                        removeElection();
+                        saveData();
                       }),
-                ),
-              ],
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Visibility(
+                    visible: widget.id != "" ? true : false,
+                    child: StyleButton(
+                        description: "Results",
+                        height: 55,
+                        width: 150,
+                        onTap: () {}),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Visibility(
+                    visible: widget.id != "" ? true : false,
+                    child: StyleButton(
+                        description: "Remove",
+                        height: 55,
+                        width: 150,
+                        onTap: () {
+                          removeElection();
+                        }),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ])));
+          ]),
+        )));
   }
 }

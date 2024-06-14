@@ -56,10 +56,13 @@ class _DateSelecterState extends State<DateSelecter> {
               ),
             ),
             child: TextField(
+              textAlign: TextAlign.center,
               controller: widget.controller,
               readOnly: true,
-              decoration:
-                  const InputDecoration(hintText: "Click here to select date"),
+              decoration: InputDecoration(
+                hintText: "Click here to select date",
+                border: InputBorder.none,
+              ),
               onTap: () => onTapFunction(context: context),
             ),
           )
