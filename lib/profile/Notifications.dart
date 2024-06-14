@@ -75,9 +75,18 @@ class _NotificationsState extends State<Notifications> {
                 fontWeight: FontWeight.normal),
           ),
         ),
-        CheckBoxExample(name: 'Example'),
-        CheckBoxExample(name: 'Example'),
-        CheckBoxExample(name: 'Example'),
+        CheckBoxExample(
+          name: 'Example',
+          value: false,
+        ),
+        CheckBoxExample(
+          name: 'Example',
+          value: false,
+        ),
+        CheckBoxExample(
+          name: 'Example',
+          value: false,
+        ),
         SizedBox(
           height: MyUtility(context).height * 0.05,
         ),
@@ -108,8 +117,14 @@ class _NotificationsState extends State<Notifications> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CheckBoxExample(name: 'Example'),
-                CheckBoxExample(name: 'Example'),
+                CheckBoxExample(
+                  name: 'Example',
+                  value: false,
+                ),
+                CheckBoxExample(
+                  name: 'Example',
+                  value: false,
+                ),
               ],
             ),
             SizedBox(
@@ -118,14 +133,23 @@ class _NotificationsState extends State<Notifications> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CheckBoxExample(name: 'Example'),
-                CheckBoxExample(name: 'Example'),
+                CheckBoxExample(
+                  name: 'Example',
+                  value: false,
+                ),
+                CheckBoxExample(
+                  name: 'Example',
+                  value: false,
+                ),
               ],
             ),
             SizedBox(
               width: MyUtility(context).width * 0.05,
             ),
-            CheckBoxExample(name: 'Example'),
+            CheckBoxExample(
+              name: 'Example',
+              value: false,
+            ),
           ],
         ),
         CheckBoxCircle(

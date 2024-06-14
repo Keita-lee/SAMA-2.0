@@ -9,6 +9,8 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/utility.dart';
 import 'dart:io';
 
+import 'package:sama/components/yesNoDialog.dart';
+
 class NewEvent extends StatefulWidget {
   Function closeDialog;
   String id;
@@ -31,6 +33,7 @@ class _NewEventState extends State<NewEvent> {
   TextEditingController _memberPricing = TextEditingController();
   TextEditingController _eventProvider = TextEditingController();
   TextEditingController _CPDAccreditation = TextEditingController();
+  TextEditingController _memberAmount = TextEditingController();
 
   //var
   String eventsImage = "";
@@ -59,7 +62,8 @@ class _NewEventState extends State<NewEvent> {
       "attending": attending,
       "memberPricing": _memberPricing.text,
       "eventProvider": _eventProvider.text,
-      "CPDAccreditation": _CPDAccreditation.text
+      "CPDAccreditation": _CPDAccreditation.text,
+      "_memberAmount": _memberAmount.text
     };
 
     if (widget.id == "") {
@@ -101,6 +105,7 @@ class _NewEventState extends State<NewEvent> {
         _memberPricing.text = data.get('memberPricing');
         _eventProvider.text = data.get('eventProvider');
         _CPDAccreditation.text = data.get('CPDAccreditation');
+        _memberAmount.text = data.get('_memberAmount');
       });
     }
   }
@@ -115,10 +120,30 @@ class _NewEventState extends State<NewEvent> {
           closeDialog: () => Navigator.pop(context!),
         ));
       });
+
+  //Remove member from db
+  removeEvents() {
+    FirebaseFirestore.instance
+        .collection('events')
+        .doc(widget.id)
+        .delete()
+        .whenComplete(() => widget.closeDialog!());
+  }
+
+  //Dialog to Remove Item
+  Future removeEventsPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to remove this item",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: removeEvents,
+        ));
+      });
   @override
   void initState() {
     super.initState();
-    print(widget.id);
     if (widget.id != "") {
       getEventData();
     }
@@ -260,8 +285,9 @@ class _NewEventState extends State<NewEvent> {
                             controller: _CPDAccreditation,
                             textSection: 'CPD Accreditation',
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.25,
+                          EventTxtField(
+                            controller: _memberAmount,
+                            textSection: 'Member Amount',
                           ),
                         ],
                       ),
@@ -296,6 +322,20 @@ class _NewEventState extends State<NewEvent> {
                               description: 'View Attendees',
                               onTap: () {
                                 openViewEventAtt();
+                              },
+                              height: 55,
+                              width: 150,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Visibility(
+                            visible: widget.id != "" ? true : false,
+                            child: StyleButton(
+                              description: 'Remove',
+                              onTap: () {
+                                removeEventsPopup();
                               },
                               height: 55,
                               width: 150,

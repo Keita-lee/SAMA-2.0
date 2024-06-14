@@ -51,7 +51,7 @@ class _NominationAcceptanceState extends State<NominationAcceptance> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
-                        'Round 1 Elections',
+                        'Round 11 Elections',
                         style: TextStyle(
                           fontSize: 24,
                           color: Color(0xFF3D3D3D),

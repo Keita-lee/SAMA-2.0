@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class CheckBoxExample extends StatefulWidget {
   final String name;
+  bool value;
 
-  const CheckBoxExample({super.key, required this.name});
+  CheckBoxExample({super.key, required this.name, required this.value});
 
   @override
   State<CheckBoxExample> createState() => _CheckBoxExampleState();
@@ -22,6 +23,7 @@ class _CheckBoxExampleState extends State<CheckBoxExample> {
             onTap: () {
               setState(() {
                 _isChecked = !_isChecked;
+                widget.value = !widget.value;
               });
             },
             child: Container(
@@ -33,7 +35,7 @@ class _CheckBoxExampleState extends State<CheckBoxExample> {
                   color: Colors.grey,
                   width: 2.0,
                 ),
-                color: _isChecked ? Color(0xFF174486) : Colors.transparent,
+                color: widget.value ? Color(0xFF174486) : Colors.transparent,
               ),
               child: _isChecked
                   ? Icon(

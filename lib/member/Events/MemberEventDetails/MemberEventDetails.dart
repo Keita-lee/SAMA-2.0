@@ -22,6 +22,7 @@ class MemberEventDetails extends StatefulWidget {
 }
 
 class _MemberEventDetailsState extends State<MemberEventDetails> {
+  //Text editing controllers
   TextEditingController bookings = TextEditingController();
   TextEditingController _title = TextEditingController();
   TextEditingController _date = TextEditingController();
@@ -33,25 +34,20 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
   TextEditingController _memberPricing = TextEditingController();
   TextEditingController _eventProvider = TextEditingController();
   TextEditingController _CPDAccreditation = TextEditingController();
+  TextEditingController _memberAmount = TextEditingController();
 
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
   TextEditingController email = TextEditingController();
 
+  //String
   String eventsImage = "";
   List attending = [];
-  final List<String> imagePaths = [
-    'images/coffee.jpg',
-    'images/coffee.jpg',
-    'images/coffee.jpg',
-    'images/coffee.jpg',
-    'images/coffee.jpg',
-    'images/coffee.jpg',
-  ];
-
   int _currentPage = 0;
   final PageController _pageController = PageController(viewportFraction: .33);
   int _selectedNumber = 1;
+
+  bool checkIfMadeBooking = false;
 
   @override
   void dispose() {
@@ -59,6 +55,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
     super.dispose();
   }
 
+//retrieve event data
   getEventData() async {
     final data = await FirebaseFirestore.instance
         .collection('events')
@@ -79,6 +76,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         _CPDAccreditation.text = data.get('CPDAccreditation');
         eventsImage = data.get('eventsImage');
         attending = data.get('attending');
+        _memberAmount.text = data.get('_memberAmount');
       });
     }
     setState(() {});
@@ -101,19 +99,24 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
   }
 
   //Dialog  already made booking
-  Future validateBooking() => showDialog(
+  Future validateBooking(description) => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
             child: ValidateDialog(
-                description: "Booking already made",
+                description: description,
                 closeDialog: () => Navigator.pop(context!)));
       });
-
+//complete booking
   confirmBooking() async {
     var checkIfExist = false;
+    var attendingAmount = 0.0;
 
     for (int i = 0; i < attending.length; i++) {
+      setState(() {
+        attendingAmount = attendingAmount + attending[i]['peopleAmmount'];
+      });
+
       if (attending[i]["email"] == email.text) {
         setState(() {
           checkIfExist = true;
@@ -129,8 +132,46 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
     };
     attending.add(bookingData);
     if (checkIfExist) {
-      validateBooking();
+      validateBooking("Booking already made");
+    } else if (double.parse(_memberAmount.text) >= attendingAmount) {
+      validateBooking("Member amount reached");
     } else {
+      final data = await FirebaseFirestore.instance
+          .collection('events')
+          .doc(widget.id)
+          .update({"attending": attending}).whenComplete(widget.closeDialog());
+    }
+  }
+
+  var attendingAmount = 0.0;
+  updateBooking() async {
+    attendingAmount = 0;
+    var bookingData = {
+      "email": email.text.toLowerCase(),
+      "firstName": firstName.text,
+      "lastName": lastName.text,
+      "peopleAmmount": _selectedNumber
+    };
+
+    for (int i = 0; i < attending.length; i++) {
+      setState(() {
+        attendingAmount = attendingAmount + attending[i]['peopleAmmount'];
+      });
+    }
+
+    attending.add(bookingData);
+    if ((attendingAmount + _selectedNumber) >
+        double.parse(_memberAmount.text)) {
+      validateBooking("Member amount reached");
+    } else {
+      for (int i = 0; i < attending.length; i++) {
+        if (attending[i]["email"] == email.text) {
+          setState(() {
+            attending.removeAt(i);
+          });
+        }
+      }
+
       final data = await FirebaseFirestore.instance
           .collection('events')
           .doc(widget.id)
@@ -150,6 +191,15 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
 
   @override
   Widget build(BuildContext context) {
+    //check if user already made booking
+    for (int i = 0; i < attending.length; i++) {
+      if (attending[i]["email"] == email.text) {
+        setState(() {
+          checkIfMadeBooking = true;
+        });
+      }
+    }
+
     return Container(
       width: MyUtility(context).width * 0.50,
       padding: const EdgeInsets.all(16.0),
@@ -323,7 +373,6 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
               child: SizedBox(
                 width: MyUtility(context).width * 0.75,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       width: 300,
@@ -355,10 +404,21 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                         ],
                       ),
                     ),
-                    // EventTxtField(
-                    //   controller: bookingnumber,
-                    //   textSection: 'How many people',
-                    // ),
+                    Spacer(),
+                    Visibility(
+                      visible: checkIfMadeBooking ? true : false,
+                      child: StyleButton(
+                        description: 'Update Booking',
+                        height: 55,
+                        width: 150,
+                        onTap: () {
+                          updateBooking();
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
                     StyleButton(
                       description: 'Confirm Booking',
                       height: 55,
