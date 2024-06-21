@@ -27,18 +27,61 @@ class MemberContainer extends StatefulWidget {
 class _MemberContainerState extends State<MemberContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width * 0.22,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: Color(0xFFD1D1D1),
-          )),
+    return GestureDetector(
+      onTap: () {
+        print("Pressed");
+        widget.onPressed();
+      },
       child: Container(
-        height: 600,
-        child: Column(
+        width: MyUtility(context).width * 0.22,
+        decoration: BoxDecoration(
+            color: Color(0xFFF8FAFF),
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: Color(0xFFF8FAFF),
+            )),
+        child: Row(
           children: [
+            Container(
+              height: MyUtility(context).height * 0.1,
+              width: 10.0,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade900,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  bottomLeft: Radius.circular(10.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width * 0.025,
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'SAT\n',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '5',
+                    style: TextStyle(
+                      color: Colors.blue.shade900,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width * 0.025,
+            ),
             /*   Container(
               width: MyUtility(context).width * 0.15,
               height: MyUtility(context).height * 0.22,
@@ -54,33 +97,44 @@ class _MemberContainerState extends State<MemberContainer> {
                 ),
               ),
             ),*/
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: ImageNetwork(
-                    image: widget.eventImage,
-                    width: MyUtility(context).width * 0.2,
-                    height: MyUtility(context).height * 0.25,
-                  ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ImageNetwork(
+                  image: widget.eventImage,
+                  width: MyUtility(context).width * 0.1,
+                  height: MyUtility(context).height * 0.1,
+                  fitWeb: BoxFitWeb.cover,
                 ),
               ),
             ),
             SizedBox(
-              width: MyUtility(context).height * 0.10,
+              width: MyUtility(context).height * 0.025,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 width: MyUtility(context).width * 0.2,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: SizedBox(
+                        child: Text(
+                          '${widget.dateFrom}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF3D3D3D),
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.only(bottom: 5),
                         child: Container(
                           height: 30,
                           child: Text(
@@ -105,45 +159,9 @@ class _MemberContainerState extends State<MemberContainer> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: SizedBox(
-                        child: Container(
-                          height: 30,
-                          child: Text(
-                            '${widget.dateFrom}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
-            ),
-            Container(
-              height: 30,
-              child: Text(
-                'TEST',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ),
-            StyleButton(
-              onTap: () {
-                print("Pressed");
-                widget.onPressed();
-              },
-              description: 'Learn More',
-              height: 55,
-              width: 150,
             ),
           ],
         ),

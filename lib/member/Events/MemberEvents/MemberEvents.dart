@@ -81,12 +81,7 @@ class _MemberEventsState extends State<MemberEvents> {
               width:
                   MyUtility(context).width - (MyUtility(context).width * 0.25),
               height: 700,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 6.0,
-                  childAspectRatio: 0.65,
-                ),
+              child: ListView.builder(
                 itemCount: documents.length,
                 itemBuilder: (BuildContext context, int index) {
                   final DocumentSnapshot document = documents[index];
@@ -98,9 +93,7 @@ class _MemberEventsState extends State<MemberEvents> {
                         print('learn_more_action_test');
                       },
                       child: Container(
-                        width: MyUtility(context).width * 0.22,
-                        //height: MyUtility(context).height * 0.70,
-                        //height: 1000,
+                        width: MyUtility(context).width * 0.9,
                         decoration: ShapeDecoration(
                           color: Color(0xFFFFF5F5),
                           shape: RoundedRectangleBorder(
