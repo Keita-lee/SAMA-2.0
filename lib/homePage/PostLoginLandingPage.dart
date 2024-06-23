@@ -11,11 +11,13 @@ import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
+import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEvents.dart';
 import 'package:sama/member/centerOfExcellence/CenterOfExcellence.dart';
 import 'package:sama/member/centerOfExcellence/CenterofExcellenceArticle.dart';
+import 'package:sama/member/election/memberElection.dart';
 import 'package:sama/member/media/memberMedia.dart';
 import 'package:sama/member/memberBenifits/MemberBenifits.dart';
 import 'package:sama/homePage/dashboard/PostLoginCenter.dart';
@@ -35,6 +37,8 @@ class PostLoginLandingPage extends StatefulWidget {
 
 class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   //var
+  List userNotification = [];
+  var notificationsRead = false;
   final GlobalKey _menuKey = GlobalKey();
   String articleId = "";
   String articleImage = "";
@@ -42,6 +46,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   var pageIndex = 0;
   String userType = "";
   double menuSize = 6.5;
+  //get data of signed in user
   getUserData() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -63,9 +68,42 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     });
   }
 
+//get User Notification list
+  getUserNotificationList() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('notifications')
+        .where("userWhoNotify",
+            isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    setState(() {
+      userNotification.addAll(doc.docs);
+    });
+
+    var notificationIndex =
+        (doc.docs).indexWhere((item) => item["read"] == false);
+
+    if (notificationIndex != -1) {
+      setState(() {
+        notificationsRead = true;
+      });
+    }
+  }
+
+//popup for notification
+  Future openNotificationList() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: NotificationList(
+          closeDialog: () => Navigator.pop(context),
+          notificationsList: userNotification,
+        ));
+      });
+
   @override
   void initState() {
     getUserData();
+    getUserNotificationList();
     super.initState();
   }
 
@@ -103,9 +141,10 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       MemberMedia(),
       MemberEvents(),
       NominationSetup(),
+      MemberElection(),
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
-      /*ElectionSetup(), */
+
       /*BranchMembers(),*/
       /*AdminEventDetails(),*/
       /*AdminEvents(),*/
@@ -217,8 +256,15 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         Transform.scale(
                           scale: 0.8,
                           child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.notifications),
+                            onPressed: () {
+                              openNotificationList();
+                            },
+                            icon: Icon(
+                              Icons.notifications,
+                              color: notificationsRead
+                                  ? Color(0xFF174486)
+                                  : Colors.grey,
+                            ),
                           ),
                         ),
                         Transform.scale(

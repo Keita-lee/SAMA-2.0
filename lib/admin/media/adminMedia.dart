@@ -20,25 +20,41 @@ class _AdminMediaState extends State<AdminMedia> {
   // Text controllers
   final selectCategory = TextEditingController();
 
+  //var
+  bool hideVideos = false;
+
+  closeDialog() {
+    setState(() {
+      Navigator.pop(context);
+      hideVideos = false;
+    });
+  }
+
   //Open dialog for media
   Future openMediaDialog(id) => showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return Dialog(
             child: MediaForm(
           id: id,
-          closeDialog: () => Navigator.pop(context),
+          closeDialog: () {
+            closeDialog();
+          },
         ));
       });
 
 //View date
   Future viewMediaDialog(id) => showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return Dialog(
             child: MediaPopup(
           id: id,
-          closeDialog: () => Navigator.pop(context),
+          closeDialog: () {
+            closeDialog();
+          },
         ));
       });
 
@@ -68,103 +84,81 @@ class _AdminMediaState extends State<AdminMedia> {
               openMediaDialog("");
             },
             getCategoryValue: getCategoryValue),
-        StreamBuilder<QuerySnapshot>(
-            stream: selectCategory.text == ""
-                ? FirebaseFirestore.instance.collection('media').snapshots()
-                : FirebaseFirestore.instance
-                    .collection('media')
-                    .where('category', isEqualTo: selectCategory.text)
-                    .snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: snapshot error');
-              }
-              if (!snapshot.hasData) {
-                return const Text('Loading...');
-              }
+        Visibility(
+          visible: !hideVideos ? true : false,
+          child: StreamBuilder<QuerySnapshot>(
+              stream: selectCategory.text == ""
+                  ? FirebaseFirestore.instance.collection('media').snapshots()
+                  : FirebaseFirestore.instance
+                      .collection('media')
+                      .where('category', isEqualTo: selectCategory.text)
+                      .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: snapshot error');
+                }
+                if (!snapshot.hasData) {
+                  return const Text('Loading...');
+                }
 
-              final List<DocumentSnapshot> documents = snapshot.data!.docs;
-              if (documents.isEmpty) {
-                return Center(child: Text('No Media Podcast yet'));
-              }
+                final List<DocumentSnapshot> documents = snapshot.data!.docs;
+                if (documents.isEmpty) {
+                  return Center(child: Text('No Media Podcast yet'));
+                }
 
-              return Container(
-                width: MyUtility(context).width -
-                    (MyUtility(context).width * 0.25),
-                height: 550,
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemCount: documents.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final DocumentSnapshot document = documents[index];
+                return Container(
+                  width: MyUtility(context).width -
+                      (MyUtility(context).width * 0.25),
+                  height: 550,
+                  child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemCount: documents.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final DocumentSnapshot document = documents[index];
 
-                      // if (selectCategory.text == "") {
-                      return Container(
-                        child: Wrap(
-                          //mainAxisAlignment: MainAxisAlignment.start,
-                          spacing: 10,
-                          runSpacing: 10,
-                          children: [
-                            Visibility(
-                              visible: document['category']
-                                      .contains(selectCategory.text)
-                                  ? true
-                                  : false,
-                              child: MediaContainerStyle(
-                                onpress: () {
-                                  openMediaDialog(document['id']);
-                                },
-                                view: () {
-                                  viewMediaDialog(document['id']);
-                                },
-                                adminType: "true",
-                                image: document['mediaImageUrl'] ?? '',
-                                duration: document['duration'],
-                                releaseDate: '',
-                                category: document['category'],
-                                title: document['title'],
-                                id: document['id'],
+                        return Container(
+                          child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: [
+                              Visibility(
+                                visible: document['category']
+                                        .contains(selectCategory.text)
+                                    ? true
+                                    : false,
+                                child: MediaContainerStyle(
+                                  onpress: () {
+                                    setState(() {
+                                      hideVideos = true;
+                                    });
+                                    openMediaDialog(document['id']);
+                                  },
+                                  view: () {
+                                    setState(() {
+                                      hideVideos = true;
+                                    });
+                                    viewMediaDialog(document['id']);
+                                  },
+                                  adminType: "true",
+                                  image: document['mediaImageUrl'] ?? '',
+                                  duration: document['duration'],
+                                  releaseDate: '',
+                                  category: document['category'],
+                                  title: document['title'],
+                                  id: document['id'],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    // }
-                    //   else if (document['category']
-                    //       .contains(selectCategory.text)) {
-                    //     return Container(
-                    //       child: Wrap(
-                    //         //mainAxisAlignment: MainAxisAlignment.start,
-                    //         spacing: 10,
-                    //         runSpacing: 10,
-                    //         children: [
-                    //           MediaContainerStyle(
-                    //             onpress: () {
-                    //               openMediaDialog(document['id']);
-                    //             },
-                    //             view: () {
-                    //               viewMediaDialog(document['id']);
-                    //             },
-                    //             adminType: "true",
-                    //             image: document['mediaImageUrl'] ?? '',
-                    //             duration: document['duration'],
-                    //             releaseDate: '',
-                    //             category: document['category'],
-                    //             title: document['title'],
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     );
-                    //   }
-                    // },
-                    ),
-              );
-            }),
+                            ],
+                          ),
+                        );
+                      }),
+                );
+              }),
+        ),
       ]),
     );
   }

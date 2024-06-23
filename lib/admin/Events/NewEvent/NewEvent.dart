@@ -5,6 +5,8 @@ import 'package:sama/admin/Events/AdminEvents/UI/addEventsImage.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventDescriptionTextField.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventTextField.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/eventAttendees.dart';
+import 'package:sama/admin/Events/NewEvent/NewEventComp/startEndTimeSelect.dart';
+import 'package:sama/components/dateSelecter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/utility.dart';
 import 'dart:io';
@@ -121,24 +123,20 @@ class _NewEventState extends State<NewEvent> {
         ));
       });
 
-  //Remove member from db
-  removeEvents() {
-    FirebaseFirestore.instance
-        .collection('events')
-        .doc(widget.id)
-        .delete()
-        .whenComplete(() => widget.closeDialog!());
+  getTimes(value) {
+    setState(() {
+      _times.text = value;
+    });
   }
 
-  //Dialog to Remove Item
-  Future removeEventsPopup() => showDialog(
+  //Popup view start end time
+  Future openStartEndTimes() => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            child: YesNoDialog(
-          description: "Are you sure you want to remove this item",
+            child: StartEndTimeSelect(
+          getTimes: getTimes,
           closeDialog: () => Navigator.pop(context!),
-          callFunction: removeEvents,
         ));
       });
   @override
@@ -221,9 +219,12 @@ class _NewEventState extends State<NewEvent> {
                             controller: _title,
                             textSection: 'Title',
                           ),
-                          EventTxtField(
+                          DateSelecter(
+                            customSize:
+                                MediaQuery.of(context).size.width * 0.25,
                             controller: _date,
-                            textSection: 'Date',
+                            refresh: () {},
+                            description: 'Date',
                           ),
                         ],
                       ),
@@ -233,9 +234,20 @@ class _NewEventState extends State<NewEvent> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          EventTxtField(
-                            controller: _times,
-                            textSection: 'Start-EndTime',
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            child: EventTxtField(
+                              controller: _times,
+                              textSection: 'Start-EndTime',
+                            ),
+                          ),
+                          StyleButton(
+                            description: 'Select time',
+                            onTap: () {
+                              openStartEndTimes();
+                            },
+                            height: 55,
+                            width: 150,
                           ),
                           EventTxtField(
                             controller: _event,
@@ -299,7 +311,6 @@ class _NewEventState extends State<NewEvent> {
                         textSection: 'Description',
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -327,76 +338,12 @@ class _NewEventState extends State<NewEvent> {
                               width: 150,
                             ),
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Visibility(
-                            visible: widget.id != "" ? true : false,
-                            child: StyleButton(
-                              description: 'Remove',
-                              onTap: () {
-                                removeEventsPopup();
-                              },
-                              height: 55,
-                              width: 150,
-                            ),
-                          ),
                         ],
                       ),
                     ),
                     SizedBox(
                       height: 20,
                     ),
-
-                    // Visibility(
-                    //   visible: widget.id != "" ? true : false,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(left: 10),
-                    //     child: Row(
-                    //       children: [
-                    //         Expanded(
-                    //           child: Text(
-                    //             'Member Name',
-                    //             style: TextStyle(
-                    //               fontSize: 20,
-                    //               color: Color(0xFF3D3D3D),
-                    //               fontWeight: FontWeight.normal,
-                    //             ),
-                    //             textAlign: TextAlign.left,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // for (int i = 0; i < attending.length; i++)
-                    //   Padding(
-                    //     padding: const EdgeInsets.only(bottom: 5),
-                    //     child: Container(
-                    //       width: MyUtility(context).width * 0.8,
-                    //       height: MyUtility(context).height * 0.06,
-                    //       decoration: BoxDecoration(
-                    //         color: const Color.fromARGB(255, 218, 218, 218),
-                    //         borderRadius: BorderRadius.circular(10),
-                    //       ),
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.only(left: 0),
-                    //         child: Row(
-                    //           children: [
-                    //             Text(
-                    //               "${attending[i]['firstName']} ${attending[i]['lastName']}",
-                    //               style: TextStyle(
-                    //                 fontSize: 20,
-                    //                 color: Color(0xFF3D3D3D),
-                    //                 fontWeight: FontWeight.bold,
-                    //               ),
-                    //               textAlign: TextAlign.left,
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
                   ],
                 ),
               ),

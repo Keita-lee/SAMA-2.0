@@ -1,36 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/Events/AdminEvents/UI/EventsHeaderSection.dart';
+
 import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/components/utility.dart';
-import 'package:sama/components/yesNoDialog.dart';
 
-class AdminEvents extends StatefulWidget {
-  const AdminEvents({Key? key}) : super(key: key);
+class DummyFile extends StatefulWidget {
+  const DummyFile({Key? key}) : super(key: key);
 
   @override
-  State<AdminEvents> createState() => _AdminEventsState();
+  State<DummyFile> createState() => _DummyFileState();
 }
 
-class _AdminEventsState extends State<AdminEvents> {
+class _DummyFileState extends State<DummyFile> {
   final selectCategory = TextEditingController();
-
-  //Remove member from db
-  removeEvents(id) {
-    FirebaseFirestore.instance.collection('events').doc(id).delete();
-  }
-
-  //Dialog to Remove Item
-  Future removeEventsPopup() => showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-            child: YesNoDialog(
-          description: "Are you sure you want to remove this item",
-          closeDialog: () => Navigator.pop(context!),
-          callFunction: removeEvents,
-        ));
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +99,8 @@ class _AdminEventsState extends State<AdminEvents> {
                             height: 500,
                             child: Table(
                               columnWidths: {
-                                0: FlexColumnWidth(3),
-                                1: FlexColumnWidth(2),
+                                0: FlexColumnWidth(1),
+                                1: FlexColumnWidth(3),
                                 2: FlexColumnWidth(2),
                                 3: FlexColumnWidth(2),
                                 4: FlexColumnWidth(2),
@@ -125,11 +108,15 @@ class _AdminEventsState extends State<AdminEvents> {
                               children: [
                                 TableRow(
                                   children: [
+                                    Text('State',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20)),
                                     Text('Title',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
-                                    Text('Type',
+                                    Text('Category',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
@@ -162,6 +149,53 @@ class _AdminEventsState extends State<AdminEvents> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            if (data != null) {
+                                              bool currentState =
+                                                  data['state'] ?? false;
+                                              FirebaseFirestore.instance
+                                                  .collection('events')
+                                                  .doc(document.id)
+                                                  .update(
+                                                      {'state': !currentState});
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 60),
+                                            child: Container(
+                                              width: 50,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                color: (data != null &&
+                                                        data['state'] == true)
+                                                    ? Colors.blue
+                                                    : Colors.grey,
+                                              ),
+                                              child: Align(
+                                                alignment: (data != null &&
+                                                        data['state'] == true)
+                                                    ? Alignment.centerRight
+                                                    : Alignment.centerLeft,
+                                                child: Container(
+                                                  width: 20,
+                                                  height: 20,
+                                                  margin: EdgeInsets.all(5.0),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           data != null &&
                                                   data.containsKey('title')
@@ -174,8 +208,8 @@ class _AdminEventsState extends State<AdminEvents> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           data != null &&
-                                                  data.containsKey('_event')
-                                              ? data['_event']
+                                                  data.containsKey('category')
+                                              ? data['category']
                                               : 'N/A',
                                           style: TextStyle(fontSize: 18),
                                         ),
@@ -184,8 +218,9 @@ class _AdminEventsState extends State<AdminEvents> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           data != null &&
-                                                  data.containsKey('date')
-                                              ? data['date']
+                                                  data.containsKey(
+                                                      'publish_date')
+                                              ? data['publish_date']
                                               : 'N/A',
                                           style: TextStyle(fontSize: 18),
                                         ),
@@ -194,8 +229,16 @@ class _AdminEventsState extends State<AdminEvents> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.spaceAround,
                                           children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                // View action
+                                              },
+                                              child: Text('View',
+                                                  style: TextStyle(
+                                                      color: Colors.blue)),
+                                            ),
                                             GestureDetector(
                                               onTap: () {
                                                 // Edit action
@@ -229,12 +272,9 @@ class _AdminEventsState extends State<AdminEvents> {
                                                   style: TextStyle(
                                                       color: Colors.blue)),
                                             ),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
                                             GestureDetector(
                                               onTap: () {
-                                                removeEventsPopup();
+                                                // Delete action
                                               },
                                               child: Text('Delete',
                                                   style: TextStyle(

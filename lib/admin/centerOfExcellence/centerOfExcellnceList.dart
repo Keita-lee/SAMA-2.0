@@ -14,16 +14,14 @@ class CenterOfExcellenceList extends StatefulWidget {
 class _CenterOfExcellenceListState extends State<CenterOfExcellenceList> {
   @override
   Widget build(BuildContext context) {
-    BuildContext? dialogContext;
     //Dialog for benifits
     Future openArticleDialog(id) => showDialog(
         context: context,
         builder: (context) {
-          dialogContext = context;
           return Dialog(
               child: CenterOfExcellenceDialog(
             id: id,
-            closeDialog: () => Navigator.pop(dialogContext!),
+            closeDialog: () => Navigator.pop(context!),
             getAllArticles: () {},
           ));
         });

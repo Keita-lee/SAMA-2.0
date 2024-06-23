@@ -25,6 +25,76 @@ class MemberContainer extends StatefulWidget {
 }
 
 class _MemberContainerState extends State<MemberContainer> {
+  //Get days in a month
+  getMonthNumber(month) {
+    switch (month) {
+      case "January":
+        return 01;
+
+      case "Febuary":
+        return 02;
+
+      case "March":
+        return 03;
+
+      case "April":
+        return 04;
+
+      case "May":
+        return 05;
+
+      case "June":
+        return "06";
+
+      case "July":
+        return 07;
+
+      case "Augustus":
+        return 08;
+      case "September":
+        return 09;
+      case "October":
+        return 10;
+      case "November":
+        return 11;
+      case "December":
+        return 12;
+      default:
+        return 0;
+    }
+  }
+
+  getDayNumber(date) {
+    if (date != "") {
+      var dateSplit = date.split("-");
+      return "${dateSplit[2]}";
+    } else {
+      return "";
+    }
+  }
+
+  getDay(date) {
+    if (date != "") {
+      /* var dateSplit = date.split(" ");
+
+      var newDate = "${dateSplit[2]}-${(dateSplit[1])}-${dateSplit[0]}";*/
+
+      var convertDate = DateTime.parse(date);
+      const Map<int, String> weekdayName = {
+        1: "Mon",
+        2: "Tues",
+        3: "Wed",
+        4: "Thurs",
+        5: "Fri",
+        6: "Sat",
+        7: "Sun"
+      };
+      return weekdayName[convertDate.weekday];
+    } else {
+      return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,7 +131,7 @@ class _MemberContainerState extends State<MemberContainer> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'SAT\n',
+                    text: '${getDay(widget.dateTill)}\n',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 24,
@@ -69,7 +139,7 @@ class _MemberContainerState extends State<MemberContainer> {
                     ),
                   ),
                   TextSpan(
-                    text: '5',
+                    text: '${getDayNumber(widget.dateTill)}',
                     style: TextStyle(
                       color: Colors.blue.shade900,
                       fontSize: 34,

@@ -90,7 +90,6 @@ class _MemberEventsState extends State<MemberEvents> {
                     child: InkWell(
                       onTap: () {
                         openMemberEventsDialog(document['id']);
-                        print('learn_more_action_test');
                       },
                       child: Container(
                         width: MyUtility(context).width * 0.9,

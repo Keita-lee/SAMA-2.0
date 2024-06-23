@@ -25,23 +25,23 @@ class _YesNoDialogState extends State<YesNoDialog> {
       height: 185,
       child: Column(
         children: [
-          Row(
-            children: [
-              Spacer(),
-              GestureDetector(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "X",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Spacer(),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      widget.closeDialog!();
+                    },
+                    child: Icon(Icons.cancel),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Text(
             widget.description!,

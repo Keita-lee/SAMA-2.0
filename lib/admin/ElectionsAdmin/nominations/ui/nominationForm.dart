@@ -5,6 +5,7 @@ import 'package:sama/components/dateSelecter.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/yesNoDialog.dart';
 
 class NominationFrom extends StatefulWidget {
@@ -28,6 +29,9 @@ class _NominationFromState extends State<NominationFrom> {
   final chairPersonStart = TextEditingController();
   final chairPersonEnd = TextEditingController();
 
+  final title = TextEditingController();
+  final position = TextEditingController();
+  final criteria = TextEditingController();
   //var
   bool includeBranchChairPerson = false;
   String status = "InComplete";
@@ -46,6 +50,9 @@ class _NominationFromState extends State<NominationFrom> {
       "chairPersonEnd": chairPersonEnd.text,
       "includeBranchChairPerson": includeBranchChairPerson,
       "status": status,
+      "title": title.text,
+      "position": position.text,
+      "criteria": criteria.text,
       "count": count,
       "id": widget.id,
     };
@@ -90,6 +97,10 @@ class _NominationFromState extends State<NominationFrom> {
         includeBranchChairPerson = data.get('includeBranchChairPerson');
         status = data.get('status');
         count.addAll(data.get('count'));
+
+        title.text = data.get('title');
+        position.text = data.get('position');
+        criteria.text = data.get('criteria');
       });
     }
   }
@@ -185,12 +196,6 @@ class _NominationFromState extends State<NominationFrom> {
             SizedBox(
               height: 50,
             ),
-            // Container(
-            //   //color: Colors.grey,
-            //   height: 1,
-            //   width: MyUtility(context).width / 1.8,
-            //   padding: EdgeInsets.only(bottom: 30),
-            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -232,6 +237,54 @@ class _NominationFromState extends State<NominationFrom> {
                       value: includeBranchChairPerson),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                ProfileTextField(
+                    customSize: MyUtility(context).width * 0.27,
+                    description: "Title",
+                    textfieldController: title,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  width: 15,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width * 0.27,
+                    description: "Position",
+                    textfieldController: position,
+                    textFieldType: "stringType")
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                ProfileTextField(
+                    customSize: MyUtility(context).width * 0.55,
+                    description: "Criteria",
+                    textfieldController: criteria,
+                    textFieldType: "stringType"),
+              ],
             ),
             SizedBox(
               height: 15,
@@ -453,6 +506,11 @@ class _NominationFromState extends State<NominationFrom> {
                   ),
                 ],
               ),
+            ),
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MyUtility(context).width / 1.8,
             ),
             SizedBox(
               height: 5,

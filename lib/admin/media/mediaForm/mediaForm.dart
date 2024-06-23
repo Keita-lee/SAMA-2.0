@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sama/admin/media/ui/addMediaImage.dart';
+import 'package:sama/admin/media/ui/selectDuarationPopup.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
+import 'package:sama/components/selectDuration.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleButtonYellow.dart';
 import 'package:sama/components/yesNoDialog.dart';
@@ -109,7 +111,7 @@ class _MediaFormState extends State<MediaForm> {
         .whenComplete(() => widget.closeDialog!());
   }
 
-  //Dialog for password Validate
+  //Dialog for remove media
   Future removeMediaPopup() => showDialog(
       context: context,
       builder: (context) {
@@ -118,6 +120,24 @@ class _MediaFormState extends State<MediaForm> {
           description: "Are you sure you want to remove this item",
           closeDialog: () => Navigator.pop(context!),
           callFunction: removeMedia,
+        ));
+      });
+
+  getDuration(value) {
+    setState(() {
+      duration.text = value;
+      Navigator.pop(context);
+    });
+  }
+
+  //Dialog to select a duration
+  Future selectDurationPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: SelectDurationPopup(
+          closeDialog: () => Navigator.pop(context!),
+          getDuration: getDuration,
         ));
       });
 
@@ -231,27 +251,41 @@ class _MediaFormState extends State<MediaForm> {
                   ),
                   SizedBox(height: 20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ProfileTextField(
-                          customSize: MyUtility(context).width / 4,
+                      SizedBox(
+                        width: 35,
+                      ),
+                      /**/ ProfileTextField(
+                          customSize: MyUtility(context).width / 10,
                           description: "Duration:",
                           textfieldController: duration,
                           textFieldType: "stringType"),
                       SizedBox(
                         width: 8,
                       ),
-                      ProfileTextField(
-                          customSize: MyUtility(context).width / 4,
-                          description: "Description:",
-                          textfieldController: description,
-                          textFieldType: "stringType"),
+                      StyleButton(
+                          description: "Select Duration",
+                          height: 55,
+                          width: 150,
+                          onTap: () {
+                            selectDurationPopup();
+                          }),
                     ],
                   ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      ProfileTextField(
+                          customSize: MyUtility(context).width / 4,
+                          description: "Description:",
+                          textfieldController: description,
+                          textFieldType: "stringType"),
+                      SizedBox(
+                        width: 8,
+                      ),
                       ProfileTextField(
                           customSize: MyUtility(context).width / 4,
                           description: "Youtube Link",
