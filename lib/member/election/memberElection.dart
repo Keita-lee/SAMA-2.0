@@ -152,10 +152,6 @@ class _MemberElectionState extends State<MemberElection> {
             position: position,
           ),
         ),
-        MemberElectionsRound2(
-          branch: branch,
-          position: position,
-        ),
       ]),
     );
   }

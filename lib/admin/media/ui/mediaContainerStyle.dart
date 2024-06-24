@@ -61,7 +61,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Youtubevideoplayer(
               id: widget.id,

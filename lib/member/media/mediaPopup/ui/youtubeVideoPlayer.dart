@@ -62,7 +62,7 @@ class _YoutubevideoplayerState extends State<Youtubevideoplayer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 4.4,
-      height: 200,
+      height: MyUtility(context).height / 4,
       child: YoutubePlayerScaffold(
         controller: _youtubePlayerController,
         aspectRatio: 16 / 9,
