@@ -38,36 +38,10 @@ class _StyleButtonState extends State<StyleButton> {
           style: TextStyle(
             color: Color.fromARGB(255, 255, 255, 255),
             fontSize: 16,
-            //  fontWeight: FontWeight.w900,
-            //height: 0,
           ),
         ),
         onPressed: widget.onTap,
       ),
     );
-
-/*
-    GestureDetector(
-      onTap: widget.onTap,
-      child: Container(
-        width: widget.width,
-        height: widget.height,
-        decoration: BoxDecoration(
-            color: Color.fromARGB(255, 8, 55, 145),
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        child: Center(
-          child: Text(
-            widget.description!,
-            style: TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
-              fontSize: 16,
-              //  fontWeight: FontWeight.w900,
-              height: 0,
-            ),
-          ),
-        ),
-      ),
-    );
- */
   }
 }

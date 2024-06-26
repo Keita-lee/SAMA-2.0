@@ -134,7 +134,15 @@ class _MemberElectionState extends State<MemberElection> {
         SizedBox(
           height: 25,
         ),
-        /*    Visibility(
+        MemberElectionRound1(
+          branch: branch,
+          position: position,
+        ),
+        MemberElectionsRound2(
+          branch: branch,
+          position: position,
+        ),
+        /*  Visibility(
           visible: checkDatePeriod(nominateStartDate, nominateEndDate)
               ? true
               : false,
@@ -142,7 +150,7 @@ class _MemberElectionState extends State<MemberElection> {
             branch: branch,
             position: position,
           ),
-        ),*/
+        ),
         Visibility(
           visible: checkDatePeriod(electionDateStart, electionDateEnd)
               ? true
@@ -151,7 +159,7 @@ class _MemberElectionState extends State<MemberElection> {
             branch: branch,
             position: position,
           ),
-        ),
+        ),*/
       ]),
     );
   }
