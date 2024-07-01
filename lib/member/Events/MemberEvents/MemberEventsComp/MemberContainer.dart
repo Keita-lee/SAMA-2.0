@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/utility.dart';
 
@@ -100,7 +101,7 @@ class _MemberContainerState extends State<MemberContainer> {
     return Container(
       width: MyUtility(context).width * 0.22,
       decoration: BoxDecoration(
-          color: Color(0xFFF8FAFF),
+          color: Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
             color: Color(0xFFF8FAFF),
@@ -173,7 +174,7 @@ class _MemberContainerState extends State<MemberContainer> {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: SizedBox(
                       child: Text(
-                        '${widget.dateFrom}',
+                        '${CommonService().getDateInText(widget.dateFrom)}',
                         style: TextStyle(
                           fontSize: 18,
                           color: Color(0xFF3D3D3D),
@@ -220,7 +221,10 @@ class _MemberContainerState extends State<MemberContainer> {
               width: 125,
               onTap: () {
                 widget.onPressed();
-              })
+              }),
+          SizedBox(
+            width: 25,
+          ),
         ],
       ),
     );

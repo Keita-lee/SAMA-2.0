@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
   int _selectedNumber = 1;
 
   bool checkIfMadeBooking = false;
-
+  double attendeesAlreadyAdded = 0;
   @override
   void dispose() {
     _pageController.dispose();
@@ -130,11 +132,15 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       "lastName": lastName.text,
       "peopleAmmount": _selectedNumber
     };
-    attending.add(bookingData);
+    setState(() {
+      attending.add(bookingData);
+    });
+
     if (checkIfExist) {
       validateBooking("Booking already made");
-    } else if (double.parse(_memberAmount.text) >= attendingAmount) {
-      validateBooking("Member amount reached");
+    } else if (attendingAmount >= double.parse(_memberAmount.text)) {
+      validateBooking(
+          "Member amount reached ${double.parse(_memberAmount.text)} ${attendingAmount}");
     } else {
       final data = await FirebaseFirestore.instance
           .collection('events')
@@ -158,11 +164,13 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         attendingAmount = attendingAmount + attending[i]['peopleAmmount'];
       });
     }
+    setState(() {
+      attending.add(bookingData);
+    });
 
-    attending.add(bookingData);
-    if ((attendingAmount + _selectedNumber) >
+    if (((attendingAmount + _selectedNumber) - attendeesAlreadyAdded) >
         double.parse(_memberAmount.text)) {
-      validateBooking("Member amount reached");
+      validateBooking("Member amount reached ");
     } else {
       for (int i = 0; i < attending.length; i++) {
         if (attending[i]["email"] == email.text) {
@@ -175,7 +183,9 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       final data = await FirebaseFirestore.instance
           .collection('events')
           .doc(widget.id)
-          .update({"attending": attending}).whenComplete(widget.closeDialog());
+          .update({"attending": attending}).whenComplete(
+              validateBooking("Booking made successfully") as FutureOr<void>
+                  Function());
     }
   }
 
@@ -196,6 +206,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       if (attending[i]["email"] == email.text) {
         setState(() {
           checkIfMadeBooking = true;
+          attendeesAlreadyAdded = attending[i]["peopleAmmount"];
         });
       }
     }

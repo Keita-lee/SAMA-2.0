@@ -90,7 +90,7 @@ class _MemberEventsState extends State<MemberEvents> {
                     child: Container(
                       width: MyUtility(context).width * 0.9,
                       decoration: ShapeDecoration(
-                        color: Color(0xFFFFF5F5),
+                        color: Color.fromARGB(255, 255, 255, 255),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
