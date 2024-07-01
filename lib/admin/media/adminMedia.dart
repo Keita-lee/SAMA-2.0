@@ -7,6 +7,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
+import 'package:sama/member/media/mediaPopup/test.dart';
 import 'package:sama/member/media/mediaPopup/ui/youtubeVideoPlayer.dart';
 
 class AdminMedia extends StatefulWidget {
@@ -50,7 +51,7 @@ class _AdminMediaState extends State<AdminMedia> {
       barrierDismissible: false,
       builder: (context) {
         return Dialog(
-            child: MediaPopup(
+            child: Test(
           id: id,
           closeDialog: () {
             closeDialog();
@@ -89,10 +90,14 @@ class _AdminMediaState extends State<AdminMedia> {
           child: StreamBuilder<QuerySnapshot>(
               stream: selectCategory.text == ""
                   ? FirebaseFirestore.instance.collection('media').snapshots()
-                  : FirebaseFirestore.instance
-                      .collection('media')
-                      .where('category', isEqualTo: selectCategory.text)
-                      .snapshots(),
+                  : selectCategory.text == "All"
+                      ? FirebaseFirestore.instance
+                          .collection('media')
+                          .snapshots()
+                      : FirebaseFirestore.instance
+                          .collection('media')
+                          .where('category', isEqualTo: selectCategory.text)
+                          .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
@@ -132,9 +137,6 @@ class _AdminMediaState extends State<AdminMedia> {
                                     : false,
                                 child: MediaContainerStyle(
                                   onpress: () {
-                                    setState(() {
-                                      hideVideos = true;
-                                    });
                                     openMediaDialog(document['id']);
                                   },
                                   view: () {

@@ -42,9 +42,15 @@ class _ElectionResultsState extends State<ElectionResults> {
           nominationStartDate: widget.nominationStartDate,
           nominationEndDate: widget.nominationEndDate,
           electionId: widget.electionId),
+      SizedBox(
+        height: 50,
+      ),
       NominationAcceptanceRound(
-        nominateAcceptEndDate: widget.nominateAcceptStartDate,
-        nominateAcceptStartDate: widget.nominateAcceptEndDate,
+          nominateAcceptEndDate: widget.nominateAcceptStartDate,
+          nominateAcceptStartDate: widget.nominateAcceptEndDate,
+          electionId: widget.electionId),
+      SizedBox(
+        height: 50,
       ),
       Round2Election(
         electionDateStart: widget.electionDateStart,

@@ -85,16 +85,14 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
     widget.closeDialog();
   }
 
-  BuildContext? dialogContext;
   //Dialog for password Validate
   Future removeArticlepopup() => showDialog(
       context: context,
       builder: (context) {
-        dialogContext = context;
         return Dialog(
             child: YesNoDialog(
           description: "Are you sure you want to remove this item",
-          closeDialog: () => Navigator.pop(dialogContext!),
+          closeDialog: () => Navigator.pop(context!),
           callFunction: removeArticle,
         ));
       });

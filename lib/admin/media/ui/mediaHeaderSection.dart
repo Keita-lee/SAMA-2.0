@@ -20,6 +20,7 @@ class MediaHeaderSection extends StatefulWidget {
 
 class _MediaHeaderSectionState extends State<MediaHeaderSection> {
   List items = [
+    'All',
     'Webinar',
     'SAMA News',
     'General',

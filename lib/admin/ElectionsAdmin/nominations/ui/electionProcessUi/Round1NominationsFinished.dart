@@ -20,24 +20,27 @@ class Round1NominationsFinished extends StatefulWidget {
 
 class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
   List membersWhoAreNominated = [];
+  List nominations = [];
 
   //get user details from notification
   getUserDetail(id) async {
     final doc =
         await FirebaseFirestore.instance.collection('users').doc(id).get();
+
+    var count = 0;
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
+      "hpca": doc.get("hpcsa"),
       "hdiStatus": "HDI",
       "email": "${doc.get("email")}",
-      "nominations": ""
+      "nominations": '${getNominationsForUser(doc.get("email"))}',
     };
     setState(() {
       membersWhoAreNominated.add(userData);
     });
   }
 
-//TODO get real branch number
   //get User Notification list who accepted nomination
   getUserNotificationList() async {
     final doc = await FirebaseFirestore.instance
@@ -49,6 +52,35 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
         getUserDetail(doc.docs[i]["userWhoNotify"]);
       }
     });
+  }
+
+  getNominations() async {
+    final doc =
+        await FirebaseFirestore.instance.collection('nominations').get();
+    if (doc != null) {
+      setState(() {
+        nominations.addAll(doc.docs);
+      });
+    }
+  }
+
+  getNominationsForUser(email) {
+    var nomAmount = 0;
+    for (int i = 0; i < nominations.length; i++) {
+      if (nominations[i]['nominee'] == email) {
+        setState(() {
+          nomAmount++;
+        });
+      }
+    }
+    return nomAmount;
+  }
+
+  @override
+  void initState() {
+    getUserNotificationList();
+    getNominations();
+    super.initState();
   }
 
   @override
@@ -111,7 +143,7 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
         width: MyUtility(context).width / 1.4,
       ),
       SizedBox(
-        height: 8,
+        height: 30,
       ),
       Row(
         children: [
@@ -147,7 +179,7 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
           ),
           Spacer(),
           Text(
-            "Nominations",
+            "Nom.",
             style: TextStyle(
                 fontSize: 20,
                 color: Color(0xFF174486),
@@ -163,6 +195,69 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
         height: 1,
         width: MyUtility(context).width / 1.4,
       ),
+      for (int i = 0; i < membersWhoAreNominated.length; i++)
+        Column(
+          children: [
+            Container(
+              color: Colors.grey,
+              height: 0.5,
+              width: MyUtility(context).width / 1.4,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: MyUtility(context).width / 8,
+                  child: Text(
+                    membersWhoAreNominated[i]['SamaNr'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 8,
+                  child: Text(
+                    membersWhoAreNominated[i]['hpca'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 6,
+                  child: Text(
+                    membersWhoAreNominated[i]['name'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  membersWhoAreNominated[i]['nominations'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF174486),
+                      fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 0.5,
+              width: MyUtility(context).width / 1.4,
+            ),
+          ],
+        ),
     ]);
   }
 }

@@ -2,12 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/login/popups/validateDialog.dart';
 
 class MemberElectionRound1 extends StatefulWidget {
   String branch;
+  String electionId;
   String position;
+  String votingCount;
+  String acceptDate;
+  bool hdiStatus;
   MemberElectionRound1(
-      {super.key, required this.branch, required this.position});
+      {super.key,
+      required this.branch,
+      required this.electionId,
+      required this.position,
+      required this.votingCount,
+      required this.acceptDate,
+      required this.hdiStatus});
 
   @override
   State<MemberElectionRound1> createState() => _MemberElectionRound1State();
@@ -16,6 +27,7 @@ class MemberElectionRound1 extends StatefulWidget {
 class _MemberElectionRound1State extends State<MemberElectionRound1> {
   //var
   List nominationData = [];
+  var userNominateCount = 0;
 
 //get nomination made by user
   getUsersNominations() async {
@@ -26,6 +38,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
     setState(() {
       nominationData.clear();
       nominationData.addAll(data.docs);
+      userNominateCount = data.docs.length;
     });
   }
 
@@ -35,21 +48,30 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
       "id": "",
       "nominee": email,
       "userIdWho": FirebaseAuth.instance.currentUser!.uid,
-      "branch": widget.branch
+      "electionId": widget.electionId
     };
 
     var nomIndex =
         nominationData.indexWhere((item) => item["nominee"] == email);
 
     if (nomIndex == -1) {
+      if (int.parse(widget.votingCount) == userNominateCount) {
+        return openValidateDialog();
+      }
       //Add
       final doc = FirebaseFirestore.instance.collection('nominations').doc();
       nomineeData["id"] = doc.id;
       sendNomineeANotification(id);
       final json = nomineeData;
       doc.set(json).whenComplete(getUsersNominations());
+      setState(() {
+        userNominateCount = userNominateCount + 1;
+      });
     } else {
       //remove
+      setState(() {
+        userNominateCount = userNominateCount - 1;
+      });
       FirebaseFirestore.instance
           .collection('nominations')
           .doc(nominationData[nomIndex]["id"])
@@ -95,7 +117,11 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
           "You have been Nominated for ${widget.position} at ${widget.branch} Branch",
       "read": false,
       "type": "Nomination",
-      "data": {"electionId": "orIEplhDstxiWQdSLHlK", "accept": ""}
+      "data": {
+        "electionId": "orIEplhDstxiWQdSLHlK",
+        "acceptDate": widget.acceptDate,
+        "accept": false
+      }
     };
 
 //check if Notifcation Already Sent
@@ -121,6 +147,16 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
     }
   }
 
+  //Dialog for nominate limit
+  Future openValidateDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Nomination Limit Reached",
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
   @override
   void initState() {
     getUsersNominations();
@@ -131,6 +167,21 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          children: [
+            Text(
+              'Current Nominations ${userNominateCount} / ${widget.votingCount}',
+              style: TextStyle(
+                fontSize: 28,
+                color: Color(0xFF3D3D3D),
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
         Container(
           width: MyUtility(context).width * 0.8,
           height: MyUtility(context).height / 2,
@@ -171,8 +222,8 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                               0: FlexColumnWidth(3),
                               1: FlexColumnWidth(3),
                               2: FlexColumnWidth(3),
-                              3: FlexColumnWidth(1.5),
-                              4: FlexColumnWidth(2),
+                              3: FlexColumnWidth(1),
+                              4: FlexColumnWidth(1.2),
                             },
                             children: [
                               TableRow(
@@ -200,14 +251,14 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text('Nominate',
+                                    child: Text('HDI',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text('Actions',
+                                    child: Text('Nominate',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
@@ -249,6 +300,13 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         '${data!["hpcsa"]} ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${data!["race"] == "White/Caucasian" || data!["race"] == "Other" ? "" : "HDI"} ',
                                         style: TextStyle(fontSize: 18),
                                       ),
                                     ),
@@ -297,15 +355,6 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: InkWell(
-                                        onTap: () {},
-                                        child: Text('View Profile',
-                                            style:
-                                                TextStyle(color: Colors.black)),
                                       ),
                                     ),
                                   ],

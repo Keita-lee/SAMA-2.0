@@ -21,14 +21,16 @@ class _AdminEventsState extends State<AdminEvents> {
   }
 
   //Dialog to Remove Item
-  Future removeEventsPopup() => showDialog(
+  Future removeEventsPopup(id) => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
             child: YesNoDialog(
           description: "Are you sure you want to remove this item",
           closeDialog: () => Navigator.pop(context!),
-          callFunction: removeEvents,
+          callFunction: () {
+            removeEvents(id);
+          },
         ));
       });
 
@@ -234,7 +236,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                removeEventsPopup();
+                                                removeEventsPopup(data!['id']);
                                               },
                                               child: Text('Delete',
                                                   style: TextStyle(

@@ -419,13 +419,16 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                     SizedBox(
                       width: 8,
                     ),
-                    StyleButton(
-                      description: 'Confirm Booking',
-                      height: 55,
-                      width: 150,
-                      onTap: () {
-                        confirmBooking();
-                      },
+                    Visibility(
+                      visible: checkIfMadeBooking ? false : true,
+                      child: StyleButton(
+                        description: 'Confirm Booking',
+                        height: 55,
+                        width: 150,
+                        onTap: () {
+                          confirmBooking();
+                        },
+                      ),
                     ),
                   ],
                 ),

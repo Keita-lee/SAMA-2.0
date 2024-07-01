@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/myutility.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class MediaPopup extends StatefulWidget {
@@ -64,27 +65,95 @@ class _MediaPopupState extends State<MediaPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('YouTube Player'),
-      ),
-      body: videoUrl == null
-          ? Center(child: CircularProgressIndicator())
-          : YoutubePlayerScaffold(
-              controller: _youtubePlayerController,
-              aspectRatio: 16 / 9,
-              builder: (context, player) {
-                return Column(
-                  children: [
-                    player,
-                    ElevatedButton(
-                      onPressed: () => widget.closeDialog(),
-                      child: Text('Close'),
-                    ),
-                  ],
-                );
-              },
+    return Container(
+        width: MyUtility(context).width / 2,
+        height: MyUtility(context).height / 1.4,
+        decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Color.fromARGB(255, 8, 55, 145),
+                width: 2.0,
+              ),
             ),
-    );
+            borderRadius: BorderRadius.circular(15),
+            color: Color.fromARGB(255, 255, 255, 255)),
+        child: SingleChildScrollView(
+            child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              children: [
+                Text(
+                  'Media & Podcast',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF174486),
+                      fontWeight: FontWeight.bold),
+                ),
+                Spacer(),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      widget.closeDialog();
+                    },
+                    child: Icon(Icons.cancel),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: MyUtility(context).width / 2.1,
+              // height: MyUtility(context).height / 2.1,
+              child: YoutubePlayerScaffold(
+                controller: _youtubePlayerController,
+                aspectRatio: 16 / 9,
+                builder: (context, player) {
+                  return Column(
+                    children: [
+                      player,
+                    ],
+                  );
+                },
+              ),
+            ),
+          ) /**/
+        ])));
+
+    /* Container(
+        width: MyUtility(context).width / 2,
+        height: MyUtility(context).height / 2,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: Color(0xFFD1D1D1),
+            )),
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+            child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /*  Container(
+                    width: MyUtility(context).width / 4.4,
+                    height: MyUtility(context).height / 4,
+                    child: YoutubePlayerScaffold(
+                      controller: _youtubePlayerController,
+                      aspectRatio: 16 / 9,
+                      builder: (context, player) {
+                        return Column(
+                          children: [
+                            player,
+                          ],
+                        );
+                      },
+                    ),
+                  )*/
+                ])));
+ */
   }
 }

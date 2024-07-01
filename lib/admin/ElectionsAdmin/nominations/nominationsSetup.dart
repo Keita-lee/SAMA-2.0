@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/NominationHeader.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/nominationForm.dart';
+import 'package:sama/admin/ElectionsAdmin/nominations/ui/previewElection/sections/previewNominations.dart';
 import 'package:sama/components/myutility.dart';
 
 class NominationSetup extends StatefulWidget {
@@ -160,7 +161,9 @@ class _NominationSetupState extends State<NominationSetup> {
                               SizedBox(
                                 width: MyUtility(context).width / 8,
                                 child: Text(
-                                  document['status'],
+                                  document['status'] != "Complete"
+                                      ? "InComplete"
+                                      : "Complete",
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Color(0xFF3D3D3D),
@@ -180,7 +183,7 @@ class _NominationSetupState extends State<NominationSetup> {
                               SizedBox(
                                 width: MyUtility(context).width / 14,
                                 child: Text(
-                                  "0",
+                                  document['count'],
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Color(0xFF3D3D3D),

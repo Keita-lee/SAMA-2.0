@@ -32,6 +32,12 @@ class _MediaFormState extends State<MediaForm> {
   final description = TextEditingController();
   final urlLink = TextEditingController();
 
+  getMediaImageUrl(value) {
+    setState(() {
+      mediaImageUrl = value;
+    });
+  }
+
   List<String> categories = [
     'Webinar',
     'SAMA News',
@@ -196,6 +202,10 @@ class _MediaFormState extends State<MediaForm> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
+                  AddMediaImage(
+                    networkImageUrl: mediaImageUrl,
+                    updateUrl: getUrlForMediaImage,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -322,77 +332,6 @@ class _MediaFormState extends State<MediaForm> {
                 ],
               ),
             ),
-            // Transform.scale(
-            //   scale: 0.8,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     //crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.only(left: 20),
-            //         child: ProfileTextField(
-            //             customSize: MyUtility(context).width / 2.5,
-            //             description: "Description",
-            //             textfieldController: description,
-            //             textFieldType: "stringType"),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // Transform.scale(
-            //   scale: 0.8,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     //crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.only(left: 35),
-            //         child: ProfileTextField(
-            //             customSize: MyUtility(context).width / 2.5,
-            //             description: "Youtube Link",
-            //             textfieldController: urlLink,
-            //             textFieldType: "stringType"),
-            //       ),
-            //       SizedBox(
-            //         width: 15,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            //SizedBox(height: 20),
-            // Center(
-            //   child: Transform.scale(
-            //     scale: 0.8,
-            //     child: Container(
-            //       //width: MyUtility(context).width / 2,
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         children: [
-            //           StyleButton(
-            //               description: "Save",
-            //               height: 55,
-            //               width: 150,
-            //               onTap: () {
-            //                 saveData();
-            //               }),
-            //           SizedBox(
-            //             width: 15,
-            //           ),
-            //           Visibility(
-            //             visible: widget.id != "" ? true : false,
-            //             child: StyleButton(
-            //                 description: "Remove",
-            //                 height: 55,
-            //                 width: 150,
-            //                 onTap: () {
-            //                   removeMediaPopup();
-            //                 }),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),

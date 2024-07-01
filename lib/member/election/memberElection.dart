@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/service/commonService.dart';
+import 'package:sama/member/election/electionRounds/electionSummaryView.dart';
 import 'package:sama/member/election/electionRounds/memberElectionRound1.dart';
 import 'package:sama/member/election/electionRounds/memberElectionsRound2.dart';
 
@@ -15,11 +17,15 @@ class MemberElection extends StatefulWidget {
 class _MemberElectionState extends State<MemberElection> {
   //var
   List nominationData = [];
-
+  var pageIndex = 0;
   String title = "";
   String position = "";
   String criteria = "";
   String branch = "";
+  String votingStatus = "";
+  bool hdiStatus = false;
+  String votingClosingDate = "";
+  String votingCount = "";
   //First part
   String nominateStartDate = "";
   String nominateEndDate = "";
@@ -31,7 +37,7 @@ class _MemberElectionState extends State<MemberElection> {
   // Third Part
   String electionDateStart = "";
   String electionDateEnd = "";
-
+  List electionVotes = [];
 //get election data
 //TODO get elections based on branch
   getElection() async {
@@ -52,31 +58,46 @@ class _MemberElectionState extends State<MemberElection> {
         position = data.get('position');
         criteria = data.get('criteria');
         branch = data.get('selectBranch');
+        votingCount = data.get('count');
+        electionVotes = data.get('electionVotes');
+      });
+    }
+    checkVotingStatus();
+  }
+
+//see what status the election is at
+  checkVotingStatus() {
+    if (CommonService().checkDatePeriod(nominateStartDate, nominateEndDate)) {
+      setState(() {
+        votingStatus = "Nominations";
+        votingClosingDate = nominateEndDate;
+      });
+    } else if (CommonService()
+        .checkDatePeriod(nominateAcceptStartDate, nominateAcceptEndDate)) {
+      setState(() {
+        votingStatus = "Nomination Acceptance";
+        votingClosingDate = nominateAcceptEndDate;
+      });
+    } else if (CommonService()
+        .checkDatePeriod(electionDateStart, electionDateEnd)) {
+      setState(() {
+        votingStatus = "Elections";
+        votingClosingDate = electionDateEnd;
       });
     }
   }
 
-//check if date inbetween and call correct election round
-  checkDatePeriod(start, end) {
-    var validDate = false;
-
-    var startDate = DateTime.parse(start);
-    var endDate = DateTime.parse(end);
-    final currentDate = DateTime.now();
-
-    final today =
-        DateTime(currentDate.year, currentDate.month, currentDate.day);
-    final checkDateStart =
-        DateTime(startDate.year, startDate.month, startDate.day);
-    final checkDateEnd = DateTime(endDate.year, endDate.month, endDate.day);
-
-    if (checkDateStart == today || checkDateEnd == today) {
-      validDate = true;
-    } else if (currentDate.isAfter(startDate) &&
-        currentDate.isBefore(endDate)) {
-      validDate = true;
+//update the page index based on the status
+  updatePageBasedOnStatus() {
+    if (votingStatus == "Nominations") {
+      setState(() {
+        pageIndex = 1;
+      });
+    } else {
+      setState(() {
+        pageIndex = 2;
+      });
     }
-    return validDate;
   }
 
   @override
@@ -88,6 +109,28 @@ class _MemberElectionState extends State<MemberElection> {
 
   @override
   Widget build(BuildContext context) {
+    var electionPages = [
+      Electionsummaryview(
+          startDate: nominateStartDate,
+          endDate: electionDateEnd,
+          status: votingStatus,
+          statusClosingDate: votingClosingDate,
+          updatePageBasedOnStatus: updatePageBasedOnStatus),
+      MemberElectionsRound2(
+          branch: branch,
+          position: position,
+          electionId: "orIEplhDstxiWQdSLHlK",
+          votingCount: votingCount,
+          electionVotes: electionVotes),
+      MemberElectionRound1(
+        branch: branch,
+        electionId: "orIEplhDstxiWQdSLHlK",
+        position: position,
+        votingCount: votingCount,
+        acceptDate: nominateAcceptStartDate,
+        hdiStatus: hdiStatus,
+      ),
+    ];
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
@@ -134,7 +177,28 @@ class _MemberElectionState extends State<MemberElection> {
         SizedBox(
           height: 25,
         ),
-        MemberElectionRound1(
+        Container(
+          child: electionPages[pageIndex],
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Electionsummaryview(
+            startDate: nominateStartDate,
+            endDate: electionDateEnd,
+            status: "Nomination Acceptance",
+            statusClosingDate: votingClosingDate,
+            updatePageBasedOnStatus: updatePageBasedOnStatus),
+        SizedBox(
+          height: 15,
+        ),
+        Electionsummaryview(
+            startDate: nominateStartDate,
+            endDate: electionDateEnd,
+            status: "Elections",
+            statusClosingDate: votingClosingDate,
+            updatePageBasedOnStatus: updatePageBasedOnStatus),
+        /*   MemberElectionRound1(
           branch: branch,
           position: position,
         ),
@@ -142,7 +206,7 @@ class _MemberElectionState extends State<MemberElection> {
           branch: branch,
           position: position,
         ),
-        /*  Visibility(
+        Visibility(
           visible: checkDatePeriod(nominateStartDate, nominateEndDate)
               ? true
               : false,
@@ -159,6 +223,13 @@ class _MemberElectionState extends State<MemberElection> {
             branch: branch,
             position: position,
           ),
+        ),
+
+        Electionsummaryview(
+          startDate: nominateStartDate,
+          endDate: electionDateEnd,
+          status: votingStatus,
+          statusClosingDate: votingClosingDate,
         ),*/
       ]),
     );

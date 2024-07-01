@@ -51,7 +51,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 4.4,
-      height: widget.adminType == "true" ? 425 : 380,
+      height: 425,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
@@ -63,8 +63,26 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Youtubevideoplayer(
+            /* Youtubevideoplayer(
               id: widget.id,
+            ),*/
+
+            Container(
+              width: MyUtility(context).width / 4.0,
+              height: 230,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color(0xFFD1D1D1),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: ImageNetwork(
+                  image: widget.image,
+                  fitWeb: BoxFitWeb.fill,
+                  width: MyUtility(context).width / 4.0,
+                  height: 250,
+                ),
+              ),
             ),
 
             Container(
@@ -106,6 +124,22 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
               height: 10,
             ),
 
+            Visibility(
+              visible: widget.adminType != "true" ? true : false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StyleButton(
+                    onTap: () {
+                      widget.view!();
+                    },
+                    description: 'View1',
+                    height: 55,
+                    width: MyUtility(context).width * 0.17,
+                  ),
+                ],
+              ),
+            ),
             Visibility(
               visible: widget.adminType == "true" ? true : false,
               child: Row(

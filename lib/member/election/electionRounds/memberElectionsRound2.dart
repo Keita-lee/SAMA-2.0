@@ -1,23 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 
-final List<List<String>> tableData = [
-  ['9088466', 'John Doe', 'HDI', '2'],
-  ['9088466', 'Jane Smith', 'HDI', '8'],
-  ['9088466', 'Alice Brown', 'HDI', '0'],
-  ['9088466', 'Bob White', 'HDI', '12'],
-  ['9088466', 'Eve Black', 'HDI', '3'],
-  ['9088466', 'Tom Blue', 'HDI', '2'],
-];
-
 class MemberElectionsRound2 extends StatefulWidget {
   String branch;
   String position;
+  String electionId;
+  String votingCount;
+  List electionVotes;
   MemberElectionsRound2(
-      {super.key, required this.branch, required this.position});
+      {super.key,
+      required this.branch,
+      required this.position,
+      required this.electionId,
+      required this.votingCount,
+      required this.electionVotes});
 
   @override
   State<MemberElectionsRound2> createState() => _MemberElectionsRound2State();
@@ -27,7 +27,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
   //var
   List membersWhoAccepted = [];
   List voteList = [];
-  var voteAmount = 3;
+  var voteAmount = 0;
 //get user details from notification
   getUserDetail(id) async {
     final doc =
@@ -35,7 +35,8 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hdiStatus": "HDI",
+      "hdiStatus":
+          '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"} ',
       "email": "${doc.get("email")}",
       "vote": ""
     };
@@ -44,7 +45,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
     });
   }
 
-//TODO get real branch number
+//TODO get real branch id
   //get User Notification list who accepted nomination
   getUserNotificationList() async {
     final doc = await FirebaseFirestore.instance
@@ -61,7 +62,11 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
 
 //check if member alread in list
   checkIfVoted(email) {
-    if (voteList.contains(email)) {
+    var voteIndex = (widget.electionVotes).indexWhere((item) =>
+        item['email'] == email &&
+        item['userWhoVoted'] == FirebaseAuth.instance.currentUser!.uid);
+
+    if (voteIndex != -1) {
       return true;
     } else {
       return false;
@@ -70,18 +75,27 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
 
 //vote for member add to list
   voteForMember(email) {
+    var voteDetails = {
+      "email": email,
+      "userWhoVoted": FirebaseAuth.instance.currentUser!.uid
+    };
+
     setState(() {
       if (checkIfVoted(email)) {
-        var voteIndex = voteList.indexWhere((item) => item == email);
-        voteList.removeAt(voteIndex);
+        var voteIndex = (widget.electionVotes).indexWhere((item) =>
+            item['email'] == email &&
+            item['userWhoVoted'] == FirebaseAuth.instance.currentUser!.uid);
+
+        widget.electionVotes.removeAt(voteIndex);
         voteAmount = voteAmount + 1;
       } else if (voteAmount == 0) {
         validateVotes();
         return;
       } else {
-        voteList.add(email);
+        widget.electionVotes.add(voteDetails);
         voteAmount = voteAmount - 1;
       }
+      submitVotes();
     });
   }
 
@@ -95,9 +109,18 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
                 closeDialog: () => Navigator.pop(context!)));
       });
 
+//Send votes to db
+  submitVotes() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('elections')
+        .doc(widget.electionId)
+        .update({"electionVotes": widget.electionVotes});
+  }
+
   @override
   void initState() {
     getUserNotificationList();
+    voteAmount = int.parse(widget.votingCount);
     super.initState();
   }
 
@@ -105,17 +128,14 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            SizedBox(
+              width: MyUtility(context).width / 1.6,
+            ),
             Text('Votes Left ${voteAmount}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            SizedBox(
-              width: 15,
-            ),
-            StyleButton(
-                description: "Submit Vote",
-                height: 55,
-                width: 125,
-                onTap: () {})
           ],
         ),
         SizedBox(

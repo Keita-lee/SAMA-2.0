@@ -5,11 +5,15 @@ class YesNoDialog extends StatefulWidget {
   Function? closeDialog;
   Function? callFunction;
   String? description;
+  double? customWidth;
+  double? customHeight;
   YesNoDialog(
       {super.key,
       required this.closeDialog,
       required this.callFunction,
-      required this.description});
+      required this.description,
+      this.customWidth,
+      this.customHeight});
 
   @override
   State<YesNoDialog> createState() => _YesNoDialogState();
@@ -21,8 +25,8 @@ class _YesNoDialogState extends State<YesNoDialog> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      width: 300,
-      height: 185,
+      width: widget.customWidth != null ? widget.customWidth : 300,
+      height: widget.customHeight != null ? widget.customHeight : 185,
       child: Column(
         children: [
           Padding(

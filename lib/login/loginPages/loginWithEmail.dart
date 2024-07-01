@@ -56,10 +56,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
 //Check if email exists and continue
   checkEmail() async {
-    widget.getEmail(email.text.toLowerCase());
+    widget.getEmail((email.text).toLowerCase());
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('email', isEqualTo: email.text)
+        .where('email', isEqualTo: (email.text).toLowerCase())
         .get();
     updateStateText("");
     if (users.docs.length >= 1 && email.text != "") {
@@ -92,12 +92,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   checkUserState() async {
     var uid = await FirebaseAuth.instance.currentUser!.uid;
-
-    //print(FirebaseAuth.instance.currentUser!.uid);
-    print("test");
-    print(FirebaseAuth.instance.currentUser!.uid);
-
-    if (uid != null) {}
     setState(() {
       Navigator.push(
           context,

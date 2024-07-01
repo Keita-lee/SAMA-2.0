@@ -171,7 +171,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     ),
                     HoverItem(
                       menuSize: widget.menuSize,
-                      description: 'Media  & Podcast',
+                      description: 'Media & Webinars',
                       iconPath: "images/videoCamera.svg",
                       onPressed: () {
                         widget.changePage(7);
@@ -261,7 +261,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   ),
                   HoverItem(
                     menuSize: widget.menuSize,
-                    description: "Podcast",
+                    description: " Media & Webinars",
                     iconPath: "images/videoCamera.svg",
                     onPressed: () {
                       widget.changePage(9);

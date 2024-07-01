@@ -7,12 +7,14 @@ class StyleButton extends StatefulWidget {
   double? height;
   double? width;
   final Function()? onTap;
+  Color? buttonColor;
   StyleButton(
       {super.key,
       required this.description,
       required this.height,
       required this.width,
-      required this.onTap});
+      required this.onTap,
+      this.buttonColor});
 
   @override
   State<StyleButton> createState() => _StyleButtonState();
@@ -30,7 +32,9 @@ class _StyleButtonState extends State<StyleButton> {
             //elevation: 10,
             minimumSize:
                 Size(widget.width!, widget.height!), // Size(width, height)
-            backgroundColor: Color.fromARGB(255, 8, 55, 145),
+            backgroundColor: widget.buttonColor != null
+                ? widget.buttonColor
+                : Color.fromARGB(255, 8, 55, 145),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15))),
         child: Text(

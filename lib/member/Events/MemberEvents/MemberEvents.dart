@@ -87,28 +87,23 @@ class _MemberEventsState extends State<MemberEvents> {
                   final DocumentSnapshot document = documents[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        openMemberEventsDialog(document['id']);
-                      },
-                      child: Container(
-                        width: MyUtility(context).width * 0.9,
-                        decoration: ShapeDecoration(
-                          color: Color(0xFFFFF5F5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                    child: Container(
+                      width: MyUtility(context).width * 0.9,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFFFFF5F5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: MemberContainer(
-                          eventImage: document['eventsImage']!,
-                          eventName: document['title']!,
-                          location: document['_location']!,
-                          dateFrom: document['date']!,
-                          dateTill: document['date']!,
-                          onPressed: () {
-                            openMemberEventsDialog(document['id']);
-                          },
-                        ),
+                      ),
+                      child: MemberContainer(
+                        eventImage: document['eventsImage']!,
+                        eventName: document['title']!,
+                        location: document['_location']!,
+                        dateFrom: document['date']!,
+                        dateTill: document['date']!,
+                        onPressed: () {
+                          openMemberEventsDialog(document['id']);
+                        },
                       ),
                     ),
                   );
