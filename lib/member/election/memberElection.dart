@@ -185,7 +185,7 @@ class _MemberElectionState extends State<MemberElection> {
 // check if user can vote for chair member
   voteChareMemberPermission() {
     var permission = false;
-    membersWhoAccepted.sort((a, b) => a["votes"].compareTo(b["votes"]));
+    membersWhoAccepted.sort((b, a) => a["votes"].compareTo(b["votes"]));
     for (int i = 0; i < membersWhoAccepted.length; i++) {
       if (membersWhoAccepted[i]["id"] ==
           FirebaseAuth.instance.currentUser!.uid) {

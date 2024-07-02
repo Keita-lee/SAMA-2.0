@@ -1,37 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
-import 'package:sama/components/service/commonService.dart';
 
-class Round2Election extends StatefulWidget {
-  String electionDateStart;
-  String electionDateEnd;
+class ChairMemberRound extends StatefulWidget {
+  String chairMemberStartDate;
+  String chairMemberEndDate;
+  List chairMemberVoteList;
   String electionId;
-  List electionVotes;
-  bool hdiCompliant;
-
-  Round2Election(
+  ChairMemberRound(
       {super.key,
-      required this.electionDateStart,
-      required this.electionDateEnd,
-      required this.electionId,
-      required this.electionVotes,
-      required this.hdiCompliant});
+      required this.chairMemberEndDate,
+      required this.chairMemberStartDate,
+      required this.chairMemberVoteList,
+      required this.electionId});
 
   @override
-  State<Round2Election> createState() => _Round2ElectionState();
+  State<ChairMemberRound> createState() => _ChairMemberRoundState();
 }
 
-class _Round2ElectionState extends State<Round2Election> {
+class _ChairMemberRoundState extends State<ChairMemberRound> {
   //var
   List membersWhoAccepted = [];
   List nominations = [];
 
   getVotes(email) {
     var totalVotes = 0;
-    for (int i = 0; i < (widget.electionVotes).length; i++) {
-      if (widget.electionVotes[i]['email'] == email) {
+    for (int i = 0; i < (widget.chairMemberVoteList).length; i++) {
+      if (widget.chairMemberVoteList[i]['email'] == email) {
         totalVotes = totalVotes + 1;
       }
     }
@@ -57,6 +52,8 @@ class _Round2ElectionState extends State<Round2Election> {
         membersWhoAccepted.add(userData);
       }
     });
+
+    membersWhoAccepted.sort((b, a) => a["votes"].compareTo(b["votes"]));
   }
 
   //get User Notification list who accepted nomination
@@ -106,7 +103,7 @@ class _Round2ElectionState extends State<Round2Election> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        "Round 2 elections",
+        "Chair Member elections",
         style: TextStyle(
             fontSize: 22,
             color: Color(0xFF174486),
@@ -116,7 +113,7 @@ class _Round2ElectionState extends State<Round2Election> {
         height: 8,
       ),
       Text(
-        "Round 2 elections from ${widget.electionDateStart} - ${widget.electionDateEnd}",
+        "Chair Member  elections from ${widget.chairMemberStartDate} - ${widget.chairMemberEndDate}",
         style: TextStyle(
             fontSize: 18,
             color: Color(0xFF174486),
@@ -126,52 +123,11 @@ class _Round2ElectionState extends State<Round2Election> {
         height: 8,
       ),
       Text(
-        CommonService().checkDateStarted(widget.electionDateStart) == "After"
-            ? "Round 2 elections has Finished"
-            : "Round 2 elections has not yet Finished",
+        "Chair Member  elections has Finished",
         style: TextStyle(
             fontSize: 18,
             color: Color(0xFF174486),
             fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Row(
-        children: [
-          Text(
-            "HDI compliance checks for elections:",
-            style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.w500),
-          ),
-          Text(
-            widget.hdiCompliant ? "Enabled" : "Disabled",
-            style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "Election Results",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.bold),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
       ),
       SizedBox(
         height: 8,

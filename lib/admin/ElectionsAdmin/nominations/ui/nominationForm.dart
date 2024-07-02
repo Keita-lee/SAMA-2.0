@@ -49,6 +49,7 @@ class _NominationFromState extends State<NominationFrom> {
   bool includeBranchChairPerson = false;
   bool hdiCompliant = false;
   List electionVotes = [];
+  List chairMemberVoteList = [];
   String status = "";
   int nomintionCount = 0;
   int pageIndex = 0;
@@ -85,6 +86,7 @@ class _NominationFromState extends State<NominationFrom> {
       "count": count.text,
       "hdiComply": hdiCompliant,
       "electionVotes": electionVotes,
+      "chairmanVotes": chairMemberVoteList,
       "id": widget.id,
     };
 
@@ -129,6 +131,7 @@ class _NominationFromState extends State<NominationFrom> {
         status = data.get('status');
         count.text = data.get('count');
         electionVotes.addAll(data.get('electionVotes'));
+        chairMemberVoteList.addAll(data.get('chairmanVotes'));
 
         title.text = data.get('title');
         position.text = data.get('position');
@@ -348,7 +351,10 @@ class _NominationFromState extends State<NominationFrom> {
                   electionDateEnd: electionDateEnd.text,
                   electionId: widget.id,
                   electionVotes: electionVotes,
-                  hdiCompliant: hdiCompliant),
+                  hdiCompliant: hdiCompliant,
+                  chairmanStartDate: chairPersonStart.text,
+                  chairmanEndDate: chairPersonEnd.text,
+                  chairMemberVoteList: chairMemberVoteList),
             ),
             Visibility(
               visible: pageIndex == 0 ? true : false,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/service/commonService.dart';
 
 class Round1NominationsFinished extends StatefulWidget {
   String nominationStartDate;
@@ -109,7 +110,9 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
         height: 8,
       ),
       Text(
-        "Round 1 Nominations has Finished",
+        CommonService().checkDateStarted(widget.nominationEndDate) == "After"
+            ? "Round 1 Nominations has Finished"
+            : "Round 1 Nominations has not yet Finished",
         style: TextStyle(
             fontSize: 18,
             color: Color(0xFF174486),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/electionProcessUi/NomintaionAcceptanceRound.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/electionProcessUi/Round1NominationsFinished.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/electionProcessUi/Round2Election.dart';
+import 'package:sama/admin/ElectionsAdmin/nominations/ui/electionProcessUi/chairMemberRound.dart';
 
 class ElectionResults extends StatefulWidget {
   String branch;
@@ -12,20 +13,27 @@ class ElectionResults extends StatefulWidget {
   String electionDateStart;
   String electionDateEnd;
   String electionId;
+  String chairmanStartDate;
+  String chairmanEndDate;
   List electionVotes;
+  List chairMemberVoteList;
   bool hdiCompliant;
-  ElectionResults(
-      {super.key,
-      required this.branch,
-      required this.nominationStartDate,
-      required this.nominationEndDate,
-      required this.nominateAcceptStartDate,
-      required this.nominateAcceptEndDate,
-      required this.electionDateStart,
-      required this.electionDateEnd,
-      required this.electionId,
-      required this.electionVotes,
-      required this.hdiCompliant});
+  ElectionResults({
+    super.key,
+    required this.branch,
+    required this.nominationStartDate,
+    required this.nominationEndDate,
+    required this.nominateAcceptStartDate,
+    required this.nominateAcceptEndDate,
+    required this.electionDateStart,
+    required this.electionDateEnd,
+    required this.electionId,
+    required this.chairmanStartDate,
+    required this.chairmanEndDate,
+    required this.electionVotes,
+    required this.chairMemberVoteList,
+    required this.hdiCompliant,
+  });
 
   @override
   State<ElectionResults> createState() => _ElectionResultsState();
@@ -62,7 +70,16 @@ class _ElectionResultsState extends State<ElectionResults> {
           electionDateEnd: widget.electionDateEnd,
           electionId: widget.electionId,
           electionVotes: widget.electionVotes,
-          hdiCompliant: widget.hdiCompliant)
+          hdiCompliant: widget.hdiCompliant),
+      SizedBox(
+        height: 50,
+      ),
+      ChairMemberRound(
+        chairMemberEndDate: widget.chairmanStartDate,
+        chairMemberStartDate: widget.chairmanEndDate,
+        chairMemberVoteList: widget.chairMemberVoteList,
+        electionId: widget.electionId,
+      )
     ]);
   }
 }
