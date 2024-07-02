@@ -3,7 +3,18 @@ import 'package:sama/admin/products/UI/myProductTextField.dart';
 import 'package:sama/components/myutility.dart';
 
 class CodingProductDetail extends StatelessWidget {
-  const CodingProductDetail({super.key});
+  final TextEditingController firstLicensePriceController;
+  final TextEditingController tenLicensePriceController;
+  final TextEditingController elevenPlusLicensePriceController;
+  final TextEditingController downloadLinkController;
+
+  const CodingProductDetail({
+    super.key,
+    required this.firstLicensePriceController,
+    required this.tenLicensePriceController,
+    required this.elevenPlusLicensePriceController,
+    required this.downloadLinkController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +37,7 @@ class CodingProductDetail extends StatelessWidget {
           children: [
             MyProductTextField(
                 hintText: 'Price in ZAR',
-                textfieldController: TextEditingController(),
+                textfieldController: firstLicensePriceController,
                 textFieldWidth: MyUtility(context).width * 0.19,
                 topPadding: 0,
                 header: 'First License Price'),
@@ -35,7 +46,7 @@ class CodingProductDetail extends StatelessWidget {
             ),
             MyProductTextField(
                 hintText: 'Price in ZAR',
-                textfieldController: TextEditingController(),
+                textfieldController: tenLicensePriceController,
                 textFieldWidth: MyUtility(context).width * 0.19,
                 topPadding: 0,
                 header: '2-10 License Price'),
@@ -44,7 +55,7 @@ class CodingProductDetail extends StatelessWidget {
             ),
             MyProductTextField(
                 hintText: 'Price in ZAR',
-                textfieldController: TextEditingController(),
+                textfieldController: elevenPlusLicensePriceController,
                 textFieldWidth: MyUtility(context).width * 0.19,
                 topPadding: 0,
                 header: '11 + License Price'),
@@ -52,7 +63,7 @@ class CodingProductDetail extends StatelessWidget {
         ),
         MyProductTextField(
             hintText: 'Add full URL https://',
-            textfieldController: TextEditingController(),
+            textfieldController: downloadLinkController,
             textFieldWidth: MyUtility(context).width * 0.60,
             topPadding: 0,
             header: 'Download link'),

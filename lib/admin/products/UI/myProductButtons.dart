@@ -17,24 +17,26 @@ class MyProductButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: buttonColor,
-        border: Border.all(
-          color: borderColor,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: buttonColor,
+          border: Border.all(
+            color: borderColor,
+          ),
         ),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-          child: Text(
-            buttonText,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              letterSpacing: 1.1
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  letterSpacing: 1.1),
             ),
           ),
         ),

@@ -4,22 +4,25 @@ import 'package:sama/components/myutility.dart';
 class ProductListItem extends StatelessWidget {
   final String title;
   final String type;
+  final bool isActive; // Add this line
   final Function()? onTapView;
   final Function()? onTapEdit;
   final Function()? onTapDelete;
   final Color itemColor;
-  ProductListItem(
-      {super.key,
-      required this.title,
-      required this.type,
-      this.onTapView,
-      this.onTapEdit,
-      this.onTapDelete,
-      required this.itemColor});
+
+  ProductListItem({
+    super.key,
+    required this.title,
+    required this.type,
+    required this.isActive, // Add this line
+    this.onTapView,
+    this.onTapEdit,
+    this.onTapDelete,
+    required this.itemColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var status = true;
     return Container(
       color: itemColor,
       child: Padding(
@@ -36,12 +39,14 @@ class ProductListItem extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
-                    color: (status == true) ? Color(0xFF174486) : Colors.grey,
+                    color: isActive
+                        ? Color(0xFF174486)
+                        : Colors.grey, // Update this line
                   ),
                   child: Align(
-                    alignment: (status == true)
+                    alignment: isActive
                         ? Alignment.centerRight
-                        : Alignment.centerLeft,
+                        : Alignment.centerLeft, // Update this line
                     child: Container(
                       width: 20,
                       height: 20,
@@ -74,13 +79,13 @@ class ProductListItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  TextButton(
+                  /* TextButton(
                       onPressed: onTapView,
                       child: Text(
                         'View',
                         style: TextStyle(color: Colors.black),
                       )),
-                  Text('|'),
+                  Text('|'),*/
                   TextButton(
                       onPressed: onTapEdit,
                       child: Text(

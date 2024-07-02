@@ -193,6 +193,14 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         widget.changePage(11);
                       },
                     ),
+                    HoverItem(
+                      menuSize: widget.menuSize,
+                      description: 'Products',
+                      iconPath: "images/star.svg",
+                      onPressed: () {
+                        widget.changePage(13);
+                      },
+                    ),
                   ],
                 )),
             Visibility(

@@ -11,6 +11,7 @@ import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
+import 'package:sama/admin/products/products.dart';
 import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
@@ -142,6 +143,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       MemberEvents(),
       NominationSetup(),
       MemberElection(),
+      Products()
+
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
 
