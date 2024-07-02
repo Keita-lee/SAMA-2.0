@@ -12,6 +12,8 @@ class ElectionResults extends StatefulWidget {
   String electionDateStart;
   String electionDateEnd;
   String electionId;
+  List electionVotes;
+  bool hdiCompliant;
   ElectionResults(
       {super.key,
       required this.branch,
@@ -21,7 +23,9 @@ class ElectionResults extends StatefulWidget {
       required this.nominateAcceptEndDate,
       required this.electionDateStart,
       required this.electionDateEnd,
-      required this.electionId});
+      required this.electionId,
+      required this.electionVotes,
+      required this.hdiCompliant});
 
   @override
   State<ElectionResults> createState() => _ElectionResultsState();
@@ -41,7 +45,8 @@ class _ElectionResultsState extends State<ElectionResults> {
       Round1NominationsFinished(
           nominationStartDate: widget.nominationStartDate,
           nominationEndDate: widget.nominationEndDate,
-          electionId: widget.electionId),
+          electionId: widget.electionId,
+          hdiCompliant: widget.hdiCompliant),
       SizedBox(
         height: 50,
       ),
@@ -53,9 +58,11 @@ class _ElectionResultsState extends State<ElectionResults> {
         height: 50,
       ),
       Round2Election(
-        electionDateStart: widget.electionDateStart,
-        electionDateEnd: widget.electionDateEnd,
-      )
+          electionDateStart: widget.electionDateStart,
+          electionDateEnd: widget.electionDateEnd,
+          electionId: widget.electionId,
+          electionVotes: widget.electionVotes,
+          hdiCompliant: widget.hdiCompliant)
     ]);
   }
 }

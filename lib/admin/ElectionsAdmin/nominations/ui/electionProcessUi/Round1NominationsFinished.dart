@@ -7,11 +7,13 @@ class Round1NominationsFinished extends StatefulWidget {
   String nominationStartDate;
   String nominationEndDate;
   String electionId;
+  bool hdiCompliant;
   Round1NominationsFinished(
       {super.key,
       required this.nominationStartDate,
       required this.nominationEndDate,
-      required this.electionId});
+      required this.electionId,
+      required this.hdiCompliant});
 
   @override
   State<Round1NominationsFinished> createState() =>
@@ -126,7 +128,7 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
                 fontWeight: FontWeight.w500),
           ),
           Text(
-            "Disabled",
+            widget.hdiCompliant ? "Enabled" : "Disabled",
             style: TextStyle(
                 fontSize: 18,
                 color: Color(0xFF174486),
