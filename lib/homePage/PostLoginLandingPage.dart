@@ -25,6 +25,7 @@ import 'package:sama/homePage/dashboard/PostLoginCenter.dart';
 import 'package:sama/homePage/dashboard/menu/PostLoginLeft.dart';
 
 import 'package:sama/components/myutility.dart';
+import 'package:sama/member/productDisplay/ProductListDisplay.dart';
 import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
 
@@ -143,7 +144,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       MemberEvents(),
       NominationSetup(),
       MemberElection(),
-      Products()
+      Products(),
+      ProductListDisplay(),
 
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/

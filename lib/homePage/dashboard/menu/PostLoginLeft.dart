@@ -286,7 +286,9 @@ and Membership""",
                     menuSize: widget.menuSize,
                     description: "E-Store",
                     iconPath: "",
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.changePage(14);
+                    },
                   ),
                   HoverItem(
                     menuSize: widget.menuSize,

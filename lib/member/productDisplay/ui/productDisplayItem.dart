@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/admin/products/UI/myProductButtons.dart';
 import 'package:sama/components/myutility.dart';
 
@@ -8,15 +9,14 @@ class ProductDisplayItem extends StatelessWidget {
   final String productDescription;
   final String price;
   final String priceInfo;
-  
+  final String productImage;
   ProductDisplayItem(
       {super.key,
       required this.productName,
       required this.price,
       required this.priceInfo,
       required this.productDescription,
-      
-      });
+      required this.productImage});
 
   bool isDigital = true;
 
@@ -26,14 +26,26 @@ class ProductDisplayItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Container(
-          height: 140,
-          width: 180,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/imageIcon.png'),
-              fit: BoxFit.fill,
+        Visibility(
+          visible: productImage == "" ? true : false,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/imageIcon.png"),
+                fit: BoxFit.cover,
+              ),
             ),
+            width: MyUtility(context).width / 7,
+            height: 200,
+          ),
+        ),
+        Visibility(
+          visible: productImage != "" ? true : false,
+          child: ImageNetwork(
+            fitWeb: BoxFitWeb.cover,
+            image: productImage,
+            width: MyUtility(context).width / 7,
+            height: 200,
           ),
         ),
         const SizedBox(
@@ -78,7 +90,6 @@ class ProductDisplayItem extends StatelessWidget {
         const SizedBox(
           width: 25,
         ),
-
         MyProductButtons(
             buttonText: 'Read More',
             buttonColor: Color.fromARGB(255, 212, 210, 210),

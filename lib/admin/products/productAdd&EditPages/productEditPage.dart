@@ -79,6 +79,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
       if (productSnapshot.exists) {
         var data = productSnapshot.data() as Map<String, dynamic>;
         setState(() {
+          isActive = data['isActive'] ?? '';
           imageUrl = data['imageUrl'] ?? '';
           _nameController.text = data['name'] ?? '';
           _descriptionController.text = data['description'] ?? '';
@@ -197,7 +198,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                       borderColor: Color.fromARGB(255, 8, 55, 145),
                       textColor: Colors.white,
                       onTap: () {
-                        updateProduct;
+                        updateProduct();
                         Navigator.pop(context);
                       },
                     )
