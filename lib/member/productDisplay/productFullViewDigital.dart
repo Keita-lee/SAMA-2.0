@@ -11,14 +11,15 @@ class ProductFullViewDigital extends StatefulWidget {
 
   String description;
   String productImage;
-
+  Function(int, String) changePageIndex;
   ProductFullViewDigital(
       {super.key,
       required this.title,
       required this.price,
       required this.priceInfo,
       required this.description,
-      required this.productImage});
+      required this.productImage,
+      required this.changePageIndex});
 
   @override
   State<ProductFullViewDigital> createState() => _ProductFullViewDigitalState();
@@ -43,6 +44,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
               priceInfo: widget.priceInfo,
               qtyWidget: DigitalQuantityWidget(),
               productImage: widget.productImage,
+              changePageIndex: widget.changePageIndex,
             ),
             const SizedBox(
               height: 40,

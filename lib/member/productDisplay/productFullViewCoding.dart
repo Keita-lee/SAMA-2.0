@@ -12,14 +12,15 @@ class ProductFullViewCoding extends StatefulWidget {
 
   String description;
   String productImage;
-
+  Function(int, String) changePageIndex;
   ProductFullViewCoding(
       {super.key,
       required this.title,
       required this.price,
       required this.priceInfo,
       required this.description,
-      required this.productImage});
+      required this.productImage,
+      required this.changePageIndex});
 
   @override
   State<ProductFullViewCoding> createState() => _ProductFullViewCodingState();
@@ -46,6 +47,7 @@ class _ProductFullViewCodingState extends State<ProductFullViewCoding> {
                 priceInfo: widget.priceInfo,
                 qtyWidget: CodingQuantityWidget(),
                 productImage: widget.productImage,
+                changePageIndex: widget.changePageIndex,
               ),
               const SizedBox(
                 height: 40,

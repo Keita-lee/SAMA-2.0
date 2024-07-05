@@ -10,13 +10,15 @@ class ProductFullView extends StatefulWidget {
   final String priceInfo;
   final Widget qtyWidget;
   final String productImage;
-  const ProductFullView(
+  Function(int, String) changePageIndex;
+  ProductFullView(
       {super.key,
       required this.productTitle,
       required this.price,
       required this.priceInfo,
       required this.qtyWidget,
-      required this.productImage});
+      required this.productImage,
+      required this.changePageIndex});
 
   @override
   State<ProductFullView> createState() => _ProductFullViewState();
@@ -114,6 +116,18 @@ class _ProductFullViewState extends State<ProductFullView> {
                       borderColor: Color.fromARGB(255, 8, 55, 145),
                       textColor: Colors.white,
                       onTap: () {},
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    MyProductButtons(
+                      buttonText: 'Back',
+                      buttonColor: Color.fromARGB(255, 39, 82, 163),
+                      borderColor: Color.fromARGB(255, 8, 55, 145),
+                      textColor: Colors.white,
+                      onTap: () {
+                        widget.changePageIndex(0, "");
+                      },
                     ),
                   ],
                 )

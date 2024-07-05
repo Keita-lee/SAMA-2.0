@@ -67,6 +67,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
               Visibility(
                 visible: pageIndex == 0 ? true : false,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Products',
@@ -102,21 +103,25 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                       ? true
                       : false,
                   child: ProductFullViewDigital(
-                      title: title,
-                      price: price,
-                      priceInfo: priceInfo,
-                      description: description,
-                      productImage: productImage)),
+                    title: title,
+                    price: price,
+                    priceInfo: priceInfo,
+                    description: description,
+                    productImage: productImage,
+                    changePageIndex: changePageIndex,
+                  )),
               Visibility(
                 visible: pageIndex == 1 && productType == "Coding Product"
                     ? true
                     : false,
                 child: ProductFullViewCoding(
-                    title: title,
-                    price: price,
-                    priceInfo: priceInfo,
-                    description: description,
-                    productImage: productImage),
+                  title: title,
+                  price: price,
+                  priceInfo: priceInfo,
+                  description: description,
+                  productImage: productImage,
+                  changePageIndex: changePageIndex,
+                ),
               ),
             ],
           ),
