@@ -126,10 +126,12 @@ class _ProductAddState extends State<ProductAdd> {
                     ),
                     Spacer(),
                     MyProductButtons(
-                        buttonText: 'Save as Draft',
-                        buttonColor: Color.fromARGB(255, 212, 210, 210),
-                        borderColor: Colors.black,
-                        textColor: Colors.black),
+                      buttonText: 'Save as Draft',
+                      buttonColor: Color.fromARGB(255, 212, 210, 210),
+                      borderColor: Colors.black,
+                      textColor: Colors.black,
+                      onTap: () {},
+                    ),
                     const SizedBox(
                       width: 25,
                     ),

@@ -6,13 +6,18 @@ class Tabstyle extends StatefulWidget {
   int tabIndexNumber;
   String description;
   double customWidth;
-  Tabstyle(
-      {super.key,
-      required this.changePage,
-      required this.pageIndex,
-      required this.tabIndexNumber,
-      required this.description,
-      required this.customWidth});
+  Color customColor1;
+  Color customColor2;
+  Tabstyle({
+    super.key,
+    required this.changePage,
+    required this.pageIndex,
+    required this.tabIndexNumber,
+    required this.description,
+    required this.customWidth,
+    required this.customColor1,
+    required this.customColor2,
+  });
 
   @override
   State<Tabstyle> createState() => _TabstyleState();
@@ -22,7 +27,7 @@ class _TabstyleState extends State<Tabstyle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: GestureDetector(
         onTap: () {
           widget.changePage();
@@ -31,8 +36,8 @@ class _TabstyleState extends State<Tabstyle> {
           height: 50,
           width: widget.customWidth!,
           color: widget.pageIndex == widget.tabIndexNumber
-              ? Color.fromARGB(255, 8, 55, 145)
-              : Color.fromARGB(255, 83, 115, 175),
+              ? widget.customColor1
+              : widget.customColor2,
           child: Center(
             child: Text(
               widget.description,

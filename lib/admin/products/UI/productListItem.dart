@@ -65,13 +65,23 @@ class ProductListItem extends StatelessWidget {
               height: 30,
               child: Text(
                 title,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF3D3D3D),
+                ),
                 textAlign: TextAlign.start,
               ),
             ),
             SizedBox(
               width: MyUtility(context).width * 0.13,
               height: 30,
-              child: Text(type),
+              child: Text(
+                type,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF3D3D3D),
+                ),
+              ),
             ),
             SizedBox(
               width: 185,
@@ -90,14 +100,20 @@ class ProductListItem extends StatelessWidget {
                       onPressed: onTapEdit,
                       child: Text(
                         'Edit',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       )),
                   Text('|'),
                   TextButton(
                       onPressed: onTapDelete,
                       child: Text(
                         'Delete',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
                       )),
                 ],
               ),

@@ -11,7 +11,9 @@ import 'package:sama/components/myutility.dart';
 
 class ProductEditPage extends StatefulWidget {
   final String productId;
-  const ProductEditPage({super.key, required this.productId});
+  Function(int, String) changePageIndex;
+  ProductEditPage(
+      {super.key, required this.productId, required this.changePageIndex});
 
   @override
   State<ProductEditPage> createState() => _ProductEditPageState();
@@ -162,141 +164,137 @@ class _ProductEditPageState extends State<ProductEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SizedBox(
-          width: MyUtility(context).width * 0.60,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MyUtility(context).height * 0.08,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Edit product',
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    Spacer(),
-                    MyProductButtons(
-                      buttonText: 'Delete',
-                      buttonColor: Color.fromARGB(255, 212, 210, 210),
-                      borderColor: Colors.black,
-                      textColor: Colors.black,
-                      onTap: deleteProduct,
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    MyProductButtons(
-                      buttonText: 'Update Product',
-                      buttonColor: Color.fromARGB(255, 8, 55, 145),
-                      borderColor: Color.fromARGB(255, 8, 55, 145),
-                      textColor: Colors.white,
-                      onTap: () {
-                        updateProduct();
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    MyProductTextField(
-                      hintText: 'Product name',
-                      textfieldController: _nameController,
-                      textFieldWidth: MyUtility(context).width * 0.35,
+    return Center(
+      child: SizedBox(
+        width: MyUtility(context).width * 0.60,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Edit product',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(),
+                  MyProductButtons(
+                    buttonText: 'Back',
+                    buttonColor: Color.fromARGB(255, 212, 210, 210),
+                    borderColor: Colors.black,
+                    textColor: Colors.black,
+                    onTap: () {
+                      widget.changePageIndex(0, "");
+                    },
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  MyProductButtons(
+                    buttonText: 'Update Product',
+                    buttonColor: Color.fromARGB(255, 8, 55, 145),
+                    borderColor: Color.fromARGB(255, 8, 55, 145),
+                    textColor: Colors.white,
+                    onTap: () {
+                      updateProduct();
+                      widget.changePageIndex(0, "");
+                      //  Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  MyProductTextField(
+                    hintText: 'Product name',
+                    textfieldController: _nameController,
+                    textFieldWidth: MyUtility(context).width * 0.35,
+                    topPadding: 0,
+                    header: 'Name',
+                  ),
+                  Spacer(),
+                  MyToggleButton(
+                    initialValue: isActive,
+                    onChanged: (value) {
+                      setState(() {
+                        isActive = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyProductTextField(
+                    hintText: 'Product description',
+                    textfieldController: _descriptionController,
+                    textFieldWidth: MyUtility(context).width * 0.35,
+                    lines: 12,
+                    topPadding: 20,
+                    header: 'Description',
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ProductImage(
+                      customWidth: 150,
+                      customHeight: 150,
+                      description: '',
+                      networkImageUrl: imageUrl,
+                      setUrl: setImageUrl)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  MyProductTextField(
+                      hintText: 'Product SKU',
+                      textfieldController: _skuController,
+                      textFieldWidth: MyUtility(context).width * 0.19,
                       topPadding: 0,
-                      header: 'Name',
-                    ),
-                    Spacer(),
-                    MyToggleButton(
-                      initialValue: isActive,
-                      onChanged: (value) {
-                        setState(() {
-                          isActive = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyProductTextField(
-                      hintText: 'Product description',
-                      textfieldController: _descriptionController,
-                      textFieldWidth: MyUtility(context).width * 0.35,
-                      lines: 12,
-                      topPadding: 20,
-                      header: 'Description',
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    ProductImage(
-                        customWidth: 150,
-                        customHeight: 150,
-                        description: '',
-                        networkImageUrl: imageUrl,
-                        setUrl: setImageUrl)
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    MyProductTextField(
-                        hintText: 'Product SKU',
-                        textfieldController: _skuController,
-                        textFieldWidth: MyUtility(context).width * 0.19,
-                        topPadding: 0,
-                        header: 'SKU'),
-                    MyDropDownButton(
-                      getDropDownValue: (value) {
-                        setState(() {
-                          dropDownValue = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                Visibility(
-                  visible: dropDownValue == 'Digital Product' ? true : false,
-                  child: DigitalProductDeatail(
-                    memberPriceController: _memberPriceController,
-                    nonMemberPriceController: _nonMemberPriceController,
-                    retailerPriceController: _retailerPriceController,
-                    downloadLinkController: _digitalDownloadLinkController,
+                      header: 'SKU'),
+                  MyDropDownButton(
+                    getDropDownValue: (value) {
+                      setState(() {
+                        dropDownValue = value;
+                      });
+                    },
                   ),
+                ],
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              Visibility(
+                visible: dropDownValue == 'Digital Product' ? true : false,
+                child: DigitalProductDeatail(
+                  memberPriceController: _memberPriceController,
+                  nonMemberPriceController: _nonMemberPriceController,
+                  retailerPriceController: _retailerPriceController,
+                  downloadLinkController: _digitalDownloadLinkController,
                 ),
-                Visibility(
-                  visible: dropDownValue == 'Coding Product' ? true : false,
-                  child: CodingProductDetail(
-                    firstLicensePriceController: _firstLicensePriceController,
-                    tenLicensePriceController: _tenLicensePriceController,
-                    elevenPlusLicensePriceController:
-                        _elevenPlusLicensePriceController,
-                    downloadLinkController: _codingDownloadLinkController,
-                  ),
+              ),
+              Visibility(
+                visible: dropDownValue == 'Coding Product' ? true : false,
+                child: CodingProductDetail(
+                  firstLicensePriceController: _firstLicensePriceController,
+                  tenLicensePriceController: _tenLicensePriceController,
+                  elevenPlusLicensePriceController:
+                      _elevenPlusLicensePriceController,
+                  downloadLinkController: _codingDownloadLinkController,
                 ),
-                SizedBox(
-                  height: MyUtility(context).height * 0.08,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: MyUtility(context).height * 0.08,
+              ),
+            ],
           ),
         ),
       ),

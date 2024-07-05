@@ -6,7 +6,11 @@ import 'package:sama/admin/products/productAdd&EditPages/productEditPage.dart';
 import 'package:sama/components/myutility.dart';
 
 class ProductListView extends StatefulWidget {
-  const ProductListView({super.key});
+  Function(
+    int,
+    String,
+  ) changePageIndex;
+  ProductListView({super.key, required this.changePageIndex});
 
   @override
   State<ProductListView> createState() => _ProductListViewState();
@@ -43,7 +47,7 @@ class _ProductListViewState extends State<ProductListView> {
         return Container(
           color: Colors.white,
           width: MyUtility(context).width - (MyUtility(context).width * 0.25),
-          height: 500,
+          height: MyUtility(context).height / 2.2,
           child: ListView.builder(
             itemCount: documents.length,
             itemBuilder: (BuildContext context, int index) {
@@ -61,13 +65,7 @@ class _ProductListViewState extends State<ProductListView> {
                   deleteProduct(document.id);
                 },
                 onTapEdit: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ProductEditPage(productId: document.id),
-                    ),
-                  );
+                  widget.changePageIndex(1, document.id);
                 },
               );
             },

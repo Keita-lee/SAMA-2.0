@@ -19,6 +19,7 @@ class MediaPopup extends StatefulWidget {
 
 class _MediaPopupState extends State<MediaPopup> {
   String? videoUrl;
+  String title = "";
   late YoutubePlayerController _youtubePlayerController;
 
   @override
@@ -36,6 +37,7 @@ class _MediaPopupState extends State<MediaPopup> {
       if (doc.exists) {
         setState(() {
           videoUrl = doc['urlLink'];
+          title = doc['title'];
           print('Video URL: $videoUrl');
           if (videoUrl != null) {
             print('this is the vid URL' + videoUrl!);
@@ -84,7 +86,7 @@ class _MediaPopupState extends State<MediaPopup> {
             child: Row(
               children: [
                 Text(
-                  'Media & Podcast',
+                  title,
                   style: TextStyle(
                       fontSize: 18,
                       color: Color(0xFF174486),

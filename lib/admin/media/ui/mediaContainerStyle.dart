@@ -133,7 +133,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                     onTap: () {
                       widget.view!();
                     },
-                    description: 'View1',
+                    description: 'View',
                     height: 55,
                     width: MyUtility(context).width * 0.17,
                   ),

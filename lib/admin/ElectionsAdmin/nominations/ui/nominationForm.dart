@@ -53,6 +53,7 @@ class _NominationFromState extends State<NominationFrom> {
   String status = "";
   int nomintionCount = 0;
   int pageIndex = 0;
+  int electionIndex = 0;
 
   updateStatus() {
     setState(() {
@@ -319,6 +320,8 @@ class _NominationFromState extends State<NominationFrom> {
                   tabIndexNumber: 0,
                   description: "Setup Election",
                   customWidth: 150,
+                  customColor1: Color.fromARGB(255, 8, 55, 145),
+                  customColor2: Color.fromARGB(255, 83, 115, 175),
                 ),
                 Visibility(
                   visible: widget.id == "" ? false : true,
@@ -332,9 +335,86 @@ class _NominationFromState extends State<NominationFrom> {
                     tabIndexNumber: 1,
                     description: "Results",
                     customWidth: 150,
+                    customColor1: Color.fromARGB(255, 8, 55, 145),
+                    customColor2: Color.fromARGB(255, 83, 115, 175),
                   ),
                 )
               ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Visibility(
+              visible: pageIndex == 0 ? true : false,
+              child: Row(
+                children: [
+                  Tabstyle(
+                    pageIndex: electionIndex,
+                    changePage: () {
+                      setState(() {
+                        electionIndex = 0;
+                      });
+                    },
+                    tabIndexNumber: 0,
+                    description: "Election Details",
+                    customWidth: 150,
+                    customColor1: Color.fromARGB(255, 7, 124, 179),
+                    customColor2: Color.fromARGB(255, 8, 55, 145),
+                  ),
+                  Tabstyle(
+                    pageIndex: electionIndex,
+                    changePage: () {
+                      setState(() {
+                        electionIndex = 1;
+                      });
+                    },
+                    tabIndexNumber: 1,
+                    description: "Round 1",
+                    customWidth: 150,
+                    customColor1: Color.fromARGB(255, 7, 124, 179),
+                    customColor2: Color.fromARGB(255, 8, 55, 145),
+                  ),
+                  Tabstyle(
+                    pageIndex: electionIndex,
+                    changePage: () {
+                      setState(() {
+                        electionIndex = 2;
+                      });
+                    },
+                    tabIndexNumber: 2,
+                    description: "Acceptance Round",
+                    customWidth: 150,
+                    customColor1: Color.fromARGB(255, 7, 124, 179),
+                    customColor2: Color.fromARGB(255, 8, 55, 145),
+                  ),
+                  Tabstyle(
+                    pageIndex: electionIndex,
+                    changePage: () {
+                      setState(() {
+                        electionIndex = 3;
+                      });
+                    },
+                    tabIndexNumber: 3,
+                    description: "Round2",
+                    customWidth: 150,
+                    customColor1: Color.fromARGB(255, 7, 124, 179),
+                    customColor2: Color.fromARGB(255, 8, 55, 145),
+                  ),
+                  Tabstyle(
+                    pageIndex: electionIndex,
+                    changePage: () {
+                      setState(() {
+                        electionIndex = 4;
+                      });
+                    },
+                    tabIndexNumber: 4,
+                    description: "Chair Person",
+                    customWidth: 150,
+                    customColor1: Color.fromARGB(255, 7, 124, 179),
+                    customColor2: Color.fromARGB(255, 8, 55, 145),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20,
@@ -360,38 +440,53 @@ class _NominationFromState extends State<NominationFrom> {
               visible: pageIndex == 0 ? true : false,
               child: Column(
                 children: [
-                  ElectionFunctions(
-                    includeBranchChairPerson: includeBranchChairPerson,
-                    hdiCompliant: hdiCompliant,
-                    status: status,
-                    selectBranch: selectBranch,
-                    title: title,
-                    position: position,
-                    criteria: criteria,
-                    count: count,
-                    updateElectionCriteria: updateElectionCriteria,
-                    saveElection: saveData,
+                  Visibility(
+                    visible: electionIndex == 0 ? true : false,
+                    child: ElectionFunctions(
+                      includeBranchChairPerson: includeBranchChairPerson,
+                      hdiCompliant: hdiCompliant,
+                      status: status,
+                      selectBranch: selectBranch,
+                      title: title,
+                      position: position,
+                      criteria: criteria,
+                      count: count,
+                      updateElectionCriteria: updateElectionCriteria,
+                      saveElection: saveData,
+                    ),
                   ),
-                  PreviewNominations(
-                    nominationStartDate: nominateStartDate.text,
-                    nominationEndDate: nominateEndDate.text,
-                    updateStartDate: updateNominationStartDate,
-                    updateEndDate: updateNominationEndDate,
+                  Visibility(
+                    visible: electionIndex == 1 ? true : false,
+                    child: PreviewNominations(
+                      nominationStartDate: nominateStartDate.text,
+                      nominationEndDate: nominateEndDate.text,
+                      updateStartDate: updateNominationStartDate,
+                      updateEndDate: updateNominationEndDate,
+                    ),
                   ),
-                  PreviewAcceptanceRound(
-                    nominateAcceptStartDate: nominateAcceptStartDate.text,
-                    nominateAcceptEndDate: nominateAcceptEndDate.text,
+                  Visibility(
+                    visible: electionIndex == 2 ? true : false,
+                    child: PreviewAcceptanceRound(
+                      nominateAcceptStartDate: nominateAcceptStartDate.text,
+                      nominateAcceptEndDate: nominateAcceptEndDate.text,
+                    ),
                   ),
-                  PreviewElections(
-                    electionStartDate: electionDateStart.text,
-                    electionEndDate: electionDateEnd.text,
-                    updateStartDate: updateRound2StartDate,
-                    updateEndDate: updateRound2EndDate,
+                  Visibility(
+                    visible: electionIndex == 3 ? true : false,
+                    child: PreviewElections(
+                      electionStartDate: electionDateStart.text,
+                      electionEndDate: electionDateEnd.text,
+                      updateStartDate: updateRound2StartDate,
+                      updateEndDate: updateRound2EndDate,
+                    ),
                   ),
-                  PreviewChairPersonRound(
-                    chairPersonStartDate: chairPersonStart.text,
-                    chairPersonEndDate: chairPersonEnd.text,
-                    updateChairPersonDate: updateChairPersonDate,
+                  Visibility(
+                    visible: electionIndex == 4 ? true : false,
+                    child: PreviewChairPersonRound(
+                      chairPersonStartDate: chairPersonStart.text,
+                      chairPersonEndDate: chairPersonEnd.text,
+                      updateChairPersonDate: updateChairPersonDate,
+                    ),
                   ),
                 ],
               ),

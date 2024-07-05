@@ -10,21 +10,23 @@ class ProductDisplayItem extends StatelessWidget {
   final String price;
   final String priceInfo;
   final String productImage;
+  VoidCallback readMore;
   ProductDisplayItem(
       {super.key,
       required this.productName,
       required this.price,
       required this.priceInfo,
       required this.productDescription,
-      required this.productImage});
+      required this.productImage,
+      required this.readMore});
 
   bool isDigital = true;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Visibility(
           visible: productImage == "" ? true : false,
@@ -62,26 +64,31 @@ class ProductDisplayItem extends StatelessWidget {
               Text(
                 productName,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                productDescription,
-                maxLines: 3,
-                style: const TextStyle(
-                  fontSize: 14,
+              SizedBox(
+                width: MyUtility(context).width / 3.5,
+                height: 30,
+                child: Text(
+                  productDescription,
+                  maxLines: 3,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(
                 'R ${price}',
                 style: const TextStyle(
-                    fontSize: 22, color: Color.fromARGB(255, 8, 55, 145)),
+                    fontSize: 25, color: Color.fromARGB(255, 8, 55, 145)),
               ),
               Text(
                 priceInfo,
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 22,
                 ),
               ),
             ],
@@ -91,20 +98,26 @@ class ProductDisplayItem extends StatelessWidget {
           width: 25,
         ),
         MyProductButtons(
-            buttonText: 'Read More',
-            buttonColor: Color.fromARGB(255, 212, 210, 210),
-            borderColor: Color.fromARGB(255, 212, 210, 210),
-            textColor: Colors.black),
+          buttonText: 'Read More',
+          buttonColor: Color.fromARGB(255, 212, 210, 210),
+          borderColor: Color.fromARGB(255, 212, 210, 210),
+          textColor: Colors.black,
+          onTap: () {
+            readMore();
+          },
+        ),
         const SizedBox(
           width: 15,
         ),
         Visibility(
           visible: isDigital,
           child: MyProductButtons(
-              buttonText: 'Buy Now',
-              buttonColor: Color.fromARGB(255, 8, 55, 145),
-              borderColor: Color.fromARGB(255, 8, 55, 145),
-              textColor: Colors.white),
+            buttonText: 'Buy Now',
+            buttonColor: Color.fromARGB(255, 8, 55, 145),
+            borderColor: Color.fromARGB(255, 8, 55, 145),
+            textColor: Colors.white,
+            onTap: () {},
+          ),
         ),
       ],
     );

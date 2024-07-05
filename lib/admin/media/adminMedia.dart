@@ -70,7 +70,7 @@ class _AdminMediaState extends State<AdminMedia> {
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'Media & Podcast',
+          'Media & Webinars',
           style: TextStyle(
               fontSize: 32,
               color: Color(0xFF3D3D3D),
@@ -140,9 +140,6 @@ class _AdminMediaState extends State<AdminMedia> {
                                     openMediaDialog(document['id']);
                                   },
                                   view: () {
-                                    setState(() {
-                                      hideVideos = true;
-                                    });
                                     viewMediaDialog(document['id']);
                                   },
                                   adminType: "true",

@@ -4,7 +4,7 @@ class MyProductButtons extends StatelessWidget {
   final String buttonText;
   final Color buttonColor;
   final Color borderColor;
-  final Function()? onTap;
+  final Function() onTap;
   final Color textColor;
 
   MyProductButtons(
@@ -12,13 +12,15 @@ class MyProductButtons extends StatelessWidget {
       required this.buttonText,
       required this.buttonColor,
       required this.borderColor,
-      this.onTap,
+      required this.onTap,
       required this.textColor});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        onTap();
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
