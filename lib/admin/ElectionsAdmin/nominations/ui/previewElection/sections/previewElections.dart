@@ -6,6 +6,7 @@ import 'package:sama/admin/ElectionsAdmin/nominations/ui/previewElection/ui/date
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/yesNoDialog.dart';
 
 class PreviewElections extends StatefulWidget {
   String electionStartDate;
@@ -37,6 +38,34 @@ class _PreviewElectionsState extends State<PreviewElections> {
               type == "Start" ? widget.updateStartDate : widget.updateEndDate,
         ));
       });
+
+  //Skip Election round
+  Future closeElectionPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to close elections",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: () {
+            widget.updateEndDate(CommonService().getTodaysDateText());
+          },
+        ));
+      });
+
+  //Reopen Election round
+  Future reopenElectionsPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to reopen elections",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: () {
+            widget.updateStartDate(CommonService().getTodaysDateText());
+          },
+        ));
+      });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,6 +80,35 @@ class _PreviewElectionsState extends State<PreviewElections> {
               fontSize: 25,
               color: Color(0xFF174486),
               fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 25,
+        ),
+        Visibility(
+          visible: CommonService().checkDateStarted(widget.electionEndDate) ==
+                  "After"
+              ? false
+              : true,
+          child: StyleButton(
+              description: "Close Nominations Early",
+              height: 55,
+              width: 85,
+              onTap: () {
+                closeElectionPopup();
+              }),
+        ),
+        Visibility(
+          visible: CommonService().checkDateStarted(widget.electionEndDate) ==
+                  "Before"
+              ? false
+              : true,
+          child: StyleButton(
+              description: "Reopen Nominations",
+              height: 55,
+              width: 85,
+              onTap: () {
+                reopenElectionsPopup();
+              }),
         ),
         SizedBox(
           height: 25,
@@ -138,13 +196,20 @@ class _PreviewElectionsState extends State<PreviewElections> {
             SizedBox(
               width: 15,
             ),
-            StyleButton(
-                description: "Update",
-                height: 55,
-                width: 85,
-                onTap: () {
-                  updateDate("Update Start Date", "Start");
-                }),
+            Visibility(
+              visible:
+                  CommonService().checkDateStarted(widget.electionStartDate) ==
+                          "After"
+                      ? false
+                      : true,
+              child: StyleButton(
+                  description: "Update",
+                  height: 55,
+                  width: 85,
+                  onTap: () {
+                    updateDate("Update Start Date", "Start");
+                  }),
+            ),
           ],
         ),
         SizedBox(
@@ -212,13 +277,20 @@ class _PreviewElectionsState extends State<PreviewElections> {
             SizedBox(
               width: 15,
             ),
-            StyleButton(
-                description: "Update",
-                height: 55,
-                width: 85,
-                onTap: () {
-                  updateDate("Update End Date", "End");
-                }),
+            Visibility(
+              visible:
+                  CommonService().checkDateStarted(widget.electionEndDate) ==
+                          "After"
+                      ? false
+                      : true,
+              child: StyleButton(
+                  description: "Update",
+                  height: 55,
+                  width: 85,
+                  onTap: () {
+                    updateDate("Update End Date", "End");
+                  }),
+            ),
           ],
         ),
         SizedBox(

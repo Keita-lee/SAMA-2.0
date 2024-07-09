@@ -6,6 +6,7 @@ import 'package:sama/admin/ElectionsAdmin/nominations/ui/previewElection/ui/date
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/yesNoDialog.dart';
 
 class PreviewNominations extends StatefulWidget {
   String nominationStartDate;
@@ -13,12 +14,13 @@ class PreviewNominations extends StatefulWidget {
   Function(String) updateStartDate;
   Function(String) updateEndDate;
 
-  PreviewNominations(
-      {super.key,
-      required this.nominationStartDate,
-      required this.nominationEndDate,
-      required this.updateStartDate,
-      required this.updateEndDate});
+  PreviewNominations({
+    super.key,
+    required this.nominationStartDate,
+    required this.nominationEndDate,
+    required this.updateStartDate,
+    required this.updateEndDate,
+  });
 
   @override
   State<PreviewNominations> createState() => _PreviewNominationsState();
@@ -37,6 +39,35 @@ class _PreviewNominationsState extends State<PreviewNominations> {
               type == "Start" ? widget.updateStartDate : widget.updateEndDate,
         ));
       });
+
+  //Skip Nominations round
+  Future closeNominationsPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to close nominations",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: () {
+            widget.updateEndDate(CommonService().getTodaysDateText());
+          },
+        ));
+      });
+
+  //Reopen Nominations round
+  Future reopenNominationsPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to reopen nominations",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: () {
+            widget.updateStartDate(CommonService().getTodaysDateText());
+          },
+        ));
+      });
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,6 +82,35 @@ class _PreviewNominationsState extends State<PreviewNominations> {
               fontSize: 25,
               color: Color(0xFF174486),
               fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 25,
+        ),
+        Visibility(
+          visible: CommonService().checkDateStarted(widget.nominationEndDate) ==
+                  "After"
+              ? false
+              : true,
+          child: StyleButton(
+              description: "Close Nominations Early",
+              height: 55,
+              width: 85,
+              onTap: () {
+                closeNominationsPopup();
+              }),
+        ),
+        Visibility(
+          visible: CommonService().checkDateStarted(widget.nominationEndDate) ==
+                  "Before"
+              ? false
+              : true,
+          child: StyleButton(
+              description: "Reopen Nominations",
+              height: 55,
+              width: 85,
+              onTap: () {
+                reopenNominationsPopup();
+              }),
         ),
         SizedBox(
           height: 25,
@@ -138,13 +198,20 @@ class _PreviewNominationsState extends State<PreviewNominations> {
             SizedBox(
               width: 15,
             ),
-            StyleButton(
-                description: "Update",
-                height: 55,
-                width: 85,
-                onTap: () {
-                  updateDate("Update Start Date", "Start");
-                }),
+            Visibility(
+              visible: CommonService()
+                          .checkDateStarted(widget.nominationStartDate) ==
+                      "After"
+                  ? false
+                  : true,
+              child: StyleButton(
+                  description: "Update",
+                  height: 55,
+                  width: 85,
+                  onTap: () {
+                    updateDate("Update Start Date", "Start");
+                  }),
+            ),
           ],
         ),
         SizedBox(
@@ -212,13 +279,20 @@ class _PreviewNominationsState extends State<PreviewNominations> {
             SizedBox(
               width: 15,
             ),
-            StyleButton(
-                description: "Update",
-                height: 55,
-                width: 85,
-                onTap: () {
-                  updateDate("Update End Date", "End");
-                }),
+            Visibility(
+              visible:
+                  CommonService().checkDateStarted(widget.nominationEndDate) ==
+                          "After"
+                      ? false
+                      : true,
+              child: StyleButton(
+                  description: "Update",
+                  height: 55,
+                  width: 85,
+                  onTap: () {
+                    updateDate("Update End Date", "End");
+                  }),
+            ),
           ],
         ),
         SizedBox(

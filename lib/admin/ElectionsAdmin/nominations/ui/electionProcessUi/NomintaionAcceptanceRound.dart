@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/service/commonService.dart';
 
 class NominationAcceptanceRound extends StatefulWidget {
   String nominateAcceptStartDate;
@@ -24,7 +25,7 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
   List nominations = [];
 
   //get user details from notification
-  getUserDetail(id, result) async {
+  getUserDetail(id, result, notificationId) async {
     final doc =
         await FirebaseFirestore.instance.collection('users').doc(id).get();
 
@@ -35,8 +36,9 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
       "hpca": doc.get("hpcsa"),
       "hdiStatus": "HDI",
       "email": "${doc.get("email")}",
-      "state": result == true ? "Elected" : "Seconded",
-      "result": result == true ? "Accept" : "Declined"
+      "state": "Elected",
+      "result": result == true ? "Accept" : "Declined",
+      "notificationId": notificationId
     };
     setState(() {
       if (getNominationsForUser(doc.get("email")) >= 2) {
@@ -54,7 +56,8 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
         .get();
     setState(() {
       for (int i = 0; i < (doc.docs).length; i++) {
-        getUserDetail(doc.docs[i]["userWhoNotify"], doc.docs[i]["data.accept"]);
+        getUserDetail(doc.docs[i]["userWhoNotify"], doc.docs[i]["data.accept"],
+            doc.docs[i]["id"]);
       }
     });
   }
@@ -79,6 +82,19 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
       }
     }
     return nomAmount;
+  }
+
+  acceptNominationForUser(nomId, value) async {
+    final doc = await FirebaseFirestore.instance
+        .collection('notifications')
+        .doc(nomId)
+        .update({"data.accept": value});
+    setState(() {
+      var nomIndex = (membersWhoAccepted)
+          .indexWhere((item) => item["notificationId"] == nomId);
+
+      membersWhoAccepted[nomIndex]['result'] = value ? "Accept" : "Declined";
+    });
   }
 
   @override
@@ -253,12 +269,58 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                membersWhoAccepted[i]['result'],
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF174486),
-                    fontWeight: FontWeight.w400),
+              Visibility(
+                visible: CommonService()
+                        .checkDateStarted(widget.nominateAcceptEndDate) ==
+                    "Before",
+                child: GestureDetector(
+                  onTap: () {
+                    acceptNominationForUser(
+                        membersWhoAccepted[i]['notificationId'],
+                        membersWhoAccepted[i]['result'] == "Accept"
+                            ? false
+                            : true);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: Container(
+                      width: 60,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: membersWhoAccepted[i]['result'] == "Accept"
+                            ? Color(0xFF174486)
+                            : Colors.grey, // Update this line
+                      ),
+                      child: Align(
+                        alignment: membersWhoAccepted[i]['result'] == "Accept"
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft, // Update this line
+                        child: Container(
+                          width: 20,
+                          height: 20,
+                          margin: EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: CommonService()
+                        .checkDateStarted(widget.nominateAcceptEndDate) ==
+                    "After",
+                child: Text(
+                  membersWhoAccepted[i]['result'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF174486),
+                      fontWeight: FontWeight.w400),
+                ),
               ),
               SizedBox(
                 width: 15,

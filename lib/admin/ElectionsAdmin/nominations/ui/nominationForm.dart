@@ -203,8 +203,8 @@ class _NominationFromState extends State<NominationFrom> {
 
   updateNominationEndDate(date) {
     setState(() {
-      nominateStartDate.text = updateDateValues(date, 0);
-      nominateEndDate.text = updateDateValues(nominateStartDate.text, 10);
+      nominateStartDate.text = updateDateValues(nominateEndDate.text, -15);
+      nominateEndDate.text = updateDateValues(date, 0);
 
       nominateAcceptStartDate.text = updateDateValues(nominateEndDate.text, 1);
       nominateAcceptEndDate.text =

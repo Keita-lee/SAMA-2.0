@@ -6,6 +6,7 @@ import 'package:sama/admin/ElectionsAdmin/nominations/ui/previewElection/ui/date
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/components/yesNoDialog.dart';
 
 class PreviewChairPersonRound extends StatefulWidget {
   String chairPersonStartDate;
@@ -35,6 +36,19 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           updateDate: widget.updateChairPersonDate,
         ));
       });
+
+  Future reopenChairPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to close chair person election",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: () {
+            widget.updateChairPersonDate(CommonService().getTodaysDateText());
+          },
+        ));
+      });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,6 +66,20 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
         ),
         SizedBox(
           height: 25,
+        ),
+        Visibility(
+          visible:
+              CommonService().checkDateStarted(widget.chairPersonEndDate) ==
+                      "Before"
+                  ? false
+                  : true,
+          child: StyleButton(
+              description: "Close Chair Person Election Early",
+              height: 55,
+              width: 85,
+              onTap: () {
+                reopenChairPopup();
+              }),
         ),
         Row(
           children: [
@@ -136,13 +164,20 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
             SizedBox(
               width: 15,
             ),
-            StyleButton(
-                description: "Update",
-                height: 55,
-                width: 85,
-                onTap: () {
-                  updateDate("Update Start Date");
-                }),
+            Visibility(
+              visible: CommonService()
+                          .checkDateStarted(widget.chairPersonStartDate) ==
+                      "After"
+                  ? false
+                  : true,
+              child: StyleButton(
+                  description: "Update",
+                  height: 55,
+                  width: 85,
+                  onTap: () {
+                    updateDate("Update Start Date");
+                  }),
+            ),
           ],
         ),
         SizedBox(
