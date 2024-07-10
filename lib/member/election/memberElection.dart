@@ -3,10 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
+import 'package:sama/member/election/electionRounds/acceptanceRound.dart';
 import 'package:sama/member/election/electionRounds/chairMemberVotes.dart';
+import 'package:sama/member/election/electionRounds/electionOverView.dart';
 import 'package:sama/member/election/electionRounds/electionSummaryView.dart';
 import 'package:sama/member/election/electionRounds/memberElectionRound1.dart';
 import 'package:sama/member/election/electionRounds/memberElectionsRound2.dart';
+import 'package:sama/member/election/ui/electionTabStyle.dart';
+
+import '../../admin/ElectionsAdmin/nominations/ui/tabStyle.dart';
 
 List membersWhoAccepted = [];
 
@@ -42,6 +47,11 @@ class _MemberElectionState extends State<MemberElection> {
   // Third Part
   String electionDateStart = "";
   String electionDateEnd = "";
+
+  //Fourth Part
+  String chairmanStartDate = "";
+  String chairmanEndDate = "";
+
   List electionVotes = [];
   List chairManVotes = [];
 //get election data
@@ -60,6 +70,8 @@ class _MemberElectionState extends State<MemberElection> {
         nominateAcceptEndDate = data.get('nominateAcceptEndDate');
         electionDateStart = data.get('electionDateStart');
         electionDateEnd = data.get('electionDateEnd');
+        chairmanStartDate = data.get('chairPersonStart');
+        chairmanEndDate = data.get('chairPersonEnd');
         title = data.get('title');
         position = data.get('position');
         criteria = data.get('criteria');
@@ -209,38 +221,153 @@ class _MemberElectionState extends State<MemberElection> {
   @override
   Widget build(BuildContext context) {
     var electionPages = [
-      Electionsummaryview(
+      ElectionOverView(
+          startDate: nominateStartDate,
+          endDate: electionDateEnd,
+          status: votingStatus,
+          statusClosingDate: votingClosingDate,
+          branch: branch),
+
+      /* Electionsummaryview(
           startDate: nominateStartDate,
           endDate: electionDateEnd,
           status: votingStatus,
           statusClosingDate: votingClosingDate,
           updatePageBasedOnStatus: () {
             updatePageBasedOnStatus(1);
-          }),
+          }),*/
       MemberElectionRound1(
         branch: branch,
         electionId: "orIEplhDstxiWQdSLHlK",
         position: position,
         votingCount: votingCount,
         acceptDate: nominateAcceptStartDate,
+        startDate: nominateStartDate,
+        endDate: nominateEndDate,
         hdiStatus: hdiStatus,
       ),
+      AcceptanceRound(
+          startDate: nominateAcceptStartDate,
+          endDate: nominateAcceptEndDate,
+          branch: branch),
       MemberElectionsRound2(
-          branch: branch,
-          position: position,
-          electionId: "orIEplhDstxiWQdSLHlK",
-          votingCount: votingCount,
-          electionVotes: electionVotes),
+        branch: branch,
+        position: position,
+        electionId: "orIEplhDstxiWQdSLHlK",
+        votingCount: votingCount,
+        electionVotes: electionVotes,
+        startDate: electionDateStart,
+        endDate: electionDateEnd,
+      ),
       ChairMemberVotes(
-          votingCount: votingCount,
-          electionId: "orIEplhDstxiWQdSLHlK",
-          voteChareMemberList: membersWhoAccepted,
-          chairmemberVoteList: chairManVotes,
-          electionVotes: electionVotes)
+        votingCount: votingCount,
+        electionId: "orIEplhDstxiWQdSLHlK",
+        voteChareMemberList: membersWhoAccepted,
+        chairmemberVoteList: chairManVotes,
+        electionVotes: electionVotes,
+        startDate: chairmanStartDate,
+        endDate: chairmanEndDate,
+        branch: branch,
+      )
     ];
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
+          'Branch Voting',
+          style: TextStyle(
+            fontSize: 36,
+            color: Color.fromARGB(255, 24, 69, 126),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: [
+            ElectionTabStyle(
+              changePage: () {
+                setState(() {
+                  pageIndex = 0;
+                });
+              },
+              tabIndexNumber: 0,
+              description: "Overview",
+              customWidth: 150,
+              customColor1: Color.fromARGB(255, 211, 210, 210),
+              customColor2: Color.fromARGB(255, 0, 159, 158),
+              pageIndex: pageIndex,
+            ),
+            ElectionTabStyle(
+              changePage: () {
+                setState(() {
+                  pageIndex = 1;
+                });
+              },
+              tabIndexNumber: 1,
+              description: "Round 1",
+              customWidth: 150,
+              customColor1: Color.fromARGB(255, 211, 210, 210),
+              customColor2: Color.fromARGB(255, 0, 159, 158),
+              pageIndex: pageIndex,
+            ),
+            ElectionTabStyle(
+              changePage: () {
+                setState(() {
+                  pageIndex = 2;
+                });
+              },
+              tabIndexNumber: 2,
+              description: "Acceptance Round",
+              customWidth: 180,
+              customColor1: Color.fromARGB(255, 211, 210, 210),
+              customColor2: Color.fromARGB(255, 0, 159, 158),
+              pageIndex: pageIndex,
+            ),
+            ElectionTabStyle(
+              changePage: () {
+                setState(() {
+                  pageIndex = 3;
+                });
+              },
+              tabIndexNumber: 3,
+              description: "Round 2",
+              customWidth: 150,
+              customColor1: Color.fromARGB(255, 211, 210, 210),
+              customColor2: Color.fromARGB(255, 0, 159, 158),
+              pageIndex: pageIndex,
+            ),
+            ElectionTabStyle(
+              changePage: () {
+                setState(() {
+                  pageIndex = 4;
+                });
+              },
+              tabIndexNumber: 4,
+              description: "Chair Person",
+              customWidth: 150,
+              customColor1: Color.fromARGB(255, 211, 210, 210),
+              customColor2: Color.fromARGB(255, 0, 159, 158),
+              pageIndex: pageIndex,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+            width: MyUtility(context).width * 0.8,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  color: Color(0xFFD1D1D1),
+                )),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: electionPages[pageIndex],
+            )),
+        /* Text(
           'Nominations',
           style: TextStyle(
             fontSize: 36,
@@ -313,7 +440,7 @@ class _MemberElectionState extends State<MemberElection> {
             statusClosingDate: votingClosingDate,
             updatePageBasedOnStatus: () {
               updatePageBasedOnStatus(2);
-            }),
+            }),*/
         SizedBox(
           height: 15,
         ),
@@ -323,7 +450,7 @@ class _MemberElectionState extends State<MemberElection> {
             voteChareMemberList: membersWhoAccepted,
             chairmemberVoteList: chairManVotes,
             electionVotes: electionVotes),*/
-        Visibility(
+        /*      Visibility(
           visible: voteChareMemberPermission(),
           child: Electionsummaryview(
               startDate: nominateStartDate,
@@ -334,7 +461,7 @@ class _MemberElectionState extends State<MemberElection> {
                 updatePageBasedOnStatus(3);
               }),
         ),
-        SizedBox(
+       SizedBox(
           height: 25,
         ),
         Visibility(
@@ -343,7 +470,7 @@ class _MemberElectionState extends State<MemberElection> {
             child: electionPages[pageIndex],
           ),
         ),
-        /*   MemberElectionRound1(
+          MemberElectionRound1(
           branch: branch,
           position: position,
         ),

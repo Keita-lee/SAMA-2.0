@@ -10,13 +10,19 @@ class ChairMemberVotes extends StatefulWidget {
   String votingCount;
   String electionId;
   List electionVotes;
+  String startDate;
+  String endDate;
+  String branch;
   ChairMemberVotes(
       {super.key,
       required this.voteChareMemberList,
       required this.chairmemberVoteList,
       required this.votingCount,
       required this.electionId,
-      required this.electionVotes});
+      required this.electionVotes,
+      required this.startDate,
+      required this.endDate,
+      required this.branch});
 
   @override
   State<ChairMemberVotes> createState() => _ChairMemberVotesState();
@@ -26,12 +32,12 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
   List chairMemberVoteList = [];
   List membersWhoAccepted = [];
   List nominations = [];
-  var voteAmount = 1;
+  var voteAmount = 0;
   getVotes(email) {
     var totalVotes = 0;
     for (int i = 0; i < (widget.electionVotes).length; i++) {
       if (widget.electionVotes[i]['email'] == email) {
-        totalVotes = totalVotes + 1;
+        totalVotes = totalVotes - 1;
       }
     }
     return '${totalVotes}';
@@ -48,6 +54,8 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
       "hpca": doc.get("hpcsa"),
       "email": "${doc.get("email")}",
+      "hdi":
+          '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"}',
       "votes": getVotes(doc.get("email"))
     };
     print("TEST");
@@ -169,17 +177,37 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            SizedBox(
-              width: MyUtility(context).width / 1.6,
-            ),
-            Text('Votes Left ${voteAmount}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ],
+        Text(
+          'Chair member vote round open for  /n ${widget.branch}',
+          style: TextStyle(
+            fontSize: 25,
+            color: Color.fromARGB(255, 0, 159, 158),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          'Period ${widget.startDate} to ${widget.endDate}',
+          style: TextStyle(
+            fontSize: 20,
+            color: Color.fromARGB(255, 58, 65, 65),
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        SizedBox(
+          height: 35,
+        ),
+        Text(
+          'You have ${voteAmount} out of  1 votes left.',
+          style: TextStyle(
+            fontSize: 18,
+            color: Color.fromARGB(255, 58, 65, 65),
+            fontWeight: FontWeight.normal,
+          ),
         ),
         SizedBox(
           height: 25,
@@ -192,7 +220,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
               0: FlexColumnWidth(3),
               1: FlexColumnWidth(3),
               2: FlexColumnWidth(3),
-              3: FlexColumnWidth(1.3),
+              3: FlexColumnWidth(1.2),
             },
             children: [
               TableRow(
@@ -248,7 +276,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('Vote',
+                        child: Text(membersWhoAccepted[i]['hdi'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20)),
                       ),

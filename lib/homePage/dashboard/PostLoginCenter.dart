@@ -19,7 +19,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        /*    Container(
           width: MyUtility(context).width / 1.3,
           height: MyUtility(context).height / 3,
           decoration: BoxDecoration(
@@ -37,9 +37,9 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
             ),
             textAlign: TextAlign.center,
           ),
-        ),
+        ),*/
 
-        /*  Row(
+        Row(
           children: [
             Container(
               width: 25,
@@ -1024,7 +1024,6 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         SizedBox(
           height: MyUtility(context).height * 0.05,
         ),
-      */
       ],
     );
   }

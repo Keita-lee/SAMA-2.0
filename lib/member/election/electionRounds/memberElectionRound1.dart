@@ -10,6 +10,8 @@ class MemberElectionRound1 extends StatefulWidget {
   String position;
   String votingCount;
   String acceptDate;
+  String startDate;
+  String endDate;
   bool hdiStatus;
   MemberElectionRound1(
       {super.key,
@@ -18,6 +20,8 @@ class MemberElectionRound1 extends StatefulWidget {
       required this.position,
       required this.votingCount,
       required this.acceptDate,
+      required this.startDate,
+      required this.endDate,
       required this.hdiStatus});
 
   @override
@@ -167,17 +171,35 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          children: [
-            Text(
-              'Current Nominations ${userNominateCount} / ${widget.votingCount}',
-              style: TextStyle(
-                fontSize: 28,
-                color: Color(0xFF3D3D3D),
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ],
+        Text(
+          'Nomination round open for  /n ${widget.branch}',
+          style: TextStyle(
+            fontSize: 25,
+            color: Color.fromARGB(255, 0, 159, 158),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          'Period ${widget.startDate} to ${widget.endDate}',
+          style: TextStyle(
+            fontSize: 20,
+            color: Color.fromARGB(255, 58, 65, 65),
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        SizedBox(
+          height: 35,
+        ),
+        Text(
+          'You have ${userNominateCount} out of  ${widget.votingCount} nominations left.',
+          style: TextStyle(
+            fontSize: 18,
+            color: Color.fromARGB(255, 58, 65, 65),
+            fontWeight: FontWeight.normal,
+          ),
         ),
         SizedBox(
           height: 15,

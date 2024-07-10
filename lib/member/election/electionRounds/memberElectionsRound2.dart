@@ -10,6 +10,8 @@ class MemberElectionsRound2 extends StatefulWidget {
   String position;
   String electionId;
   String votingCount;
+  String startDate;
+  String endDate;
   List electionVotes;
   MemberElectionsRound2(
       {super.key,
@@ -17,6 +19,8 @@ class MemberElectionsRound2 extends StatefulWidget {
       required this.position,
       required this.electionId,
       required this.votingCount,
+      required this.startDate,
+      required this.endDate,
       required this.electionVotes});
 
   @override
@@ -126,20 +130,40 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
 
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            SizedBox(
-              width: MyUtility(context).width / 1.6,
-            ),
-            Text('Votes Left ${voteAmount}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ],
+        Text(
+          'Voting round open for  /n ${widget.branch}',
+          style: TextStyle(
+            fontSize: 25,
+            color: Color.fromARGB(255, 0, 159, 158),
+            fontWeight: FontWeight.bold,
+          ),
         ),
         SizedBox(
-          height: 25,
+          height: 20,
+        ),
+        Text(
+          'Period ${widget.startDate} to ${widget.endDate}',
+          style: TextStyle(
+            fontSize: 20,
+            color: Color.fromARGB(255, 58, 65, 65),
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        SizedBox(
+          height: 35,
+        ),
+        Text(
+          'You have ${voteAmount} out of  ${widget.votingCount} nominations left.',
+          style: TextStyle(
+            fontSize: 18,
+            color: Color.fromARGB(255, 58, 65, 65),
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        SizedBox(
+          height: 15,
         ),
         Container(
           color: Colors.white,
@@ -149,7 +173,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
               0: FlexColumnWidth(3),
               1: FlexColumnWidth(3),
               2: FlexColumnWidth(3),
-              3: FlexColumnWidth(1.3),
+              3: FlexColumnWidth(1),
             },
             children: [
               TableRow(
