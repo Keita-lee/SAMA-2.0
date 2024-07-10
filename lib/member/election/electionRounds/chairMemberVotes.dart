@@ -32,7 +32,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
   List chairMemberVoteList = [];
   List membersWhoAccepted = [];
   List nominations = [];
-  var voteAmount = 0;
+  var voteAmount = 1;
   getVotes(email) {
     var totalVotes = 0;
     for (int i = 0; i < (widget.electionVotes).length; i++) {
