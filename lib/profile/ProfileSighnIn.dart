@@ -17,6 +17,8 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/profile/logoutPopup.dart';
 import 'package:uuid/uuid.dart';
 
+import 'bio.dart';
+
 class ProfileSighnIn extends StatefulWidget {
   String profileImage;
   ProfileSighnIn({super.key, required this.profileImage});
@@ -84,6 +86,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
 
     var pages = [
       EditProfile(),
+      Bio(),
       Notifications(),
       MyPreferences(profilePicView: profilePicView, profileView: profileView),
       Security(changePage: changePage)
@@ -361,6 +364,36 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                       changePage(1);
                                     },
                                     child: Text(
+                                      'Build Bio',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Visibility(
+                                    visible: pageIndex == 0 ? true : false,
+                                    child: Container(
+                                      width: 4,
+                                      height: MyUtility(context).height * 0.05,
+                                      color: Colors.amber,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            child: Container(
+                              color: Color(0xFFEFEFEF),
+                              width: MyUtility(context).width * 0.1,
+                              height: MyUtility(context).height * 0.05,
+                              child: Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      changePage(5);
+                                    },
+                                    child: Text(
                                       'Notifications',
                                       style: TextStyle(color: Colors.black),
                                     ),
@@ -388,7 +421,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      changePage(2);
+                                      changePage(3);
                                     },
                                     child: Text(
                                       'My Preferences',
@@ -418,7 +451,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      changePage(3);
+                                      changePage(4);
                                     },
                                     child: Text(
                                       'Security',
