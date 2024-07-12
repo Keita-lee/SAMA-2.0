@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MyDatePicker extends StatefulWidget {
+  final String hintText;
   final TextEditingController textfieldController;
-  const MyDatePicker({super.key , required this.textfieldController});
-
-  
+  const MyDatePicker(
+      {super.key, required this.textfieldController, required this.hintText});
 
   @override
   State<MyDatePicker> createState() => _MyDatePickerState();
@@ -22,7 +22,6 @@ openDatePicker({required BuildContext context}) async {
   if (pickedDate == null) return;
   DateFormat('yyyy-MM-dd').format(pickedDate);
 }
-
 
 class _MyDatePickerState extends State<MyDatePicker> {
   @override
@@ -44,8 +43,8 @@ class _MyDatePickerState extends State<MyDatePicker> {
           controller: widget.textfieldController,
           /////
           readOnly: true,
-          decoration:
-              const InputDecoration(border: InputBorder.none, hintText: "Select Date"),
+          decoration: InputDecoration(
+              border: InputBorder.none, hintText: widget.hintText),
           onTap: () => openDatePicker(context: context),
         ),
       ),

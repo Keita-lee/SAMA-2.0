@@ -59,13 +59,8 @@ class _BioState extends State<Bio> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BoiFormText(mainFormText: 'Date of Birth:'),
-              ProfileTextField(
-                customSize: 300,
-                textFieldType: '',
-                //Controller here
-                textfieldController: TextEditingController(),
-                ////
-              ),
+              //Text Controller
+              MyDatePicker(textfieldController: TextEditingController(), hintText: 'Date of Birth',),
             ],
           ),
           const SizedBox(
@@ -110,25 +105,13 @@ class _BioState extends State<Bio> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProfileTextField(
-                    customSize: 300,
-                    textFieldType: '',
-                    //Controller here
-                    textfieldController: TextEditingController(),
-                    ////
-                    hintText: 'From',
-                  ),
+                  //Text Controller
+              MyDatePicker(textfieldController: TextEditingController(), hintText: 'From',),
                   const SizedBox(
                     height: 20,
                   ),
-                  ProfileTextField(
-                    customSize: 300,
-                    textFieldType: '',
-                    //Controller here
-                    textfieldController: TextEditingController(),
-                    ////
-                    hintText: 'to',
-                  ),
+                  //Text Controller
+              MyDatePicker(textfieldController: TextEditingController(), hintText: 'To',),
                   const SizedBox(
                     height: 20,
                   ),
@@ -297,6 +280,7 @@ class _BioState extends State<Bio> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyDatePicker(
+                    hintText: 'Select Date',
                     //Text Controller
                     textfieldController: TextEditingController(),
                     //////
@@ -372,6 +356,7 @@ class _BioState extends State<Bio> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyDatePicker(
+                    hintText: 'Select Date',
                     //Text Controller
                     textfieldController: TextEditingController(),
                     //////
