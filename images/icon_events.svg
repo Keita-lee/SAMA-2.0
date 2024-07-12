@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15.37 16.72">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #132b51;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-2" width="15.37" height="16.72"/>
+    </clipPath>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="Group_588" data-name="Group 588">
+      <g class="cls-3">
+        <g id="Group_588-2" data-name="Group 588-2">
+          <path id="Path_340" data-name="Path 340" class="cls-1" d="M14.42,1.35H.95C.43,1.35,0,1.77,0,2.3v13.46c.02.52.44.93.95.95h13.46c.53,0,.95-.43.95-.95V2.3c-.02-.52-.44-.93-.95-.95M14.81,15.76c0,.22-.18.39-.39.39H.95c-.21-.02-.37-.19-.39-.39V2.3c0-.22.18-.39.39-.39h13.46c.21.02.37.19.39.39v13.46Z"/>
+          <path id="Path_341" data-name="Path 341" class="cls-1" d="M10.91,9.24l-3.93,3.7c-.11.1-.28.1-.39,0l-2.13-2.02c-.11-.11-.12-.28-.01-.4.05-.06.13-.09.21-.09.07,0,.14.02.2.07l1.94,1.84,3.73-3.52c.05-.05.13-.08.2-.08.15,0,.28.13.27.29,0,.07-.03.15-.09.2"/>
+          <path id="Path_342" data-name="Path 342" class="cls-1" d="M15.37,5.67c0,.15-.13.28-.28.28H.28C.13,5.95,0,5.82,0,5.67s.13-.28.28-.28h14.81c.15,0,.28.13.28.28"/>
+          <path id="Path_343" data-name="Path 343" class="cls-1" d="M12.01.28v2.69c0,.15-.14.27-.3.26-.14,0-.26-.12-.26-.26V.28c0-.15.14-.27.3-.26.14,0,.26.12.26.26"/>
+          <path id="Path_344" data-name="Path 344" class="cls-1" d="M3.93.28v2.69c0,.15-.14.27-.3.26-.14,0-.26-.12-.26-.26V.28c0-.15.14-.27.3-.26.14,0,.26.12.26.26"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

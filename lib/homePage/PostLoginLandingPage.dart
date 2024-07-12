@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/admin/ElectionsAdmin/NominationAcceptance/NominationAcceptance.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/nominationsSetup.dart';
@@ -12,6 +13,7 @@ import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/products/products.dart';
+import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
 import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
@@ -177,6 +179,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       );
     }
 
+    var heightDevice = MediaQuery.of(context).size.height;
+
+    var widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         children: [
@@ -185,160 +190,240 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Transform.scale(
-                          scale: 0.8,
-                          child: Container(
-                            width: 75,
-                            height: 75,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage('images/sama_logo.png'),
-                                fit: BoxFit.cover,
+                  Container(
+                    height: 65,
+                    width: widthDevice,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            width: 1.5,
+                            color: Color.fromRGBO(211, 230, 250, 1)),
+                      ),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage('images/sama_logo.png'),
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          userType == "Admin"
-                              ? 'Admin Portal'
-                              : 'Member Portal',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xFF174486),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(width: MyUtility(context).width * 0.037),
-                        Transform.scale(
-                          scale: 0.8,
-                          child: Container(
-                            width: 180,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0),
-                              border: Border.all(
-                                  color: Color.fromRGBO(170, 170, 170, 1.0)),
+                            SizedBox(width: 10),
+                            Visibility(
+                              visible: menuSize == 6.5 ? true : false,
+                              child: Text(
+                                userType == "Admin"
+                                    ? 'Admin Portal'
+                                    : 'Member Portal',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFF174486),
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.search, color: Colors.grey),
-                                  SizedBox(width: 8),
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: 'Search SAMA',
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(
-                                            color: Color.fromRGBO(
-                                                170, 170, 170, 1.0)),
+                            SizedBox(width: menuSize == 6.5 ? 30 : 10),
+                            Visibility(
+                              visible: menuSize == 6.5 ? true : false,
+                              child: GestureDetector(
+                                onTap: () {
+                                  changeSideMenuSize();
+                                },
+                                child: SizedBox(
+                                  width: MyUtility(context).width * 0.025,
+                                  child: Icon(
+                                    Icons.menu,
+                                    color: Color.fromRGBO(174, 204, 236, 1),
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: menuSize != 6.5 ? true : false,
+                              child: GestureDetector(
+                                onTap: () {
+                                  changeSideMenuSize();
+                                },
+                                child: SizedBox(
+                                  width: MyUtility(context).width * 0.025,
+                                  child: Icon(
+                                    Icons.menu,
+                                    size: 30,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Visibility(
+                              visible: userType != 'Admin',
+                              child: Transform.scale(
+                                scale: 0.8,
+                                child: Container(
+                                  width: 220,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    border: Border.all(
+                                        color:
+                                            Color.fromRGBO(170, 170, 170, 1.0)),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 8,
+                                      right: 8,
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(width: 8),
+                                          Expanded(
+                                            child: TextField(
+                                              cursorColor: Colors.black,
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    EdgeInsets.only(bottom: 10),
+                                                hintText: 'Search',
+                                                border: InputBorder.none,
+                                                hintStyle: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        170, 170, 170, 1.0)),
+                                              ),
+                                            ),
+                                          ),
+                                          Icon(Icons.search, color: Colors.grey),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Spacer(),
-                        SizedBox(width: 20),
-                        Transform.scale(
-                          scale: 0.8,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.mail),
-                          ),
-                        ),
-                        Transform.scale(
-                          scale: 0.8,
-                          child: IconButton(
-                            onPressed: () {
-                              openNotificationList();
-                            },
-                            icon: Icon(
-                              Icons.notifications,
-                              color: notificationsRead
-                                  ? Color(0xFF174486)
-                                  : Colors.grey,
+                            SizedBox(
+                              width: widthDevice / 10,
                             ),
-                          ),
-                        ),
-                        Transform.scale(
-                            scale: 0.8,
-                            child: PopupMenuButton(
-                              key: _menuKey,
-                              onSelected: (value) {
-                                if (value == "viewProfile") {
-                                  changePage(3);
-                                } else if (value == "logout") {
-                                  openLogoutDialog();
-                                }
-                              },
-                              itemBuilder: (BuildContext context) =>
-                                  <PopupMenuEntry>[
-                                PopupMenuItem(
-                                  height: 22,
-                                  value: "viewProfile",
-                                  child: const Text(
-                                    'View Profile',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF174486),
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                            Visibility(
+                              visible: userType != 'Admin',
+                              child: SamaTopTabBar()),
+                            Spacer(),
+                            SizedBox(width: 20),
+                            Visibility(
+                              visible: userType != 'Admin',
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: SvgPicture.asset('images/icon_cart.svg',
+                                    width: 24,
+                                    height: 24,
+                                    color: Color.fromRGBO(73, 91, 155, 1)),
+                              ),
+                            ),
+                            Transform.scale(
+                              scale: 0.8,
+                              child: IconButton(
+                                onPressed: () {
+                                  openNotificationList();
+                                },
+                                icon: SvgPicture.asset(
+                                  'images/icon_bell.svg',
+                                  width: 20,
+                                  height: 20,
+                                  color: Color.fromRGBO(73, 91, 155, 1),
                                 ),
-                                PopupMenuItem(
-                                  height: 22,
-                                  value: "logout",
-                                  child: const Text(
-                                    'Logout',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF174486),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Container(
-                                  width: 55,
-                                  height: 55,
-                                  decoration: BoxDecoration(
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(
+                                'images/icon_gear.svg',
+                                width: 20,
+                                height: 20,
+                                color: Color.fromRGBO(73, 91, 155, 1),
+                              ),
+                            ),
+                            Transform.scale(
+                                scale: 0.8,
+                                child: PopupMenuButton(
+                                  key: _menuKey,
+                                  onSelected: (value) {
+                                    if (value == "viewProfile") {
+                                      changePage(3);
+                                    } else if (value == "logout") {
+                                      openLogoutDialog();
+                                    }
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry>[
+                                    PopupMenuItem(
+                                      height: 22,
+                                      value: "viewProfile",
+                                      child: const Text(
+                                        'View Profile',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Color(0xFF174486),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      height: 22,
+                                      value: "logout",
+                                      child: const Text(
+                                        'Logout',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Color(0xFF174486),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                  child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-                                    color: Colors.white,
+                                    child: Container(
+                                      width: 55,
+                                      height: 55,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        color: Colors.white,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(0.0),
+                                        child: profileUrl != ""
+                                            ? ImageNetwork(
+                                                onTap: () {
+                                                  dynamic state =
+                                                      _menuKey.currentState;
+                                                  state.showButtonMenu();
+                                                },
+                                                image: profileUrl!,
+                                                height: 55,
+                                                width: 55,
+                                              )
+                                            : Container(),
+                                      ),
+                                    ),
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: profileUrl != ""
-                                        ? ImageNetwork(
-                                            onTap: () {
-                                              dynamic state =
-                                                  _menuKey.currentState;
-                                              state.showButtonMenu();
-                                            },
-                                            image: profileUrl!,
-                                            height: 55,
-                                            width: 55,
-                                          )
-                                        : Container(),
-                                  ),
-                                ),
-                              ),
-                            )),
-                        SizedBox(
-                          width: MyUtility(context).width * 0.04,
-                        )
-                      ],
+                                )),
+                            SizedBox(
+                              width: MyUtility(context).width * 0.04,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   Column(
@@ -347,41 +432,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Transform.scale(
-                            scale: 0.8,
-                            child: PostLoginLeft(
-                                changePage: changePage, menuSize: menuSize),
-                          ),
-                          Visibility(
-                            visible: menuSize == 6.5 ? true : false,
-                            child: GestureDetector(
-                              onTap: () {
-                                changeSideMenuSize();
-                              },
-                              child: SizedBox(
-                                width: MyUtility(context).width * 0.025,
-                                child: Icon(
-                                  Icons.arrow_circle_left,
-                                  size: 30,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: menuSize != 6.5 ? true : false,
-                            child: GestureDetector(
-                              onTap: () {
-                                changeSideMenuSize();
-                              },
-                              child: SizedBox(
-                                width: MyUtility(context).width * 0.025,
-                                child: Icon(
-                                  Icons.arrow_circle_right,
-                                  size: 30,
-                                ),
-                              ),
-                            ),
-                          ),
+                          PostLoginLeft(
+                              changePage: changePage, menuSize: menuSize),
                           Transform.scale(
                             scale: 0.8,
                             child: Center(

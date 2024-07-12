@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/admin/products/UI/myProductButtons.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/member/productDisplay/cart/cartPage.dart';
 
 class ProductFullView extends StatefulWidget {
   final String productTitle;
@@ -83,7 +84,7 @@ class _ProductFullViewState extends State<ProductFullView> {
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 8, 55, 145),
+                    color: Colors.teal,
                   ),
                 ),
                 Text(
@@ -105,15 +106,21 @@ class _ProductFullViewState extends State<ProductFullView> {
                       buttonColor: Color.fromARGB(255, 212, 210, 210),
                       borderColor: Color.fromARGB(255, 212, 210, 210),
                       textColor: Colors.black,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CartPage()),
+                        );
+                      },
                     ),
                     const SizedBox(
                       width: 15,
                     ),
                     MyProductButtons(
                       buttonText: 'Buy Now',
-                      buttonColor: Color.fromARGB(255, 8, 55, 145),
-                      borderColor: Color.fromARGB(255, 8, 55, 145),
+                      buttonColor: Colors.teal,
+                      borderColor: Colors.teal,
                       textColor: Colors.white,
                       onTap: () {},
                     ),
@@ -122,8 +129,8 @@ class _ProductFullViewState extends State<ProductFullView> {
                     ),
                     MyProductButtons(
                       buttonText: 'Back',
-                      buttonColor: Color.fromARGB(255, 39, 82, 163),
-                      borderColor: Color.fromARGB(255, 8, 55, 145),
+                      buttonColor: Colors.teal,
+                      borderColor: Colors.teal,
                       textColor: Colors.white,
                       onTap: () {
                         widget.changePageIndex(0, "");

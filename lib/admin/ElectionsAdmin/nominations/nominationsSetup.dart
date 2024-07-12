@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/NominationHeader.dart';
+import 'package:sama/admin/ElectionsAdmin/nominations/ui/brachVotingItems.dart';
+import 'package:sama/admin/ElectionsAdmin/nominations/ui/branchVotingContainer.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/nominationForm.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/previewElection/sections/previewNominations.dart';
 import 'package:sama/components/myutility.dart';
@@ -49,6 +51,49 @@ class _NominationSetupState extends State<NominationSetup> {
   Widget build(BuildContext context) {
     return Container(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //Conditional Container
+      Container(
+        height: 180,
+        width: MyUtility(context).width * 0.60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Color(0xFFD1D1D1),
+            width: 1.5,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            'There are no elections in progress and none are pending.',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      ///////////////////////////////////
+      BranchVotingContainer(
+        branchTitle: 'Branch Title',
+        count: '10',
+        isInProgress: true,
+        isChairpersonActive: true,
+        votingItems: [
+          BranchVotingItems(
+              voteTitle: 'Round 1 Nominations',
+              startDate: '5 July 2024',
+              endDate: '20 July 2024',
+              voteDuration: '10 days'),
+          BranchVotingItems(
+              voteTitle: 'Round 1 Nominations',
+              startDate: '5 July 2024',
+              endDate: '20 July 2024',
+              voteDuration: '10 days'),
+          BranchVotingItems(
+              voteTitle: 'Round 1 Nominations',
+              startDate: '5 July 2024',
+              endDate: '20 July 2024',
+              voteDuration: '10 days')
+        ],
+      ),
       Text(
         'Nominations & Elections',
         style: TextStyle(

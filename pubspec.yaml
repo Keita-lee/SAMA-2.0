@@ -53,6 +53,7 @@ dependencies:
   # youtube_parser: ^2.1.4
   # flutter_youtube_view: ^2.0.4
   youtube_player_iframe: ^5.1.2
+  google_fonts: ^6.2.1
 
 
 dev_dependencies:

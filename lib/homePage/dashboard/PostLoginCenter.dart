@@ -5,6 +5,7 @@ import 'package:sama/homePage/dashboard/ui/GeneralInfoContainer.dart';
 import 'package:sama/components/Morecontainers.dart';
 import 'package:sama/components/ReuseableButton.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/homePage/dashboard/ui/samaNotificationsBox.dart';
 
 class PostLoginCenter extends StatefulWidget {
   const PostLoginCenter({super.key});
@@ -574,7 +575,8 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         ),
         Row(
           children: [
-            Container(
+            SamaNotificationsBox(),
+           /* Container(
               width: MyUtility(context).width / 5.5,
               height: MyUtility(context).height * 0.6,
               decoration: BoxDecoration(
@@ -638,7 +640,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
                   ],
                 ),
               ),
-            ),
+            ),*/
             SizedBox(
               width: MyUtility(context).width * 0.01,
             ),

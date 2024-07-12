@@ -70,7 +70,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Products',
+                      'E-Store',
                       style:
                           TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                     ),

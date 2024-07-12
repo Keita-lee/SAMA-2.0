@@ -1,18 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/greybutton.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sama/homePage/dashboard/menu/ui/leftMenuDropButton.dart';
+import 'package:sama/homePage/dashboard/menu/ui/memberCategoriesDrop.dart';
 
 class HoverItem extends StatefulWidget {
   double menuSize;
   String description;
   String iconPath;
   final VoidCallback onPressed;
+  bool isActive;
   HoverItem(
       {super.key,
+      required this.isActive,
       required this.menuSize,
       required this.description,
       required this.iconPath,
@@ -26,61 +31,91 @@ class _HoverItemState extends State<HoverItem> {
   @override
   Widget build(BuildContext context) {
     if (widget.menuSize == 6.5) {
-      return TextButton(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered))
-                return Color.fromARGB(255, 8, 55, 145);
-              return Color(0xFF6A6A6A);
-            }),
-          ),
-          onPressed: widget.onPressed,
-          child: Row(
-            children: [
-              Container(
-                width: 35,
-                height: 25,
-                child: SvgPicture.asset(
-                  widget.iconPath,
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  width: 25,
-                  height: 25,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              color: widget.isActive
+                  ? Color.fromRGBO(174, 204, 236, 1)
+                  : Color.fromRGBO(248, 250, 255, 1)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.hovered))
+                      return Color.fromRGBO(24, 68, 126, 1);
+                    return Colors.black;
+                  }),
                 ),
-              ),
-              Text(
-                widget.description,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ));
+                onPressed: widget.onPressed,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 20,
+                      height: 20,
+                      child: SvgPicture.asset(
+                        widget.iconPath,
+                        color: Color.fromARGB(255, 8, 55, 145),
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      widget.description,
+                      style: GoogleFonts.openSans(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )),
+          ),
+        ),
+      );
     } else {
-      return TextButton(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-              if (states.contains(MaterialState.hovered))
-                return Color.fromARGB(255, 8, 55, 145);
-              return Color(0xFF6A6A6A);
-            }),
-          ),
-          onPressed: widget.onPressed,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 50,
-                height: 35,
-                child: SvgPicture.asset(
-                  widget.iconPath,
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  width: 25,
-                  height: 25,
-                ),
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              color: widget.isActive
+                  ? Color.fromRGBO(174, 204, 236, 1)
+                  : Color.fromRGBO(248, 250, 255, 1)),
+          child: TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.hovered))
+                    return Color.fromARGB(255, 8, 55, 145);
+                  return Color(0xFF6A6A6A);
+                }),
               ),
-            ],
-          ));
+              onPressed: widget.onPressed,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      child: SvgPicture.asset(
+                        widget.iconPath,
+                        color: Color.fromARGB(255, 8, 55, 145),
+                        width: 25,
+                        height: 25,
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      );
     }
   }
 }
@@ -97,6 +132,24 @@ class PostLoginLeft extends StatefulWidget {
 class _PostLoginLeftState extends State<PostLoginLeft> {
   var pages = [];
   String userType = "";
+  int activeIndex = 0;
+  int? currentOpenDropdown;
+
+  void toggleDropdown(int index) {
+    setState(() {
+      if (currentOpenDropdown == index) {
+        currentOpenDropdown = null;
+      } else {
+        currentOpenDropdown = index;
+      }
+    });
+  }
+
+  void _handleItemClick(int index) {
+    setState(() {
+      activeIndex = index;
+    });
+  }
 
   getUserData() async {
     final data = await FirebaseFirestore.instance
@@ -132,11 +185,14 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
     return AnimatedContainer(
       // Use the properties stored in the State class.
       width: MyUtility(context).width / widget.menuSize,
-      height: MyUtility(context).height / 1.2,
+      height: MyUtility(context).height,
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Color(0xFFD1D1D1),
+        color: Color(0xFFF8FAFF),
+        border: Border(
+          right: BorderSide(
+            width: 1.5,
+            color: Color.fromRGBO(211, 230, 250, 1),
+          ),
         ),
       ),
       // Define how long the animation should take.
@@ -148,56 +204,71 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+                    height: 10,
+                  ),
             Visibility(
                 visible: userType == "Admin" ? true : false,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HoverItem(
+                      isActive: activeIndex == 0,
                       menuSize: widget.menuSize,
                       description: 'Centre of Excellence',
-                      iconPath: "images/student.svg",
+                      iconPath: "images/icon_centre_of.svg",
                       onPressed: () {
+                        _handleItemClick(0);
                         widget.changePage(1);
                       },
                     ),
                     HoverItem(
+                      isActive: activeIndex == 1,
                       menuSize: widget.menuSize,
                       description: 'Member Benefits',
-                      iconPath: "images/star.svg",
+                      iconPath: "images/icon_benefits.svg",
                       onPressed: () {
+                        _handleItemClick(1);
                         widget.changePage(2);
                       },
                     ),
                     HoverItem(
+                      isActive: activeIndex == 2,
                       menuSize: widget.menuSize,
                       description: 'Media & Webinars',
-                      iconPath: "images/videoCamera.svg",
+                      iconPath: "images/icon_media.svg",
                       onPressed: () {
+                        _handleItemClick(2);
                         widget.changePage(7);
                       },
                     ),
                     HoverItem(
+                      isActive: activeIndex == 3,
                       menuSize: widget.menuSize,
-                      description: 'Events List',
-                      iconPath: "images/star.svg",
+                      description: 'Events',
+                      iconPath: "images/icon_events.svg",
                       onPressed: () {
+                        _handleItemClick(3);
                         widget.changePage(8);
                       },
                     ),
                     HoverItem(
+                      isActive: activeIndex == 4,
                       menuSize: widget.menuSize,
-                      description: 'Election Setup',
-                      iconPath: "images/star.svg",
+                      description: 'Branch Voting',
+                      iconPath: "images/icon_voting.svg",
                       onPressed: () {
+                        _handleItemClick(4);
                         widget.changePage(11);
                       },
                     ),
                     HoverItem(
+                      isActive: activeIndex == 5,
                       menuSize: widget.menuSize,
-                      description: 'Products',
-                      iconPath: "images/star.svg",
+                      description: 'E-Store',
+                      iconPath: "images/icon_estore.svg",
                       onPressed: () {
+                        _handleItemClick(5);
                         widget.changePage(13);
                       },
                     ),
@@ -209,25 +280,138 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MyUtility(context).height * 0.025,
+                    height: 5,
                   ),
                   HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "Election",
-                    iconPath: "",
-                    onPressed: () {
-                      widget.changePage(12);
-                    },
-                  ),
-                  HoverItem(
+                    isActive: activeIndex == 0,
                     menuSize: widget.menuSize,
                     description: "Dashboard",
-                    iconPath: "",
+                    iconPath: "images/icon_dashboard.svg",
                     onPressed: () {
+                      _handleItemClick(0);
                       widget.changePage(0);
                     },
                   ),
                   HoverItem(
+                    isActive: activeIndex == 1,
+                    menuSize: widget.menuSize,
+                    description: "Centre of Excellence",
+                    iconPath: "images/icon_centre_of.svg",
+                    onPressed: () {
+                      widget.changePage(1);
+                      _handleItemClick(1);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 2,
+                    menuSize: widget.menuSize,
+                    description: " Media & Webinars",
+                    iconPath: "images/icon_media.svg",
+                    onPressed: () {
+                      widget.changePage(9);
+                      _handleItemClick(2);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 3,
+                    menuSize: widget.menuSize,
+                    description: "Publications",
+                    iconPath: "images/icon_publications.svg",
+                    onPressed: () {
+                      _handleItemClick(3);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 4,
+                    menuSize: widget.menuSize,
+                    description: "Coding Academy",
+                    iconPath: "images/icons_coding.svg",
+                    onPressed: () {
+                      _handleItemClick(4);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 5,
+                    menuSize: widget.menuSize,
+                    description: "Professional Development",
+                    iconPath: "images/icon_prof_dev.svg",
+                    onPressed: () {
+                      _handleItemClick(5);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 6,
+                    menuSize: widget.menuSize,
+                    description: "E-Store",
+                    iconPath: "images/icon_estore.svg",
+                    onPressed: () {
+                      _handleItemClick(6);
+                      widget.changePage(14);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 7,
+                    menuSize: widget.menuSize,
+                    description: "Events",
+                    iconPath: "images/icon_events.svg",
+                    onPressed: () {
+                      _handleItemClick(7);
+                      widget.changePage(10);
+                    },
+                  ),
+                  LeftMenuDropButton(
+                      isActive: activeIndex == 8,
+                      menuSize: widget.menuSize,
+                      description: "MemberShip Category",
+                      iconPath: "images/icon_categories.svg",
+                      onPressed: () {
+                        _handleItemClick(8);
+                        toggleDropdown(0);
+                      },
+                      isOpen: currentOpenDropdown == 0,
+                      dropDownContent: [
+                        MemberCategoriesDrop(
+                            buttonText: 'Student',
+                            onTap: () {
+                              //ADD PATH
+                            }),
+                        MemberCategoriesDrop(
+                            buttonText: 'Public Sector',
+                            onTap: () {
+                              //ADD PATH
+                            }),
+                        MemberCategoriesDrop(
+                            buttonText: 'Private Practice',
+                            onTap: () {
+                              //ADD PATH
+                            }),
+                        MemberCategoriesDrop(
+                            buttonText: 'EDOPS',
+                            onTap: () {
+                              //ADD PATH
+                            }),
+                      ]),
+                  HoverItem(
+                    isActive: activeIndex == 9,
+                    menuSize: widget.menuSize,
+                    description: "Member Benefits",
+                    iconPath: "images/icon_benefits.svg",
+                    onPressed: () {
+                      _handleItemClick(9);
+                      widget.changePage(2);
+                    },
+                  ),
+                  HoverItem(
+                    isActive: activeIndex == 10,
+                    menuSize: widget.menuSize,
+                    description: "Branch Voting",
+                    iconPath: "images/icon_voting.svg",
+                    onPressed: () {
+                      _handleItemClick(10);
+                      widget.changePage(12);
+                    },
+                  ),
+                  /*HoverItem(
                     menuSize: widget.menuSize,
                     description: "Announcements",
                     iconPath: "",
@@ -245,65 +429,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     iconPath: "",
                     onPressed: () {},
                   ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "Events",
-                    iconPath: "images/star.svg",
-                    onPressed: () {
-                      widget.changePage(10);
-                    },
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "Centre of Excellence",
-                    iconPath: "images/student.svg",
-                    onPressed: () {
-                      widget.changePage(1);
-                    },
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "Publications",
-                    iconPath: "",
-                    onPressed: () {},
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: " Media & Webinars",
-                    iconPath: "images/videoCamera.svg",
-                    onPressed: () {
-                      widget.changePage(9);
-                    },
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: """Professional Development
-and Membership""",
-                    iconPath: "",
-                    onPressed: () {},
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "E-Store",
-                    iconPath: "",
-                    onPressed: () {
-                      widget.changePage(14);
-                    },
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "Member Benefits",
-                    iconPath: "images/star.svg",
-                    onPressed: () {
-                      widget.changePage(2);
-                    },
-                  ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "Coding Academy",
-                    iconPath: "",
-                    onPressed: () {},
-                  ),
+                  
                   HoverItem(
                     menuSize: widget.menuSize,
                     description: "Industry Development",
@@ -316,18 +442,12 @@ and Membership""",
                     iconPath: "",
                     onPressed: () {},
                   ),
-                  HoverItem(
-                    menuSize: widget.menuSize,
-                    description: "MemberShip Category",
-                    iconPath: "",
-                    onPressed: () {},
-                  ),
                   SizedBox(
                     height: MyUtility(context).height * 0.025,
                   ),
                   SizedBox(
                     height: MyUtility(context).height * 0.05,
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -336,85 +456,81 @@ and Membership""",
                   ? MyUtility(context).height / 2
                   : MyUtility(context).height / 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: SizedBox(
-                width: MyUtility(context).width * 0.13,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFFBC82D),
-                      ),
-                      child: ClipOval(
-                        child: Transform.scale(
-                          scale: 0.6, // Adjust the scale factor as needed
-                          child: SvgPicture.asset(
-                            'images/lifebuoy.svg',
-                            color: Color(0xFF174486),
-                          ),
-                        ),
-                      ),
+            /* SizedBox(
+              width: MyUtility(context).width * 0.13,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFFBC82D),
                     ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.01,
-                    ),
-                    Text(
-                      'Need Help?',
-                      style: TextStyle(
-                          fontSize: 18,
+                    child: ClipOval(
+                      child: Transform.scale(
+                        scale: 0.6, // Adjust the scale factor as needed
+                        child: SvgPicture.asset(
+                          'images/lifebuoy.svg',
                           color: Color(0xFF174486),
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.01,
-                    ),
-                    Text(
-                      'Our friendly SAMA Bot Assistant is ready to assist you right now.',
-                      style: TextStyle(
-                          color: Colors.grey.shade600,
-                          letterSpacing: -0.05,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.5),
-                    ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.01,
-                    ),
-                    Text(
-                      "If you don't get what you are looking for, your query will be routed to someone who can help you.",
-                      style: TextStyle(
-                          color: Colors.grey.shade600,
-                          letterSpacing: -0.05,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.5),
-                    ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.01,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        OpenContructionPopup();
-                      },
-                      child: Text(
-                        "Chat Now",
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          letterSpacing: -0.05,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.5,
-                          decoration:
-                              TextDecoration.underline, // Underline text
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MyUtility(context).height * 0.01,
+                  ),
+                  Text(
+                    'Need Help?',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: MyUtility(context).height * 0.01,
+                  ),
+                  Text(
+                    'Our friendly SAMA Bot Assistant is ready to assist you right now.',
+                    style: TextStyle(
+                        color: Colors.grey.shade600,
+                        letterSpacing: -0.05,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.5),
+                  ),
+                  SizedBox(
+                    height: MyUtility(context).height * 0.01,
+                  ),
+                  Text(
+                    "If you don't get what you are looking for, your query will be routed to someone who can help you.",
+                    style: TextStyle(
+                        color: Colors.grey.shade600,
+                        letterSpacing: -0.05,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.5),
+                  ),
+                  SizedBox(
+                    height: MyUtility(context).height * 0.01,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      OpenContructionPopup();
+                    },
+                    child: Text(
+                      "Chat Now",
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        letterSpacing: -0.05,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.5,
+                        decoration: TextDecoration.underline, // Underline text
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ),
+            ),*/
           ],
         ),
       ),
