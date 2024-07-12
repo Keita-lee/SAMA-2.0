@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CheckBoxCircle extends StatefulWidget {
   final String header;
-  final String discription;
+  final String? discription;
 
   const CheckBoxCircle(
-      {super.key, required this.header, required this.discription});
+      {super.key, required this.header, this.discription});
 
   @override
   State<CheckBoxCircle> createState() => _CheckBoxCircleState();
@@ -57,14 +57,18 @@ class _CheckBoxCircleState extends State<CheckBoxCircle> {
                   fontSize: 18,
                   color: Color(0xFF6A6A6A),
                   fontWeight: FontWeight.normal,
+                  height: 1
                 ),
               ),
-              Text(
-                widget.discription,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF6A6A6A),
-                  fontWeight: FontWeight.normal,
+              Visibility(
+                visible: widget.discription == null? false : true,
+                child: Text(
+                  widget.discription == null? '' : widget.discription! ,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF6A6A6A),
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],

@@ -4,14 +4,18 @@ class ProfileTextField extends StatefulWidget {
   double customSize;
   String textFieldType;
   final TextEditingController textfieldController;
-  String description;
+  String? description;
+  String? hintText;
+  int? lines;
 
   ProfileTextField(
       {super.key,
+      this.lines,
       required this.customSize,
       required this.textFieldType,
       required this.textfieldController,
-      required this.description});
+      this.description,
+      this.hintText});
 
   @override
   State<ProfileTextField> createState() => _ProfileTextFieldState();
@@ -24,12 +28,15 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.description,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: Color(0xFF6A6A6A),
+        Visibility(
+          visible: widget.description == null? false : true,
+          child: Text(
+           widget.description == null? '' : widget.description! ,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Color(0xFF6A6A6A),
+            ),
           ),
         ),
         Container(
@@ -43,6 +50,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
             ),
           ),
           child: TextFormField(
+            maxLines: widget.lines == null ? 1 : widget.lines,
             validator: (value) {
               if (widget.textFieldType == "") {
                 return null;
@@ -75,10 +83,10 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
             decoration: InputDecoration(
               contentPadding: new EdgeInsets.only(left: 12.0),
               border: InputBorder.none,
-              hintText: "",
+              hintText: widget.hintText,
               hintStyle: TextStyle(
                 color: Color.fromARGB(255, 199, 199, 199),
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -91,13 +99,13 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
 
 class ProfileDropDownField extends StatefulWidget {
   double customSize;
-  String description;
+  String? description;
   List items;
   final TextEditingController textfieldController;
   ProfileDropDownField(
       {super.key,
       required this.customSize,
-      required this.description,
+      this.description,
       required this.items,
       required this.textfieldController});
 
@@ -112,12 +120,15 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.description,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Color(0xFF6A6A6A),
+          Visibility(
+            visible: widget.description == null? false : true,
+            child: Text(
+               widget.description == null? '' : widget.description! ,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Color(0xFF6A6A6A),
+              ),
             ),
           ),
           DropdownMenu<String>(
