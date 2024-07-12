@@ -116,6 +116,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
       'sku': _skuController.text,
       'type': dropDownValue,
       'isActive': isActive,
+      'imageUrl': imageUrl
     };
 
     if (isDigitalProduct) {

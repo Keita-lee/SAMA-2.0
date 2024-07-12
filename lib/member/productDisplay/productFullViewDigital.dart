@@ -11,21 +11,45 @@ class ProductFullViewDigital extends StatefulWidget {
 
   String description;
   String productImage;
+
   Function(int, String) changePageIndex;
-  ProductFullViewDigital(
-      {super.key,
-      required this.title,
-      required this.price,
-      required this.priceInfo,
-      required this.description,
-      required this.productImage,
-      required this.changePageIndex});
+  Function(Map, int) buyProduct;
+  Function(String, int) getProductQuantity;
+  int productQuantity;
+
+  ProductFullViewDigital({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.priceInfo,
+    required this.description,
+    required this.productImage,
+    required this.changePageIndex,
+    required this.buyProduct,
+    required this.productQuantity,
+    required this.getProductQuantity,
+  });
 
   @override
   State<ProductFullViewDigital> createState() => _ProductFullViewDigitalState();
 }
 
 class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
+  var product = {};
+
+  @override
+  void initState() {
+    super.initState();
+    product = {
+      "name": widget.title,
+      "productPrice": 'Member Price. Includes VAT',
+      "quantity": widget.productQuantity,
+      "memberPrice": widget.price,
+      "id": "",
+      "imageUrl": widget.productImage,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -39,13 +63,19 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
               height: MyUtility(context).height * 0.08,
             ),
             ProductFullView(
-              productTitle: widget.title,
-              price: widget.price,
-              priceInfo: widget.priceInfo,
-              qtyWidget: DigitalQuantityWidget(),
-              productImage: widget.productImage,
-              changePageIndex: widget.changePageIndex,
-            ),
+                productTitle: widget.title,
+                price: "R ${widget.price}",
+                priceInfo: widget.priceInfo,
+                productQuantity: widget.productQuantity,
+                qtyWidget: DigitalQuantityWidget(
+                  productQuantity: widget.productQuantity,
+                  getProductQuantity: widget.getProductQuantity,
+                  title: widget.title,
+                ),
+                productImage: widget.productImage,
+                changePageIndex: widget.changePageIndex,
+                buyProduct: widget.buyProduct,
+                product: product),
             const SizedBox(
               height: 40,
             ),

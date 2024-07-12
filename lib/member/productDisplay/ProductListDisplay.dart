@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/member/productDisplay/cart/cartPage.dart';
 import 'package:sama/member/productDisplay/productFullViewCoding.dart';
 import 'package:sama/member/productDisplay/productFullViewDigital.dart';
 import 'package:sama/member/productDisplay/ui/productDisplayItem.dart';
@@ -14,7 +15,9 @@ class ProductListDisplay extends StatefulWidget {
 }
 
 class _ProductListDisplayState extends State<ProductListDisplay> {
+  //var
   List allProduct = [];
+  List cartProducts = [];
   String userType = "";
   int pageIndex = 0;
   String productType = "";
@@ -24,11 +27,34 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   String description = "";
   String productImage = "";
 
+  var productQuantity = 0;
+
   changePageIndex(value, type) {
     setState(() {
       pageIndex = value;
       productType = type;
     });
+  }
+
+  getProductQuantity(productName, amount) {
+    var productIndex =
+        (cartProducts).indexWhere((item) => item["productName"] == productName);
+
+    if (amount == 0) {
+      if (productIndex == -1) {
+        productQuantity = 0;
+      } else {
+        productQuantity = cartProducts[productIndex]['quantity'];
+      }
+    } else {
+      if (productIndex == -1) {
+        productQuantity = amount;
+      } else {
+        productQuantity = amount;
+      }
+    }
+
+    setState(() {});
   }
 
 //Get all products from firebase
@@ -42,6 +68,42 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
           allProduct.add(data.docs[i]);
         }
       }
+    });
+  }
+
+  // Add a product to the cart list
+  addProductToList(product, quantity) {
+    var productSelected = {
+      "productName": product['name'],
+      "productPrice": 'Member Price. Includes VAT',
+      "quantity": quantity != "" ? quantity : 1,
+      "total":
+          '${double.parse(product['memberPrice']) * (quantity != "" ? quantity : 1)}',
+      "id": product['id'],
+      "productImage": product['imageUrl'],
+    };
+
+    setState(() {
+      var productIndex = (cartProducts)
+          .indexWhere((item) => item["productName"] == product['name']);
+
+      if (productIndex == -1) {
+        cartProducts.add(productSelected);
+      } else {
+        if (quantity == "") {
+          cartProducts[productIndex]['quantity'] =
+              cartProducts[productIndex]['quantity'] + 1;
+
+          cartProducts[productIndex]['total'] =
+              '${double.parse(cartProducts[productIndex]['total']) * cartProducts[productIndex]['quantity']}';
+        } else {
+          cartProducts[productIndex]['quantity'] = quantity;
+
+          cartProducts[productIndex]['total'] =
+              '${double.parse(cartProducts[productIndex]['total']) * quantity}';
+        }
+      } /* */
+      getProductQuantity(product['name'], 0);
     });
   }
 
@@ -78,39 +140,49 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                       height: 35,
                     ),
                     for (int i = 0; i < allProduct.length; i++)
-                      ProductDisplayItem(
-                        productName: allProduct[i]['name'],
-                        price: allProduct[i]['memberPrice'],
-                        priceInfo: 'Member Price. Includes VAT',
-                        productDescription: allProduct[i]['description'],
-                        productImage: allProduct[i]['imageUrl'],
-                        readMore: () {
-                          changePageIndex(1, allProduct[i]['type']);
-                          setState(() {
-                            title = allProduct[i]['name'];
-                            price = allProduct[i]['memberPrice'];
-                            priceInfo = 'Member Price. Includes VAT';
-                            description = allProduct[i]['description'];
-                            productImage = allProduct[i]['imageUrl'];
-                          });
-                        },
-                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ProductDisplayItem(
+                            productName: allProduct[i]['name'],
+                            price: allProduct[i]['memberPrice'],
+                            priceInfo: 'Member Price. Includes VAT',
+                            productDescription: allProduct[i]['description'],
+                            productImage: allProduct[i]['imageUrl'],
+                            readMore: () {
+                              changePageIndex(1, allProduct[i]['type']);
+                              setState(() {
+                                title = allProduct[i]['name'];
+                                price = allProduct[i]['memberPrice'];
+                                priceInfo = 'Member Price. Includes VAT';
+                                description = allProduct[i]['description'];
+                                productImage = allProduct[i]['imageUrl'];
+
+                                getProductQuantity(allProduct[i]['name'], 0);
+                              });
+                            },
+                            buyProduct: () {
+                              addProductToList(allProduct[i], "");
+                              changePageIndex(2, allProduct[i]['type']);
+                            }),
+                      ), /* */
                   ],
                 ),
+              ), //&& productType == "Digital Product"
+              Visibility(
+                visible: pageIndex == 1 ? true : false,
+                child: ProductFullViewDigital(
+                  title: title,
+                  price: price,
+                  priceInfo: priceInfo,
+                  description: description,
+                  productImage: productImage,
+                  changePageIndex: changePageIndex,
+                  buyProduct: addProductToList,
+                  productQuantity: productQuantity,
+                  getProductQuantity: getProductQuantity,
+                ),
               ),
-              Visibility(
-                  visible: pageIndex == 1 && productType == "Digital Product"
-                      ? true
-                      : false,
-                  child: ProductFullViewDigital(
-                    title: title,
-                    price: price,
-                    priceInfo: priceInfo,
-                    description: description,
-                    productImage: productImage,
-                    changePageIndex: changePageIndex,
-                  )),
-              Visibility(
+              /*  Visibility(
                 visible: pageIndex == 1 && productType == "Coding Product"
                     ? true
                     : false,
@@ -122,7 +194,13 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                   productImage: productImage,
                   changePageIndex: changePageIndex,
                 ),
-              ),
+              ),*/
+              Visibility(
+                visible: pageIndex == 2 ? true : false,
+                child: CartPage(
+                  products: cartProducts,
+                ),
+              )
             ],
           ),
         ),

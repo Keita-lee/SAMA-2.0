@@ -56,7 +56,7 @@ class _ProductsState extends State<Products> {
                         borderColor: Color.fromARGB(255, 8, 55, 145),
                         textColor: Colors.white,
                         onTap: () {
-                          changePageIndex(1, "");
+                          changePageIndex(2, "");
                         },
                       )
                     ],
@@ -123,6 +123,12 @@ class _ProductsState extends State<Products> {
           child: Center(
             child: ProductEditPage(
                 productId: productId, changePageIndex: changePageIndex),
+          ),
+        ),
+        Visibility(
+          visible: pageIndex == 2 ? true : false,
+          child: Center(
+            child: ProductAdd(changePageIndex: changePageIndex),
           ),
         )
       ],

@@ -6,7 +6,7 @@ class CartItemDisplay extends StatefulWidget {
   final String productImage;
   final String productName;
   final String productPrice;
-  final Widget qtyWidget;
+  final int qtyWidget;
   final String total;
   const CartItemDisplay(
       {super.key,
@@ -66,10 +66,9 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                     Text(
                       widget.productName,
                       style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                      ),
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
                     ),
                     Text(
                       'First copy free for members',
@@ -78,10 +77,9 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                     Text(
                       widget.productPrice,
                       style: const TextStyle(
-                        color: Color.fromRGBO(0, 159, 158, 1),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                      ),
+                          color: Color.fromRGBO(0, 159, 158, 1),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 )
@@ -89,21 +87,26 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
             ),
           ),
           Container(
-            
             width: MyUtility(context).width * 0.11,
             child: Transform.scale(
-                scale: 0.8, child: Center(child: widget.qtyWidget)),
+                scale: 0.8,
+                child: Center(
+                  child: Text(
+                    '${widget.qtyWidget}',
+                    style: const TextStyle(
+                        color: Color.fromRGBO(0, 159, 158, 1),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
           ),
           SizedBox(
             width: MyUtility(context).width * 0.115,
             child: Center(
               child: Text(
                 widget.total,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600
-                  
-                ),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
             ),
           ),

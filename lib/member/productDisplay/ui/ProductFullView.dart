@@ -12,6 +12,9 @@ class ProductFullView extends StatefulWidget {
   final Widget qtyWidget;
   final String productImage;
   Function(int, String) changePageIndex;
+  Function(Map, int) buyProduct;
+  final int productQuantity;
+  Map product;
   ProductFullView(
       {super.key,
       required this.productTitle,
@@ -19,7 +22,10 @@ class ProductFullView extends StatefulWidget {
       required this.priceInfo,
       required this.qtyWidget,
       required this.productImage,
-      required this.changePageIndex});
+      required this.changePageIndex,
+      required this.buyProduct,
+      required this.productQuantity,
+      required this.product});
 
   @override
   State<ProductFullView> createState() => _ProductFullViewState();
@@ -107,11 +113,16 @@ class _ProductFullViewState extends State<ProductFullView> {
                       borderColor: Color.fromARGB(255, 212, 210, 210),
                       textColor: Colors.black,
                       onTap: () {
-                        Navigator.push(
+                        print(widget.product);
+
+                        widget.buyProduct(
+                            widget.product, widget.productQuantity);
+
+                        /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const CartPage()),
-                        );
+                        );*/
                       },
                     ),
                     const SizedBox(
@@ -122,7 +133,12 @@ class _ProductFullViewState extends State<ProductFullView> {
                       buttonColor: Colors.teal,
                       borderColor: Colors.teal,
                       textColor: Colors.white,
-                      onTap: () {},
+                      onTap: () {
+                        widget.buyProduct(
+                            widget.product, widget.productQuantity);
+
+                        widget.changePageIndex(2, "");
+                      },
                     ),
                     const SizedBox(
                       width: 15,

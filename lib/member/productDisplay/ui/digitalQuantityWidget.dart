@@ -2,7 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DigitalQuantityWidget extends StatefulWidget {
-  const DigitalQuantityWidget({super.key});
+  int productQuantity;
+  String title;
+  Function(String, int) getProductQuantity;
+  DigitalQuantityWidget(
+      {super.key,
+      required this.productQuantity,
+      required this.title,
+      required this.getProductQuantity});
 
   @override
   State<DigitalQuantityWidget> createState() => _DigitalQuantityWidgetState();
@@ -14,6 +21,7 @@ class _DigitalQuantityWidgetState extends State<DigitalQuantityWidget> {
   void _incrementAmount() {
     setState(() {
       _amount++;
+      widget.getProductQuantity(widget.title, _amount);
     });
   }
 
@@ -21,8 +29,15 @@ class _DigitalQuantityWidgetState extends State<DigitalQuantityWidget> {
     if (_amount > 1) {
       setState(() {
         _amount--;
+        widget.getProductQuantity(widget.title, _amount);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _amount = widget.productQuantity;
   }
 
   @override

@@ -11,6 +11,7 @@ class ProductDisplayItem extends StatelessWidget {
   final String priceInfo;
   final String productImage;
   VoidCallback readMore;
+  VoidCallback buyProduct;
   ProductDisplayItem(
       {super.key,
       required this.productName,
@@ -18,7 +19,8 @@ class ProductDisplayItem extends StatelessWidget {
       required this.priceInfo,
       required this.productDescription,
       required this.productImage,
-      required this.readMore});
+      required this.readMore,
+      required this.buyProduct});
 
   bool isDigital = true;
 
@@ -27,8 +29,10 @@ class ProductDisplayItem extends StatelessWidget {
     return Container(
       width: MyUtility(context).width * 0.70,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-          color: Colors.white, border: Border.all(color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          border: Border.all(
+              color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
         child: Row(
@@ -88,7 +92,8 @@ class ProductDisplayItem extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Row(mainAxisSize: MainAxisSize.max,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,8 +103,7 @@ class ProductDisplayItem extends StatelessWidget {
                           Text(
                             'R ${price}',
                             style: const TextStyle(
-                                fontSize: 25,
-                                color: Colors.teal),
+                                fontSize: 25, color: Colors.teal),
                           ),
                           Text(
                             priceInfo,
@@ -129,7 +133,9 @@ class ProductDisplayItem extends StatelessWidget {
                           buttonColor: Colors.teal,
                           borderColor: Colors.teal,
                           textColor: Colors.white,
-                          onTap: () {},
+                          onTap: () {
+                            buyProduct();
+                          },
                         ),
                       ),
                     ],

@@ -1,18 +1,120 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/products/UI/myProductButtons.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/login/popups/validateDialog.dart';
 import 'package:sama/member/productDisplay/cart/ui/payStackCon.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class CartTotalContainer extends StatefulWidget {
+  final List products;
   final String cartTotal;
-  const CartTotalContainer({super.key, required this.cartTotal});
+  const CartTotalContainer(
+      {super.key, required this.products, required this.cartTotal});
 
   @override
   State<CartTotalContainer> createState() => _CartTotalContainerState();
 }
 
 class _CartTotalContainerState extends State<CartTotalContainer> {
+  bool loadingState = false;
+  String email = "";
+  String reference = "";
+  String total = "";
+
+  //Dialog for payment popup
+  Future successPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Payment received , please check your emails",
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
+  getUserEmail() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      email = data.get('email');
+    }
+  }
+
+//Send payment
+  Future<void> sendPayment() async {
+    final response = await http.post(
+      Uri.parse('https://api.paystack.co/transaction/initialize'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization':
+            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': email,
+        'amount': "${double.parse(total) * 100}",
+        "currency": "ZAR",
+      }),
+    );
+    if (response.statusCode == 200) {
+      final decode =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      setState(() {
+        loadingState = true;
+        reference = decode['data']['reference'];
+        afterPaymentMade();
+      });
+
+      launchUrl(Uri.parse(decode['data']['authorization_url']));
+    } else {
+      throw Exception('Failed .');
+    } /* */
+  }
+
+  checkPaymentMade() {
+    return http.get(
+      Uri.parse('https://api.paystack.co/transaction/verify/${reference}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+      },
+    );
+  }
+
+  afterPaymentMade() {
+    var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      final response = await checkPaymentMade();
+
+      final decode =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+      if (decode['data']['status'] == "success" && loadingState == true) {
+        setState(() {
+          loadingState = false;
+          successPopup();
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getUserEmail();
+    var split = widget.cartTotal.split(" ");
+    total = split[1];
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,11 +139,8 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
                     Text(
                       'Total',
                       style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                      ),
+                          fontSize: 20, fontWeight: FontWeight.w600),
                     ),
-                    
                     Text(
                       widget.cartTotal,
                       style: const TextStyle(
@@ -51,23 +150,26 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 Text(
                   'Inclusive of VAT. Placeholder text for any other related info.',
                   style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
-                const SizedBox(height: 50,),
+                const SizedBox(
+                  height: 50,
+                ),
                 InkWell(
                   onTap: () {
-                    
+                    sendPayment();
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color.fromRGBO(0, 159, 158, 1),
-                      
                     ),
                     child: Center(
                       child: Padding(
@@ -85,13 +187,28 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
               ],
             ),
           ),
         ),
-        const SizedBox(height: 15,),
-        PayStackCon()
+        const SizedBox(
+          height: 15,
+        ),
+        PayStackCon(),
+        Visibility(
+          visible: loadingState,
+          child: Text(
+            'Awaiting Payment ....',
+            style: TextStyle(
+                color: Color.fromRGBO(0, 159, 158, 1),
+                fontWeight: FontWeight.w500,
+                fontSize: 22,
+                letterSpacing: 1.1),
+          ),
+        ),
       ],
     );
   }

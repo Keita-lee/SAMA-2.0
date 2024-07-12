@@ -29,35 +29,34 @@ class ProductFullViewCoding extends StatefulWidget {
 class _ProductFullViewCodingState extends State<ProductFullViewCoding> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: MyUtility(context).width * 0.70,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: MyUtility(context).height * 0.08,
-              ),
-              ProductFullView(
-                productTitle: widget.title,
-                price: widget.price,
-                priceInfo: widget.priceInfo,
-                qtyWidget: CodingQuantityWidget(),
-                productImage: widget.productImage,
-                changePageIndex: widget.changePageIndex,
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Text(
-                widget.description,
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
-          ),
+    return Center(
+      child: Container(
+        width: MyUtility(context).width * 0.70,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: MyUtility(context).height * 0.08,
+            ),
+            /*ProductFullView(
+              productTitle: widget.title,
+              price: widget.price,
+              priceInfo: widget.priceInfo,
+              qtyWidget: CodingQuantityWidget(),
+              productImage: widget.productImage,
+              changePageIndex: widget.changePageIndex,
+            
+              productQuantity: 0, buyProduct: (String , int ,  ) {  },
+            ),*/
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              widget.description,
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
         ),
       ),
     );

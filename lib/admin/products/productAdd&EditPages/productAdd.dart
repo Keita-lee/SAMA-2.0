@@ -9,11 +9,11 @@ import 'package:sama/admin/products/UI/myToggleButton.dart';
 import 'package:sama/admin/products/UI/productImage.dart';
 import 'package:sama/components/imageAdd.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:uuid/uuid.dart';
 
 class ProductAdd extends StatefulWidget {
-  const ProductAdd({
-    super.key,
-  });
+  Function(int, String) changePageIndex;
+  ProductAdd({super.key, required this.changePageIndex});
 
   @override
   State<ProductAdd> createState() => _ProductAddState();
@@ -104,143 +104,161 @@ class _ProductAddState extends State<ProductAdd> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      var uuid = Uuid();
+      skuController.text = uuid.v1().toString();
+      print("TEST");
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SizedBox(
-          width: MyUtility(context).width * 0.60,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MyUtility(context).height * 0.08,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Add new product',
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    Spacer(),
-                    MyProductButtons(
-                      buttonText: 'Save as Draft',
-                      buttonColor: Color.fromARGB(255, 212, 210, 210),
-                      borderColor: Colors.black,
-                      textColor: Colors.black,
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    MyProductButtons(
-                      buttonText: 'Publish Product',
-                      buttonColor: Color.fromARGB(255, 8, 55, 145),
-                      borderColor: Color.fromARGB(255, 8, 55, 145),
-                      textColor: Colors.white,
-                      onTap: () {
-                        addProduct();
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    MyProductTextField(
-                      hintText: 'Product name',
-                      textfieldController: nameController,
-                      textFieldWidth: MyUtility(context).width * 0.35,
+    return Center(
+      child: SizedBox(
+        width: MyUtility(context).width * 0.60,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: MyUtility(context).height * 0.08,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Add new product',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(),
+                  MyProductButtons(
+                    buttonText: 'Back',
+                    buttonColor: Color.fromARGB(255, 212, 210, 210),
+                    borderColor: Colors.black,
+                    textColor: Colors.black,
+                    onTap: () {
+                      widget.changePageIndex(0, "");
+                    },
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  MyProductButtons(
+                    buttonText: 'Save as Draft',
+                    buttonColor: Color.fromARGB(255, 212, 210, 210),
+                    borderColor: Colors.black,
+                    textColor: Colors.black,
+                    onTap: () {},
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  MyProductButtons(
+                    buttonText: 'Publish Product',
+                    buttonColor: Color.fromARGB(255, 8, 55, 145),
+                    borderColor: Color.fromARGB(255, 8, 55, 145),
+                    textColor: Colors.white,
+                    onTap: () {
+                      addProduct();
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  MyProductTextField(
+                    hintText: 'Product name',
+                    textfieldController: nameController,
+                    textFieldWidth: MyUtility(context).width * 0.35,
+                    topPadding: 0,
+                    header: 'Name',
+                  ),
+                  Spacer(),
+                  MyToggleButton(
+                    initialValue: isActive,
+                    onChanged: (value) {
+                      setState(() {
+                        isActive = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyProductTextField(
+                    hintText: 'Product description',
+                    textfieldController: descriptionController,
+                    textFieldWidth: MyUtility(context).width * 0.35,
+                    lines: 12,
+                    topPadding: 20,
+                    header: 'Description',
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ProductImage(
+                      customWidth: 150,
+                      customHeight: 150,
+                      description: '',
+                      networkImageUrl: imageUrl,
+                      setUrl: setImageUrl)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  MyProductTextField(
+                      hintText: 'Product SKU',
+                      textfieldController: skuController,
+                      textFieldWidth: MyUtility(context).width * 0.19,
                       topPadding: 0,
-                      header: 'Name',
-                    ),
-                    Spacer(),
-                    MyToggleButton(
-                      initialValue: isActive,
-                      onChanged: (value) {
-                        setState(() {
-                          isActive = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyProductTextField(
-                      hintText: 'Product description',
-                      textfieldController: descriptionController,
-                      textFieldWidth: MyUtility(context).width * 0.35,
-                      lines: 12,
-                      topPadding: 20,
-                      header: 'Description',
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    ProductImage(
-                        customWidth: 150,
-                        customHeight: 150,
-                        description: '',
-                        networkImageUrl: imageUrl,
-                        setUrl: setImageUrl)
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    MyProductTextField(
-                        hintText: 'Product SKU',
-                        textfieldController: skuController,
-                        textFieldWidth: MyUtility(context).width * 0.19,
-                        topPadding: 0,
-                        header: 'SKU'),
-                    MyDropDownButton(
-                      getDropDownValue: (value) {
-                        setState(() {
-                          dropDownValue = value;
-                          isDigitalProduct = value == 'Digital Product';
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                Visibility(
-                  visible: dropDownValue == 'Digital Product' ? true : false,
-                  child: DigitalProductDeatail(
-                    memberPriceController: memberPriceController,
-                    nonMemberPriceController: nonMemberPriceController,
-                    retailerPriceController: retailerPriceController,
-                    downloadLinkController: digitalDownloadLinkController,
+                      header: 'SKU'),
+                  MyDropDownButton(
+                    getDropDownValue: (value) {
+                      setState(() {
+                        dropDownValue = value;
+                        isDigitalProduct = value == 'Digital Product';
+                      });
+                    },
                   ),
+                ],
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              Visibility(
+                visible: dropDownValue == 'Digital Product' ? true : false,
+                child: DigitalProductDeatail(
+                  memberPriceController: memberPriceController,
+                  nonMemberPriceController: nonMemberPriceController,
+                  retailerPriceController: retailerPriceController,
+                  downloadLinkController: digitalDownloadLinkController,
                 ),
-                Visibility(
-                  visible: dropDownValue == 'Coding Product' ? true : false,
-                  child: CodingProductDetail(
-                    firstLicensePriceController: firstLicensePriceController,
-                    tenLicensePriceController: tenLicensePriceController,
-                    elevenPlusLicensePriceController:
-                        elevenPlusLicensePriceController,
-                    downloadLinkController: codingDownloadLinkController,
-                  ),
+              ),
+              Visibility(
+                visible: dropDownValue == 'Coding Product' ? true : false,
+                child: CodingProductDetail(
+                  firstLicensePriceController: firstLicensePriceController,
+                  tenLicensePriceController: tenLicensePriceController,
+                  elevenPlusLicensePriceController:
+                      elevenPlusLicensePriceController,
+                  downloadLinkController: codingDownloadLinkController,
                 ),
-                SizedBox(
-                  height: MyUtility(context).height * 0.08,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: MyUtility(context).height * 0.08,
+              ),
+            ],
           ),
         ),
       ),

@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 
+import 'cartItemDisplay.dart';
+
 class CartProductContainer extends StatefulWidget {
-  final List<Widget> productItems;
+  final List productItems;
   const CartProductContainer({super.key, required this.productItems});
 
   @override
@@ -35,19 +37,16 @@ class _CartProductContainerState extends State<CartProductContainer> {
                   width: 15,
                 ),
                 Container(
-                  
                   width: MyUtility(context).width * 0.30,
                   child: Text('Product'),
                 ),
                 Container(
-                  
                   width: MyUtility(context).width * 0.115,
                   child: Center(
                     child: Text('Qty'),
                   ),
                 ),
                 Container(
-                 
                   width: MyUtility(context).width * 0.115,
                   child: Center(
                     child: Text('Total'),
@@ -77,9 +76,15 @@ class _CartProductContainerState extends State<CartProductContainer> {
             ),
           ),
           child: SingleChildScrollView(
-            child: Column(
-              children: widget.productItems,
-            ),
+            child: Column(children: [
+              for (int i = 0; i < (widget.productItems).length; i++)
+                CartItemDisplay(
+                    productImage: widget.productItems[i]['productImage'],
+                    productName: widget.productItems[i]['productName'],
+                    productPrice: widget.productItems[i]['productPrice'],
+                    qtyWidget: widget.productItems[i]['quantity'],
+                    total: widget.productItems[i]['total']),
+            ]),
           ),
         ),
       ],
