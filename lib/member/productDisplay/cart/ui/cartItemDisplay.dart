@@ -63,12 +63,16 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.productName,
-                      style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                    SizedBox(
+                      width: MyUtility(context).width / 4.5,
+                      child: Text(
+                        widget.productName,
+                        style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Text(
                       'First copy free for members',

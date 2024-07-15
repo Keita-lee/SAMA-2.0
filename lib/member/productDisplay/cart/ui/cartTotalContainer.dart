@@ -90,6 +90,36 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
     );
   }
 
+  savePaymentsToHistory() {
+    List products = [];
+    /*
+    productImage: widget.productItems[i]['productImage'],
+                    productName: widget.productItems[i]['productName'],
+                    productPrice: widget.productItems[i]['productPrice'],
+                    qtyWidget: widget.productItems[i]['quantity'],
+     */
+
+    for (int i = 0; i < widget.products.length; i++) {
+      var product = {
+        "productImage": widget.products[i]['productImage'],
+        "productName": widget.products[i]['productName'],
+        "productPrice": widget.products[i]['productPrice'],
+        "quantity": widget.products[i]['quantity'],
+        "downloadLink": widget.products[i]['downloadLink'],
+      };
+      products.add(product);
+    }
+
+    var productHistory = {
+      "paymentRef": reference,
+      "products": products,
+      "date": DateTime.now(),
+      "user": FirebaseAuth.instance.currentUser!.uid
+    };
+
+    FirebaseFirestore.instance.collection('storeHistory').add(productHistory);
+  }
+
   afterPaymentMade() {
     var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
       final response = await checkPaymentMade();
@@ -99,6 +129,7 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
 
       if (decode['data']['status'] == "success" && loadingState == true) {
         setState(() {
+          savePaymentsToHistory();
           loadingState = false;
           successPopup();
         });

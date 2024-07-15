@@ -49,12 +49,16 @@ class _CartPageState extends State<CartPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'My Cart',
-          style: TextStyle(
-              fontSize: 35,
-              fontWeight: FontWeight.bold,
-              color: Color.fromRGBO(55, 94, 144, 1)),
+        Row(
+          children: [
+            Text(
+              'My Cart',
+              style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(55, 94, 144, 1)),
+            ),
+          ],
         ),
         const SizedBox(
           height: 35,

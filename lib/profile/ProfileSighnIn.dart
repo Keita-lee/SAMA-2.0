@@ -370,7 +370,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                   ),
                                   Spacer(),
                                   Visibility(
-                                    visible: pageIndex == 0 ? true : false,
+                                    visible: pageIndex == 1 ? true : false,
                                     child: Container(
                                       width: 4,
                                       height: MyUtility(context).height * 0.05,
@@ -391,7 +391,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      changePage(5);
+                                      changePage(2);
                                     },
                                     child: Text(
                                       'Notifications',
@@ -400,7 +400,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                   ),
                                   Spacer(),
                                   Visibility(
-                                    visible: pageIndex == 1 ? true : false,
+                                    visible: pageIndex == 2 ? true : false,
                                     child: Container(
                                       width: 4,
                                       height: MyUtility(context).height * 0.05,
@@ -430,7 +430,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                   ),
                                   Spacer(),
                                   Visibility(
-                                    visible: pageIndex == 2 ? true : false,
+                                    visible: pageIndex == 3 ? true : false,
                                     child: Container(
                                       width: 4,
                                       height: MyUtility(context).height * 0.05,
@@ -460,7 +460,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                   ),
                                   Spacer(),
                                   Visibility(
-                                    visible: pageIndex == 3 ? true : false,
+                                    visible: pageIndex == 4 ? true : false,
                                     child: Container(
                                       width: 4,
                                       height: MyUtility(context).height * 0.05,

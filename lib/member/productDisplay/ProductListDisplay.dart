@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/productDisplay/cart/cartPage.dart';
 import 'package:sama/member/productDisplay/productFullViewCoding.dart';
 import 'package:sama/member/productDisplay/productFullViewDigital.dart';
+import 'package:sama/member/productDisplay/purchaseHistory/purchaseHistory.dart';
 import 'package:sama/member/productDisplay/ui/productDisplayItem.dart';
 import 'package:sama/components/myutility.dart';
 
@@ -131,10 +133,22 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'E-Store',
-                      style:
-                          TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        Text(
+                          'E-Store',
+                          style: TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        StyleButton(
+                            description: "View Purchase History",
+                            height: 55,
+                            width: 125,
+                            onTap: () {
+                              changePageIndex(3, "");
+                            })
+                      ],
                     ),
                     const SizedBox(
                       height: 35,
@@ -200,6 +214,11 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                 child: CartPage(
                   products: cartProducts,
                 ),
+              ),
+
+              Visibility(
+                visible: pageIndex == 3 ? true : false,
+                child: PurchaseHistory(changePageIndex: changePageIndex),
               )
             ],
           ),
