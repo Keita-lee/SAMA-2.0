@@ -1,10 +1,16 @@
-
 import 'package:flutter/material.dart';
 
 import '../../components/utility.dart';
 
 class VolunteerWorkTable extends StatefulWidget {
-  const VolunteerWorkTable({super.key});
+  List volunteerWork;
+  Function(int) removeVolunteerWork;
+  String? memberView;
+  VolunteerWorkTable(
+      {super.key,
+      required this.volunteerWork,
+      required this.removeVolunteerWork,
+      this.memberView});
 
   @override
   State<VolunteerWorkTable> createState() => _VolunteerWorkTableState();
@@ -20,7 +26,7 @@ class _VolunteerWorkTableState extends State<VolunteerWorkTable> {
         child: Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
-            const TableRow(
+            TableRow(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 233, 232, 232),
               ),
@@ -47,17 +53,20 @@ class _VolunteerWorkTableState extends State<VolunteerWorkTable> {
                     ),
                   ),
                 ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(''),
+                Visibility(
+                  visible: widget.memberView != null ? false : true,
+                  child: TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(''),
+                    ),
                   ),
                 ),
               ],
             ),
             ...List.generate(
-              3,
+              widget.volunteerWork.length,
               (index) => TableRow(
                 decoration: BoxDecoration(
                   color: index % 2 == 0
@@ -76,7 +85,7 @@ class _VolunteerWorkTableState extends State<VolunteerWorkTable> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        '06 May 2017',
+                        widget.volunteerWork[index]['volunteerDate'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -86,18 +95,21 @@ class _VolunteerWorkTableState extends State<VolunteerWorkTable> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'Test Description',
+                        widget.volunteerWork[index]['volunteerDescription'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.red,
+                  Visibility(
+                    visible: widget.memberView != null ? false : true,
+                    child: TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   ),

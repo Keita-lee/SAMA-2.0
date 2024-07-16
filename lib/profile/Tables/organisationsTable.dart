@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import '../../components/myutility.dart';
 
 class OrganisationsTable extends StatefulWidget {
-  const OrganisationsTable({super.key});
+  List organizations;
+
+  Function(int) removeOrganization;
+  OrganisationsTable(
+      {super.key,
+      required this.removeOrganization,
+      required this.organizations});
 
   @override
   State<OrganisationsTable> createState() => _OrganisationsTableState();
@@ -47,11 +53,10 @@ class _OrganisationsTableState extends State<OrganisationsTable> {
                     ),
                   ),
                 ),
-                
               ],
             ),
             ...List.generate(
-              3,
+              widget.organizations.length,
               (index) => TableRow(
                 decoration: BoxDecoration(
                   color: index % 2 == 0
@@ -65,13 +70,12 @@ class _OrganisationsTableState extends State<OrganisationsTable> {
                   ),
                 ),
                 children: [
-                  
                   TableCell(
                     verticalAlignment: TableCellVerticalAlignment.middle,
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'Test name',
+                        widget.organizations[index]['organizationName'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -81,7 +85,7 @@ class _OrganisationsTableState extends State<OrganisationsTable> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'Test role',
+                        widget.organizations[index]['organizationRole'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),

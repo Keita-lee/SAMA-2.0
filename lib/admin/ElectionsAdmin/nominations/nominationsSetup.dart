@@ -51,8 +51,8 @@ class _NominationSetupState extends State<NominationSetup> {
   Widget build(BuildContext context) {
     return Container(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          //Conditional Container
-      Container(
+      //Conditional Container
+      /* Container(
         height: 180,
         width: MyUtility(context).width * 0.60,
         decoration: BoxDecoration(
@@ -69,33 +69,10 @@ class _NominationSetupState extends State<NominationSetup> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-      ),
+      ),*/
       ///////////////////////////////////
-      BranchVotingContainer(
-        branchTitle: 'Branch Title',
-        count: '10',
-        isInProgress: true,
-        isChairpersonActive: true,
-        votingItems: [
-          BranchVotingItems(
-              voteTitle: 'Round 1 Nominations',
-              startDate: '5 July 2024',
-              endDate: '20 July 2024',
-              voteDuration: '10 days'),
-          BranchVotingItems(
-              voteTitle: 'Round 1 Nominations',
-              startDate: '5 July 2024',
-              endDate: '20 July 2024',
-              voteDuration: '10 days'),
-          BranchVotingItems(
-              voteTitle: 'Round 1 Nominations',
-              startDate: '5 July 2024',
-              endDate: '20 July 2024',
-              voteDuration: '10 days')
-        ],
-      ),
       Text(
-        'Nominations & Elections',
+        'Elections',
         style: TextStyle(
             fontSize: 32,
             color: Color(0xFF3D3D3D),
@@ -107,46 +84,6 @@ class _NominationSetupState extends State<NominationSetup> {
       NominationHeader(
         controller: selectBranch,
         openNominationForm: openNominationForm,
-      ),
-      SizedBox(
-        height: 25,
-      ),
-      Row(
-        children: [
-          SizedBox(
-            width: 15,
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text('Status',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 5,
-            child: Text('Branch',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 10,
-            child: Text('Count',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text('Nominations',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text('Collections',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 10,
-            child: Text('Elections',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-          ),
-        ],
       ),
       SizedBox(
         height: 25,
@@ -182,7 +119,54 @@ class _NominationSetupState extends State<NominationSetup> {
                   itemBuilder: (BuildContext context, int index) {
                     final DocumentSnapshot document = documents[index];
 
-                    return Padding(
+                    return BranchVotingContainer(
+                      editElection: () {
+                        openNominationForm(document['id']);
+                      },
+                      branchTitle: document['selectBranch'],
+                      count: document['count'],
+                      isInProgress:
+                          document['status'] != "Complete" ? false : true,
+                      isChairpersonActive: document['includeBranchChairPerson'],
+                      votingItems: [
+                        BranchVotingItems(
+                            voteTitle: 'Round 1 Nominations',
+                            startDate: document['nominateStartDate'],
+                            endDate: document['nominateEndDate'],
+                            voteDuration: getDaysAmount(
+                                document['nominateStartDate'],
+                                document['nominateEndDate'])),
+                        BranchVotingItems(
+                            voteTitle: 'Acceptance Round',
+                            startDate: document['nominateAcceptStartDate'],
+                            endDate: document['nominateAcceptEndDate'],
+                            voteDuration: getDaysAmount(
+                                document['nominateAcceptStartDate'],
+                                document['nominateAcceptEndDate'])),
+                        BranchVotingItems(
+                          voteTitle: 'Elections',
+                          startDate: document['electionDateStart'],
+                          endDate: document['electionDateEnd'],
+                          voteDuration: getDaysAmount(
+                              document['electionDateStart'],
+                              document['electionDateEnd']),
+                        ),
+                        Visibility(
+                          visible: document['includeBranchChairPerson'],
+                          child: BranchVotingItems(
+                            voteTitle: 'Chairperson Round',
+                            startDate: document['chairPersonStart'],
+                            endDate: document['chairPersonEnd'],
+                            voteDuration: getDaysAmount(
+                                document['electionDateStart'],
+                                document['electionDateEnd']),
+                          ),
+                        )
+                      ],
+                    );
+
+                    /*    
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
@@ -330,6 +314,7 @@ class _NominationSetupState extends State<NominationSetup> {
                         ),
                       ),
                     );
+              */
                   }),
             );
           }),

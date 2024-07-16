@@ -1,3 +1,8 @@
+import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -11,11 +16,14 @@ import 'package:sama/profile/Tables/workExperience.dart';
 import 'package:sama/profile/ui/longTextField.dart';
 import 'package:sama/profile/ui/myDatePicker.dart';
 
+import '../components/dateSelecter.dart';
+import 'package:file_picker/file_picker.dart';
 import '../components/myutility.dart';
+import '../login/popups/validateDialog.dart';
 
 class BoiFormText extends StatelessWidget {
-  final String mainFormText;
-  const BoiFormText({super.key, required this.mainFormText});
+  var mainFormText;
+  BoiFormText({super.key, required this.mainFormText});
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +43,198 @@ class Bio extends StatefulWidget {
 }
 
 class _BioState extends State<Bio> {
+  //TextEditing Controller
+  final dob = TextEditingController();
+  final maritalStatus = TextEditingController();
+// Work Experience
+  final workExperienceFrom = TextEditingController();
+  final workExperienceTo = TextEditingController();
+  final workExperienceDescription = TextEditingController();
+  List workExperience = [];
+//Qualification
+  final qualification = TextEditingController();
+//Articles
+  final articleDate = TextEditingController();
+  final articleDescription = TextEditingController();
+  List articles = [];
+
+//volunteer
+  final volunteerDate = TextEditingController();
+  final volunteerDescription = TextEditingController();
+  List volunteerWork = [];
+
+  //QA
+  final positionAtSama = TextEditingController();
+  final skillToSama = TextEditingController();
+
+  //Organization
+  final organizationName = TextEditingController();
+  final organizationRole = TextEditingController();
+  List organizations = [];
+
+  final position = TextEditingController();
+  final leaderShipMotivation = TextEditingController();
+
+  //var
+  var cv = "";
+  bool pendingDiscipline = false;
+  bool disciplineAction = false;
+  bool civilJudgement = false;
+  bool positionRemoved = false;
+  bool chargedCrime = false;
+
+  //add data to workExperienceList
+  addRemoveWorkExperience(index) {
+    setState(() {
+      if (index == "") {
+        workExperience.add({
+          "workExperienceFrom": workExperienceFrom.text,
+          "workExperienceTo": workExperienceTo.text,
+          "workExperienceDescription": workExperienceDescription.text,
+        });
+      } else {
+        workExperience.removeAt(index);
+      }
+    });
+  }
+
+//add or remove data from articles list
+  addRemoveArticle(index) {
+    setState(() {
+      if (index == "") {
+        articles.add({
+          "articleDate": articleDate.text,
+          "articleDescription": articleDescription.text,
+        });
+      } else {
+        articles.removeAt(index);
+      }
+    });
+  }
+
+//add or remove data from volunteers list
+  addRemoveVolunteer(index) {
+    setState(() {
+      if (index == "") {
+        volunteerWork.add({
+          "volunteerDate": volunteerDate.text,
+          "volunteerDescription": volunteerDescription.text,
+        });
+      } else {
+        volunteerWork.removeAt(index);
+      }
+    });
+  }
+
+//add or remove data from volunteers list
+  addRemoveOrganization(index) {
+    setState(() {
+      if (index == "") {
+        organizations.add({
+          "organizationName": organizationName.text,
+          "organizationRole": organizationRole.text,
+        });
+      } else {
+        organizations.removeAt(index);
+      }
+    });
+  }
+
+  Future uploadFile(fileName, webImage) async {
+    final ref = FirebaseStorage.instance.ref().child('files').child(fileName);
+
+    var imageUrl = "";
+    await ref.putData(webImage!);
+    imageUrl = await ref.getDownloadURL();
+    print(imageUrl);
+    setState(() {
+      cv = imageUrl;
+      fileUploadStatus = "Upload Complete";
+    });
+  }
+
+  var fileUploadStatus = "";
+  Future<void> pickFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    //  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      for (var i = 0; i < result.files.length; i++) {
+        Uint8List? fileBytes = result.files[i].bytes;
+        var fileName = result.files[i].name;
+        fileUploadStatus = "Uploading ...";
+        await uploadFile(fileName, fileBytes);
+      }
+
+      // Upload file
+    }
+  }
+
+  Future userUpdated() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: "Bio Data Saved",
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
+  getBioData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (data.exists) {
+      setState(() {
+        cv = data.get('bio.cv');
+        articles = data.get('bio.articles');
+        chargedCrime = data.get('bio.chargedCrime');
+        civilJudgement = data.get('bio.civilJudgement');
+        dob.text = data.get('bio.dob');
+        maritalStatus.text = data.get('bio.maritalStatus');
+        pendingDiscipline = data.get('bio.pendingDiscipline');
+        positionRemoved = data.get('bio.positionRemoved');
+        qualification.text = data.get('bio.qualifications');
+        volunteerWork = data.get('bio.volunteerWork');
+        workExperience = data.get('bio.workExperience');
+        organizations = data.get('bio.organizations'); /**/
+      });
+    }
+  }
+
+  updateUserBio() async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      "bio": {
+        "cv": cv,
+        "dob": dob.text,
+        "maritalStatus": maritalStatus.text,
+        "workExperience": workExperience,
+        "qualifications": qualification.text,
+        "articles": articles,
+        "volunteerWork": volunteerWork,
+        "pendingDiscipline": pendingDiscipline,
+        "civilJudgement": civilJudgement,
+        "positionRemoved": positionRemoved,
+        "chargedCrime": chargedCrime,
+        "organizations": organizations
+      }
+    }).whenComplete(() {
+      userUpdated();
+    });
+  }
+
+  @override
+  void initState() {
+    getBioData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -60,7 +260,13 @@ class _BioState extends State<Bio> {
             children: [
               BoiFormText(mainFormText: 'Date of Birth:'),
               //Text Controller
-              MyDatePicker(textfieldController: TextEditingController(), hintText: 'Date of Birth',),
+              MyDatePicker(
+                textfieldController: dob,
+                hintText: 'Date of Birth',
+                refresh: () {
+                  setState(() {});
+                },
+              ),
             ],
           ),
           const SizedBox(
@@ -75,7 +281,7 @@ class _BioState extends State<Bio> {
               ProfileDropDownField(
                 customSize: 300,
                 //Controller here
-                textfieldController: TextEditingController(),
+                textfieldController: maritalStatus,
                 items: ['Married', 'Single'],
               ),
             ],
@@ -93,25 +299,37 @@ class _BioState extends State<Bio> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BoiFormText(mainFormText: 'Occupation/Work Experience:'),
-                  const SizedBox(
+                  /*  const SizedBox(
                     height: 8,
                   ),
                   Text(
                     'Click the link above to view your Occupation/Work Experience.',
                     style: GoogleFonts.openSans(fontSize: 12),
-                  )
+                  )*/
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Text Controller
-              MyDatePicker(textfieldController: TextEditingController(), hintText: 'From',),
+                  MyDatePicker(
+                    textfieldController: workExperienceTo,
+                    hintText: 'From',
+                    refresh: () {
+                      setState(() {});
+                    },
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   //Text Controller
-              MyDatePicker(textfieldController: TextEditingController(), hintText: 'To',),
+                  MyDatePicker(
+                    textfieldController: workExperienceFrom,
+                    hintText: 'To',
+                    refresh: () {
+                      setState(() {});
+                    },
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -119,7 +337,7 @@ class _BioState extends State<Bio> {
                     customSize: 300,
                     textFieldType: '',
                     //Controller here
-                    textfieldController: TextEditingController(),
+                    textfieldController: workExperienceDescription,
                     ////
                     hintText: 'Description',
                   ),
@@ -127,7 +345,9 @@ class _BioState extends State<Bio> {
                     height: 20,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      addRemoveWorkExperience("");
+                    },
                     child: Text(
                       'Add More',
                       style: TextStyle(
@@ -146,14 +366,16 @@ class _BioState extends State<Bio> {
             height: 15,
           ),
           const MyDidiver(),
-           const SizedBox(
-            height: 30,
-          ),
-          const BoiFormText(mainFormText: 'Your Occupation/Work Experience'),
           const SizedBox(
             height: 30,
           ),
-          const WorkExperience(),
+          BoiFormText(mainFormText: 'Your Occupation/Work Experience'),
+          const SizedBox(
+            height: 30,
+          ),
+          WorkExperience(
+              workExperienceList: workExperience,
+              removeExperience: addRemoveWorkExperience),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
             child: Container(
@@ -220,11 +442,11 @@ class _BioState extends State<Bio> {
               ),
               Column(
                 children: [
-                  ProfileTextField(
-                    customSize: 300,
-                    textFieldType: '',
+                  LongTextField(
+                    textFieldWidth: 300,
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textEditingController: qualification,
+                    lines: 5,
                   ),
                   const SizedBox(
                     height: 20,
@@ -255,7 +477,7 @@ class _BioState extends State<Bio> {
             height: 30,
           ),
           const MyDidiver(),
-           const SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -270,10 +492,10 @@ class _BioState extends State<Bio> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  /*   Text(
                     'Click the link above to view your Occupation/Work Experience.',
                     style: GoogleFonts.openSans(fontSize: 12),
-                  )
+                  )*/
                 ],
               ),
               Column(
@@ -282,7 +504,10 @@ class _BioState extends State<Bio> {
                   MyDatePicker(
                     hintText: 'Select Date',
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textfieldController: articleDate,
+                    refresh: () {
+                      setState(() {});
+                    },
                     //////
                   ),
                   const SizedBox(
@@ -293,14 +518,16 @@ class _BioState extends State<Bio> {
                     customSize: 300,
                     textFieldType: '',
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textfieldController: articleDescription,
                     ///////
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      addRemoveArticle("");
+                    },
                     child: Text(
                       'Add More',
                       style: TextStyle(
@@ -319,19 +546,20 @@ class _BioState extends State<Bio> {
             height: 15,
           ),
           const MyDidiver(),
-           const SizedBox(
+          const SizedBox(
             height: 30,
           ),
           BoiFormText(mainFormText: 'Your Published articles:'),
           const SizedBox(
             height: 15,
           ),
-          PublishedArticlesTable(),
+          PublishedArticlesTable(
+              articlesList: articles, removeArticle: addRemoveArticle),
           const SizedBox(
             height: 50,
           ),
           const MyDidiver(),
-           const SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -346,10 +574,10 @@ class _BioState extends State<Bio> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  /*   Text(
                     'Click the link above to view your Volunteer Work information.',
                     style: GoogleFonts.openSans(fontSize: 12),
-                  )
+                  )*/
                 ],
               ),
               Column(
@@ -358,7 +586,10 @@ class _BioState extends State<Bio> {
                   MyDatePicker(
                     hintText: 'Select Date',
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textfieldController: volunteerDate,
+                    refresh: () {
+                      setState(() {});
+                    },
                     //////
                   ),
                   const SizedBox(
@@ -369,14 +600,16 @@ class _BioState extends State<Bio> {
                     hintText: 'Description',
                     textFieldType: '',
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textfieldController: volunteerDescription,
                     ///////
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      addRemoveVolunteer("");
+                    },
                     child: Text(
                       'Add More',
                       style: TextStyle(
@@ -395,14 +628,16 @@ class _BioState extends State<Bio> {
             height: 15,
           ),
           const MyDidiver(),
-           const SizedBox(
+          const SizedBox(
             height: 30,
           ),
           BoiFormText(mainFormText: 'Your Volunteer Work:'),
           const SizedBox(
             height: 15,
           ),
-          VolunteerWorkTable(),
+          VolunteerWorkTable(
+              volunteerWork: volunteerWork,
+              removeVolunteerWork: addRemoveVolunteer),
           const SizedBox(
             height: 30,
           ),
@@ -512,7 +747,7 @@ class _BioState extends State<Bio> {
             height: 15,
           ),
           const MyDidiver(),
-           const SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -537,7 +772,7 @@ class _BioState extends State<Bio> {
                     hintText: 'Organisation name',
                     textFieldType: '',
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textfieldController: organizationName,
                     ///////
                   ),
                   const SizedBox(
@@ -548,14 +783,16 @@ class _BioState extends State<Bio> {
                     hintText: 'Position/role',
                     textFieldType: '',
                     //Text Controller
-                    textfieldController: TextEditingController(),
+                    textfieldController: organizationRole,
                     ///////
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      addRemoveOrganization("");
+                    },
                     child: Text(
                       'Add More',
                       style: TextStyle(
@@ -574,14 +811,16 @@ class _BioState extends State<Bio> {
             height: 15,
           ),
           const MyDidiver(),
-           const SizedBox(
+          const SizedBox(
             height: 30,
           ),
           BoiFormText(mainFormText: 'Your Organisations:'),
           const SizedBox(
             height: 15,
           ),
-          OrganisationsTable(),
+          OrganisationsTable(
+              removeOrganization: addRemoveOrganization,
+              organizations: organizations),
           const SizedBox(
             height: 30,
           ),
@@ -729,6 +968,48 @@ class _BioState extends State<Bio> {
           const SizedBox(
             height: 30,
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: MyUtility(context).width * 0.05,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF174486),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      pickFile();
+                    },
+                    child: Text(
+                      'Upload Cv',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                fileUploadStatus,
+                style: GoogleFonts.openSans(
+                  fontSize: 18,
+                  height: 1.2,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+          ),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
@@ -740,7 +1021,7 @@ class _BioState extends State<Bio> {
               ),
               child: TextButton(
                 onPressed: () {
-                  //ADD LOGIC HERE
+                  updateUserBio();
                 },
                 child: Text(
                   'Update',
@@ -753,7 +1034,6 @@ class _BioState extends State<Bio> {
               ),
             ),
           ),
-          
         ],
       ),
     );

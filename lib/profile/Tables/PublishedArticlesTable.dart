@@ -1,10 +1,16 @@
-
 import 'package:flutter/material.dart';
 
 import '../../components/utility.dart';
 
 class PublishedArticlesTable extends StatefulWidget {
-  const PublishedArticlesTable({super.key});
+  List articlesList;
+  Function(int) removeArticle;
+  String? memberView;
+  PublishedArticlesTable(
+      {super.key,
+      required this.removeArticle,
+      required this.articlesList,
+      this.memberView});
 
   @override
   State<PublishedArticlesTable> createState() => _PublishedArticlesTableState();
@@ -20,7 +26,7 @@ class _PublishedArticlesTableState extends State<PublishedArticlesTable> {
         child: Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
-            const TableRow(
+            TableRow(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 233, 232, 232),
               ),
@@ -47,17 +53,20 @@ class _PublishedArticlesTableState extends State<PublishedArticlesTable> {
                     ),
                   ),
                 ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(''),
+                Visibility(
+                  visible: widget.memberView != null ? false : true,
+                  child: TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(''),
+                    ),
                   ),
                 ),
               ],
             ),
             ...List.generate(
-              3,
+              widget.articlesList.length,
               (index) => TableRow(
                 decoration: BoxDecoration(
                   color: index % 2 == 0
@@ -76,7 +85,7 @@ class _PublishedArticlesTableState extends State<PublishedArticlesTable> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        '06 May 2017',
+                        widget.articlesList[index]['articleDate'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -86,18 +95,26 @@ class _PublishedArticlesTableState extends State<PublishedArticlesTable> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'Test Article',
+                        widget.articlesList[index]['articleDescription'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.red,
+                  Visibility(
+                    visible: widget.memberView != null ? false : true,
+                    child: TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: InkWell(
+                        onTap: () {
+                          widget.removeArticle(index);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          ),
+                        ),
                       ),
                     ),
                   ),

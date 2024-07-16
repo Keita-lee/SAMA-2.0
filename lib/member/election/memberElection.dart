@@ -59,7 +59,7 @@ class _MemberElectionState extends State<MemberElection> {
   getElection() async {
     final data = await FirebaseFirestore.instance
         .collection('elections')
-        .doc("orIEplhDstxiWQdSLHlK")
+        .doc("ngZiVRVWoMETIGm0VPgj")
         .get();
 
     if (data.exists) {

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/login/popups/validateDialog.dart';
+import 'package:sama/member/election/viewMemberBio.dart';
 
 class MemberElectionRound1 extends StatefulWidget {
   String branch;
@@ -161,6 +162,17 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                 closeDialog: () => Navigator.pop(context!)));
       });
 
+  //Dialog for nominate limit
+  Future viewMemberBioDialog(memberId) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ViewMemberBio(
+          closeDialog: () => Navigator.pop(context!),
+          memberId: memberId,
+        ));
+      });
+
   @override
   void initState() {
     getUsersNominations();
@@ -172,7 +184,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'Nomination round open for  /n ${widget.branch}',
+          'Nomination round open for ${widget.branch}',
           style: TextStyle(
             fontSize: 25,
             color: Color.fromARGB(255, 0, 159, 158),
@@ -246,6 +258,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                               2: FlexColumnWidth(3),
                               3: FlexColumnWidth(1),
                               4: FlexColumnWidth(1.2),
+                              5: FlexColumnWidth(1.2)
                             },
                             children: [
                               TableRow(
@@ -281,6 +294,13 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text('Nominate',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
@@ -334,7 +354,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(
+                                      child: InkWell(
                                         onTap: () {
                                           nominateUser(
                                               data!["email"], data!["id"]);
@@ -376,6 +396,20 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                               ),
                                             ),
                                           ),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        viewMemberBioDialog(data["id"]);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'View Profile',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xFF174486)),
                                         ),
                                       ),
                                     ),

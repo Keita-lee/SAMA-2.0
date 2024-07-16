@@ -8,13 +8,16 @@ class BranchVotingContainer extends StatefulWidget {
   final bool isInProgress;
   final bool isChairpersonActive;
   final List<Widget> votingItems;
-  const BranchVotingContainer(
+  final VoidCallback editElection;
+
+  BranchVotingContainer(
       {super.key,
       required this.branchTitle,
       required this.count,
       required this.isInProgress,
       required this.isChairpersonActive,
-      required this.votingItems});
+      required this.votingItems,
+      required this.editElection});
 
   @override
   State<BranchVotingContainer> createState() => _BranchVotingContainerState();
@@ -23,62 +26,66 @@ class BranchVotingContainer extends StatefulWidget {
 class _BranchVotingContainerState extends State<BranchVotingContainer> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
-        width: MyUtility(context).width * 0.60,
-        height: 450,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Color(0xFFD1D1D1),
-            width: 1.5,
-          ),
+    return Container(
+      width: MyUtility(context).width * 0.60,
+      height: 465,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: Color(0xFFD1D1D1),
+          width: 1.5,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 55,
-                  width: 160,
-                  decoration: BoxDecoration(
-                    color: widget.isInProgress
-                        ? Color.fromRGBO(0, 159, 12, 1)
-                        : Color(0xFFD1D1D1),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                  ),
-                  child: Center(
-                    child: Text(
-                      widget.isInProgress ? 'In progress' : 'Draft',
-                      style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 1.1,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
-                    ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 55,
+                width: 160,
+                decoration: BoxDecoration(
+                  color: widget.isInProgress
+                      ? Color.fromRGBO(0, 159, 12, 1)
+                      : Color(0xFFD1D1D1),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                ),
+                child: Center(
+                  child: Text(
+                    widget.isInProgress ? 'Complete' : 'In Progress',
+                    style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1.1,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.55,
-              child: Row(
-                children: [
-                  Text(
-                    widget.branchTitle,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26,
-                    ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SizedBox(
+            width: MyUtility(context).width * 0.55,
+            child: Row(
+              children: [
+                Text(
+                  widget.branchTitle,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
                   ),
-                  Spacer(),
-                  Container(
+                ),
+                Spacer(),
+                InkWell(
+                  onTap: () {
+                    widget.editElection();
+                  },
+                  child: Container(
                     width: 100,
                     height: 56,
                     decoration: BoxDecoration(
@@ -92,47 +99,50 @@ class _BranchVotingContainerState extends State<BranchVotingContainer> {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 30,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SizedBox(
+            width: MyUtility(context).width * 0.55,
+            child: Column(
+              children: widget.votingItems,
             ),
-            SizedBox(
-              width: MyUtility(context).width * 0.55,
-              child: Column(
-                children: widget.votingItems,
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.55,
-              child: Row(
-                children: [
-                  Text('Count: ${widget.count}', style: TextStyle(fontSize: 20),),
-                  const SizedBox(
-                    width: 30,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          SizedBox(
+            width: MyUtility(context).width * 0.55,
+            child: Row(
+              children: [
+                Text(
+                  'Count: ${widget.count}',
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: 'Chairperson voting: '),
+                      TextSpan(
+                          text: widget.isChairpersonActive
+                              ? 'Active'
+                              : 'Disabled'),
+                    ],
                   ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(text: 'Chairperson voting: '),
-                        TextSpan(
-                            text: widget.isChairpersonActive
-                                ? 'Active'
-                                : 'Disabled'),
-                      ],
-                    ),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                ],
-              ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ],
             ),
-          ],
-        ),
-      
+          ),
+        ],
+      ),
     );
   }
 }

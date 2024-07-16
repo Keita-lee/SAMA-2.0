@@ -1,11 +1,16 @@
-
 import 'package:flutter/material.dart';
-
 
 import '../../components/myutility.dart';
 
 class WorkExperience extends StatefulWidget {
-  const WorkExperience({super.key});
+  List workExperienceList;
+  Function(int) removeExperience;
+  String? memberView;
+  WorkExperience(
+      {super.key,
+      required this.workExperienceList,
+      required this.removeExperience,
+      this.memberView});
 
   @override
   State<WorkExperience> createState() => _WorkExperienceState();
@@ -21,7 +26,7 @@ class _WorkExperienceState extends State<WorkExperience> {
         child: Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
-            const TableRow(
+            TableRow(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 233, 232, 232),
               ),
@@ -59,21 +64,25 @@ class _WorkExperienceState extends State<WorkExperience> {
                     ),
                   ),
                 ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(''),
+                Visibility(
+                  visible: widget.memberView != null ? false : true,
+                  child: TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(''),
+                    ),
                   ),
                 ),
               ],
             ),
             ...List.generate(
-              3,
-              (index) =>  TableRow(
+              widget.workExperienceList.length,
+              (index) => TableRow(
                 decoration: BoxDecoration(
-                  
-                  color: index % 2 == 0 ? Color(0xFFF8FAFF)  : Color.fromRGBO(174, 204, 236, 1),  
+                  color: index % 2 == 0
+                      ? Color(0xFFF8FAFF)
+                      : Color.fromRGBO(174, 204, 236, 1),
                   border: Border(
                     bottom: BorderSide(
                       width: 1.5,
@@ -87,7 +96,7 @@ class _WorkExperienceState extends State<WorkExperience> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        '06 May 2017',
+                        widget.workExperienceList[index]['workExperienceFrom'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -97,7 +106,7 @@ class _WorkExperienceState extends State<WorkExperience> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        '06 May 2017',
+                        widget.workExperienceList[index]['workExperienceTo'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -107,18 +116,27 @@ class _WorkExperienceState extends State<WorkExperience> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'Test 1',
+                        widget.workExperienceList[index]
+                            ['workExperienceDescription'],
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.red,
+                  Visibility(
+                    visible: widget.memberView != null ? false : true,
+                    child: TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: InkWell(
+                        onTap: () {
+                          widget.removeExperience(index);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          ),
+                        ),
                       ),
                     ),
                   ),
