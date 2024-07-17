@@ -27,9 +27,6 @@ class _NotificationListState extends State<NotificationList> {
     return '$dayNumber $month $year ';
   }
 
-// Will make all user notification read =  true
-  resetUsersNotification() {}
-
 //update notification if type = nomination
   updateNotificationNomination(id) async {
     final doc = await FirebaseFirestore.instance

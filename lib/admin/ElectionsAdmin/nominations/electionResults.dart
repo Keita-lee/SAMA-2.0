@@ -45,12 +45,18 @@ class _ElectionResultsState extends State<ElectionResults> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(
+        height: 25,
+      ),
       Text(
         widget.branch,
         style: TextStyle(
             fontSize: 22,
             color: Color(0xFF174486),
             fontWeight: FontWeight.bold),
+      ),
+      SizedBox(
+        height: 25,
       ),
       Row(
         children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sama/member/election/ui/electionTabStyle.dart';
+import 'package:sama/components/electionTabStyle.dart';
 
 class ElectionOverView extends StatefulWidget {
   String startDate;

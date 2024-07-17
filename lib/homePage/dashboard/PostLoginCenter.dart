@@ -8,7 +8,8 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/homePage/dashboard/ui/samaNotificationsBox.dart';
 
 class PostLoginCenter extends StatefulWidget {
-  const PostLoginCenter({super.key});
+  List userNotification;
+  PostLoginCenter({super.key, required this.userNotification});
 
   @override
   State<PostLoginCenter> createState() => _PostLoginCenterState();
@@ -575,8 +576,8 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         ),
         Row(
           children: [
-            SamaNotificationsBox(),
-           /* Container(
+            SamaNotificationsBox(userNotification: widget.userNotification),
+            /* Container(
               width: MyUtility(context).width / 5.5,
               height: MyUtility(context).height * 0.6,
               decoration: BoxDecoration(

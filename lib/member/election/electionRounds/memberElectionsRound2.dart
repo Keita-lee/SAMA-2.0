@@ -54,7 +54,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
   getUserNotificationList() async {
     final doc = await FirebaseFirestore.instance
         .collection('notifications')
-        .where("data.electionId", isEqualTo: "orIEplhDstxiWQdSLHlK")
+        .where("data.electionId", isEqualTo: "ngZiVRVWoMETIGm0VPgj")
         .where("data.accept", isEqualTo: true)
         .get();
     setState(() {
@@ -133,7 +133,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Voting round open for  /n ${widget.branch}',
+          'Voting round open for ${widget.branch}',
           style: TextStyle(
             fontSize: 25,
             color: Color.fromARGB(255, 0, 159, 158),

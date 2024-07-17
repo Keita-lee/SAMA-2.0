@@ -20,6 +20,12 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/yesNoDialog.dart';
 
+import '../ui2/setup/setupAcceptance.dart';
+import '../ui2/setup/setupChairPersonElection.dart';
+import '../ui2/setup/setupElection2.dart';
+import '../ui2/setup/setupRound1.dart';
+import '../ui2/setup/setupRound2.dart';
+
 class NominationFrom extends StatefulWidget {
   Function closeDialog;
   String id;
@@ -263,9 +269,175 @@ class _NominationFromState extends State<NominationFrom> {
     updateStatus();
   }
 
+  updateHdi() {
+    setState(() {
+      hdiCompliant = !hdiCompliant;
+    });
+  }
+
+  updateChairperson() {
+    setState(() {
+      includeBranchChairPerson = !includeBranchChairPerson;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+        width: MyUtility(context).width - (MyUtility(context).width * 0.18),
+        height: 750,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Color(0xFFD1D1D1),
+            width: 1.5,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Branch Nominations and Elections - ${selectBranch.text}',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF174486),
+                      fontWeight: FontWeight.bold),
+                ),
+                Spacer(),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      widget.closeDialog();
+                    },
+                    child: Icon(Icons.cancel),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Row(
+              children: [
+                Tabstyle(
+                  pageIndex: pageIndex,
+                  changePage: () {
+                    setState(() {
+                      pageIndex = 0;
+                    });
+                  },
+                  tabIndexNumber: 0,
+                  description: "Setup Election",
+                  customWidth: 150,
+                  customColor1: Color.fromARGB(255, 8, 55, 145),
+                  customColor2: Color.fromARGB(255, 83, 115, 175),
+                ),
+                Visibility(
+                  visible: widget.id == "" ? false : true,
+                  child: Tabstyle(
+                    pageIndex: pageIndex,
+                    changePage: () {
+                      setState(() {
+                        pageIndex = 1;
+                      });
+                    },
+                    tabIndexNumber: 1,
+                    description: "Results",
+                    customWidth: 150,
+                    customColor1: Color.fromARGB(255, 8, 55, 145),
+                    customColor2: Color.fromARGB(255, 83, 115, 175),
+                  ),
+                )
+              ],
+            ),
+            /*  Visibility(
+              visible: pageIndex == 0 ? true : false,
+              child: Column(
+                children: [
+                  SetupElection2(
+                      selectBranch: selectBranch,
+                      count: count,
+                      hdiCompliant: hdiCompliant,
+                      updateHdi: updateHdi),
+                  SetupRound1(
+                    nominationStartDate: nominateStartDate.text,
+                    nominationEndDate: nominateEndDate.text,
+                    updateStartDate: updateNominationStartDate,
+                    updateEndDate: updateNominationEndDate,
+                  ),
+                  SetupAcceptance(
+                    nominateAcceptStartDate: nominateAcceptStartDate.text,
+                    nominateAcceptEndDate: nominateAcceptEndDate.text,
+                  ),
+                  SetupRound2(
+                    electionStartDate: electionDateStart.text,
+                    electionEndDate: electionDateEnd.text,
+                    updateStartDate: updateRound2StartDate,
+                    updateEndDate: updateRound2EndDate,
+                  ),
+                  SetupChairPersonElection(
+                      chairPersonStartDate: chairPersonStart.text,
+                      chairPersonEndDate: chairPersonEnd.text,
+                      updateChairPersonDate: updateChairPersonDate,
+                      includeBranchChairPerson: includeBranchChairPerson,
+                      updateChairperson: () {
+                        updateChairperson();
+                      }),
+                ],
+              ),
+            ),*/
+            Visibility(
+              visible: pageIndex == 1 ? true : false,
+              child: ElectionResults(
+                  branch: selectBranch.text,
+                  nominationStartDate: nominateStartDate.text,
+                  nominationEndDate: nominateEndDate.text,
+                  nominateAcceptStartDate: nominateAcceptStartDate.text,
+                  nominateAcceptEndDate: nominateAcceptEndDate.text,
+                  electionDateStart: electionDateStart.text,
+                  electionDateEnd: electionDateEnd.text,
+                  electionId: widget.id,
+                  electionVotes: electionVotes,
+                  hdiCompliant: hdiCompliant,
+                  chairmanStartDate: chairPersonStart.text,
+                  chairmanEndDate: chairPersonEnd.text,
+                  chairMemberVoteList: chairMemberVoteList),
+            ),
+          ]),
+        ));
+  }
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    
+    
+    Container(
         width: MyUtility(context).width / 1.6,
         height: MyUtility(context).height / 1.2,
         decoration: BoxDecoration(
@@ -344,7 +516,14 @@ class _NominationFromState extends State<NominationFrom> {
             SizedBox(
               height: 20,
             ),
-            Visibility(
+
+
+
+
+
+
+
+         /*   Visibility(
               visible: pageIndex == 0 ? true : false,
               child: Row(
                 children: [
@@ -491,6 +670,10 @@ class _NominationFromState extends State<NominationFrom> {
                 ],
               ),
             ),
+         
+         */
+         
+         
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: Row(
@@ -523,3 +706,4 @@ class _NominationFromState extends State<NominationFrom> {
         )));
   }
 }
+*/

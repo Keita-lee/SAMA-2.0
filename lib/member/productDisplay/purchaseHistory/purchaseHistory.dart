@@ -65,9 +65,12 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
             height: 35,
           ),
           for (int i = 0; i < allProducts.length; i++)
-            HistoryProductDisplay(
-              products: allProducts[i]["products"],
-              date: "${CommonService().getTodaysDateText()}",
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: HistoryProductDisplay(
+                products: allProducts[i]["products"],
+                date: "${CommonService().getTodaysDateText()}",
+              ),
             ),
         ],
       ),

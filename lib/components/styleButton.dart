@@ -35,8 +35,8 @@ class _StyleButtonState extends State<StyleButton> {
             backgroundColor: widget.buttonColor != null
                 ? widget.buttonColor
                 : Color.fromARGB(255, 8, 55, 145),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15))),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
         child: Text(
           widget.description!,
           style: TextStyle(

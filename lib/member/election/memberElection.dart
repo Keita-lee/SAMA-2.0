@@ -9,7 +9,7 @@ import 'package:sama/member/election/electionRounds/electionOverView.dart';
 import 'package:sama/member/election/electionRounds/electionSummaryView.dart';
 import 'package:sama/member/election/electionRounds/memberElectionRound1.dart';
 import 'package:sama/member/election/electionRounds/memberElectionsRound2.dart';
-import 'package:sama/member/election/ui/electionTabStyle.dart';
+import 'package:sama/components/electionTabStyle.dart';
 
 import '../../admin/ElectionsAdmin/nominations/ui/tabStyle.dart';
 
@@ -238,7 +238,7 @@ class _MemberElectionState extends State<MemberElection> {
           }),*/
       MemberElectionRound1(
         branch: branch,
-        electionId: "orIEplhDstxiWQdSLHlK",
+        electionId: "ngZiVRVWoMETIGm0VPgj",
         position: position,
         votingCount: votingCount,
         acceptDate: nominateAcceptStartDate,
@@ -253,7 +253,7 @@ class _MemberElectionState extends State<MemberElection> {
       MemberElectionsRound2(
         branch: branch,
         position: position,
-        electionId: "orIEplhDstxiWQdSLHlK",
+        electionId: "ngZiVRVWoMETIGm0VPgj",
         votingCount: votingCount,
         electionVotes: electionVotes,
         startDate: electionDateStart,
@@ -261,7 +261,7 @@ class _MemberElectionState extends State<MemberElection> {
       ),
       ChairMemberVotes(
         votingCount: votingCount,
-        electionId: "orIEplhDstxiWQdSLHlK",
+        electionId: "ngZiVRVWoMETIGm0VPgj",
         voteChareMemberList: membersWhoAccepted,
         chairmemberVoteList: chairManVotes,
         electionVotes: electionVotes,

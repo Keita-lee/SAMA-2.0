@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/nominationForm.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 
 class NominationHeader extends StatefulWidget {
   TextEditingController controller;
-  Function(String) openNominationForm;
+  String electionId;
+  VoidCallback openElectionForm;
+  Function(int) changePageIndex;
   NominationHeader(
-      {super.key, required this.controller, required this.openNominationForm});
+      {super.key,
+      required this.controller,
+      required this.electionId,
+      required this.openElectionForm,
+      required this.changePageIndex});
 
   @override
   State<NominationHeader> createState() => _NominationHeaderState();
@@ -49,7 +56,7 @@ class _NominationHeaderState extends State<NominationHeader> {
           SizedBox(
             width: MyUtility(context).width / 1.8,
           ),
-          Column(
+          /*  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -79,17 +86,38 @@ class _NominationHeaderState extends State<NominationHeader> {
                 }).toList(),
               ),
             ],
+          ),*/
+          SizedBox(
+            width: 15,
+          ),
+          Visibility(
+            visible: widget.electionId == "" ? true : false,
+            child: StyleButton(
+                description: "New Voting",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.openElectionForm();
+                }),
+          ),
+          Visibility(
+            visible: widget.electionId != "" ? true : false,
+            child: StyleButton(
+                description: "Back",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.changePageIndex(0);
+                }),
           ),
           SizedBox(
             width: 15,
           ),
-          StyleButton(
-              description: "New Voting",
+          /*   StyleButton(
+              description: "View All",
               height: 55,
               width: 125,
-              onTap: () {
-                widget.openNominationForm("");
-              })
+              onTap: () {}) */
         ],
       ),
     );

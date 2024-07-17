@@ -73,7 +73,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
   getUserNotificationList() async {
     final doc = await FirebaseFirestore.instance
         .collection('notifications')
-        .where("data.electionId", isEqualTo: "orIEplhDstxiWQdSLHlK")
+        .where("data.electionId", isEqualTo: "ngZiVRVWoMETIGm0VPgj")
         .get();
     setState(() {
       for (int i = 0; i < (doc.docs).length; i++) {
@@ -180,7 +180,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Chair member vote round open for  /n ${widget.branch}',
+          'Chair member vote round open for ${widget.branch}',
           style: TextStyle(
             fontSize: 25,
             color: Color.fromARGB(255, 0, 159, 158),

@@ -130,7 +130,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     }
 
     var pages = [
-      PostLoginCenter(),
+      PostLoginCenter(userNotification: userNotification),
       CenterOfExcellence(getArticleId: getArticleId, changePage: changePage),
       MemberBenifits(),
       Profile(),
@@ -305,7 +305,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                               ),
                                             ),
                                           ),
-                                          Icon(Icons.search, color: Colors.grey),
+                                          Icon(Icons.search,
+                                              color: Colors.grey),
                                         ],
                                       ),
                                     ),
@@ -317,8 +318,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                               width: widthDevice / 10,
                             ),
                             Visibility(
-                              visible: userType != 'Admin',
-                              child: SamaTopTabBar()),
+                                visible: userType != 'Admin',
+                                child: SamaTopTabBar()),
                             Spacer(),
                             SizedBox(width: 20),
                             Visibility(

@@ -34,7 +34,7 @@ class _ElectionTabStyleState extends State<ElectionTabStyle> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(8),
             color: widget.pageIndex == widget.tabIndexNumber
                 ? widget.customColor2
                 : widget.customColor1,

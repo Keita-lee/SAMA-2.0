@@ -39,6 +39,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
     final data = await FirebaseFirestore.instance
         .collection('nominations')
         .where("userIdWho", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where("electionId", isEqualTo: "ngZiVRVWoMETIGm0VPgj")
         .get();
     setState(() {
       nominationData.clear();
@@ -257,7 +258,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                               1: FlexColumnWidth(3),
                               2: FlexColumnWidth(3),
                               3: FlexColumnWidth(1),
-                              4: FlexColumnWidth(1.2),
+                              4: FlexColumnWidth(1.6),
                               5: FlexColumnWidth(1.2)
                             },
                             children: [
@@ -368,7 +369,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                           padding:
                                               const EdgeInsets.only(right: 60),
                                           child: Container(
-                                            width: 25,
+                                            width: 45,
                                             height: 30,
                                             decoration: BoxDecoration(
                                               borderRadius:

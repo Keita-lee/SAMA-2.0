@@ -46,6 +46,7 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
 
   //get User Notification list who accepted nomination
   getUserNotificationList() async {
+    print(widget.electionId);
     final doc = await FirebaseFirestore.instance
         .collection('notifications')
         .where("data.electionId", isEqualTo: widget.electionId)
@@ -88,181 +89,184 @@ class _Round1NominationsFinishedState extends State<Round1NominationsFinished> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        "Round 1 nominations",
-        style: TextStyle(
-            fontSize: 22,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.bold),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "Round 1 Nominations from ${widget.nominationStartDate} - ${widget.nominationEndDate}",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        CommonService().checkDateStarted(widget.nominationEndDate) == "After"
-            ? "Round 1 Nominations has Finished"
-            : "Round 1 Nominations has not yet Finished",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Row(
-        children: [
-          Text(
-            "HDI compliance checks for nominations:",
-            style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.w500),
-          ),
-          Text(
-            widget.hdiCompliant ? "Enabled" : "Disabled",
-            style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
-      ),
-      SizedBox(
-        height: 30,
-      ),
-      Row(
-        children: [
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text(
-              "SAMA",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text(
-              "HPCSA",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 6,
-            child: Text(
-              "Name",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          Spacer(),
-          Text(
-            "Nom.",
-            style: TextStyle(
-                fontSize: 20,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.w400),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
-      ),
-      for (int i = 0; i < membersWhoAreNominated.length; i++)
-        Column(
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          "Round 1 nominations",
+          style: TextStyle(
+              fontSize: 22,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Round 1 Nominations from ${widget.nominationStartDate} - ${widget.nominationEndDate}",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          CommonService().checkDateStarted(widget.nominationEndDate) == "After"
+              ? "Round 1 Nominations has Finished"
+              : "Round 1 Nominations has not yet Finished",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
           children: [
-            Container(
-              color: Colors.grey,
-              height: 0.5,
-              width: MyUtility(context).width / 1.4,
+            Text(
+              "HDI compliance checks for nominations:",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF174486),
+                  fontWeight: FontWeight.w500),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 8,
-                  child: Text(
-                    membersWhoAreNominated[i]['SamaNr'],
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF174486),
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 8,
-                  child: Text(
-                    membersWhoAreNominated[i]['hpca'],
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF174486),
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 6,
-                  child: Text(
-                    membersWhoAreNominated[i]['name'],
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF174486),
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  membersWhoAreNominated[i]['nominations'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              color: Colors.grey,
-              height: 0.5,
-              width: MyUtility(context).width / 1.4,
+            Text(
+              widget.hdiCompliant ? "Enabled" : "Disabled",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF174486),
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
-    ]);
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+          width: MyUtility(context).width / 0.8,
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MyUtility(context).width / 8,
+              child: Text(
+                "SAMA",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 8,
+              child: Text(
+                "HPCSA",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 6,
+              child: Text(
+                "Name",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+            Spacer(),
+            Text(
+              "Nom.",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF174486),
+                  fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+          width: MyUtility(context).width / 0.8,
+        ),
+        for (int i = 0; i < membersWhoAreNominated.length; i++)
+          Column(
+            children: [
+              Container(
+                color: Colors.grey,
+                height: 0.5,
+                width: MyUtility(context).width / 0.8,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 8,
+                    child: Text(
+                      membersWhoAreNominated[i]['SamaNr'],
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF174486),
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 8,
+                    child: Text(
+                      membersWhoAreNominated[i]['hpca'],
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF174486),
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 6,
+                    child: Text(
+                      membersWhoAreNominated[i]['name'],
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF174486),
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    membersWhoAreNominated[i]['nominations'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.grey,
+                height: 0.5,
+                width: MyUtility(context).width / 0.8,
+              ),
+            ],
+          ),
+      ]),
+    );
   }
 }

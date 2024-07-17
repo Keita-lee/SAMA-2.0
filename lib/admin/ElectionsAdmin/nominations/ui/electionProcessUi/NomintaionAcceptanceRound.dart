@@ -106,236 +106,239 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        "Nomination acceptance round",
-        style: TextStyle(
-            fontSize: 22,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.bold),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "The collection round is from ${widget.nominateAcceptStartDate} - ${widget.nominateAcceptEndDate}",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "Candidate with 2 or more nomination collection round has been accepted",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "Memebrs that have been seconded and invirted to stand for the round 2 election",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.bold),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Row(
-        children: [
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text(
-              "SAMA",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 8,
-            child: Text(
-              "HPCSA",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 6,
-            child: Text(
-              "Name",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          Spacer(),
-          Text(
-            "State",
-            style: TextStyle(
-                fontSize: 20,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Text(
-            "Result",
-            style: TextStyle(
-                fontSize: 20,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
-      ),
-      SizedBox(
-        height: 25,
-      ),
-      for (int i = 0; i < membersWhoAccepted.length; i++)
-        Column(children: [
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: MyUtility(context).width / 8,
-                child: Text(
-                  membersWhoAccepted[i]['SamaNr'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-              SizedBox(
-                width: MyUtility(context).width / 8,
-                child: Text(
-                  membersWhoAccepted[i]['hpca'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-              SizedBox(
-                width: MyUtility(context).width / 6,
-                child: Text(
-                  membersWhoAccepted[i]['name'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-              Spacer(),
-              Text(
-                membersWhoAccepted[i]['state'],
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          "Nomination acceptance round",
+          style: TextStyle(
+              fontSize: 22,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "The collection round is from ${widget.nominateAcceptStartDate} - ${widget.nominateAcceptEndDate}",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Candidate with 2 or more nomination collection round has been accepted",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Memebrs that have been seconded and invirted to stand for the round 2 election",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+          width: MyUtility(context).width / 0.8,
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MyUtility(context).width / 8,
+              child: Text(
+                "SAMA",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     color: Color(0xFF174486),
-                    fontWeight: FontWeight.w400),
+                    fontWeight: FontWeight.w600),
               ),
-              SizedBox(
-                width: 15,
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 8,
+              child: Text(
+                "HPCSA",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w600),
               ),
-              Visibility(
-                visible: CommonService()
-                        .checkDateStarted(widget.nominateAcceptEndDate) ==
-                    "Before",
-                child: GestureDetector(
-                  onTap: () {
-                    acceptNominationForUser(
-                        membersWhoAccepted[i]['notificationId'],
-                        membersWhoAccepted[i]['result'] == "Accept"
-                            ? false
-                            : true);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Container(
-                      width: 60,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: membersWhoAccepted[i]['result'] == "Accept"
-                            ? Color(0xFF174486)
-                            : Colors.grey, // Update this line
-                      ),
-                      child: Align(
-                        alignment: membersWhoAccepted[i]['result'] == "Accept"
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft, // Update this line
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          margin: EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 6,
+              child: Text(
+                "Name",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            Spacer(),
+            Text(
+              "State",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF174486),
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              "Result",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF174486),
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+          width: MyUtility(context).width / 0.8,
+        ),
+        SizedBox(
+          height: 25,
+        ),
+        for (int i = 0; i < membersWhoAccepted.length; i++)
+          Column(children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: MyUtility(context).width / 8,
+                  child: Text(
+                    membersWhoAccepted[i]['SamaNr'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 8,
+                  child: Text(
+                    membersWhoAccepted[i]['hpca'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 6,
+                  child: Text(
+                    membersWhoAccepted[i]['name'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  membersWhoAccepted[i]['state'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF174486),
+                      fontWeight: FontWeight.w400),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Visibility(
+                  visible: CommonService()
+                          .checkDateStarted(widget.nominateAcceptEndDate) ==
+                      "Before",
+                  child: GestureDetector(
+                    onTap: () {
+                      acceptNominationForUser(
+                          membersWhoAccepted[i]['notificationId'],
+                          membersWhoAccepted[i]['result'] == "Accept"
+                              ? false
+                              : true);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Container(
+                        width: 60,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: membersWhoAccepted[i]['result'] == "Accept"
+                              ? Color(0xFF174486)
+                              : Colors.grey, // Update this line
+                        ),
+                        child: Align(
+                          alignment: membersWhoAccepted[i]['result'] == "Accept"
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft, // Update this line
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            margin: EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: CommonService()
-                        .checkDateStarted(widget.nominateAcceptEndDate) ==
-                    "After",
-                child: Text(
-                  membersWhoAccepted[i]['result'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
+                Visibility(
+                  visible: CommonService()
+                          .checkDateStarted(widget.nominateAcceptEndDate) ==
+                      "After",
+                  child: Text(
+                    membersWhoAccepted[i]['result'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 0.5,
-            width: MyUtility(context).width / 1.4,
-          ),
-        ])
-    ]);
+                SizedBox(
+                  width: 15,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 0.5,
+              width: MyUtility(context).width / 0.8,
+            ),
+          ])
+      ]),
+    );
   }
 }

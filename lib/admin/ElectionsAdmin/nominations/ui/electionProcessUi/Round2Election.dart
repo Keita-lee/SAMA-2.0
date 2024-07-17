@@ -104,213 +104,216 @@ class _Round2ElectionState extends State<Round2Election> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        "Round 2 elections",
-        style: TextStyle(
-            fontSize: 22,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.bold),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "Round 2 elections from ${widget.electionDateStart} - ${widget.electionDateEnd}",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        CommonService().checkDateStarted(widget.electionDateStart) == "After"
-            ? "Round 2 elections has Finished"
-            : "Round 2 elections has not yet Finished",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.w500),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Row(
-        children: [
-          Text(
-            "HDI compliance checks for elections:",
-            style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.w500),
-          ),
-          Text(
-            widget.hdiCompliant ? "Enabled" : "Disabled",
-            style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF174486),
-                fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Text(
-        "Election Results",
-        style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF174486),
-            fontWeight: FontWeight.bold),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Row(
-        children: [
-          SizedBox(
-            width: MyUtility(context).width / 9,
-            child: Text(
-              "SAMA",
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          "Round 2 elections",
+          style: TextStyle(
+              fontSize: 22,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Round 2 elections from ${widget.electionDateStart} - ${widget.electionDateEnd}",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          CommonService().checkDateStarted(widget.electionDateStart) == "After"
+              ? "Round 2 elections has Finished"
+              : "Round 2 elections has not yet Finished",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            Text(
+              "HDI compliance checks for elections:",
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
+                  fontWeight: FontWeight.w500),
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 9,
-            child: Text(
-              "HPCSA",
+            Text(
+              widget.hdiCompliant ? "Enabled" : "Disabled",
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
+                  fontWeight: FontWeight.bold),
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 6,
-            child: Text(
-              "Name",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Election Results",
+          style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF174486),
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+          width: MyUtility(context).width / 0.8,
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MyUtility(context).width / 9,
+              child: Text(
+                "SAMA",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
             ),
-          ),
-          Spacer(),
-          SizedBox(
-            width: MyUtility(context).width / 11,
-            child: Text(
-              "HDI Status",
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
+            SizedBox(
+              width: MyUtility(context).width / 9,
+              child: Text(
+                "HPCSA",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 11,
-            child: Text(
-              "Votes",
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF174486),
-                  fontWeight: FontWeight.w400),
+            SizedBox(
+              width: MyUtility(context).width / 6,
+              child: Text(
+                "Name",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
             ),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        color: Colors.grey,
-        height: 1,
-        width: MyUtility(context).width / 1.4,
-      ),
-      for (int i = 0; i < membersWhoAccepted.length; i++)
-        Column(children: [
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: MyUtility(context).width / 8,
-                child: Text(
-                  membersWhoAccepted[i]['SamaNr'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
+            Spacer(),
+            SizedBox(
+              width: MyUtility(context).width / 11,
+              child: Text(
+                "HDI Status",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 11,
+              child: Text(
+                "Votes",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF174486),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+          width: MyUtility(context).width / 0.8,
+        ),
+        for (int i = 0; i < membersWhoAccepted.length; i++)
+          Column(children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: MyUtility(context).width / 8,
+                  child: Text(
+                    membersWhoAccepted[i]['SamaNr'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: MyUtility(context).width / 8,
-                child: Text(
-                  membersWhoAccepted[i]['hpca'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
+                SizedBox(
+                  width: MyUtility(context).width / 8,
+                  child: Text(
+                    membersWhoAccepted[i]['hpca'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: MyUtility(context).width / 6,
-                child: Text(
-                  membersWhoAccepted[i]['name'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
+                SizedBox(
+                  width: MyUtility(context).width / 6,
+                  child: Text(
+                    membersWhoAccepted[i]['name'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              Spacer(),
-              SizedBox(
-                width: MyUtility(context).width / 11,
-                child: Text(
-                  membersWhoAccepted[i]['hdiStatus'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
+                Spacer(),
+                SizedBox(
+                  width: MyUtility(context).width / 11,
+                  child: Text(
+                    membersWhoAccepted[i]['hdiStatus'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: MyUtility(context).width / 11,
-                child: Text(
-                  membersWhoAccepted[i]['votes'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.w400),
+                SizedBox(
+                  width: MyUtility(context).width / 11,
+                  child: Text(
+                    membersWhoAccepted[i]['votes'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            color: Colors.grey,
-            height: 0.5,
-            width: MyUtility(context).width / 1.4,
-          ),
-        ])
-    ]);
+                SizedBox(
+                  width: 15,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              color: Colors.grey,
+              height: 0.5,
+              width: MyUtility(context).width / 0.8,
+            ),
+          ])
+      ]),
+    );
   }
 }
