@@ -6,8 +6,9 @@ import 'package:sama/components/service/commonService.dart';
 import 'package:sama/member/election/electionRounds/acceptanceRound.dart';
 import 'package:sama/member/election/electionRounds/chairMemberVotes.dart';
 import 'package:sama/member/election/electionRounds/electionOverView.dart';
+import 'package:sama/member/election/electionRounds/electionStatus.dart';
 import 'package:sama/member/election/electionRounds/electionSummaryView.dart';
-import 'package:sama/member/election/electionRounds/memberElectionRound1.dart';
+import 'package:sama/member/election/electionRounds/nominations/memberElectionRound1.dart';
 import 'package:sama/member/election/electionRounds/memberElectionsRound2.dart';
 import 'package:sama/components/electionTabStyle.dart';
 
@@ -36,6 +37,9 @@ class _MemberElectionState extends State<MemberElection> {
   bool hdiStatus = false;
   String votingClosingDate = "";
   String votingCount = "";
+
+  String currentStartDate = "";
+  String currentEndDate = "";
   //First part
   String nominateStartDate = "";
   String nominateEndDate = "";
@@ -90,18 +94,24 @@ class _MemberElectionState extends State<MemberElection> {
       setState(() {
         votingStatus = "Nominations";
         votingClosingDate = nominateEndDate;
+        currentStartDate = nominateStartDate;
+        currentEndDate = nominateEndDate;
       });
     } else if (CommonService()
         .checkDatePeriod(nominateAcceptStartDate, nominateAcceptEndDate)) {
       setState(() {
         votingStatus = "Nomination Acceptance";
         votingClosingDate = nominateAcceptEndDate;
+        currentStartDate = nominateAcceptStartDate;
+        currentEndDate = nominateAcceptEndDate;
       });
     } else if (CommonService()
         .checkDatePeriod(electionDateStart, electionDateEnd)) {
       setState(() {
         votingStatus = "Elections";
         votingClosingDate = electionDateEnd;
+        currentStartDate = electionDateStart;
+        currentEndDate = electionDateEnd;
       });
     }
   }
@@ -163,7 +173,7 @@ class _MemberElectionState extends State<MemberElection> {
   getUserNotificationList() async {
     final doc = await FirebaseFirestore.instance
         .collection('notifications')
-        .where("data.electionId", isEqualTo: "orIEplhDstxiWQdSLHlK")
+        .where("data.electionId", isEqualTo: "ngZiVRVWoMETIGm0VPgj")
         .get();
     setState(() {
       for (int i = 0; i < (doc.docs).length; i++) {
@@ -305,13 +315,13 @@ class _MemberElectionState extends State<MemberElection> {
                 });
               },
               tabIndexNumber: 1,
-              description: "Round 1",
+              description: "Nominations",
               customWidth: 150,
               customColor1: Color.fromARGB(255, 211, 210, 210),
               customColor2: Color.fromARGB(255, 0, 159, 158),
               pageIndex: pageIndex,
             ),
-            ElectionTabStyle(
+            /* ElectionTabStyle(
               changePage: () {
                 setState(() {
                   pageIndex = 2;
@@ -323,7 +333,7 @@ class _MemberElectionState extends State<MemberElection> {
               customColor1: Color.fromARGB(255, 211, 210, 210),
               customColor2: Color.fromARGB(255, 0, 159, 158),
               pageIndex: pageIndex,
-            ),
+            ),*/
             ElectionTabStyle(
               changePage: () {
                 setState(() {
@@ -331,7 +341,7 @@ class _MemberElectionState extends State<MemberElection> {
                 });
               },
               tabIndexNumber: 3,
-              description: "Round 2",
+              description: "Voting",
               customWidth: 150,
               customColor1: Color.fromARGB(255, 211, 210, 210),
               customColor2: Color.fromARGB(255, 0, 159, 158),
@@ -354,6 +364,28 @@ class _MemberElectionState extends State<MemberElection> {
         ),
         SizedBox(
           height: 20,
+        ),
+        Visibility(
+          visible: pageIndex == 0 ? true : false,
+          child: Container(
+              width: MyUtility(context).width * 0.8,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: Color(0xFFD1D1D1),
+                  )),
+              child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ElectionStatus(
+                      startDate: currentStartDate,
+                      endDate: currentEndDate,
+                      status: votingStatus,
+                      statusClosingDate: votingClosingDate,
+                      branch: branch))),
+        ),
+        SizedBox(
+          height: 15,
         ),
         Container(
             width: MyUtility(context).width * 0.8,
@@ -446,7 +478,7 @@ class _MemberElectionState extends State<MemberElection> {
         ),
         /* ChairMemberVotes(
             votingCount: votingCount,
-            electionId: "orIEplhDstxiWQdSLHlK",
+            electionId: "ngZiVRVWoMETIGm0VPgj",
             voteChareMemberList: membersWhoAccepted,
             chairmemberVoteList: chairManVotes,
             electionVotes: electionVotes),*/

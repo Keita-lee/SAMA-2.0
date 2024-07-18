@@ -5,6 +5,9 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/login/popups/validateDialog.dart';
 import 'package:sama/member/election/viewMemberBio.dart';
 
+import '../../../../components/service/commonService.dart';
+import 'acceptNomination.dart';
+
 class MemberElectionRound1 extends StatefulWidget {
   String branch;
   String electionId;
@@ -33,6 +36,9 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
   //var
   List nominationData = [];
   var userNominateCount = 0;
+
+//Textediting controller
+  final search = TextEditingController();
 
 //get nomination made by user
   getUsersNominations() async {
@@ -106,7 +112,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
         .get();
 
     for (int i = 0; i < (doc.docs).length; i++) {
-      if (doc.docs[i]['data']['electionId'] == "orIEplhDstxiWQdSLHlK") {
+      if (doc.docs[i]['data']['electionId'] == "ngZiVRVWoMETIGm0VPgj") {
         notificationSent = true;
       }
     }
@@ -124,7 +130,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
       "read": false,
       "type": "Nomination",
       "data": {
-        "electionId": "orIEplhDstxiWQdSLHlK",
+        "electionId": "ngZiVRVWoMETIGm0VPgj",
         "acceptDate": widget.acceptDate,
         "accept": false
       }
@@ -139,7 +145,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
 
     for (int i = 0; i < (notificationDoc.docs).length; i++) {
       if (notificationDoc.docs[i]['data']['electionId'] ==
-          "orIEplhDstxiWQdSLHlK") {
+          "ngZiVRVWoMETIGm0VPgj") {
         notificationSent = true;
       }
     }
@@ -174,6 +180,20 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
         ));
       });
 
+  searchList(name, surname, email, hpcsa, samaNo) {
+    if (search.text == "") {
+      return true;
+    } else if (search.text.contains(name) ||
+        search.text.contains(surname) ||
+        search.text.contains(email) ||
+        search.text.contains(name) ||
+        search.text.contains(samaNo)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     getUsersNominations();
@@ -184,6 +204,12 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        AcceptNomination(
+          branch: widget.branch,
+        ),
+        SizedBox(
+          height: 15,
+        ),
         Text(
           'Nomination round open for ${widget.branch}',
           style: TextStyle(
@@ -196,7 +222,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
           height: 20,
         ),
         Text(
-          'Period ${widget.startDate} to ${widget.endDate}',
+          'Period ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
           style: TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 58, 65, 65),
@@ -212,6 +238,30 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
             fontSize: 18,
             color: Color.fromARGB(255, 58, 65, 65),
             fontWeight: FontWeight.normal,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          width: 250,
+          height: 55,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(color: Color.fromRGBO(170, 170, 170, 1.0)),
+          ),
+          child: Center(
+            child: TextField(
+              controller: search,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(bottom: 10),
+                hintText: 'Search',
+                border: InputBorder.none,
+                hintStyle: TextStyle(color: Color.fromRGBO(170, 170, 170, 1.0)),
+              ),
+            ),
           ),
         ),
         SizedBox(

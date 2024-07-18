@@ -32,7 +32,7 @@ class _TestState extends State<Test> {
             child: Row(
               children: [
                 Text(
-                  'Media & Podcast',
+                  'Media & Webinars',
                   style: TextStyle(
                       fontSize: 18,
                       color: Color(0xFF174486),

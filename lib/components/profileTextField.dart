@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProfileTextField extends StatefulWidget {
   double customSize;
+  double? customHeight;
   String textFieldType;
   final TextEditingController textfieldController;
   String? description;
@@ -12,6 +13,7 @@ class ProfileTextField extends StatefulWidget {
       {super.key,
       this.lines,
       required this.customSize,
+      this.customHeight,
       required this.textFieldType,
       required this.textfieldController,
       this.description,
@@ -29,9 +31,9 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
-          visible: widget.description == null? false : true,
+          visible: widget.description == null ? false : true,
           child: Text(
-           widget.description == null? '' : widget.description! ,
+            widget.description == null ? '' : widget.description!,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -41,7 +43,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
         ),
         Container(
           width: widget.customSize,
-          height: 50,
+          height: widget.customHeight != null ? widget.customHeight : 50,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -121,9 +123,9 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-            visible: widget.description == null? false : true,
+            visible: widget.description == null ? false : true,
             child: Text(
-               widget.description == null? '' : widget.description! ,
+              widget.description == null ? '' : widget.description!,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,

@@ -9,12 +9,14 @@ class NominationHeader extends StatefulWidget {
   String electionId;
   VoidCallback openElectionForm;
   Function(int) changePageIndex;
+  int pageIndex;
   NominationHeader(
       {super.key,
       required this.controller,
       required this.electionId,
       required this.openElectionForm,
-      required this.changePageIndex});
+      required this.changePageIndex,
+      required this.pageIndex});
 
   @override
   State<NominationHeader> createState() => _NominationHeaderState();
@@ -103,11 +105,36 @@ class _NominationHeaderState extends State<NominationHeader> {
           Visibility(
             visible: widget.electionId != "" ? true : false,
             child: StyleButton(
-                description: "Back",
+                description: "Back To Branch records ",
+                height: 55,
+                width: 175,
+                onTap: () {
+                  widget.changePageIndex(0);
+                }),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Visibility(
+            visible:
+                widget.electionId != "" && widget.pageIndex != 2 ? true : false,
+            child: StyleButton(
+                description: "OverView",
                 height: 55,
                 width: 125,
                 onTap: () {
-                  widget.changePageIndex(0);
+                  widget.changePageIndex(2);
+                }),
+          ),
+          Visibility(
+            visible:
+                widget.electionId != "" && widget.pageIndex != 1 ? true : false,
+            child: StyleButton(
+                description: "View Setup",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.changePageIndex(1);
                 }),
           ),
           SizedBox(

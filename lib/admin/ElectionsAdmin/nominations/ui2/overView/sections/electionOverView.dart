@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui2/Excel/acceptanceRoundEx.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui2/Excel/chairPersonEx.dart';
 
-import '../../../../../components/styleButton.dart';
-import '../../ui/electionOverviewItem.dart';
-import '../Excel/round1Ex.dart';
-import '../Excel/round2Ex.dart';
+import '../../../../../../components/styleButton.dart';
+import '../../../ui/electionOverviewItem.dart';
+import '../../Excel/round1Ex.dart';
+import '../../Excel/round2Ex.dart';
 
 class ElectionOverView extends StatefulWidget {
   String nominateStartDate;

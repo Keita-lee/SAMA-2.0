@@ -145,7 +145,9 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       final data = await FirebaseFirestore.instance
           .collection('events')
           .doc(widget.id)
-          .update({"attending": attending}).whenComplete(widget.closeDialog());
+          .update({"attending": attending}).whenComplete(() {
+        validateBooking("Booking made successfully");
+      });
     }
   }
 
@@ -184,8 +186,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
           .collection('events')
           .doc(widget.id)
           .update({"attending": attending}).whenComplete(
-              validateBooking("Booking made successfully") as FutureOr<void>
-                  Function());
+              validateBooking("Booking Updated") as FutureOr<void> Function());
     }
   }
 
@@ -212,6 +213,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
     }
 
     return Container(
+      color: Colors.white,
       width: MyUtility(context).width * 0.50,
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
@@ -223,8 +225,41 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
               child: Container(
                 padding: const EdgeInsets.only(top: 5, bottom: 25),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Visibility(
+                      visible: eventsImage == "" ? true : false,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("images/imageIcon.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          width: MyUtility(context).width * 0.1,
+                          height: MyUtility(context).height * 0.1,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: eventsImage == "" ? false : true,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: ImageNetwork(
+                            image: eventsImage,
+                            width: MyUtility(context).width * 0.1,
+                            height: MyUtility(context).height * 0.1,
+                            fitWeb: BoxFitWeb.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text(
                       'Events Details',
                       style: TextStyle(

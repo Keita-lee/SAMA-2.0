@@ -28,7 +28,7 @@ class _MemberMediaState extends State<MemberMedia> {
     return Container(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Media & Podcast',
+        'Media & Webinars',
         style: TextStyle(
             fontSize: 32,
             color: Color(0xFF3D3D3D),
@@ -50,7 +50,7 @@ class _MemberMediaState extends State<MemberMedia> {
 
             final List<DocumentSnapshot> documents = snapshot.data!.docs;
             if (documents.isEmpty) {
-              return Center(child: Text('No Media Podcast yet'));
+              return Center(child: Text('No Media & Webinars yet'));
             }
 
             return Container(

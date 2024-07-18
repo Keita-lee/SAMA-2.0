@@ -1,33 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sama/admin/ElectionsAdmin/nominations/ui2/overView/sections/electionOverView.dart';
 
-import '../../../../components/electionTabStyle.dart';
-import '../../../../components/myutility.dart';
-import '../../../../components/service/commonService.dart';
-import '../../../../components/yesNoDialog.dart';
-import 'overView/sections/acceptanceRoundOverView.dart';
-import 'overView/sections/chairPersonOverview.dart';
-import 'overView/sections/electionOverView.dart';
-import 'overView/sections/round1OverView.dart';
-import 'overView/sections/round2OverView.dart';
-import 'setup/setupAcceptance.dart';
-import 'setup/setupChairPersonElection.dart';
-import 'setup/setupElection2.dart';
-import 'setup/setupRound1.dart';
-import 'setup/setupRound2.dart';
+import '../../../../../components/electionTabStyle.dart';
+import '../../../../../components/myutility.dart';
+import '../../../../../components/service/commonService.dart';
+import '../../../../../components/yesNoDialog.dart';
+import '../setup/setupAcceptance.dart';
+import '../setup/setupChairPersonElection.dart';
+import '../setup/setupElection2.dart';
+import '../setup/setupRound1.dart';
+import '../setup/setupRound2.dart';
+import 'sections/acceptanceRoundOverView.dart';
+import 'sections/chairPersonOverview.dart';
+import 'sections/round1OverView.dart';
+import 'sections/round2OverView.dart';
 
-class ManageElection extends StatefulWidget {
+class OverViewElection extends StatefulWidget {
   String id;
   Function(int) changePageIndex;
 
-  ManageElection({super.key, required this.id, required this.changePageIndex});
+  OverViewElection(
+      {super.key, required this.id, required this.changePageIndex});
 
   @override
-  State<ManageElection> createState() => _ManageElectionState();
+  State<OverViewElection> createState() => _OverViewElectionState();
 }
 
-class _ManageElectionState extends State<ManageElection> {
+class _OverViewElectionState extends State<OverViewElection> {
   // Text controllers
   final selectBranch = TextEditingController();
   final nominateStartDate = TextEditingController();
@@ -50,7 +51,7 @@ class _ManageElectionState extends State<ManageElection> {
   List chairMemberVoteList = [];
   String status = "";
   int nomintionCount = 0;
-  int pageIndex = 0;
+  int pageIndex = 1;
   int electionIndex = 0;
 
   updateStatus() {
@@ -277,14 +278,13 @@ class _ManageElectionState extends State<ManageElection> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
           visible: widget.id == "" ? false : true,
           child: Row(
             children: [
-              ElectionTabStyle(
-                changePage: () {
+              /*     ElectionTabStyle(
+              changePage: () {
                   setState(() {
                     pageIndex = 0;
                   });
@@ -295,8 +295,8 @@ class _ManageElectionState extends State<ManageElection> {
                 customColor1: Color.fromARGB(255, 211, 210, 210),
                 customColor2: Color(0xFF174486),
                 pageIndex: pageIndex,
-              ),
-              /*      ElectionTabStyle(
+              ),*/
+              ElectionTabStyle(
                 changePage: () {
                   setState(() {
                     pageIndex = 1;
@@ -361,7 +361,6 @@ class _ManageElectionState extends State<ManageElection> {
                 customColor2: Color(0xFF174486),
                 pageIndex: pageIndex,
               ),
-            */
             ],
           ),
         ),

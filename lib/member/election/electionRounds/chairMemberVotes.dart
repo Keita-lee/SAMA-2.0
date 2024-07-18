@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/login/popups/validateDialog.dart';
 
+import '../../../components/service/commonService.dart';
+
 class ChairMemberVotes extends StatefulWidget {
   List voteChareMemberList;
   List chairmemberVoteList;
@@ -55,18 +57,19 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
       "hpca": doc.get("hpcsa"),
       "email": "${doc.get("email")}",
       "hdi":
-          '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"}',
+          '${doc["race"] == "White/Caucasian" || doc["race"] == "Other" ? "" : "HDI"}',
       "votes": getVotes(doc.get("email"))
     };
-    print("TEST");
+
     setState(() {
       if (getNominationsForUser(doc.get("email")) >= 2 &&
           membersWhoAccepted.length <= int.parse(widget.votingCount)) {
-        membersWhoAccepted.add(userData);
         print(userData);
+
+        membersWhoAccepted.add(userData);
+        /*  */
       }
     });
-    print("TEST");
   }
 
   //get User Notification list who accepted nomination
@@ -191,7 +194,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
           height: 20,
         ),
         Text(
-          'Period ${widget.startDate} to ${widget.endDate}',
+          'Period ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
           style: TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 58, 65, 65),
@@ -284,8 +287,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                               onTap: () {
-                                voteForMember(
-                                    widget.voteChareMemberList[i]["email"]);
+                                voteForMember(membersWhoAccepted[i]["email"]);
                                 //  voteForMember(membersWhoAccepted[i]["email"]);
                               },
                               child: Padding(
@@ -295,16 +297,15 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
                                   height: 30,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15.0),
-                                    color: (checkIfVoted(
-                                                widget.voteChareMemberList[i]
-                                                    ["email"]) ==
+                                    color: (checkIfVoted(membersWhoAccepted[i]
+                                                ["email"]) ==
                                             true)
                                         ? Color(0xFF174486)
                                         : Colors.grey,
                                   ),
                                   child: Align(
                                     alignment: (checkIfVoted(
-                                                widget.voteChareMemberList[i]
+                                                membersWhoAccepted[i]
                                                     ["email"]) ==
                                             true)
                                         ? Alignment.centerRight

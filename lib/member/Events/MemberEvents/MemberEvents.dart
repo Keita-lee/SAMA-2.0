@@ -74,7 +74,7 @@ class _MemberEventsState extends State<MemberEvents> {
 
             final List<DocumentSnapshot> documents = snapshot.data!.docs;
             if (documents.isEmpty) {
-              return Center(child: Text('No Media Podcast yet'));
+              return Center(child: Text('No Media & Webinars yet'));
             }
 
             return Container(

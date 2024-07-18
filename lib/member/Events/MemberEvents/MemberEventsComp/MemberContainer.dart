@@ -148,15 +148,34 @@ class _MemberContainerState extends State<MemberContainer> {
           SizedBox(
             width: MyUtility(context).width * 0.025,
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: ImageNetwork(
-                image: widget.eventImage,
+          Visibility(
+            visible: widget.eventImage == "" ? true : false,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/imageIcon.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 width: MyUtility(context).width * 0.1,
                 height: MyUtility(context).height * 0.1,
-                fitWeb: BoxFitWeb.cover,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: widget.eventImage == "" ? false : true,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: ImageNetwork(
+                  image: widget.eventImage,
+                  width: MyUtility(context).width * 0.1,
+                  height: MyUtility(context).height * 0.1,
+                  fitWeb: BoxFitWeb.cover,
+                ),
               ),
             ),
           ),

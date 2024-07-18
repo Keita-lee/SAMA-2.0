@@ -1,34 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../components/utility.dart';
-import '../Excel/chairPersonEx.dart';
+import '../../../../../../components/myutility.dart';
+import '../../Excel/round2Ex.dart';
 
-class ChairPersonOverview extends StatefulWidget {
-  String chairMemberStartDate;
-  String chairMemberEndDate;
-  List chairMemberVoteList;
+class Round2OverView extends StatefulWidget {
+  String electionDateStart;
+  String electionDateEnd;
   String electionId;
-  ChairPersonOverview(
+  List electionVotes;
+  bool hdiCompliant;
+  Round2OverView(
       {super.key,
-      required this.chairMemberEndDate,
-      required this.chairMemberStartDate,
-      required this.chairMemberVoteList,
-      required this.electionId});
+      required this.electionDateStart,
+      required this.electionDateEnd,
+      required this.electionId,
+      required this.electionVotes,
+      required this.hdiCompliant});
 
   @override
-  State<ChairPersonOverview> createState() => _ChairPersonOverviewState();
+  State<Round2OverView> createState() => _Round2OverViewState();
 }
 
-class _ChairPersonOverviewState extends State<ChairPersonOverview> {
+class _Round2OverViewState extends State<Round2OverView> {
   //var
   List membersWhoAccepted = [];
   List nominations = [];
 
   getVotes(email) {
     var totalVotes = 0;
-    for (int i = 0; i < (widget.chairMemberVoteList).length; i++) {
-      if (widget.chairMemberVoteList[i]['email'] == email) {
+    for (int i = 0; i < (widget.electionVotes).length; i++) {
+      if (widget.electionVotes[i]['email'] == email) {
         totalVotes = totalVotes + 1;
       }
     }
@@ -54,8 +56,6 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
         membersWhoAccepted.add(userData);
       }
     });
-
-    membersWhoAccepted.sort((b, a) => a["votes"].compareTo(b["votes"]));
   }
 
   //get User Notification list who accepted nomination
@@ -110,7 +110,7 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
           Row(
             children: [
               Text(
-                "Chairperson Elections",
+                "Round 2 Elections",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -120,8 +120,8 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
               Spacer(),
               InkWell(
                 onTap: () {
-                  ChairPersonEx().exportChairPerson(widget.chairMemberStartDate,
-                      widget.chairMemberEndDate, membersWhoAccepted);
+                  Round2Excel().exportRound2(widget.electionDateStart,
+                      widget.electionDateEnd, membersWhoAccepted);
                 },
                 child: Text(
                   "Export Result in Excel",
@@ -139,7 +139,7 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
           Row(
             children: [
               Text(
-                '${widget.chairMemberStartDate}   -   ',
+                '${widget.electionDateStart}   -   ',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
@@ -147,7 +147,7 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
                 ),
               ),
               Text(
-                widget.chairMemberEndDate,
+                widget.electionDateEnd,
                 style: TextStyle(
                     color: Color(0xFF6A6A6A),
                     fontWeight: FontWeight.w500,
@@ -284,6 +284,14 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
                     width: 15,
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.grey,
+                height: 0.5,
+                width: MyUtility(context).width / 0.8,
               ),
             ])
         ])));

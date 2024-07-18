@@ -13,6 +13,8 @@ import 'dart:io';
 
 import 'package:sama/components/yesNoDialog.dart';
 
+import '../../../Login/popups/validateDialog.dart';
+
 class NewEvent extends StatefulWidget {
   Function closeDialog;
   String id;
@@ -48,6 +50,16 @@ class _NewEventState extends State<NewEvent> {
 
   DateTime? releaseDate;
 
+  //Dialog  already made booking
+  Future descriptionPopup(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: description,
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
 //create new event / update
   createUpdateEvent() async {
     var eventData = {
@@ -80,7 +92,7 @@ class _NewEventState extends State<NewEvent> {
           .collection("events")
           .doc(widget.id)
           .update(eventData)
-          .whenComplete(() => widget.closeDialog());
+          .whenComplete(() => descriptionPopup("Event Saved"));
     }
   }
 

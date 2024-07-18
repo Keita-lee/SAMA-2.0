@@ -1,36 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../components/myutility.dart';
-import '../Excel/round2Ex.dart';
+import '../../../../../../components/utility.dart';
+import '../../Excel/chairPersonEx.dart';
 
-class Round2OverView extends StatefulWidget {
-  String electionDateStart;
-  String electionDateEnd;
+class ChairPersonOverview extends StatefulWidget {
+  String chairMemberStartDate;
+  String chairMemberEndDate;
+  List chairMemberVoteList;
   String electionId;
-  List electionVotes;
-  bool hdiCompliant;
-  Round2OverView(
+  ChairPersonOverview(
       {super.key,
-      required this.electionDateStart,
-      required this.electionDateEnd,
-      required this.electionId,
-      required this.electionVotes,
-      required this.hdiCompliant});
+      required this.chairMemberEndDate,
+      required this.chairMemberStartDate,
+      required this.chairMemberVoteList,
+      required this.electionId});
 
   @override
-  State<Round2OverView> createState() => _Round2OverViewState();
+  State<ChairPersonOverview> createState() => _ChairPersonOverviewState();
 }
 
-class _Round2OverViewState extends State<Round2OverView> {
+class _ChairPersonOverviewState extends State<ChairPersonOverview> {
   //var
   List membersWhoAccepted = [];
   List nominations = [];
 
   getVotes(email) {
     var totalVotes = 0;
-    for (int i = 0; i < (widget.electionVotes).length; i++) {
-      if (widget.electionVotes[i]['email'] == email) {
+    for (int i = 0; i < (widget.chairMemberVoteList).length; i++) {
+      if (widget.chairMemberVoteList[i]['email'] == email) {
         totalVotes = totalVotes + 1;
       }
     }
@@ -56,6 +54,8 @@ class _Round2OverViewState extends State<Round2OverView> {
         membersWhoAccepted.add(userData);
       }
     });
+
+    membersWhoAccepted.sort((b, a) => a["votes"].compareTo(b["votes"]));
   }
 
   //get User Notification list who accepted nomination
@@ -110,7 +110,7 @@ class _Round2OverViewState extends State<Round2OverView> {
           Row(
             children: [
               Text(
-                "Round 2 Elections",
+                "Chairperson Elections",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -120,8 +120,8 @@ class _Round2OverViewState extends State<Round2OverView> {
               Spacer(),
               InkWell(
                 onTap: () {
-                  Round2Excel().exportRound2(widget.electionDateStart,
-                      widget.electionDateEnd, membersWhoAccepted);
+                  ChairPersonEx().exportChairPerson(widget.chairMemberStartDate,
+                      widget.chairMemberEndDate, membersWhoAccepted);
                 },
                 child: Text(
                   "Export Result in Excel",
@@ -139,7 +139,7 @@ class _Round2OverViewState extends State<Round2OverView> {
           Row(
             children: [
               Text(
-                '${widget.electionDateStart}   -   ',
+                '${widget.chairMemberStartDate}   -   ',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
@@ -147,7 +147,7 @@ class _Round2OverViewState extends State<Round2OverView> {
                 ),
               ),
               Text(
-                widget.electionDateEnd,
+                widget.chairMemberEndDate,
                 style: TextStyle(
                     color: Color(0xFF6A6A6A),
                     fontWeight: FontWeight.w500,
@@ -284,14 +284,6 @@ class _Round2OverViewState extends State<Round2OverView> {
                     width: 15,
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                color: Colors.grey,
-                height: 0.5,
-                width: MyUtility(context).width / 0.8,
               ),
             ])
         ])));

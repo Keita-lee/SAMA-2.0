@@ -289,18 +289,30 @@ class _MediaFormState extends State<MediaForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ProfileTextField(
-                          customSize: MyUtility(context).width / 4,
-                          description: "Description:",
-                          textfieldController: description,
+                        customSize: MyUtility(context).width / 2,
+                        description: "Description:",
+                        textfieldController: description,
+                        customHeight: 100,
+                        textFieldType: "stringType",
+                        lines: 6,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ProfileTextField(
+                          customSize: MyUtility(context).width / 2,
+                          description: "Youtube Link",
+                          textfieldController: urlLink,
                           textFieldType: "stringType"),
                       SizedBox(
                         width: 8,
                       ),
-                      ProfileTextField(
-                          customSize: MyUtility(context).width / 4,
-                          description: "Youtube Link",
-                          textfieldController: urlLink,
-                          textFieldType: "stringType"),
                     ],
                   ),
                   SizedBox(height: 20),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/service/commonService.dart';
+
 class AcceptanceRound extends StatefulWidget {
   String startDate;
   String endDate;
@@ -21,7 +23,7 @@ class _AcceptanceRoundState extends State<AcceptanceRound> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Acceptance round open for  /n ${widget.branch}',
+          'Acceptance round open for ${widget.branch}',
           style: TextStyle(
             fontSize: 25,
             color: Color.fromARGB(255, 0, 159, 158),
@@ -32,7 +34,7 @@ class _AcceptanceRoundState extends State<AcceptanceRound> {
           height: 20,
         ),
         Text(
-          'Period ${widget.startDate} to ${widget.endDate}',
+          'Period ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
           style: TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 58, 65, 65),

@@ -67,6 +67,17 @@ class _AdminMediaState extends State<AdminMedia> {
 
   @override
   Widget build(BuildContext context) {
+    List items = [
+      'All',
+      'Webinar',
+      'SAMA News',
+      'General',
+      'Conferences',
+      'Virtual Meeting',
+      'Office of the Chair',
+      'Corona Virus - COVID-19',
+      'Courses',
+    ];
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
@@ -79,6 +90,7 @@ class _AdminMediaState extends State<AdminMedia> {
         SizedBox(
           height: 25,
         ),
+        Text(selectCategory.text),
         MediaHeaderSection(
             controller: selectCategory,
             openMediaForm: () {
@@ -88,7 +100,7 @@ class _AdminMediaState extends State<AdminMedia> {
         Visibility(
           visible: !hideVideos ? true : false,
           child: StreamBuilder<QuerySnapshot>(
-              stream: selectCategory.text == ""
+              stream: selectCategory.text == "All" || selectCategory.text == ""
                   ? FirebaseFirestore.instance.collection('media').snapshots()
                   : selectCategory.text == "All"
                       ? FirebaseFirestore.instance
@@ -109,7 +121,7 @@ class _AdminMediaState extends State<AdminMedia> {
 
                 final List<DocumentSnapshot> documents = snapshot.data!.docs;
                 if (documents.isEmpty) {
-                  return Center(child: Text('No Media Podcast yet'));
+                  return Center(child: Text('No Media & Webinars yet'));
                 }
 
                 return Container(

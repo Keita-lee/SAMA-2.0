@@ -59,7 +59,11 @@ class _MediaHeaderSectionState extends State<MediaHeaderSection> {
                 label: const Text(''),
                 onSelected: (value) {
                   setState(() {
-                    widget.getCategoryValue(value!);
+                    if (value == "All") {
+                      widget.getCategoryValue("");
+                    } else {
+                      widget.getCategoryValue(value!);
+                    }
                   });
                 },
                 dropdownMenuEntries:

@@ -105,36 +105,6 @@ class _SetupRound2State extends State<SetupRound2> {
                           : checkDateStatus() == "In Progress"
                               ? Colors.green
                               : Colors.blue)),
-              /*   Visibility(
-                visible:
-                    CommonService().checkDateStarted(widget.electionEndDate) ==
-                            "After"
-                        ? false
-                        : true,
-                child: Text(
-                  "(Completely Closed)",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              Visibility(
-                visible:
-                    CommonService().checkDateStarted(widget.electionEndDate) ==
-                            "Before"
-                        ? false
-                        : true,
-                child: Text(
-                  "In Progress",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: Colors.green,
-                  ),
-                ),
-              ),*/
               Spacer(),
               Visibility(
                 visible:
@@ -196,7 +166,7 @@ class _SetupRound2State extends State<SetupRound2> {
               ),
               InkWell(
                 onTap: () {
-                  updateDate("Update End Date", "End");
+                  updateDate("Update End Date", "Start");
                 },
                 child: Container(
                   height: 55,
@@ -234,7 +204,7 @@ class _SetupRound2State extends State<SetupRound2> {
               ),
               InkWell(
                 onTap: () {
-                  updateDate("Update Start Date", "Start");
+                  updateDate("Update End Date", "End");
                 },
                 child: Container(
                   height: 55,
@@ -247,7 +217,7 @@ class _SetupRound2State extends State<SetupRound2> {
                       )),
                   child: Center(
                     child: Text(
-                      "${widget.electionStartDate}",
+                      "${widget.electionEndDate}",
                       style: TextStyle(
                           fontSize: 18,
                           color: Color.fromARGB(255, 201, 201, 201),

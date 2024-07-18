@@ -26,42 +26,6 @@ class _ElectionOverViewState extends State<ElectionOverView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              'Nomination round open for  ${widget.branch}',
-              style: TextStyle(
-                fontSize: 25,
-                color: Color.fromARGB(255, 0, 159, 158),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Spacer(),
-            ElectionTabStyle(
-              changePage: () {},
-              tabIndexNumber: 0,
-              description: widget.status,
-              customWidth: 150,
-              customColor1: Color.fromARGB(255, 211, 210, 210),
-              customColor2: Color.fromARGB(255, 0, 159, 158),
-              pageIndex: 0,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          'Period ${widget.startDate} to ${widget.endDate}',
-          style: TextStyle(
-            fontSize: 20,
-            color: Color.fromARGB(255, 58, 65, 65),
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
         Text(
           'Dear...',
           style: TextStyle(

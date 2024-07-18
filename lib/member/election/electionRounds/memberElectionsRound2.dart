@@ -5,6 +5,8 @@ import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 
+import '../../../components/service/commonService.dart';
+
 class MemberElectionsRound2 extends StatefulWidget {
   String branch;
   String position;
@@ -144,7 +146,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
           height: 20,
         ),
         Text(
-          'Period ${widget.startDate} to ${widget.endDate}',
+          'Period ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
           style: TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 58, 65, 65),
@@ -155,7 +157,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
           height: 35,
         ),
         Text(
-          'You have ${voteAmount} out of  ${widget.votingCount} nominations left.',
+          'You have ${voteAmount} out of  ${widget.votingCount} votes left.',
           style: TextStyle(
             fontSize: 18,
             color: Color.fromARGB(255, 58, 65, 65),
