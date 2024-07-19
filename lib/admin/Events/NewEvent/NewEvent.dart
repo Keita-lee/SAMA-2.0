@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sama/admin/Events/AdminEvents/UI/addEventsImage.dart';
 import 'package:sama/admin/Events/NewEvent/NewEventComp/EventDescriptionTextField.dart';
@@ -29,6 +32,7 @@ class _NewEventState extends State<NewEvent> {
   //Text controllers
   TextEditingController _title = TextEditingController();
   TextEditingController _date = TextEditingController();
+  TextEditingController endDate = TextEditingController();
   TextEditingController _times = TextEditingController();
   TextEditingController _event = TextEditingController();
   TextEditingController _description = TextEditingController();
@@ -38,6 +42,9 @@ class _NewEventState extends State<NewEvent> {
   TextEditingController _eventProvider = TextEditingController();
   TextEditingController _CPDAccreditation = TextEditingController();
   TextEditingController _memberAmount = TextEditingController();
+
+  var myJSON;
+  QuillController quillController = QuillController.basic();
 
   //var
   String eventsImage = "";
@@ -65,9 +72,10 @@ class _NewEventState extends State<NewEvent> {
     var eventData = {
       "title": _title.text,
       "date": _date.text,
+      "endDate": endDate.text,
       "_times": _times.text,
       "_event": _event.text,
-      "_description": _description.text,
+      "_description": jsonEncode(quillController.document.toDelta().toJson()),
       "_location": _location.text,
       "_area": _area.text,
       "id": widget.id,
@@ -107,9 +115,11 @@ class _NewEventState extends State<NewEvent> {
       setState(() {
         _title.text = data.get('title');
         _date.text = data.get('date');
+        endDate.text = data.get('endDate');
         _times.text = data.get('_times');
         _event.text = data.get('_event');
-        _description.text = data.get('_description');
+        // _description.text = data.get('_description');
+
         _location.text = data.get('_location');
         _area.text = data.get('_area');
         eventsImage = data.get('eventsImage');
@@ -120,6 +130,10 @@ class _NewEventState extends State<NewEvent> {
         _eventProvider.text = data.get('eventProvider');
         _CPDAccreditation.text = data.get('CPDAccreditation');
         _memberAmount.text = data.get('_memberAmount');
+        myJSON = jsonDecode(data.get('_description'));
+        quillController = QuillController(
+            document: Document.fromJson(myJSON),
+            selection: TextSelection.collapsed(offset: 0));
       });
     }
   }
@@ -231,12 +245,27 @@ class _NewEventState extends State<NewEvent> {
                             controller: _title,
                             textSection: 'Title',
                           ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
                           DateSelecter(
                             customSize:
                                 MediaQuery.of(context).size.width * 0.25,
                             controller: _date,
                             refresh: () {},
-                            description: 'Date',
+                            description: 'Start Date',
+                          ),
+                          DateSelecter(
+                            customSize:
+                                MediaQuery.of(context).size.width * 0.25,
+                            controller: endDate,
+                            refresh: () {},
+                            description: 'End Date',
                           ),
                         ],
                       ),
@@ -318,11 +347,40 @@ class _NewEventState extends State<NewEvent> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
+                      child: QuillToolbar.simple(
+                        configurations: QuillSimpleToolbarConfigurations(
+                          controller: quillController,
+                          sharedConfigurations:
+                              const QuillSharedConfigurations(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: MyUtility(context).width / 2,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: QuillEditor.basic(
+                        configurations: QuillEditorConfigurations(
+                          controller: quillController,
+                          sharedConfigurations:
+                              const QuillSharedConfigurations(),
+                        ),
+                      ),
+                    ),
+                    /*    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: EventDescriptionTextField(
                         controller: _description,
                         textSection: 'Description',
                       ),
-                    ),
+                    ),*/
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(

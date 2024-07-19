@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventText.dart';
 import 'package:sama/admin/Events/EventDetails/EventDetailComp/EventsImage.dart';
@@ -28,6 +30,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
   TextEditingController bookings = TextEditingController();
   TextEditingController _title = TextEditingController();
   TextEditingController _date = TextEditingController();
+  TextEditingController endDate = TextEditingController();
   TextEditingController _times = TextEditingController();
   TextEditingController _event = TextEditingController();
   TextEditingController _description = TextEditingController();
@@ -41,6 +44,8 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
   TextEditingController email = TextEditingController();
+  var myJSON;
+  QuillController quillController = QuillController.basic();
 
   //String
   String eventsImage = "";
@@ -68,9 +73,10 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       setState(() {
         _title.text = data.get('title');
         _date.text = data.get('date');
+        endDate.text = data.get('date');
         _times.text = data.get('_times');
         _event.text = data.get('_event');
-        _description.text = data.get('_description');
+        // _description.text = data.get('_description');
         _location.text = data.get('_location');
         _area.text = data.get('_area');
         _memberPricing.text = data.get('memberPricing');
@@ -79,6 +85,10 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         eventsImage = data.get('eventsImage');
         attending = data.get('attending');
         _memberAmount.text = data.get('_memberAmount');
+        myJSON = jsonDecode(data.get('_description'));
+        quillController = QuillController(
+            document: Document.fromJson(myJSON),
+            selection: TextSelection.collapsed(offset: 0));
       });
     }
     setState(() {});
@@ -217,71 +227,140 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       width: MyUtility(context).width * 0.50,
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Transform.scale(
-              scale: 0.8,
-              child: Container(
-                padding: const EdgeInsets.only(top: 5, bottom: 25),
-                child: Row(
-                  children: [
-                    Visibility(
-                      visible: eventsImage == "" ? true : false,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("images/imageIcon.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          width: MyUtility(context).width * 0.1,
-                          height: MyUtility(context).height * 0.1,
-                        ),
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Transform.scale(
+                scale: 0.8,
+                child: Container(
+                  padding: const EdgeInsets.only(top: 5, bottom: 25),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    Visibility(
-                      visible: eventsImage == "" ? false : true,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: ImageNetwork(
-                            image: eventsImage,
-                            width: MyUtility(context).width * 0.1,
-                            height: MyUtility(context).height * 0.1,
-                            fitWeb: BoxFitWeb.cover,
-                          ),
-                        ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          widget.closeDialog();
+                        },
+                        icon: Icon(Icons.close),
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Events Details',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        widget.closeDialog();
-                      },
-                      icon: Icon(Icons.close),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Transform.scale(
-              scale: 0.8,
-              child: Container(
+              Text(
+                'Events Details',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Visibility(
+                        visible: eventsImage == "" ? true : false,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("images/imageIcon.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            width: MyUtility(context).width * 0.15,
+                            height: MyUtility(context).height * 0.15,
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: eventsImage == "" ? false : true,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: ImageNetwork(
+                              image: eventsImage,
+                              width: MyUtility(context).width * 0.15,
+                              height: MyUtility(context).height * 0.15,
+                              fitWeb: BoxFitWeb.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Text(
+                    _title.text,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Start Date: ' + _date.text,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '   ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'End Date: ' + endDate.text,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                'Time ' + _times.text,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              /*     Container(
                 width: MyUtility(context).width * 0.75,
                 height: MyUtility(context).height * 0.13,
                 decoration: BoxDecoration(
@@ -299,6 +378,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                             child: EventText(
                                 title: _title.text,
                                 date: _date.text,
+                                endDate: endDate.text,
                                 timeFrom: _times.text,
                                 timeTill: '')),
                       ],
@@ -306,31 +386,18 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   ),
                 ),
               ),
-            ),
-            Transform.scale(
-              scale: 0.8,
-              child: Column(
+          */
+              Column(
                 //mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Description:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      _description.text,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
+                    child: QuillEditor.basic(
+                      configurations: QuillEditorConfigurations(
+                        controller: quillController,
+                        sharedConfigurations: const QuillSharedConfigurations(),
                       ),
-                      textAlign: TextAlign.start,
                     ),
                   ),
                   SizedBox(
@@ -414,74 +481,74 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   )
                 ],
               ),
-            ),
-            Transform.scale(
-              scale: 0.8,
-              child: SizedBox(
-                width: MyUtility(context).width * 0.75,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 300,
-                      child: Row(
-                        children: [
-                          Text(
-                            'How many people:',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.bold,
+              Transform.scale(
+                scale: 0.8,
+                child: SizedBox(
+                  width: MyUtility(context).width * 0.75,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 300,
+                        child: Row(
+                          children: [
+                            Text(
+                              'How many people:',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF3D3D3D),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          DropdownButton<int>(
-                            value: _selectedNumber,
-                            items: List.generate(10, (index) {
-                              return DropdownMenuItem<int>(
-                                value: index + 1,
-                                child: Text((index + 1).toString()),
-                              );
-                            }),
-                            onChanged: (int? newValue) {
-                              setState(() {
-                                _selectedNumber = newValue!;
-                              });
-                            },
-                          ),
-                        ],
+                            SizedBox(width: 10),
+                            DropdownButton<int>(
+                              value: _selectedNumber,
+                              items: List.generate(10, (index) {
+                                return DropdownMenuItem<int>(
+                                  value: index + 1,
+                                  child: Text((index + 1).toString()),
+                                );
+                              }),
+                              onChanged: (int? newValue) {
+                                setState(() {
+                                  _selectedNumber = newValue!;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Visibility(
-                      visible: checkIfMadeBooking ? true : false,
-                      child: StyleButton(
-                        description: 'Update Booking',
-                        height: 55,
-                        width: 150,
-                        onTap: () {
-                          updateBooking();
-                        },
+                      Spacer(),
+                      Visibility(
+                        visible: checkIfMadeBooking ? true : false,
+                        child: StyleButton(
+                          description: 'Update Booking',
+                          height: 55,
+                          width: 150,
+                          onTap: () {
+                            updateBooking();
+                          },
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Visibility(
-                      visible: checkIfMadeBooking ? false : true,
-                      child: StyleButton(
-                        description: 'Confirm Booking',
-                        height: 55,
-                        width: 150,
-                        onTap: () {
-                          confirmBooking();
-                        },
+                      SizedBox(
+                        width: 8,
                       ),
-                    ),
-                  ],
+                      Visibility(
+                        visible: checkIfMadeBooking ? false : true,
+                        child: StyleButton(
+                          description: 'Confirm Booking',
+                          height: 55,
+                          width: 150,
+                          onTap: () {
+                            confirmBooking();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

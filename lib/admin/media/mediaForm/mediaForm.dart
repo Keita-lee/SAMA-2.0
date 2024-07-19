@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:sama/admin/media/ui/addMediaImage.dart';
 import 'package:sama/admin/media/ui/selectDuarationPopup.dart';
 import 'package:sama/components/myutility.dart';
@@ -31,6 +34,8 @@ class _MediaFormState extends State<MediaForm> {
   final category = TextEditingController();
   final description = TextEditingController();
   final urlLink = TextEditingController();
+  var myJSON;
+  QuillController quillController = QuillController.basic();
 
   getMediaImageUrl(value) {
     setState(() {
@@ -64,7 +69,7 @@ class _MediaFormState extends State<MediaForm> {
       "duration": duration.text,
       "author": author.text,
       "category": selectedCategory ?? 'No Category',
-      "description": description.text,
+      "description": jsonEncode(quillController.document.toDelta().toJson()),
       "urlLink": urlLink.text,
       "mediaImageUrl": mediaImageUrl,
       "releaseDate": releaseDate,
@@ -100,7 +105,12 @@ class _MediaFormState extends State<MediaForm> {
         duration.text = data.get('duration');
         author.text = data.get('author');
         category.text = data.get('category');
-        description.text = data.get('description');
+        //quillController = data.get('description');
+        myJSON = jsonDecode(data.get('description'));
+        quillController = QuillController(
+            document: Document.fromJson(myJSON),
+            selection: TextSelection.collapsed(offset: 0));
+        //  description.text = data.get('description');
         urlLink.text = data.get('urlLink');
         mediaImageUrl = data.get('mediaImageUrl');
         releaseDate = data.get('releaseDate');
@@ -285,17 +295,45 @@ class _MediaFormState extends State<MediaForm> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ProfileTextField(
+                      QuillToolbar.simple(
+                        configurations: QuillSimpleToolbarConfigurations(
+                          controller: quillController,
+                          sharedConfigurations:
+                              const QuillSharedConfigurations(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MyUtility(context).width / 2,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                        ),
+                        child: QuillEditor.basic(
+                          configurations: QuillEditorConfigurations(
+                            controller: quillController,
+                            sharedConfigurations:
+                                const QuillSharedConfigurations(),
+                          ),
+                        ),
+                      ),
+                      /*   ProfileTextField(
                         customSize: MyUtility(context).width / 2,
                         description: "Description:",
                         textfieldController: description,
                         customHeight: 100,
                         textFieldType: "stringType",
                         lines: 6,
-                      ),
+                      ),*/
                       SizedBox(
                         width: 8,
                       ),

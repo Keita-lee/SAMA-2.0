@@ -66,21 +66,37 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             /* Youtubevideoplayer(
               id: widget.id,
             ),*/
-
-            Container(
-              width: MyUtility(context).width / 4.0,
-              height: 230,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xFFD1D1D1),
+            Visibility(
+              visible: widget.image == "" ? true : false,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/imageIcon.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                width: MyUtility(context).width / 4.0,
+                height: 200,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: ImageNetwork(
-                  image: widget.image,
-                  fitWeb: BoxFitWeb.fill,
-                  width: MyUtility(context).width / 4.0,
-                  height: 250,
+            ),
+
+            Visibility(
+              visible: widget.image != "" ? true : false,
+              child: Container(
+                width: MyUtility(context).width / 4.0,
+                height: 230,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFFD1D1D1),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: ImageNetwork(
+                    image: widget.image,
+                    fitWeb: BoxFitWeb.fill,
+                    width: MyUtility(context).width / 4.0,
+                    height: 200,
+                  ),
                 ),
               ),
             ),

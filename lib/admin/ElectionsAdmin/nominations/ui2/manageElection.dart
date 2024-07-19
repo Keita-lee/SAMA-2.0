@@ -57,11 +57,17 @@ class _ManageElectionState extends State<ManageElection> {
   updateStatus() {
     setState(() {
       if (status == "") {
-        status = "Publish";
+        setState(() {
+          status = "Draft";
+        });
+      } else if (status == "Draft") {
+        setState(() {
+          status = "Publish";
+        });
       } else if (status == "Publish") {
-        status = "UnPublish";
-      } else if (status == "Open Nominations") {
-        status = "Close";
+        setState(() {
+          status = "UnPublish";
+        });
       }
     });
   }
@@ -280,6 +286,17 @@ class _ManageElectionState extends State<ManageElection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          'Branch Voting - Manage',
+          style: TextStyle(
+            fontSize: 36,
+            color: Color.fromARGB(255, 24, 69, 126),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -287,12 +304,25 @@ class _ManageElectionState extends State<ManageElection> {
             SizedBox(
               width: MyUtility(context).width / 2.3,
             ),
+            SizedBox(
+              width: 10,
+            ),
             StyleButton(
-                description: "Back To Branch records ",
+                description: "Exit",
                 height: 55,
                 width: 175,
                 onTap: () {
                   widget.changePageIndex(0);
+                }),
+            SizedBox(
+              width: 10,
+            ),
+            StyleButton(
+                description: "${status == "Draft" ? "Publish" : status}",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  updateStatus();
                 }),
             SizedBox(
               width: 10,
@@ -317,13 +347,6 @@ class _ManageElectionState extends State<ManageElection> {
             SizedBox(
               width: 10,
             ),
-            StyleButton(
-                description: "Delete",
-                height: 55,
-                width: 125,
-                onTap: () {
-                  removeElectionPopup();
-                }),
           ],
         ),
         SizedBox(
@@ -333,7 +356,7 @@ class _ManageElectionState extends State<ManageElection> {
           visible: widget.id == "" ? false : true,
           child: Row(
             children: [
-              ElectionTabStyle(
+              /* ElectionTabStyle(
                 changePage: () {
                   setState(() {
                     pageIndex = 0;
@@ -346,7 +369,7 @@ class _ManageElectionState extends State<ManageElection> {
                 customColor2: Color(0xFF174486),
                 pageIndex: pageIndex,
               ),
-              /*      ElectionTabStyle(
+                    ElectionTabStyle(
                 changePage: () {
                   setState(() {
                     pageIndex = 1;
@@ -438,11 +461,7 @@ class _ManageElectionState extends State<ManageElection> {
                       height: 55,
                       width: 160,
                       decoration: BoxDecoration(
-                        color: CommonService().checkDateStarted(
-                                    chairPersonEnd.text != ""
-                                        ? chairPersonEnd.text
-                                        : electionDateEnd.text) ==
-                                "After"
+                        color: status == "Draft"
                             ? Colors.grey
                             : Color.fromRGBO(0, 159, 12, 1),
                         borderRadius: BorderRadius.only(
@@ -451,13 +470,7 @@ class _ManageElectionState extends State<ManageElection> {
                       ),
                       child: Center(
                         child: Text(
-                          CommonService().checkDateStarted(
-                                      chairPersonEnd.text != ""
-                                          ? chairPersonEnd.text
-                                          : electionDateEnd.text) ==
-                                  "After"
-                              ? 'Completed'
-                              : 'In Progress',
+                          status,
                           style: TextStyle(
                               color: Colors.white,
                               letterSpacing: 1.1,
@@ -484,11 +497,11 @@ class _ManageElectionState extends State<ManageElection> {
                       saveElection: saveData,
                     ),
                     SetupRound1(
-                      nominationStartDate: nominateStartDate.text,
-                      nominationEndDate: nominateEndDate.text,
-                      updateStartDate: updateNominationStartDate,
-                      updateEndDate: updateNominationEndDate,
-                    ),
+                        nominationStartDate: nominateStartDate.text,
+                        nominationEndDate: nominateEndDate.text,
+                        updateStartDate: updateNominationStartDate,
+                        updateEndDate: updateNominationEndDate,
+                        electionId: widget.id),
                     SetupAcceptance(
                       nominateAcceptStartDate: nominateAcceptStartDate.text,
                       nominateAcceptEndDate: nominateAcceptEndDate.text,
@@ -496,6 +509,7 @@ class _ManageElectionState extends State<ManageElection> {
                     SetupRound2(
                       electionStartDate: electionDateStart.text,
                       electionEndDate: electionDateEnd.text,
+                      nominationEndDate: nominateEndDate.text,
                       updateStartDate: updateRound2StartDate,
                       updateEndDate: updateRound2EndDate,
                     ),

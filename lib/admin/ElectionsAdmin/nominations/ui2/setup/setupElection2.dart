@@ -51,7 +51,7 @@ class _SetupElection2State extends State<SetupElection2> {
       padding: const EdgeInsets.fromLTRB(40, 10, 45, 10),
       child: Column(
         children: [
-          Row(
+          /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               StyleButton(
@@ -81,7 +81,7 @@ class _SetupElection2State extends State<SetupElection2> {
                     }),
               ),
             ],
-          ),
+          ),*/
           Row(
             children: [
               Text(

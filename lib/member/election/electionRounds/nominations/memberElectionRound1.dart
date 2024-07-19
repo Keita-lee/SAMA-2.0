@@ -252,17 +252,81 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
             border: Border.all(color: Color.fromRGBO(170, 170, 170, 1.0)),
           ),
           child: Center(
-            child: TextField(
+            child: TextFormField(
               controller: search,
+              onEditingComplete: () {
+                setState(() {});
+              },
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(bottom: 10),
-                hintText: 'Search',
+                hintText: 'Search and enter',
                 border: InputBorder.none,
                 hintStyle: TextStyle(color: Color.fromRGBO(170, 170, 170, 1.0)),
               ),
             ),
           ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MyUtility(context).width / 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Name',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 7,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Email',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 7,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('HPCSA',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 12,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('HDI',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 12,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Nominate',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+            ),
+            SizedBox(
+              width: MyUtility(context).width / 12,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
+            ),
+          ],
         ),
         SizedBox(
           height: 15,
@@ -279,27 +343,196 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                 child: Column(
                   children: [
                     StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('users')
-                          /* .where("selectBranch",
+                        stream: FirebaseFirestore.instance
+                            .collection('users')
+                            /* .where("selectBranch",
                               isEqualTo: "Border Coastal (BCB)")*/
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-                        if (!snapshot.hasData) {
-                          return const Text('Loading...');
-                        }
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          if (!snapshot.hasData) {
+                            return const Text('Loading...');
+                          }
 
-                        final List<DocumentSnapshot> documents =
-                            snapshot.data!.docs;
-                        if (documents.isEmpty) {
-                          return Center(child: Text('No Events listed'));
-                        }
+                          final List<DocumentSnapshot> documents =
+                              snapshot.data!.docs;
+                          if (documents.isEmpty) {
+                            return Center(child: Text('No Events listed'));
+                          }
 
-                        return Container(
+                          return Container(
+                              color: Colors.white,
+                              width: MyUtility(context).width -
+                                  (MyUtility(context).width * 0.25),
+                              height: 500,
+                              //color: Colors.transparent,
+                              child: ListView.builder(
+                                  itemCount: documents.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final DocumentSnapshot document =
+                                        documents[index];
+
+                                    return Visibility(
+                                      visible: searchList(
+                                          document["firstName"],
+                                          document["lastName"],
+                                          document["email"],
+                                          document["hpcsa"],
+                                          document["firstName"]),
+                                      child: Container(
+                                          width: MyUtility(context).width -
+                                              (MyUtility(context).width * 0.25),
+                                          color: index.isEven
+                                              ? Colors.transparent
+                                              : Colors.grey[200],
+                                          child: Row(children: [
+                                            SizedBox(
+                                              width:
+                                                  MyUtility(context).width / 5,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  '${document!["firstName"]} ${document!["lastName"]}',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  MyUtility(context).width / 7,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  '${document!["email"]} ',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  MyUtility(context).width / 7,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  '${document!["hpcsa"]} ',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  MyUtility(context).width / 12,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  '${document!["race"] == "White/Caucasian" || document!["race"] == "Other" ? "" : "HDI"} ',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  MyUtility(context).width / 12,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    nominateUser(
+                                                        document!["email"],
+                                                        document!["id"]);
+                                                    if (document != null) {
+                                                      bool currentState =
+                                                          checkIfNominated(
+                                                              document![
+                                                                  "email"]);
+                                                    }
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 60),
+                                                    child: Container(
+                                                      width: 45,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15.0),
+                                                        color: (checkIfNominated(
+                                                                    document![
+                                                                        "email"]) ==
+                                                                true)
+                                                            ? Color(0xFF174486)
+                                                            : Colors.grey,
+                                                      ),
+                                                      child: Align(
+                                                        alignment: (checkIfNominated(
+                                                                    document![
+                                                                        "email"]) ==
+                                                                true)
+                                                            ? Alignment
+                                                                .centerRight
+                                                            : Alignment
+                                                                .centerLeft,
+                                                        child: Container(
+                                                          width: 20,
+                                                          height: 20,
+                                                          margin:
+                                                              EdgeInsets.all(
+                                                                  5.0),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  MyUtility(context).width / 12,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  viewMemberBioDialog(
+                                                      document["id"]);
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    'View Profile',
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        color:
+                                                            Color(0xFF174486)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ])),
+                                    );
+                                  }));
+                        })
+
+/*    Container(
                           width: MyUtility(context).width -
                               (MyUtility(context).width * 0.25),
                           child: Table(
@@ -470,8 +703,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                             ],
                           ),
                         );
-                      },
-                    ),
+                 */
                   ],
                 ),
               ),

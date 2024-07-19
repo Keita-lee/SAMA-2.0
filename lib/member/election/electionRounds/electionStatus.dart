@@ -28,7 +28,7 @@ class _ElectionStatusState extends State<ElectionStatus> {
       Row(
         children: [
           Text(
-            '${widget.status} round open for${widget.branch}',
+            '${widget.status} round open for ${widget.branch}',
             style: TextStyle(
               fontSize: 25,
               color: Color.fromARGB(255, 0, 159, 158),

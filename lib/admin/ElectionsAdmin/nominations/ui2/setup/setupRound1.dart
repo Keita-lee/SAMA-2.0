@@ -7,12 +7,14 @@ import '../../ui/previewElection/ui/dateUpdate.dart';
 class SetupRound1 extends StatefulWidget {
   String nominationStartDate;
   String nominationEndDate;
+  String electionId;
   Function(String) updateStartDate;
   Function(String) updateEndDate;
   SetupRound1(
       {super.key,
       required this.nominationStartDate,
       required this.nominationEndDate,
+      required this.electionId,
       required this.updateStartDate,
       required this.updateEndDate});
 
@@ -136,11 +138,7 @@ class _SetupRound1State extends State<SetupRound1> {
               ), */
               Spacer(),
               Visibility(
-                visible: CommonService()
-                            .checkDateStarted(widget.nominationEndDate) ==
-                        "After"
-                    ? false
-                    : true,
+                visible: checkDateStatus() == "In Progress" ? true : false,
                 child: InkWell(
                   onTap: () {
                     closeNominationsPopup();
@@ -156,11 +154,7 @@ class _SetupRound1State extends State<SetupRound1> {
                 ),
               ),
               Visibility(
-                visible: CommonService()
-                            .checkDateStarted(widget.nominationEndDate) ==
-                        "Before"
-                    ? false
-                    : true,
+                visible: checkDateStatus() == "Completed Closed" ? true : false,
                 child: InkWell(
                   onTap: () {
                     reopenNominationsPopup();

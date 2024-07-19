@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -20,6 +23,10 @@ class MediaPopup extends StatefulWidget {
 class _MediaPopupState extends State<MediaPopup> {
   String? videoUrl;
   String title = "";
+  String description = "";
+  var myJSON;
+  QuillController quillController = QuillController.basic();
+
   late YoutubePlayerController _youtubePlayerController;
 
   @override
@@ -38,11 +45,11 @@ class _MediaPopupState extends State<MediaPopup> {
         setState(() {
           videoUrl = doc['urlLink'];
           title = doc['title'];
-          print('Video URL: $videoUrl');
+          myJSON = jsonDecode(doc['description']);
+          quillController = QuillController(
+              document: Document.fromJson(myJSON),
+              selection: TextSelection.collapsed(offset: 0));
           if (videoUrl != null) {
-            print('this is the vid URL' + videoUrl!);
-            print(
-                'Video ID: ${YoutubePlayerController.convertUrlToId(videoUrl!)}');
             _youtubePlayerController = YoutubePlayerController.fromVideoId(
               videoId: YoutubePlayerController.convertUrlToId(videoUrl!)!,
               autoPlay: true,
@@ -123,7 +130,18 @@ class _MediaPopupState extends State<MediaPopup> {
                 },
               ),
             ),
-          ) /**/
+          ),
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Container(
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: quillController,
+                  sharedConfigurations: const QuillSharedConfigurations(),
+                ),
+              ),
+            ),
+          ),
         ])));
 
     /* Container(

@@ -153,10 +153,12 @@ class _AdminEventDetailsState extends State<AdminEventDetails> {
                       SizedBox(
                           width: MyUtility(context).width * 0.15,
                           child: EventText(
-                              title: 'Event Name',
-                              date: 'Date Here',
-                              timeFrom: 'Time',
-                              timeTill: 'Time')),
+                            title: 'Event Name',
+                            date: 'Date Here',
+                            timeFrom: 'Time',
+                            timeTill: 'Time',
+                            endDate: '',
+                          )),
                       SizedBox(
                         width: MyUtility(context).width * 0.55,
                         child: Column(

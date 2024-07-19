@@ -174,11 +174,8 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
                     */
                       Spacer(),
                       Visibility(
-                        visible: CommonService().checkDateStarted(
-                                    widget.chairPersonEndDate) ==
-                                "before"
-                            ? false
-                            : true,
+                        visible:
+                            checkDateStatus() == "In Progress" ? true : false,
                         child: InkWell(
                           onTap: () {
                             reopenChairPopup();

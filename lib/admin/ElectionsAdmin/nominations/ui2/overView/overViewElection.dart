@@ -288,7 +288,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                 width: MyUtility(context).width / 1.7,
               ),
               StyleButton(
-                  description: "Back To Branch records ",
+                  description: "Back",
                   height: 55,
                   width: 175,
                   onTap: () {
@@ -469,6 +469,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                       nominationEndDate: nominateEndDate.text,
                       updateStartDate: updateNominationStartDate,
                       updateEndDate: updateNominationEndDate,
+                      electionId: widget.id,
                     ),
                     SetupAcceptance(
                       nominateAcceptStartDate: nominateAcceptStartDate.text,
@@ -477,6 +478,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                     SetupRound2(
                       electionStartDate: electionDateStart.text,
                       electionEndDate: electionDateEnd.text,
+                      nominationEndDate: nominateEndDate.text,
                       updateStartDate: updateRound2StartDate,
                       updateEndDate: updateRound2EndDate,
                     ),

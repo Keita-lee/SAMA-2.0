@@ -47,40 +47,37 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
 
   //get user details from notification
   getUserDetail(id) async {
-    final doc =
-        await FirebaseFirestore.instance.collection('users').doc(id).get();
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .where("email", isEqualTo: id)
+        .get();
 
     var userData = {
-      "id": "${doc.get("id")}",
+      "id": "${doc.docs[0].get("id")}",
       "SamaNr": "15658",
-      "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
-      "email": "${doc.get("email")}",
+      "name": "${doc.docs[0].get("firstName")} ${doc.docs[0].get("lastName")}",
+      "hpca": doc.docs[0].get("hpcsa"),
+      "email": "${doc.docs[0].get("email")}",
       "hdi":
-          '${doc["race"] == "White/Caucasian" || doc["race"] == "Other" ? "" : "HDI"}',
-      "votes": getVotes(doc.get("email"))
+          '${doc.docs[0]["race"] == "White/Caucasian" || doc.docs[0]["race"] == "Other" ? "" : "HDI"}',
+      "votes": getVotes(doc.docs[0].get("email"))
     };
 
     setState(() {
-      if (getNominationsForUser(doc.get("email")) >= 2 &&
-          membersWhoAccepted.length <= int.parse(widget.votingCount)) {
-        print(userData);
+      var nomIndex =
+          (membersWhoAccepted).indexWhere((item) => item["email"] == id);
 
+      if (nomIndex == -1) {
         membersWhoAccepted.add(userData);
-        /*  */
       }
     });
   }
 
   //get User Notification list who accepted nomination
   getUserNotificationList() async {
-    final doc = await FirebaseFirestore.instance
-        .collection('notifications')
-        .where("data.electionId", isEqualTo: "ngZiVRVWoMETIGm0VPgj")
-        .get();
     setState(() {
-      for (int i = 0; i < (doc.docs).length; i++) {
-        getUserDetail(doc.docs[i]["userWhoNotify"]);
+      for (int i = 0; i < (widget.electionVotes).length; i++) {
+        getUserDetail(widget.electionVotes[i]['email']);
       }
     });
   }
@@ -122,13 +119,13 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
 
         widget.chairmemberVoteList.removeAt(voteIndex);
 
-        voteAmount = voteAmount - 1;
+        voteAmount = voteAmount + 1;
       } else {
-        if (voteAmount == 0) {
+        if (voteAmount == 0 || voteAmount < 0) {
           validateVotes();
         } else {
           setState(() {
-            voteAmount = voteAmount + 1;
+            voteAmount = voteAmount - 1;
           });
           widget.chairmemberVoteList.add(voteDetails);
         }

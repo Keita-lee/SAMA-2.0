@@ -9,7 +9,7 @@ class CommonService {
       DateTime d1 = DateTime.parse(date1);
       DateTime d2 = DateTime.parse(date2);
 
-      return "${d2.difference(d1).inDays + 1} days";
+      return "${d2.difference(d1).inDays} days";
     }
     return "";
   }

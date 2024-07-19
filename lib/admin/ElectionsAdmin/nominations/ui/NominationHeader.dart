@@ -52,12 +52,9 @@ class _NominationHeaderState extends State<NominationHeader> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: MyUtility(context).width / 1.8,
-          ),
+          Spacer(),
           /*  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,24 +85,54 @@ class _NominationHeaderState extends State<NominationHeader> {
                 }).toList(),
               ),
             ],
-          ),*/
+          ),
           SizedBox(
             width: 15,
-          ),
+          ),*/
           Visibility(
-            visible: widget.electionId == "" ? true : false,
+            visible: widget.electionId == "" &&
+                    widget.pageIndex != 1 &&
+                    widget.pageIndex != 2
+                ? true
+                : false,
             child: StyleButton(
-                description: "New Voting",
+                description: "New",
                 height: 55,
                 width: 125,
                 onTap: () {
                   widget.openElectionForm();
                 }),
           ),
+          SizedBox(
+            width: 15,
+          ),
           Visibility(
+            visible:
+                widget.electionId == "" && widget.pageIndex == 0 ? true : false,
+            child: StyleButton(
+                description: "OverView",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.changePageIndex(3);
+                }),
+          ),
+          Visibility(
+            visible:
+                widget.electionId == "" && widget.pageIndex == 3 ? true : false,
+            child: StyleButton(
+                description: "View All",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.changePageIndex(0);
+                }),
+          ),
+
+          /*  Visibility(
             visible: widget.electionId != "" ? true : false,
             child: StyleButton(
-                description: "Back To Branch records ",
+                description: "Exit",
                 height: 55,
                 width: 175,
                 onTap: () {
@@ -140,7 +167,7 @@ class _NominationHeaderState extends State<NominationHeader> {
           SizedBox(
             width: 15,
           ),
-          /*   StyleButton(
+             StyleButton(
               description: "View All",
               height: 55,
               width: 125,

@@ -104,10 +104,11 @@ class _NominationSetupState extends State<NominationSetup> {
               fontWeight: FontWeight.normal),
         ),
       ),
-      /*  SizedBox(
+      SizedBox(
         height: 25,
       ),
-     SizedBox(
+
+      SizedBox(
         width: MyUtility(context).width - (MyUtility(context).width * 0.18),
         child: NominationHeader(
           controller: selectBranch,
@@ -118,7 +119,7 @@ class _NominationSetupState extends State<NominationSetup> {
           changePageIndex: changePageIndex,
           pageIndex: pageIndex,
         ),
-      ),*/
+      ),
 
       SizedBox(
         height: 25,
@@ -222,7 +223,7 @@ class _NominationSetupState extends State<NominationSetup> {
                       final List<DocumentSnapshot> documents =
                           snapshot.data!.docs;
                       if (documents.isEmpty) {
-                        return Center(child: Text('No Media & Webinars yet'));
+                        return Center(child: Text('No Elections yet'));
                       }
 
                       return Container(
@@ -315,13 +316,22 @@ class _NominationSetupState extends State<NominationSetup> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  document['status'] !=
-                                                          "Complete"
-                                                      ? "InComplete"
-                                                      : "Complete",
+                                                  document['status'] == " Draft"
+                                                      ? "Draft"
+                                                      : document['status'] ==
+                                                              "Publish"
+                                                          ? "In Progress"
+                                                          : "Completed",
                                                   style: TextStyle(
                                                       fontSize: 20,
-                                                      color: Color(0xFF3D3D3D),
+                                                      color: document[
+                                                                  'status'] ==
+                                                              " Draft"
+                                                          ? Colors.blue
+                                                          : document['status'] ==
+                                                                  "Publish"
+                                                              ? Colors.green
+                                                              : Colors.black,
                                                       fontWeight:
                                                           FontWeight.normal),
                                                 ),
@@ -509,6 +519,96 @@ class _NominationSetupState extends State<NominationSetup> {
               ],
             ),
           )),
+
+      Visibility(
+          visible: pageIndex == 3 ? true : false,
+          child: StreamBuilder<QuerySnapshot>(
+              stream: selectBranch.text == ""
+                  ? FirebaseFirestore.instance
+                      .collection('elections')
+                      .snapshots()
+                  : FirebaseFirestore.instance
+                      .collection('elections')
+                      .where('selectBranch', isEqualTo: selectBranch.text)
+                      .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: snapshot error');
+                }
+                if (!snapshot.hasData) {
+                  return const Text('Loading...');
+                }
+
+                final List<DocumentSnapshot> documents = snapshot.data!.docs;
+                if (documents.isEmpty) {
+                  return Center(child: Text('No Elections yet'));
+                }
+
+                return Container(
+                    color: Colors.transparent,
+                    width: MyUtility(context).width -
+                        (MyUtility(context).width * 0.18),
+                    height: 550,
+                    child: ListView.builder(
+                        itemCount: documents.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot document = documents[index];
+
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BranchVotingContainer(
+                              editElection: () {
+                                //     openNominationForm(document['id']);
+                                openElectionForm(document['id']);
+                              },
+                              branchTitle: document['selectBranch'],
+                              count: document['count'],
+                              isInProgress: document['status'] != "Complete"
+                                  ? false
+                                  : true,
+                              isChairpersonActive:
+                                  document['includeBranchChairPerson'],
+                              votingItems: [
+                                BranchVotingItems(
+                                    voteTitle: 'Round 1 Nominations',
+                                    startDate: document['nominateStartDate'],
+                                    endDate: document['nominateEndDate'],
+                                    voteDuration: getDaysAmount(
+                                        document['nominateStartDate'],
+                                        document['nominateEndDate'])),
+                                BranchVotingItems(
+                                    voteTitle: 'Acceptance Round',
+                                    startDate:
+                                        document['nominateAcceptStartDate'],
+                                    endDate: document['nominateAcceptEndDate'],
+                                    voteDuration: getDaysAmount(
+                                        document['nominateAcceptStartDate'],
+                                        document['nominateAcceptEndDate'])),
+                                BranchVotingItems(
+                                  voteTitle: 'Elections',
+                                  startDate: document['electionDateStart'],
+                                  endDate: document['electionDateEnd'],
+                                  voteDuration: getDaysAmount(
+                                      document['electionDateStart'],
+                                      document['electionDateEnd']),
+                                ),
+                                Visibility(
+                                  visible: document['includeBranchChairPerson'],
+                                  child: BranchVotingItems(
+                                    voteTitle: 'Chairperson Round',
+                                    startDate: document['chairPersonStart'],
+                                    endDate: document['chairPersonEnd'],
+                                    voteDuration: getDaysAmount(
+                                        document['electionDateStart'],
+                                        document['electionDateEnd']),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }));
+              })),
 
       Visibility(
           visible: pageIndex == 1 ? true : false,
