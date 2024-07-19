@@ -66,7 +66,11 @@ class _ManageElectionState extends State<ManageElection> {
         });
       } else if (status == "Publish") {
         setState(() {
-          status = "Complete";
+          status = "UnPublish";
+        });
+      } else if (status == "UnPublish") {
+        setState(() {
+          status = "Publish";
         });
       }
     });
