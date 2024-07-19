@@ -6,6 +6,7 @@ import 'package:sama/admin/ElectionsAdmin/nominations/ui2/overView/sections/elec
 import '../../../../../components/electionTabStyle.dart';
 import '../../../../../components/myutility.dart';
 import '../../../../../components/service/commonService.dart';
+import '../../../../../components/styleButton.dart';
 import '../../../../../components/yesNoDialog.dart';
 import '../setup/setupAcceptance.dart';
 import '../setup/setupChairPersonElection.dart';
@@ -279,6 +280,37 @@ class _OverViewElectionState extends State<OverViewElection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SizedBox(
+                width: MyUtility(context).width / 1.7,
+              ),
+              StyleButton(
+                  description: "Back To Branch records ",
+                  height: 55,
+                  width: 175,
+                  onTap: () {
+                    widget.changePageIndex(0);
+                  }),
+              SizedBox(
+                width: 10,
+              ),
+              Visibility(
+                visible: widget.id == "" ? false : true,
+                child: StyleButton(
+                    description: "View Setup",
+                    height: 55,
+                    width: 125,
+                    onTap: () {
+                      widget.changePageIndex(1);
+                    }),
+              ),
+            ]),
+        SizedBox(
+          height: 25,
+        ),
         Visibility(
           visible: widget.id == "" ? false : true,
           child: Row(

@@ -97,7 +97,7 @@ class _NotificationListState extends State<NotificationList> {
                 InkWell(
                   onTap: () {
                     if (widget.notificationsList[i]['type'] == "Nomination") {
-                      openAcceptNomination(widget.notificationsList[i]['id']);
+                      //    openAcceptNomination(widget.notificationsList[i]['id']);
                     }
                   },
                   child: Column(

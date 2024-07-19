@@ -497,7 +497,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                       SizedBox(
                         width: MyUtility(context).width * 0.015,
                       ),
-                      Center(
+                      Container(
                         child: pages[pageIndex],
                       )
                       //*Notifications()*/

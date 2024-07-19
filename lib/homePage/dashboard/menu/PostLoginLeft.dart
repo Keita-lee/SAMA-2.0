@@ -205,8 +205,8 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-                    height: 10,
-                  ),
+              height: 10,
+            ),
             Visibility(
                 visible: userType == "Admin" ? true : false,
                 child: Column(
@@ -362,7 +362,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   LeftMenuDropButton(
                       isActive: activeIndex == 8,
                       menuSize: widget.menuSize,
-                      description: "MemberShip Category",
+                      description: "Membership Category",
                       iconPath: "images/icon_categories.svg",
                       onPressed: () {
                         _handleItemClick(8);

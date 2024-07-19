@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../components/electionTabStyle.dart';
 import '../../../../components/myutility.dart';
 import '../../../../components/service/commonService.dart';
+import '../../../../components/styleButton.dart';
 import '../../../../components/yesNoDialog.dart';
 import 'overView/sections/acceptanceRoundOverView.dart';
 import 'overView/sections/chairPersonOverview.dart';
@@ -99,13 +100,13 @@ class _ManageElectionState extends State<ManageElection> {
           .doc(myNewDoc.id)
           .update({
         "id": myNewDoc.id,
-      }).whenComplete(() => widget.changePageIndex(1));
+      }).whenComplete(() => widget.changePageIndex(0));
     } else {
       await FirebaseFirestore.instance
           .collection("elections")
           .doc(widget.id)
           .update(electionData)
-          .whenComplete(() => widget.changePageIndex(1));
+          .whenComplete(() => widget.changePageIndex(0));
     }
   }
 
@@ -147,11 +148,11 @@ class _ManageElectionState extends State<ManageElection> {
         .collection('elections')
         .doc(widget.id)
         .delete()
-        .whenComplete(() => widget.changePageIndex(1));
+        .whenComplete(() => widget.changePageIndex(0));
   }
 
   //Dialog to Remove Item
-  Future removeMediaPopup() => showDialog(
+  Future removeElectionPopup() => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
@@ -279,6 +280,55 @@ class _ManageElectionState extends State<ManageElection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SizedBox(
+              width: MyUtility(context).width / 2.3,
+            ),
+            StyleButton(
+                description: "Back To Branch records ",
+                height: 55,
+                width: 175,
+                onTap: () {
+                  widget.changePageIndex(0);
+                }),
+            SizedBox(
+              width: 10,
+            ),
+            StyleButton(
+                description: "OverView",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.changePageIndex(2);
+                }),
+            SizedBox(
+              width: 10,
+            ),
+            StyleButton(
+                description: "Update",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  saveData(status);
+                }),
+            SizedBox(
+              width: 10,
+            ),
+            StyleButton(
+                description: "Delete",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  removeElectionPopup();
+                }),
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
         Visibility(
           visible: widget.id == "" ? false : true,
           child: Row(

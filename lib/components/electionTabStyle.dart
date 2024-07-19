@@ -28,7 +28,7 @@ class _ElectionTabStyleState extends State<ElectionTabStyle> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: GestureDetector(
+      child: InkWell(
         onTap: () {
           widget.changePage();
         },

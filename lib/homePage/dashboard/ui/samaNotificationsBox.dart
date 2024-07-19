@@ -93,8 +93,8 @@ class _SamaNotificationsBoxState extends State<SamaNotificationsBox> {
                           onPressed: () {
                             if (widget.userNotification[i]['type'] ==
                                 "Nomination") {
-                              openAcceptNomination(
-                                  widget.userNotification[i]['id']);
+                              /*    openAcceptNomination(
+                                  widget.userNotification[i]['id']);*/
                             }
                           },
                           child: Text(

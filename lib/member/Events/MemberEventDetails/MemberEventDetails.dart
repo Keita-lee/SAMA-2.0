@@ -268,6 +268,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Spacer(),
                     IconButton(
                       onPressed: () {
                         widget.closeDialog();

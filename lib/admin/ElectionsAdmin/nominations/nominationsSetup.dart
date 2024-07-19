@@ -104,18 +104,21 @@ class _NominationSetupState extends State<NominationSetup> {
               fontWeight: FontWeight.normal),
         ),
       ),
-      SizedBox(
+      /*  SizedBox(
         height: 25,
       ),
-      NominationHeader(
-        controller: selectBranch,
-        openElectionForm: () {
-          openElectionForm("");
-        },
-        electionId: electionId,
-        changePageIndex: changePageIndex,
-        pageIndex: pageIndex,
-      ),
+     SizedBox(
+        width: MyUtility(context).width - (MyUtility(context).width * 0.18),
+        child: NominationHeader(
+          controller: selectBranch,
+          openElectionForm: () {
+            openElectionForm("");
+          },
+          electionId: electionId,
+          changePageIndex: changePageIndex,
+          pageIndex: pageIndex,
+        ),
+      ),*/
 
       SizedBox(
         height: 25,
