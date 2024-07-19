@@ -300,7 +300,7 @@ class _OverViewElectionState extends State<OverViewElection> {
               Visibility(
                 visible: widget.id == "" ? false : true,
                 child: StyleButton(
-                    description: "View Setup",
+                    description: "Edit",
                     height: 55,
                     width: 125,
                     onTap: () {

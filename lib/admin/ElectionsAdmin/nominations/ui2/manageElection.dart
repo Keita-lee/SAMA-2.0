@@ -66,7 +66,7 @@ class _ManageElectionState extends State<ManageElection> {
         });
       } else if (status == "Publish") {
         setState(() {
-          status = "UnPublish";
+          status = "Complete";
         });
       }
     });
@@ -220,7 +220,7 @@ class _ManageElectionState extends State<ManageElection> {
 
   updateNominationEndDate(date) {
     setState(() {
-      nominateStartDate.text = updateDateValues(nominateEndDate.text, -15);
+      nominateStartDate.text = updateDateValues(date, -10);
       nominateEndDate.text = updateDateValues(date, 0);
 
       nominateAcceptStartDate.text = updateDateValues(nominateEndDate.text, 1);
@@ -244,7 +244,8 @@ class _ManageElectionState extends State<ManageElection> {
 
   updateRound2EndDate(date) {
     setState(() {
-      electionDateEnd.text = updateDateValues(date, 10);
+      electionDateStart.text = updateDateValues(date, -10);
+      electionDateEnd.text = updateDateValues(date, 0);
       chairPersonStart.text = updateDateValues(electionDateEnd.text, 1);
       chairPersonEnd.text = updateDateValues(chairPersonStart.text, 10);
     });
@@ -262,8 +263,13 @@ class _ManageElectionState extends State<ManageElection> {
     DateTime now = DateTime.parse(date);
 
     DateTime dt = DateTime(now.year, now.month, now.day, 0, 0, 0);
+    DateTime dt1;
+    if (daysValue < 0) {
+      dt1 = dt.subtract(Duration(days: 10));
+    } else {
+      dt1 = dt.add(Duration(days: daysValue));
+    }
 
-    DateTime dt1 = dt.add(Duration(days: daysValue));
     return DateFormat('yyyy-MM-dd').format(dt1);
   }
 
