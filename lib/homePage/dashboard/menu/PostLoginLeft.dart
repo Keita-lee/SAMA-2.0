@@ -255,7 +255,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     HoverItem(
                       isActive: activeIndex == 4,
                       menuSize: widget.menuSize,
-                      description: 'Branch Voting',
+                      description: 'Branch Election',
                       iconPath: "images/icon_voting.svg",
                       onPressed: () {
                         _handleItemClick(4);
@@ -404,7 +404,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   HoverItem(
                     isActive: activeIndex == 10,
                     menuSize: widget.menuSize,
-                    description: "Branch Voting",
+                    description: "Branch Election",
                     iconPath: "images/icon_voting.svg",
                     onPressed: () {
                       _handleItemClick(10);

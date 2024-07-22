@@ -4,14 +4,19 @@ import 'package:sama/components/dateSelecter.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 
+import '../../../../../../components/service/commonService.dart';
+import '../../../../../../login/popups/validateDialog.dart';
+
 class DateUpdate extends StatefulWidget {
   Function closeDialog;
   String description;
+  String dateNotUnder;
   Function(String) updateDate;
   DateUpdate(
       {super.key,
       required this.closeDialog,
       required this.description,
+      required this.dateNotUnder,
       required this.updateDate});
 
   @override
@@ -20,6 +25,17 @@ class DateUpdate extends StatefulWidget {
 
 class _DateUpdateState extends State<DateUpdate> {
   final date = TextEditingController();
+
+  //Dialog  already made booking
+  Future descriptionPopup(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: description,
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,8 +86,15 @@ class _DateUpdateState extends State<DateUpdate> {
               height: 55,
               width: 85,
               onTap: () {
-                widget.updateDate(date.text);
-                widget.closeDialog();
+                if (CommonService().checkDateStartedWithOtherDate(
+                        widget.dateNotUnder, date.text) ==
+                    "Before") {
+                  descriptionPopup(
+                      "The chosen date already conflicts with other scheduled rounds.");
+                } else {
+                  widget.updateDate(date.text);
+                  widget.closeDialog();
+                }
               }),
           SizedBox(
             height: 15,

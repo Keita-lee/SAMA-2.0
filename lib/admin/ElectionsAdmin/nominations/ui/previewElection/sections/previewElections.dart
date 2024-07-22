@@ -36,6 +36,7 @@ class _PreviewElectionsState extends State<PreviewElections> {
           closeDialog: () => Navigator.pop(context!),
           updateDate:
               type == "Start" ? widget.updateStartDate : widget.updateEndDate,
+          dateNotUnder: '',
         ));
       });
 

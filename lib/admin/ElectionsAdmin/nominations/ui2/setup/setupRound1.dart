@@ -10,13 +10,15 @@ class SetupRound1 extends StatefulWidget {
   String electionId;
   Function(String) updateStartDate;
   Function(String) updateEndDate;
+  Function(String) getEmailType;
   SetupRound1(
       {super.key,
       required this.nominationStartDate,
       required this.nominationEndDate,
       required this.electionId,
       required this.updateStartDate,
-      required this.updateEndDate});
+      required this.updateEndDate,
+      required this.getEmailType});
 
   @override
   State<SetupRound1> createState() => _SetupRound1State();
@@ -24,16 +26,17 @@ class SetupRound1 extends StatefulWidget {
 
 class _SetupRound1State extends State<SetupRound1> {
   //popup to update the date
-  Future updateDate(description, type) => showDialog(
+  Future updateDate(description, type, dateNotUnder) => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
             child: DateUpdate(
-          description: description,
-          closeDialog: () => Navigator.pop(context!),
-          updateDate:
-              type == "Start" ? widget.updateStartDate : widget.updateEndDate,
-        ));
+                description: description,
+                closeDialog: () => Navigator.pop(context!),
+                updateDate: type == "Start"
+                    ? widget.updateStartDate
+                    : widget.updateEndDate,
+                dateNotUnder: dateNotUnder));
       });
 
   //Skip Nominations round
@@ -142,6 +145,7 @@ class _SetupRound1State extends State<SetupRound1> {
                 child: InkWell(
                   onTap: () {
                     closeNominationsPopup();
+                    widget.getEmailType("Nomination Close Early");
                   },
                   child: Text(
                     "Close Early",
@@ -158,6 +162,7 @@ class _SetupRound1State extends State<SetupRound1> {
                 child: InkWell(
                   onTap: () {
                     reopenNominationsPopup();
+                    widget.getEmailType("Nomination Reopen");
                   },
                   child: Text(
                     "Reopen",
@@ -189,7 +194,8 @@ class _SetupRound1State extends State<SetupRound1> {
               ),
               InkWell(
                 onTap: () {
-                  updateDate("Update Start Date", "Start");
+                  updateDate("Update Start Date", "Start",
+                      CommonService().getTodaysDateText());
                 },
                 child: Container(
                   height: 55,
@@ -227,7 +233,8 @@ class _SetupRound1State extends State<SetupRound1> {
               ),
               InkWell(
                 onTap: () {
-                  updateDate("Update End Date", "End");
+                  updateDate(
+                      "Update End Date", "End", widget.nominationStartDate);
                 },
                 child: Container(
                   height: 55,

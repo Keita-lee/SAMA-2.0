@@ -18,7 +18,7 @@ class _ValidateDialogState extends State<ValidateDialog> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       width: 300,
-      height: 185,
+      height: 200,
       child: Column(
         children: [
           Row(
@@ -42,6 +42,7 @@ class _ValidateDialogState extends State<ValidateDialog> {
           Text(
             widget.description!,
             style: TextStyle(fontSize: 20, color: Colors.black),
+            textAlign: TextAlign.center,
           ),
           Padding(
               padding: const EdgeInsets.all(15.0),

@@ -38,13 +38,17 @@ class _AcceptanceroundoverviewState extends State<Acceptanceroundoverview> {
       "hpca": doc.get("hpcsa"),
       "hdiStatus": "HDI",
       "email": "${doc.get("email")}",
-      "state": "Elected",
+      "state": "Nominated",
+      "nominated": getNominationsForUser(doc.get("email")),
       "result": result == true ? "Accept" : "Declined",
       "notificationId": notificationId
     };
     setState(() {
       if (getNominationsForUser(doc.get("email")) >= 2) {
         membersWhoAccepted.add(userData);
+
+        membersWhoAccepted
+            .sort((b, a) => a["nominated"].compareTo(b["nominated"]));
       }
     });
   }

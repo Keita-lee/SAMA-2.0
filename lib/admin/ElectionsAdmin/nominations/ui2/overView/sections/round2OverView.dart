@@ -53,8 +53,11 @@ class _Round2OverViewState extends State<Round2OverView> {
     };
     setState(() {
       if (getNominationsForUser(doc.get("email")) >= 2) {
-        membersWhoAccepted.add(userData);
+        if (result) {
+          membersWhoAccepted.add(userData);
+        }
       }
+      membersWhoAccepted.sort((b, a) => a["votes"].compareTo(b["votes"]));
     });
   }
 

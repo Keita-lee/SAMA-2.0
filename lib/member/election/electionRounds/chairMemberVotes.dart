@@ -191,7 +191,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
           height: 20,
         ),
         Text(
-          'Period ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
+          'Period: ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
           style: TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 58, 65, 65),

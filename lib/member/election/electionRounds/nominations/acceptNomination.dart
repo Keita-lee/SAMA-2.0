@@ -102,7 +102,7 @@ class _AcceptNominationState extends State<AcceptNomination> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(25.0),
           child: Column(
             children: [
               Visibility(
@@ -184,7 +184,7 @@ class _AcceptNominationState extends State<AcceptNomination> {
                         height: 15,
                       ),
                       Text(
-                        'Nomination Accepted Pending Approval',
+                        'Nomination Accepted',
                         style: TextStyle(
                             fontSize: 24,
                             color: Color(0xFF174486),
@@ -194,7 +194,7 @@ class _AcceptNominationState extends State<AcceptNomination> {
                         height: 10,
                       ),
                       Text(
-                        'You have accepted nominations to be a Branch Council member at ${widget.branch}. On Approval, you will be listed in the voting round',
+                        'You have accepted nominations to be a Branch Council member at ${widget.branch}. You will be listed in the voting round',
                         style: TextStyle(
                             fontSize: 20,
                             color: Color(0xFF174486),

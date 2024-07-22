@@ -9,9 +9,9 @@ import '../../../../../components/yesNoDialog.dart';
 class SetupElection2 extends StatefulWidget {
   TextEditingController selectBranch;
   TextEditingController count;
+  TextEditingController status;
   bool hdiCompliant;
   VoidCallback updateHdi;
-  String status;
   Function(String) updateElectionCriteria;
   Function(String) saveElection;
   SetupElection2(
@@ -51,37 +51,6 @@ class _SetupElection2State extends State<SetupElection2> {
       padding: const EdgeInsets.fromLTRB(40, 10, 45, 10),
       child: Column(
         children: [
-          /*Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              StyleButton(
-                  description: widget.status,
-                  height: 55,
-                  width: 150,
-                  onTap: () {
-                    if (widget.status == "Publish") {
-                      saveData(
-                          "Are you sure you want to publish this event? It will be visible to members of the branch, but not yet accessible?",
-                          "Publish");
-                    } else if (widget.status == "UnPublish") {}
-                  }),
-              SizedBox(
-                width: 15,
-              ),
-              Visibility(
-                visible: widget.status == "UnPublish" ? true : false,
-                child: StyleButton(
-                    buttonColor: Colors.grey,
-                    description: "Open Nominations",
-                    height: 55,
-                    width: 150,
-                    onTap: () {
-                      saveData("Are you sure you want to open the nominations?",
-                          "Close Nomination");
-                    }),
-              ),
-            ],
-          ),*/
           Row(
             children: [
               Text(
@@ -97,7 +66,7 @@ class _SetupElection2State extends State<SetupElection2> {
               ),
               ProfileDropDownField(
                 customSize: MyUtility(context).width -
-                    (MyUtility(context).width * 0.35),
+                    (MyUtility(context).width * 0.75),
                 description: '',
                 items: [
                   'Border Coastal (BCB)',
@@ -122,6 +91,27 @@ class _SetupElection2State extends State<SetupElection2> {
                   'Vaal River (VR)',
                 ],
                 textfieldController: widget.selectBranch,
+              ),
+              SizedBox(
+                width: 25,
+              ),
+              Text(
+                "Election Status",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Color(0xFF6A6A6A),
+                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              ProfileDropDownField(
+                customSize: MyUtility(context).width -
+                    (MyUtility(context).width * 0.75),
+                description: '',
+                items: ["Draft", "Publish", "UnPublish"],
+                textfieldController: widget.status,
               ),
             ],
           ),

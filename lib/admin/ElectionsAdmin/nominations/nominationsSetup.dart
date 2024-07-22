@@ -97,7 +97,7 @@ class _NominationSetupState extends State<NominationSetup> {
       Visibility(
         visible: pageIndex == 0 ? true : false,
         child: Text(
-          'Branch Voting - All Records',
+          'Branch Election - All Records',
           style: TextStyle(
               fontSize: 32,
               color: Color(0xFF3D3D3D),
@@ -316,17 +316,20 @@ class _NominationSetupState extends State<NominationSetup> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  document['status'] == " Draft"
+                                                  document['status'] == "Draft"
                                                       ? "Draft"
                                                       : document['status'] ==
                                                               "Publish"
                                                           ? "In Progress"
-                                                          : "Completed",
+                                                          : document['status'] ==
+                                                                  "UnPublish"
+                                                              ? "UnPublish"
+                                                              : "Completed",
                                                   style: TextStyle(
                                                       fontSize: 20,
                                                       color: document[
                                                                   'status'] ==
-                                                              " Draft"
+                                                              "UnPublish"
                                                           ? Colors.blue
                                                           : document['status'] ==
                                                                   "Publish"
@@ -471,35 +474,61 @@ class _NominationSetupState extends State<NominationSetup> {
                                                 ],
                                               )),
                                           Spacer(),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      openElectionForm(
-                                                          document['id']);
-                                                    },
-                                                    child: Text(
-                                                      "Manage",
-                                                      style: TextStyle(
-                                                          color: Colors.blue,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 18),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 25, 0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        openElectionForm(
+                                                            document['id']);
+                                                      },
+                                                      child: Text(
+                                                        "Manage",
+                                                        style: TextStyle(
+                                                            color: Colors.blue,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 18),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 30,
-                                              ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                            ],
+                                                    SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        /*  openElectionForm(
+                                                            document['id']);*/
+                                                        setState(() {
+                                                          electionId =
+                                                              document['id'];
+                                                        });
+                                                        changePageIndex(2);
+                                                      },
+                                                      child: Text(
+                                                        "View",
+                                                        style: TextStyle(
+                                                            color: Colors.blue,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 18),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  width: 30,
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),

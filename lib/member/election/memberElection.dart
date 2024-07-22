@@ -219,12 +219,25 @@ class _MemberElectionState extends State<MemberElection> {
     return permission;
   }
 
+  var memberName = "";
+  getMemberName() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (doc.exists) {}
+    setState(() {
+      memberName = "${doc.get("firstName")} ${doc.get("lastName")}";
+    });
+  }
+
   @override
   void initState() {
     getElection();
     getUserNotificationList();
     getNominations();
-
+    getMemberName();
     super.initState();
   }
 
@@ -232,11 +245,13 @@ class _MemberElectionState extends State<MemberElection> {
   Widget build(BuildContext context) {
     var electionPages = [
       ElectionOverView(
-          startDate: nominateStartDate,
-          endDate: electionDateEnd,
-          status: votingStatus,
-          statusClosingDate: votingClosingDate,
-          branch: branch),
+        startDate: nominateStartDate,
+        endDate: electionDateEnd,
+        status: votingStatus,
+        statusClosingDate: votingClosingDate,
+        branch: branch,
+        memberName: memberName,
+      ),
 
       /* Electionsummaryview(
           startDate: nominateStartDate,
@@ -283,7 +298,7 @@ class _MemberElectionState extends State<MemberElection> {
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'Branch Voting',
+          'Branch Election',
           style: TextStyle(
             fontSize: 36,
             color: Color.fromARGB(255, 24, 69, 126),
@@ -354,7 +369,7 @@ class _MemberElectionState extends State<MemberElection> {
                 });
               },
               tabIndexNumber: 4,
-              description: "Chair Person",
+              description: "ChairPerson",
               customWidth: 150,
               customColor1: Color.fromARGB(255, 211, 210, 210),
               customColor2: Color.fromARGB(255, 0, 159, 158),

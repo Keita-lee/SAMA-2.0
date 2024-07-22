@@ -38,6 +38,8 @@ class _Round1OverViewState extends State<Round1OverView> {
     };
     setState(() {
       membersWhoAreNominated.add(userData);
+      membersWhoAreNominated
+          .sort((b, a) => a["nominations"].compareTo(b["nominations"]));
     });
   }
 
@@ -94,7 +96,7 @@ class _Round1OverViewState extends State<Round1OverView> {
             Row(
               children: [
                 Text(
-                  "Roun1 Nominations",
+                  "Round1 Nominations",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,

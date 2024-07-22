@@ -61,7 +61,7 @@ class _ElectionFunctionsState extends State<ElectionFunctions> {
                 buttonColor: widget.includeBranchChairPerson == true
                     ? Colors.green
                     : Colors.grey,
-                description: "Include Branch Chair Person",
+                description: "Include Branch Chairperson",
                 height: 55,
                 width: 125,
                 onTap: () {

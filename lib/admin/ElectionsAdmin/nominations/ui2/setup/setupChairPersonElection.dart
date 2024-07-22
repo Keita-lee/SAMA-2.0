@@ -8,6 +8,7 @@ class SetupChairPersonElection extends StatefulWidget {
   String chairPersonStartDate;
   String chairPersonEndDate;
   Function(String) updateChairPersonDate;
+  String electionEndDate;
   bool includeBranchChairPerson;
   VoidCallback updateChairperson;
   SetupChairPersonElection(
@@ -15,6 +16,7 @@ class SetupChairPersonElection extends StatefulWidget {
       required this.chairPersonStartDate,
       required this.chairPersonEndDate,
       required this.updateChairPersonDate,
+      required this.electionEndDate,
       required this.includeBranchChairPerson,
       required this.updateChairperson});
 
@@ -24,7 +26,7 @@ class SetupChairPersonElection extends StatefulWidget {
 }
 
 class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
-  Future updateDate(description) => showDialog(
+  Future updateDate(description, dateNotUnder) => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
@@ -32,6 +34,7 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
           description: description,
           closeDialog: () => Navigator.pop(context!),
           updateDate: widget.updateChairPersonDate,
+          dateNotUnder: dateNotUnder,
         ));
       });
 
@@ -40,7 +43,7 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
       builder: (context) {
         return Dialog(
             child: YesNoDialog(
-          description: "Are you sure you want to close chair person election",
+          description: "Are you sure you want to close chairperson election",
           closeDialog: () => Navigator.pop(context!),
           callFunction: () {
             widget.updateChairPersonDate(CommonService().getTodaysDateText());
@@ -115,6 +118,9 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
               ),
             ],
           ),
+          SizedBox(
+            height: 15,
+          ),
           Visibility(
               visible: widget.includeBranchChairPerson,
               child: Column(
@@ -122,7 +128,7 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
                   Row(
                     children: [
                       Text(
-                        "Chair Person Eletions",
+                        "ChairPerson Eletions",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -207,7 +213,8 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
                       ),
                       InkWell(
                         onTap: () {
-                          updateDate("Update Start Date");
+                          updateDate(
+                              "Update Start Date", widget.electionEndDate);
                         },
                         child: Container(
                           height: 55,

@@ -35,7 +35,7 @@ class _Round3State extends State<Round3> {
           SizedBox(
             width: MyUtility(context).width * 0.55,
             child: Text(
-              'Round 3 - Branch Chair Person',
+              'Round 3 - Branch Chairperson',
               style: TextStyle(
                 fontSize: 18,
                 color: Color(0xFF3D3D3D),
@@ -46,7 +46,7 @@ class _Round3State extends State<Round3> {
           SizedBox(
             width: MyUtility(context).width * 0.55,
             child: DatePicker(
-              dateHeadline: 'Branch Chair Person Voting Dates',
+              dateHeadline: 'Branch Chairperson Voting Dates',
             ),
           ),
         ],

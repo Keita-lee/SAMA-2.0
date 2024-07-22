@@ -40,6 +40,7 @@ class _OverViewElectionState extends State<OverViewElection> {
   final electionDateEnd = TextEditingController();
   final chairPersonStart = TextEditingController();
   final chairPersonEnd = TextEditingController();
+  final status = TextEditingController();
 
   final title = TextEditingController();
   final position = TextEditingController();
@@ -50,22 +51,9 @@ class _OverViewElectionState extends State<OverViewElection> {
   bool hdiCompliant = false;
   List electionVotes = [];
   List chairMemberVoteList = [];
-  String status = "";
   int nomintionCount = 0;
   int pageIndex = 1;
   int electionIndex = 0;
-
-  updateStatus() {
-    setState(() {
-      if (status == "") {
-        status = "Publish";
-      } else if (status == "Publish") {
-        status = "UnPublish";
-      } else if (status == "Open Nominations") {
-        status = "Close";
-      }
-    });
-  }
 
 //save add data to firebase
   saveData(statusType) async {
@@ -129,7 +117,7 @@ class _OverViewElectionState extends State<OverViewElection> {
         chairPersonStart.text = data.get('chairPersonStart');
         chairPersonEnd.text = data.get('chairPersonEnd');
         includeBranchChairPerson = data.get('includeBranchChairPerson');
-        status = data.get('status');
+        status.text = data.get('status');
         count.text = data.get('count');
         electionVotes.addAll(data.get('electionVotes'));
         chairMemberVoteList.addAll(data.get('chairmanVotes'));
@@ -139,7 +127,6 @@ class _OverViewElectionState extends State<OverViewElection> {
         criteria.text = data.get('criteria');
         hdiCompliant = data.get('hdiComply');
       });
-      updateStatus();
     }
   }
 
@@ -273,7 +260,6 @@ class _OverViewElectionState extends State<OverViewElection> {
     }
 
     super.initState();
-    updateStatus();
   }
 
   @override
@@ -387,7 +373,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                   });
                 },
                 tabIndexNumber: 5,
-                description: "Chair Person",
+                description: "ChairPerson",
                 customWidth: 150,
                 customColor1: Color.fromARGB(255, 211, 210, 210),
                 customColor2: Color(0xFF174486),
@@ -419,26 +405,18 @@ class _OverViewElectionState extends State<OverViewElection> {
                       height: 55,
                       width: 160,
                       decoration: BoxDecoration(
-                        color: CommonService().checkDateStarted(
-                                    chairPersonEnd.text != ""
-                                        ? chairPersonEnd.text
-                                        : electionDateEnd.text) ==
-                                "After"
+                        color: status.text == "UnPublish"
                             ? Colors.grey
-                            : Color.fromRGBO(0, 159, 12, 1),
+                            : status.text == "Draft"
+                                ? Colors.grey
+                                : Color.fromRGBO(0, 159, 12, 1),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                       ),
                       child: Center(
                         child: Text(
-                          CommonService().checkDateStarted(
-                                      chairPersonEnd.text != ""
-                                          ? chairPersonEnd.text
-                                          : electionDateEnd.text) ==
-                                  "After"
-                              ? 'Completed'
-                              : 'In Progress',
+                          status.text,
                           style: TextStyle(
                               color: Colors.white,
                               letterSpacing: 1.1,
@@ -452,7 +430,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                 SizedBox(
                   height: 15,
                 ),
-                Visibility(
+                /*    Visibility(
                   visible: pageIndex == 0 ? true : false,
                   child: Column(children: [
                     SetupElection2(
@@ -492,6 +470,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                         }),
                   ]),
                 ),
+            */
                 Visibility(
                   visible: pageIndex == 1 ? true : false,
                   child: ElectionOverView(
@@ -506,6 +485,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                     electionId: widget.id,
                     electionVotes: electionVotes,
                     chairMemberVoteList: chairMemberVoteList,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(

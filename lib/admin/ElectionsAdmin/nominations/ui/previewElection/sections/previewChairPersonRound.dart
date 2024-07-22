@@ -34,6 +34,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           description: description,
           closeDialog: () => Navigator.pop(context!),
           updateDate: widget.updateChairPersonDate,
+          dateNotUnder: '',
         ));
       });
 
@@ -42,7 +43,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
       builder: (context) {
         return Dialog(
             child: YesNoDialog(
-          description: "Are you sure you want to close chair person election",
+          description: "Are you sure you want to close chairperson election",
           closeDialog: () => Navigator.pop(context!),
           callFunction: () {
             widget.updateChairPersonDate(CommonService().getTodaysDateText());
@@ -58,7 +59,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           height: 15,
         ),
         Text(
-          "Chair Person Election",
+          "Chairperson Election",
           style: TextStyle(
               fontSize: 25,
               color: Color(0xFF174486),
@@ -74,7 +75,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
                   ? false
                   : true,
           child: StyleButton(
-              description: "Close Chair Person Election Early",
+              description: "Close Chairperson Election Early",
               height: 55,
               width: 85,
               onTap: () {
@@ -84,7 +85,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
         Row(
           children: [
             Text(
-              "Chair Person Election from ${CommonService().getDateInText(widget.chairPersonStartDate)} - ${CommonService().getDateInText(widget.chairPersonEndDate)}  ",
+              "ChairPerson Election from ${CommonService().getDateInText(widget.chairPersonStartDate)} - ${CommonService().getDateInText(widget.chairPersonEndDate)}  ",
               style: TextStyle(
                   fontSize: 16,
                   color: Color(0xFF174486),
@@ -110,7 +111,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
                   TextSpan(
-                      text: 'Chair Person Election',
+                      text: 'ChairPerson Election',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -134,7 +135,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           height: 25,
         ),
         Text(
-          "Chair Person Election Start Date:",
+          "ChairPerson Election Start Date:",
           style: TextStyle(
               fontSize: 16,
               color: Color(0xFF174486),
@@ -191,7 +192,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
                   TextSpan(
-                      text: 'Chair Person Election have',
+                      text: 'ChairPerson Election have',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -215,7 +216,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           height: 25,
         ),
         Text(
-          "Chair Person Election End Date:",
+          "ChairPerson Election End Date:",
           style: TextStyle(
               fontSize: 16,
               color: Color(0xFF174486),

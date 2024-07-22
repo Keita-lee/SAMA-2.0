@@ -6,7 +6,6 @@ class Round1Excel {
     final sheet = excel.sheets[excel.getDefaultSheet() as String];
 
     for (int i = 0; i < 3; i++) sheet!.setColumnWidth(i, 20);
-
     CellStyle cellBold = CellStyle(
       bold: true,
       textWrapping: TextWrapping.WrapText,

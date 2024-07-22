@@ -8,6 +8,7 @@ import 'package:sama/profile/Tables/VolunteerWorkTable.dart';
 import '../../components/MyDivider.dart';
 import '../../profile/Tables/PublishedArticlesTable.dart';
 import '../../profile/Tables/workExperience.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewMemberBio extends StatefulWidget {
   String memberId;
@@ -94,6 +95,18 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
     } else {
       print("Nope");
     }
+  }
+
+  downloadCv() {
+    final Uri urlMonth = Uri(
+      scheme: 'https',
+      host: "",
+      path: 'paystack.com/pay/ebakeMonth',
+    );
+
+    final Uri a = Uri.parse(cv);
+
+    launchUrl(a);
   }
 
   @override
@@ -188,10 +201,10 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ImageNetwork(
-                            fitWeb: BoxFitWeb.cover,
+                            fitWeb: BoxFitWeb.contain,
                             image: profileImage,
-                            width: MyUtility(context).width / 4,
-                            height: MyUtility(context).height / 4,
+                            width: MyUtility(context).width / 5,
+                            height: MyUtility(context).height / 5,
                           ),
                         ],
                       ),
@@ -266,14 +279,16 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                       Column(
                         children: [
                           Container(
-                            width: MyUtility(context).width * 0.05,
+                            width: 120,
                             height: 50,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Color(0xFF174486),
                             ),
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                downloadCv();
+                              },
                               child: Text(
                                 'Download Cv',
                                 style: TextStyle(

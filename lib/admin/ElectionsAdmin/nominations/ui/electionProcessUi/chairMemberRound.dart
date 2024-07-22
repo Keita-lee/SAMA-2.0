@@ -7,12 +7,14 @@ class ChairMemberRound extends StatefulWidget {
   String chairMemberEndDate;
   List chairMemberVoteList;
   String electionId;
+  List electionVotes;
   ChairMemberRound(
       {super.key,
       required this.chairMemberEndDate,
       required this.chairMemberStartDate,
       required this.chairMemberVoteList,
-      required this.electionId});
+      required this.electionId,
+      required this.electionVotes});
 
   @override
   State<ChairMemberRound> createState() => _ChairMemberRoundState();
@@ -33,6 +35,16 @@ class _ChairMemberRoundState extends State<ChairMemberRound> {
     return '${totalVotes}';
   }
 
+  getElectionVotes(email) {
+    var totalVotes = 0;
+    for (int i = 0; i < (widget.electionVotes).length; i++) {
+      if (widget.electionVotes[i]['email'] == email) {
+        totalVotes = totalVotes + 1;
+      }
+    }
+    return '${totalVotes}';
+  }
+
   //get user details from notification
   getUserDetail(id, result) async {
     final doc =
@@ -45,15 +57,16 @@ class _ChairMemberRoundState extends State<ChairMemberRound> {
       "hdiStatus":
           '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"} ',
       "email": "${doc.get("email")}",
-      "votes": getVotes(doc.get("email"))
+      "votes": getVotes(doc.get("email")),
+      "electionVotes": getElectionVotes(doc.get("email")),
     };
     setState(() {
-      if (getNominationsForUser(doc.get("email")) >= 2) {
+      if (userData['electionVotes'] >= 1) {
         membersWhoAccepted.add(userData);
       }
+      membersWhoAccepted
+          .sort((b, a) => a["electionVotes"].compareTo(b["electionVotes"]));
     });
-
-    membersWhoAccepted.sort((b, a) => a["votes"].compareTo(b["votes"]));
   }
 
   //get User Notification list who accepted nomination

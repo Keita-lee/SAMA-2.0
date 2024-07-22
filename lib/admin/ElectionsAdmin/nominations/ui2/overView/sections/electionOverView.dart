@@ -6,6 +6,7 @@ import 'package:sama/admin/ElectionsAdmin/nominations/ui2/Excel/chairPersonEx.da
 
 import '../../../../../../components/styleButton.dart';
 import '../../../ui/electionOverviewItem.dart';
+import '../../Excel/exportAll.dart';
 import '../../Excel/round1Ex.dart';
 import '../../Excel/round2Ex.dart';
 
@@ -21,6 +22,7 @@ class ElectionOverView extends StatefulWidget {
   String electionId;
   List electionVotes;
   List chairMemberVoteList;
+  String branch;
   ElectionOverView(
       {super.key,
       required this.nominateStartDate,
@@ -33,7 +35,8 @@ class ElectionOverView extends StatefulWidget {
       required this.chairPersonEnd,
       required this.electionId,
       required this.electionVotes,
-      required this.chairMemberVoteList});
+      required this.chairMemberVoteList,
+      required this.branch});
   @override
   State<ElectionOverView> createState() => _ElectionOverViewState();
 }
@@ -246,7 +249,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
                     widget.electionDateEnd, membersWhoAccepted);
               }),
           ElectionOverviewItem(
-              voteTitle: 'Chair Person Election',
+              voteTitle: 'ChairPerson Election',
               startDate: widget.chairPersonStart,
               endDate: widget.chairPersonEnd,
               exportToExcel: () {
@@ -261,17 +264,20 @@ class _ElectionOverViewState extends State<ElectionOverView> {
                   height: 55,
                   width: 165,
                   onTap: () {
-                    Round1Excel().exportRound1(widget.nominateStartDate,
-                        widget.nominateEndDate, membersWhoAreNominated);
-
-                    AcceptanceRoundExcel().exportAcceptance(
+                    ExportAllData().exportAllData(
+                        widget.nominateStartDate,
+                        widget.nominateEndDate,
+                        membersWhoAreNominated,
                         widget.nominateAcceptStartDate,
                         widget.nominateAcceptEndDate,
-                        acceptanceList);
-                    Round2Excel().exportRound2(widget.electionDateStart,
-                        widget.electionDateEnd, membersWhoAccepted);
-                    ChairPersonEx().exportChairPerson(widget.chairPersonStart,
-                        widget.chairPersonEnd, chairMembers);
+                        acceptanceList,
+                        widget.electionDateStart,
+                        widget.electionDateEnd,
+                        membersWhoAccepted,
+                        widget.chairPersonStart,
+                        widget.chairPersonEnd,
+                        chairMembers,
+                        widget.branch);
                   })
             ],
           )

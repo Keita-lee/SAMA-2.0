@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../components/electionTabStyle.dart';
+import '../../../../components/email/sendElectionUpdates.dart';
 import '../../../../components/myutility.dart';
 import '../../../../components/service/commonService.dart';
 import '../../../../components/styleButton.dart';
@@ -39,6 +40,7 @@ class _ManageElectionState extends State<ManageElection> {
   final electionDateEnd = TextEditingController();
   final chairPersonStart = TextEditingController();
   final chairPersonEnd = TextEditingController();
+  final status = TextEditingController();
 
   final title = TextEditingController();
   final position = TextEditingController();
@@ -49,31 +51,30 @@ class _ManageElectionState extends State<ManageElection> {
   bool hdiCompliant = false;
   List electionVotes = [];
   List chairMemberVoteList = [];
-  String status = "";
   int nomintionCount = 0;
   int pageIndex = 0;
   int electionIndex = 0;
+  String emailTypeUpdate = "";
 
-  updateStatus() {
+  getEmailType(value) {
     setState(() {
-      if (status == "") {
-        setState(() {
-          status = "Draft";
-        });
-      } else if (status == "Draft") {
-        setState(() {
-          status = "Publish";
-        });
-      } else if (status == "Publish") {
-        setState(() {
-          status = "UnPublish";
-        });
-      } else if (status == "UnPublish") {
-        setState(() {
-          status = "Publish";
-        });
-      }
+      emailTypeUpdate = value;
     });
+  }
+
+  sendUserEmailUpdate(
+      description, nomDates, acceptanceDates, election, chairDates) async {
+    final doc = await FirebaseFirestore.instance.collection('users').get();
+    for (int i = 0; i < doc.docs.length; i++) {}
+    sendElectionUpdate(
+        description: emailTypeUpdate == ""
+            ? "Elections have begun, and the following events are taking place."
+            : emailTypeUpdate,
+        nomDates: nomDates,
+        acceptanceDates: acceptanceDates,
+        election: election,
+        chairDates: chairDates,
+        email: "chrispotjnr@gmail.com");
   }
 
 //save add data to firebase
@@ -89,7 +90,7 @@ class _ManageElectionState extends State<ManageElection> {
       "chairPersonStart": chairPersonStart.text,
       "chairPersonEnd": chairPersonEnd.text,
       "includeBranchChairPerson": includeBranchChairPerson,
-      "status": statusType,
+      "status": status.text,
       "title": title.text,
       "position": position.text,
       "criteria": criteria.text,
@@ -110,13 +111,31 @@ class _ManageElectionState extends State<ManageElection> {
           .doc(myNewDoc.id)
           .update({
         "id": myNewDoc.id,
-      }).whenComplete(() => widget.changePageIndex(0));
+      }).whenComplete(() => {
+                sendUserEmailUpdate(
+                  "Elections have begun, and the following events are taking place.",
+                  "${nominateStartDate.text} -${nominateEndDate.text}",
+                  "${nominateAcceptStartDate.text} -${nominateAcceptEndDate.text}",
+                  "${electionDateStart.text} -${electionDateEnd.text}",
+                  "${chairPersonStart.text} -${chairPersonEnd.text}",
+                ),
+                widget.changePageIndex(0)
+              });
     } else {
       await FirebaseFirestore.instance
           .collection("elections")
           .doc(widget.id)
           .update(electionData)
-          .whenComplete(() => widget.changePageIndex(0));
+          .whenComplete(() => {
+                sendUserEmailUpdate(
+                  "Elections have updated, and the following events are taking place.",
+                  "${nominateStartDate.text} -${nominateEndDate.text}",
+                  "${nominateAcceptStartDate.text} -${nominateAcceptEndDate.text}",
+                  "${electionDateStart.text} -${electionDateEnd.text}",
+                  "${chairPersonStart.text} -${chairPersonEnd.text}",
+                ),
+                widget.changePageIndex(0)
+              });
     }
   }
 
@@ -138,7 +157,7 @@ class _ManageElectionState extends State<ManageElection> {
         chairPersonStart.text = data.get('chairPersonStart');
         chairPersonEnd.text = data.get('chairPersonEnd');
         includeBranchChairPerson = data.get('includeBranchChairPerson');
-        status = data.get('status');
+        status.text = data.get('status');
         count.text = data.get('count');
         electionVotes.addAll(data.get('electionVotes'));
         chairMemberVoteList.addAll(data.get('chairmanVotes'));
@@ -148,7 +167,6 @@ class _ManageElectionState extends State<ManageElection> {
         criteria.text = data.get('criteria');
         hdiCompliant = data.get('hdiComply');
       });
-      updateStatus();
     }
   }
 
@@ -288,7 +306,6 @@ class _ManageElectionState extends State<ManageElection> {
     }
 
     super.initState();
-    updateStatus();
   }
 
   @override
@@ -297,7 +314,7 @@ class _ManageElectionState extends State<ManageElection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Branch Voting - Manage',
+          'Branch Election - Manage',
           style: TextStyle(
             fontSize: 36,
             color: Color.fromARGB(255, 24, 69, 126),
@@ -324,26 +341,16 @@ class _ManageElectionState extends State<ManageElection> {
                 onTap: () {
                   widget.changePageIndex(0);
                 }),
-            SizedBox(
+            /*       SizedBox(
               width: 10,
             ),
-            StyleButton(
-                description: "${status == "Draft" ? "Publish" : status}",
-                height: 55,
-                width: 125,
-                onTap: () {
-                  updateStatus();
-                }),
-            SizedBox(
-              width: 10,
-            ),
-            StyleButton(
+           StyleButton(
                 description: "OverView",
                 height: 55,
                 width: 125,
                 onTap: () {
                   widget.changePageIndex(2);
-                }),
+                }),*/
             SizedBox(
               width: 10,
             ),
@@ -471,16 +478,18 @@ class _ManageElectionState extends State<ManageElection> {
                       height: 55,
                       width: 160,
                       decoration: BoxDecoration(
-                        color: status == "Draft"
+                        color: status.text == "UnPublish"
                             ? Colors.grey
-                            : Color.fromRGBO(0, 159, 12, 1),
+                            : status.text == "Draft"
+                                ? Colors.grey
+                                : Color.fromRGBO(0, 159, 12, 1),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                       ),
                       child: Center(
                         child: Text(
-                          status,
+                          status.text,
                           style: TextStyle(
                               color: Colors.white,
                               letterSpacing: 1.1,
@@ -511,26 +520,29 @@ class _ManageElectionState extends State<ManageElection> {
                         nominationEndDate: nominateEndDate.text,
                         updateStartDate: updateNominationStartDate,
                         updateEndDate: updateNominationEndDate,
-                        electionId: widget.id),
+                        electionId: widget.id,
+                        getEmailType: getEmailType),
                     SetupAcceptance(
                       nominateAcceptStartDate: nominateAcceptStartDate.text,
                       nominateAcceptEndDate: nominateAcceptEndDate.text,
                     ),
                     SetupRound2(
-                      electionStartDate: electionDateStart.text,
-                      electionEndDate: electionDateEnd.text,
-                      nominationEndDate: nominateEndDate.text,
-                      updateStartDate: updateRound2StartDate,
-                      updateEndDate: updateRound2EndDate,
-                    ),
+                        electionStartDate: electionDateStart.text,
+                        electionEndDate: electionDateEnd.text,
+                        nominationEndDate: nominateEndDate.text,
+                        updateStartDate: updateRound2StartDate,
+                        updateEndDate: updateRound2EndDate,
+                        getEmailType: getEmailType),
                     SetupChairPersonElection(
-                        chairPersonStartDate: chairPersonStart.text,
-                        chairPersonEndDate: chairPersonEnd.text,
-                        updateChairPersonDate: updateChairPersonDate,
-                        includeBranchChairPerson: includeBranchChairPerson,
-                        updateChairperson: () {
-                          updateChairperson();
-                        }),
+                      chairPersonStartDate: chairPersonStart.text,
+                      chairPersonEndDate: chairPersonEnd.text,
+                      updateChairPersonDate: updateChairPersonDate,
+                      includeBranchChairPerson: includeBranchChairPerson,
+                      updateChairperson: () {
+                        updateChairperson();
+                      },
+                      electionEndDate: electionDateEnd.text,
+                    ),
                   ]),
                 ),
                 Visibility(
@@ -547,6 +559,7 @@ class _ManageElectionState extends State<ManageElection> {
                     electionId: widget.id,
                     electionVotes: electionVotes,
                     chairMemberVoteList: chairMemberVoteList,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(

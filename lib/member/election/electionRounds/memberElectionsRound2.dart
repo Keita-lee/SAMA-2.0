@@ -33,9 +33,21 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
   //var
   List membersWhoAccepted = [];
   List voteList = [];
+  List nominations = [];
   var voteAmount = 0;
+
+  getVotes(email) {
+    var totalVotes = 0;
+    for (int i = 0; i < (widget.electionVotes).length; i++) {
+      if (widget.electionVotes[i]['email'] == email) {
+        totalVotes = totalVotes + 1;
+      }
+    }
+    return '${totalVotes}';
+  }
+
 //get user details from notification
-  getUserDetail(id) async {
+  getUserDetail(id, result) async {
     final doc =
         await FirebaseFirestore.instance.collection('users').doc(id).get();
     var userData = {
@@ -44,26 +56,51 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
       "hdiStatus":
           '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"} ',
       "email": "${doc.get("email")}",
-      "vote": ""
+      "nominations": getNominationsForUser(doc.get("email"))
     };
     setState(() {
-      membersWhoAccepted.add(userData);
+      if (getNominationsForUser(userData['email']) >= 2) {
+        if (result) {
+          membersWhoAccepted.add(userData);
+        }
+      }
     });
   }
 
-//TODO get real branch id
   //get User Notification list who accepted nomination
   getUserNotificationList() async {
     final doc = await FirebaseFirestore.instance
         .collection('notifications')
-        .where("data.electionId", isEqualTo: "ngZiVRVWoMETIGm0VPgj")
-        .where("data.accept", isEqualTo: true)
+        .where("data.electionId", isEqualTo: widget.electionId)
+        // .where("data.accept", isEqualTo: true)
         .get();
     setState(() {
       for (int i = 0; i < (doc.docs).length; i++) {
-        getUserDetail(doc.docs[i]["userWhoNotify"]);
+        getUserDetail(doc.docs[i]["userWhoNotify"], doc.docs[i]["data.accept"]);
       }
     });
+  }
+
+  getNominations() async {
+    final doc =
+        await FirebaseFirestore.instance.collection('nominations').get();
+    if (doc != null) {
+      setState(() {
+        nominations.addAll(doc.docs);
+      });
+    }
+  }
+
+  getNominationsForUser(email) {
+    var nomAmount = 0;
+    for (int i = 0; i < nominations.length; i++) {
+      if (nominations[i]['nominee'] == email) {
+        setState(() {
+          nomAmount++;
+        });
+      }
+    }
+    return nomAmount;
   }
 
 //check if member alread in list
@@ -127,6 +164,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
   void initState() {
     getUserNotificationList();
     voteAmount = int.parse(widget.votingCount);
+    getNominations();
     super.initState();
   }
 
@@ -146,7 +184,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
           height: 20,
         ),
         Text(
-          'Period ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
+          'Period: ${CommonService().getDateInText(widget.startDate)} to ${CommonService().getDateInText(widget.endDate)}',
           style: TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 58, 65, 65),
@@ -175,7 +213,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
               0: FlexColumnWidth(3),
               1: FlexColumnWidth(3),
               2: FlexColumnWidth(3),
-              3: FlexColumnWidth(1),
+              3: FlexColumnWidth(1.2),
             },
             children: [
               TableRow(

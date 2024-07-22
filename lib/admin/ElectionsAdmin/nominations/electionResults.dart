@@ -107,7 +107,7 @@ class _ElectionResultsState extends State<ElectionResults> {
               });
             },
             tabIndexNumber: 3,
-            description: "Chair Person",
+            description: "Chairperson",
             customWidth: 150,
             customColor1: Color.fromARGB(255, 7, 124, 179),
             customColor2: Color.fromARGB(255, 8, 55, 145),
@@ -147,6 +147,7 @@ class _ElectionResultsState extends State<ElectionResults> {
           chairMemberEndDate: widget.chairmanStartDate,
           chairMemberStartDate: widget.chairmanEndDate,
           chairMemberVoteList: widget.chairMemberVoteList,
+          electionVotes: widget.electionVotes,
           electionId: widget.electionId,
         ),
       )

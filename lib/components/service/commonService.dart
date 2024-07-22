@@ -20,6 +20,7 @@ class CommonService {
     String day = DateFormat('dd').format(dateTime);
     String month = DateFormat('MMMM').format(dateTime);
     String year = DateFormat('yyyy').format(dateTime);
+
     return '$day $month $year';
   }
 
@@ -28,6 +29,17 @@ class CommonService {
     DateTime now = DateTime.now();
     DateTime dateTime = DateTime.parse(date);
     if (now.difference(dateTime).inDays >= 1) {
+      return "After";
+    } else {
+      return "Before";
+    }
+  }
+
+  //Check if date started or pased
+  checkDateStartedWithOtherDate(date1, date2) {
+    DateTime dateTime2 = DateTime.parse(date2);
+    DateTime dateTime = DateTime.parse(date1);
+    if (dateTime2.difference(dateTime).inDays >= 1) {
       return "After";
     } else {
       return "Before";
@@ -46,7 +58,7 @@ class CommonService {
     String day = DateFormat('dd').format(now);
     String month = DateFormat('MM').format(now);
     String year = DateFormat('yyyy').format(now);
-
+    print("$year-$month-$day");
     return "$year-$month-$day";
   }
 

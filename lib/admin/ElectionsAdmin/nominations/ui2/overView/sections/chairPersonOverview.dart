@@ -51,7 +51,9 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
     };
     setState(() {
       if (getNominationsForUser(doc.get("email")) >= 2) {
-        membersWhoAccepted.add(userData);
+        if (double.parse(getVotes(doc.get("email"))) >= 1) {
+          membersWhoAccepted.add(userData);
+        }
       }
     });
 
