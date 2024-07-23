@@ -106,11 +106,8 @@ class _MediaFormState extends State<MediaForm> {
         author.text = data.get('author');
         category.text = data.get('category');
         //quillController = data.get('description');
-        myJSON = jsonDecode(data.get('description'));
-        quillController = QuillController(
-            document: Document.fromJson(myJSON),
-            selection: TextSelection.collapsed(offset: 0));
-        //  description.text = data.get('description');
+
+        description.text = data.get('description');
         urlLink.text = data.get('urlLink');
         mediaImageUrl = data.get('mediaImageUrl');
         releaseDate = data.get('releaseDate');
@@ -308,7 +305,7 @@ class _MediaFormState extends State<MediaForm> {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      /*  Container(
                         width: MyUtility(context).width / 2,
                         height: 100,
                         decoration: BoxDecoration(
@@ -325,15 +322,16 @@ class _MediaFormState extends State<MediaForm> {
                                 const QuillSharedConfigurations(),
                           ),
                         ),
-                      ),
-                      /*   ProfileTextField(
+                      ),*/
+                      ProfileTextField(
                         customSize: MyUtility(context).width / 2,
                         description: "Description:",
                         textfieldController: description,
                         customHeight: 100,
                         textFieldType: "stringType",
                         lines: 6,
-                      ),*/
+                      ),
+                      /*  */
                       SizedBox(
                         width: 8,
                       ),

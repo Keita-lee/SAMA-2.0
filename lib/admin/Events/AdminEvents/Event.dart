@@ -5,6 +5,8 @@ import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/components/yesNoDialog.dart';
 
+import '../NewEvent/NewEventComp/eventAttendees.dart';
+
 class AdminEvents extends StatefulWidget {
   const AdminEvents({Key? key}) : super(key: key);
 
@@ -33,7 +35,16 @@ class _AdminEventsState extends State<AdminEvents> {
           },
         ));
       });
-
+//Popup view atten
+  Future openViewEventAtt(attending) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: EventAttendees(
+          attendeesList: attending,
+          closeDialog: () => Navigator.pop(context!),
+        ));
+      });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -119,9 +130,9 @@ class _AdminEventsState extends State<AdminEvents> {
                             child: Table(
                               columnWidths: {
                                 0: FlexColumnWidth(3),
-                                1: FlexColumnWidth(2),
-                                2: FlexColumnWidth(2),
-                                3: FlexColumnWidth(2),
+                                1: FlexColumnWidth(1.5),
+                                2: FlexColumnWidth(1.5),
+                                3: FlexColumnWidth(1.5),
                                 4: FlexColumnWidth(2),
                               },
                               children: [
@@ -135,7 +146,11 @@ class _AdminEventsState extends State<AdminEvents> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
-                                    Text('Publish Date',
+                                    Text('From',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20)),
+                                    Text('To',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20)),
@@ -194,6 +209,16 @@ class _AdminEventsState extends State<AdminEvents> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          data != null &&
+                                                  data.containsKey('endDate')
+                                              ? data['endDate']
+                                              : 'N/A',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -229,6 +254,20 @@ class _AdminEventsState extends State<AdminEvents> {
                                               },
                                               child: Text('Edit',
                                                   style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.blue)),
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                openViewEventAtt(
+                                                    data!['attending']);
+                                              },
+                                              child: Text('Attendees',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
                                                       color: Colors.blue)),
                                             ),
                                             SizedBox(
@@ -240,6 +279,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                               },
                                               child: Text('Delete',
                                                   style: TextStyle(
+                                                      fontSize: 18,
                                                       color: Colors.blue)),
                                             ),
                                           ],

@@ -12,6 +12,19 @@ class MemberMedia extends StatefulWidget {
 }
 
 class _MemberMediaState extends State<MemberMedia> {
+  final category = TextEditingController();
+
+  List items = [
+    'All',
+    'Webinar',
+    'SAMA News',
+    'General',
+    'Conferences',
+    'Virtual Meeting',
+    'Office of the Chair',
+    'Corona Virus - COVID-19',
+    'Courses',
+  ];
   //Open dialog for media
   Future openMediaDialog(id) => showDialog(
       context: context,
@@ -33,6 +46,53 @@ class _MemberMediaState extends State<MemberMedia> {
             fontSize: 32,
             color: Color(0xFF3D3D3D),
             fontWeight: FontWeight.normal),
+      ),
+      SizedBox(
+        height: 25,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: MyUtility(context).width - (MyUtility(context).width * 0.45),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Select a Category",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color(0xFF6A6A6A),
+                ),
+              ),
+              DropdownMenu<String>(
+                width: 250,
+                controller: category,
+                requestFocusOnTap: true,
+                label: const Text(''),
+                onSelected: (value) {
+                  setState(() {
+                    if (value == "All") {
+                      category.text = "";
+                    } else {
+                      category.text = (value!);
+                    }
+                  });
+                },
+                dropdownMenuEntries:
+                    items.map<DropdownMenuEntry<String>>((value) {
+                  return DropdownMenuEntry<String>(
+                    value: value,
+                    label: value,
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ],
       ),
       SizedBox(
         height: 25,
@@ -68,30 +128,37 @@ class _MemberMediaState extends State<MemberMedia> {
                       return Wrap(
                         direction: Axis.horizontal,
                         children: [
-                          MediaContainerStyle(
-                            view: () {
-                              openMediaDialog(document["id"]);
-                            },
-                            onpress: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return MediaPopup(
-                                    id: document["id"],
-                                    closeDialog: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            adminType: "false",
-                            image: document['mediaImageUrl'],
-                            duration: document['duration'],
-                            releaseDate: '',
-                            category: document['category'],
-                            title: document['title'],
-                            id: document['id'],
+                          Visibility(
+                            visible: category.text == ""
+                                ? true
+                                : category.text == document['category']
+                                    ? true
+                                    : false,
+                            child: MediaContainerStyle(
+                              view: () {
+                                openMediaDialog(document["id"]);
+                              },
+                              onpress: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return MediaPopup(
+                                      id: document["id"],
+                                      closeDialog: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              adminType: "false",
+                              image: document['mediaImageUrl'],
+                              duration: document['duration'],
+                              releaseDate: '',
+                              category: document['category'],
+                              title: document['title'],
+                              id: document['id'],
+                            ),
                           )
                         ],
                       );

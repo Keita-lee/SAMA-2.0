@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class EventTxtField extends StatefulWidget {
   final String textSection;
   final TextEditingController controller;
+  final double? customWidth;
 
   const EventTxtField(
-      {Key? key, required this.controller, required this.textSection})
+      {Key? key,
+      required this.controller,
+      required this.textSection,
+      this.customWidth})
       : super(key: key);
 
   @override
@@ -28,7 +32,9 @@ class _EventTxtFieldState extends State<EventTxtField> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * 0.25,
+            width: widget.customWidth != null
+                ? widget.customWidth
+                : MediaQuery.of(context).size.width * 0.25,
             height: MediaQuery.of(context).size.height * 0.07,
             decoration: BoxDecoration(
               color: Colors.white,

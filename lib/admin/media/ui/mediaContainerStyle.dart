@@ -61,11 +61,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /* Youtubevideoplayer(
-              id: widget.id,
-            ),*/
             Visibility(
               visible: widget.image == "" ? true : false,
               child: Container(
@@ -84,7 +80,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
               visible: widget.image != "" ? true : false,
               child: Container(
                 width: MyUtility(context).width / 4.0,
-                height: 230,
+                height: 200,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xFFD1D1D1),
@@ -102,8 +98,8 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             ),
 
             Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              height: 75,
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              height: 85,
               child: Text(
                 (widget.title),
                 style: TextStyle(
@@ -114,7 +110,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             ),
 
             Padding(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: Row(
                 children: [
                   Text(

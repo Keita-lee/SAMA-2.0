@@ -226,8 +226,11 @@ class _ElectionOverViewState extends State<ElectionOverView> {
               startDate: widget.nominateStartDate,
               endDate: widget.nominateEndDate,
               exportToExcel: () {
-                Round1Excel().exportRound1(widget.nominateStartDate,
-                    widget.nominateEndDate, membersWhoAreNominated);
+                Round1Excel().exportRound1(
+                    widget.nominateStartDate,
+                    widget.nominateEndDate,
+                    membersWhoAreNominated,
+                    widget.branch);
                 //  _exportToExcel();
               }),
           ElectionOverviewItem(
@@ -238,7 +241,8 @@ class _ElectionOverViewState extends State<ElectionOverView> {
                 AcceptanceRoundExcel().exportAcceptance(
                     widget.nominateAcceptStartDate,
                     widget.nominateAcceptEndDate,
-                    acceptanceList);
+                    acceptanceList,
+                    widget.branch);
               }),
           ElectionOverviewItem(
               voteTitle: 'Round 2 Elections',
@@ -246,7 +250,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
               endDate: widget.electionDateEnd,
               exportToExcel: () {
                 Round2Excel().exportRound2(widget.electionDateStart,
-                    widget.electionDateEnd, membersWhoAccepted);
+                    widget.electionDateEnd, membersWhoAccepted, widget.branch);
               }),
           ElectionOverviewItem(
               voteTitle: 'ChairPerson Election',
@@ -254,7 +258,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
               endDate: widget.chairPersonEnd,
               exportToExcel: () {
                 ChairPersonEx().exportChairPerson(widget.chairPersonStart,
-                    widget.chairPersonEnd, chairMembers);
+                    widget.chairPersonEnd, chairMembers, widget.branch);
               }),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

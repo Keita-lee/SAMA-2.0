@@ -8,11 +8,13 @@ class Round1OverView extends StatefulWidget {
   String startDate;
   String endDate;
   String electionId;
+  String branch;
   Round1OverView(
       {super.key,
       required this.startDate,
       required this.endDate,
-      required this.electionId});
+      required this.electionId,
+      required this.branch});
 
   @override
   State<Round1OverView> createState() => _Round1OverViewState();
@@ -107,7 +109,7 @@ class _Round1OverViewState extends State<Round1OverView> {
                 InkWell(
                   onTap: () {
                     Round1Excel().exportRound1(widget.startDate, widget.endDate,
-                        membersWhoAreNominated);
+                        membersWhoAreNominated, widget.branch);
                   },
                   child: Text(
                     "Export Result in Excel",

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:image_network/image_network.dart';
@@ -16,7 +17,7 @@ import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
 
 class MemberEventDetails extends StatefulWidget {
   String id;
-  Function closeDialog;
+  VoidCallback closeDialog;
 
   MemberEventDetails({Key? key, required this.closeDialog, required this.id})
       : super(key: key);
@@ -232,24 +233,22 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Transform.scale(
-                scale: 0.8,
-                child: Container(
-                  padding: const EdgeInsets.only(top: 5, bottom: 25),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: () {
+              Container(
+                padding: const EdgeInsets.only(top: 5, bottom: 25),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Spacer(),
+                    StyleButton(
+                        description: "View Events",
+                        height: 55,
+                        width: 125,
+                        onTap: () {
                           widget.closeDialog();
-                        },
-                        icon: Icon(Icons.close),
-                      ),
-                    ],
-                  ),
+                        }),
+                  ],
                 ),
               ),
               Text(
@@ -304,12 +303,15 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   SizedBox(
                     width: 25,
                   ),
-                  Text(
-                    _title.text,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: MyUtility(context).width * 0.25,
+                    child: Text(
+                      _title.text,
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -481,71 +483,90 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                   )
                 ],
               ),
-              Transform.scale(
-                scale: 0.8,
-                child: SizedBox(
-                  width: MyUtility(context).width * 0.75,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 300,
-                        child: Row(
-                          children: [
-                            Text(
-                              'How many people:',
+              SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                width: MyUtility(context).width * 0.75,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'How many people:',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFF3D3D3D),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              DropdownButton<int>(
+                                value: _selectedNumber,
+                                items: List.generate(10, (index) {
+                                  return DropdownMenuItem<int>(
+                                    value: index + 1,
+                                    child: Text((index + 1).toString()),
+                                  );
+                                }),
+                                onChanged: (int? newValue) {
+                                  setState(() {
+                                    _selectedNumber = newValue!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Visibility(
+                            visible: checkIfMadeBooking ? true : false,
+                            child: Text(
+                              'Booking amount made - ${attendeesAlreadyAdded}',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF3D3D3D),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 10),
-                            DropdownButton<int>(
-                              value: _selectedNumber,
-                              items: List.generate(10, (index) {
-                                return DropdownMenuItem<int>(
-                                  value: index + 1,
-                                  child: Text((index + 1).toString()),
-                                );
-                              }),
-                              onChanged: (int? newValue) {
-                                setState(() {
-                                  _selectedNumber = newValue!;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Spacer(),
-                      Visibility(
-                        visible: checkIfMadeBooking ? true : false,
-                        child: StyleButton(
-                          description: 'Update Booking',
-                          height: 55,
-                          width: 150,
-                          onTap: () {
-                            updateBooking();
-                          },
-                        ),
+                    ),
+                    Spacer(),
+                    Visibility(
+                      visible: checkIfMadeBooking ? true : false,
+                      child: StyleButton(
+                        description: 'Update Booking',
+                        height: 55,
+                        width: 150,
+                        onTap: () {
+                          updateBooking();
+                        },
                       ),
-                      SizedBox(
-                        width: 8,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Visibility(
+                      visible: checkIfMadeBooking ? false : true,
+                      child: StyleButton(
+                        description: 'Confirm Booking',
+                        height: 55,
+                        width: 150,
+                        onTap: () {
+                          confirmBooking();
+                        },
                       ),
-                      Visibility(
-                        visible: checkIfMadeBooking ? false : true,
-                        child: StyleButton(
-                          description: 'Confirm Booking',
-                          height: 55,
-                          width: 150,
-                          onTap: () {
-                            confirmBooking();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
+              SizedBox(
+                height: 15,
               ),
             ],
           ),

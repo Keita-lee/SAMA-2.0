@@ -244,6 +244,8 @@ class _NewEventState extends State<NewEvent> {
                           EventTxtField(
                             controller: _title,
                             textSection: 'Title',
+                            customWidth:
+                                MediaQuery.of(context).size.width * 0.50,
                           ),
                         ],
                       ),
@@ -340,7 +342,7 @@ class _NewEventState extends State<NewEvent> {
                           ),
                           EventTxtField(
                             controller: _memberAmount,
-                            textSection: 'Member Amount',
+                            textSection: 'Maximum Attendees ',
                           ),
                         ],
                       ),
@@ -394,7 +396,7 @@ class _NewEventState extends State<NewEvent> {
                             height: 55,
                             width: 150,
                           ),
-                          SizedBox(
+                          /*  SizedBox(
                             width: 10,
                           ),
                           Visibility(
@@ -407,7 +409,7 @@ class _NewEventState extends State<NewEvent> {
                               height: 55,
                               width: 150,
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),

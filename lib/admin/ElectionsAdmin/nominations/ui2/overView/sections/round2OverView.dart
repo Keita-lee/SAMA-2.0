@@ -10,13 +10,15 @@ class Round2OverView extends StatefulWidget {
   String electionId;
   List electionVotes;
   bool hdiCompliant;
+  String branch;
   Round2OverView(
       {super.key,
       required this.electionDateStart,
       required this.electionDateEnd,
       required this.electionId,
       required this.electionVotes,
-      required this.hdiCompliant});
+      required this.hdiCompliant,
+      required this.branch});
 
   @override
   State<Round2OverView> createState() => _Round2OverViewState();
@@ -123,8 +125,11 @@ class _Round2OverViewState extends State<Round2OverView> {
               Spacer(),
               InkWell(
                 onTap: () {
-                  Round2Excel().exportRound2(widget.electionDateStart,
-                      widget.electionDateEnd, membersWhoAccepted);
+                  Round2Excel().exportRound2(
+                      widget.electionDateStart,
+                      widget.electionDateEnd,
+                      membersWhoAccepted,
+                      widget.branch);
                 },
                 child: Text(
                   "Export Result in Excel",

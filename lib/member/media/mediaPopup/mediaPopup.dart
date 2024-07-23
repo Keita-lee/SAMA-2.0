@@ -45,10 +45,11 @@ class _MediaPopupState extends State<MediaPopup> {
         setState(() {
           videoUrl = doc['urlLink'];
           title = doc['title'];
-          myJSON = jsonDecode(doc['description']);
-          quillController = QuillController(
+          description = doc['description'];
+          //  myJSON = jsonDecode(doc['description']);
+          /* quillController = QuillController(
               document: Document.fromJson(myJSON),
-              selection: TextSelection.collapsed(offset: 0));
+              selection: TextSelection.collapsed(offset: 0));*/
           if (videoUrl != null) {
             _youtubePlayerController = YoutubePlayerController.fromVideoId(
               videoId: YoutubePlayerController.convertUrlToId(videoUrl!)!,
@@ -131,7 +132,8 @@ class _MediaPopupState extends State<MediaPopup> {
               ),
             ),
           ),
-          Padding(
+
+          /*   Padding(
             padding: const EdgeInsets.all(25.0),
             child: Container(
               child: QuillEditor.basic(
@@ -141,7 +143,7 @@ class _MediaPopupState extends State<MediaPopup> {
                 ),
               ),
             ),
-          ),
+          ),*/
         ])));
 
     /* Container(

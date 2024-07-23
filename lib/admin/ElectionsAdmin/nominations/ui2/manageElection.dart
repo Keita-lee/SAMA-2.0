@@ -21,6 +21,7 @@ import 'setup/setupRound2.dart';
 
 class ManageElection extends StatefulWidget {
   String id;
+
   Function(int) changePageIndex;
 
   ManageElection({super.key, required this.id, required this.changePageIndex});
@@ -568,6 +569,7 @@ class _ManageElectionState extends State<ManageElection> {
                     startDate: nominateStartDate.text,
                     endDate: nominateEndDate.text,
                     electionId: widget.id,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(
@@ -576,6 +578,7 @@ class _ManageElectionState extends State<ManageElection> {
                     electionId: widget.id,
                     nominateAcceptEndDate: nominateAcceptEndDate.text,
                     nominateAcceptStartDate: nominateAcceptStartDate.text,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(
@@ -585,6 +588,7 @@ class _ManageElectionState extends State<ManageElection> {
                     electionDateEnd: electionDateEnd.text,
                     electionId: widget.id,
                     electionVotes: electionVotes,
+                    branch: selectBranch.text,
                     hdiCompliant: hdiCompliant,
                   ),
                 ),
@@ -594,6 +598,7 @@ class _ManageElectionState extends State<ManageElection> {
                     chairMemberEndDate: chairPersonEnd.text,
                     chairMemberStartDate: chairPersonStart.text,
                     chairMemberVoteList: chairMemberVoteList,
+                    branch: selectBranch.text,
                     electionId: widget.id,
                   ),
                 ),

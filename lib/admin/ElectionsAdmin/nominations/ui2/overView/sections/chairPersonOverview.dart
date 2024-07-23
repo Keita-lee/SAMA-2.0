@@ -9,12 +9,14 @@ class ChairPersonOverview extends StatefulWidget {
   String chairMemberEndDate;
   List chairMemberVoteList;
   String electionId;
+  String branch;
   ChairPersonOverview(
       {super.key,
       required this.chairMemberEndDate,
       required this.chairMemberStartDate,
       required this.chairMemberVoteList,
-      required this.electionId});
+      required this.electionId,
+      required this.branch});
 
   @override
   State<ChairPersonOverview> createState() => _ChairPersonOverviewState();
@@ -122,8 +124,11 @@ class _ChairPersonOverviewState extends State<ChairPersonOverview> {
               Spacer(),
               InkWell(
                 onTap: () {
-                  ChairPersonEx().exportChairPerson(widget.chairMemberStartDate,
-                      widget.chairMemberEndDate, membersWhoAccepted);
+                  ChairPersonEx().exportChairPerson(
+                      widget.chairMemberStartDate,
+                      widget.chairMemberEndDate,
+                      membersWhoAccepted,
+                      widget.branch);
                 },
                 child: Text(
                   "Export Result in Excel",

@@ -36,7 +36,7 @@ class _ElectionStatusState extends State<ElectionStatus> {
             ),
           ),
           Spacer(),
-          ElectionTabStyle(
+          /*   ElectionTabStyle(
             changePage: () {},
             tabIndexNumber: 0,
             description: widget.status,
@@ -44,7 +44,7 @@ class _ElectionStatusState extends State<ElectionStatus> {
             customColor1: Color.fromARGB(255, 211, 210, 210),
             customColor2: Color.fromARGB(255, 0, 159, 158),
             pageIndex: 0,
-          ),
+          ),*/
         ],
       ),
       SizedBox(

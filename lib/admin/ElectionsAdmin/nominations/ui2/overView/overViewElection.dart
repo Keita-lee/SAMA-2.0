@@ -20,6 +20,7 @@ import 'sections/round2OverView.dart';
 
 class OverViewElection extends StatefulWidget {
   String id;
+
   Function(int) changePageIndex;
 
   OverViewElection(
@@ -494,6 +495,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                     startDate: nominateStartDate.text,
                     endDate: nominateEndDate.text,
                     electionId: widget.id,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(
@@ -502,6 +504,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                     electionId: widget.id,
                     nominateAcceptEndDate: nominateAcceptEndDate.text,
                     nominateAcceptStartDate: nominateAcceptStartDate.text,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(
@@ -512,6 +515,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                     electionId: widget.id,
                     electionVotes: electionVotes,
                     hdiCompliant: hdiCompliant,
+                    branch: selectBranch.text,
                   ),
                 ),
                 Visibility(
@@ -521,6 +525,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                     chairMemberStartDate: chairPersonStart.text,
                     chairMemberVoteList: chairMemberVoteList,
                     electionId: widget.id,
+                    branch: selectBranch.text,
                   ),
                 ),
               ]),

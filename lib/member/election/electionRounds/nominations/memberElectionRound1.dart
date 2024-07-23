@@ -5,6 +5,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/login/popups/validateDialog.dart';
 import 'package:sama/member/election/viewMemberBio.dart';
 
+import '../../../../components/email/sendElectionUpdates.dart';
 import '../../../../components/service/commonService.dart';
 import 'acceptNomination.dart';
 
@@ -54,6 +55,16 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
     });
   }
 
+  sendUserEmailUpdate(nomDates, email) async {
+    sendElectionUpdate(
+        description: "You have been nominated",
+        nomDates: nomDates,
+        acceptanceDates: "",
+        election: "",
+        chairDates: "",
+        email: "chrispotjnr@gmail.com");
+  }
+
   // nominate a user
   nominateUser(email, id) async {
     var nomineeData = {
@@ -70,7 +81,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
       if (int.parse(widget.votingCount) == userNominateCount) {
         return openValidateDialog();
       }
-      //Add
+      //Add 123
       final doc = FirebaseFirestore.instance.collection('nominations').doc();
       nomineeData["id"] = doc.id;
       sendNomineeANotification(id);
@@ -78,6 +89,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
       doc.set(json).whenComplete(getUsersNominations());
       setState(() {
         userNominateCount = userNominateCount + 1;
+        sendUserEmailUpdate("${widget.startDate} - Widget.endDate", email);
       });
     } else {
       //remove
@@ -99,7 +111,12 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
     if (nomIndex == -1) {
       return false;
     } else {
-      return true;
+      if (nominationData[nomIndex]['userIdWho'] ==
+          FirebaseAuth.instance.currentUser!.uid) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 

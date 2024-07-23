@@ -106,7 +106,7 @@ class _NominationHeaderState extends State<NominationHeader> {
           SizedBox(
             width: 15,
           ),
-          Visibility(
+          /*  Visibility(
             visible:
                 widget.electionId == "" && widget.pageIndex == 0 ? true : false,
             child: StyleButton(
@@ -116,7 +116,7 @@ class _NominationHeaderState extends State<NominationHeader> {
                 onTap: () {
                   widget.changePageIndex(3);
                 }),
-          ),
+          ),*/
           Visibility(
             visible:
                 widget.electionId == "" && widget.pageIndex == 3 ? true : false,

@@ -174,14 +174,6 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          memberName,
-                          style: GoogleFonts.openSans(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF174486),
-                          ),
-                        ),
                         IconButton(
                           onPressed: () {
                             widget.closeDialog();
@@ -198,7 +190,7 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ImageNetwork(
                             fitWeb: BoxFitWeb.contain,
@@ -216,44 +208,24 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Date of Birth:    ",
+                                  "Member Name:    ",
                                   style: GoogleFonts.openSans(
                                       fontSize: 18,
                                       height: 1,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  dob.text,
+                                  memberName,
                                   style: GoogleFonts.openSans(
-                                    fontSize: 18,
-                                    height: 1,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF174486),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Marital Status:    ",
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 18,
-                                      height: 1,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  maritalStatus.text,
-                                  style: GoogleFonts.openSans(
-                                    fontSize: 18,
-                                    height: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
+                          /*      Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
@@ -273,12 +245,12 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                                 ),
                               ],
                             ),
-                          )
+                          )*/
                         ],
                       ),
                       Column(
                         children: [
-                          Container(
+                          /*  Container(
                             width: 120,
                             height: 50,
                             decoration: BoxDecoration(
@@ -298,10 +270,63 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width / 3,
                       )
                     ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Date of Birth:    ",
+                          style: GoogleFonts.openSans(
+                              fontSize: 18,
+                              height: 1,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          dob.text,
+                          style: GoogleFonts.openSans(
+                            fontSize: 18,
+                            height: 1,
+                          ),
+                        ),
+                        SizedBox(
+                          width: MyUtility(context).width / 2.2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Marital Status:    ",
+                          style: GoogleFonts.openSans(
+                              fontSize: 18,
+                              height: 1,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          maritalStatus.text,
+                          style: GoogleFonts.openSans(
+                            fontSize: 18,
+                            height: 1,
+                          ),
+                        ),
+                        SizedBox(
+                          width: MyUtility(context).width / 2.1,
+                        ),
+                      ],
+                    ),
                   ),
                   MyDidiver(),
                   SizedBox(

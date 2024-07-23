@@ -1,7 +1,7 @@
 import 'package:excel/excel.dart';
 
 class ChairPersonEx {
-  exportChairPerson(startDate, endDate, chairList) {
+  exportChairPerson(startDate, endDate, chairList, branch) {
     final excel = Excel.createExcel();
     final sheet = excel.sheets[excel.getDefaultSheet() as String];
 
@@ -12,9 +12,12 @@ class ChairPersonEx {
       textWrapping: TextWrapping.WrapText,
       rotation: 0,
     );
-    var cell = sheet!.cell(CellIndex.indexByString("A1"));
+    var cell = sheet!.cell(CellIndex.indexByString("A2"));
     cell.value = TextCellValue("Chairperson Election");
     cell.cellStyle = cellBold;
+    var cellBrach = sheet!.cell(CellIndex.indexByString("A1"));
+    cellBrach.value = TextCellValue(branch);
+    cellBrach.cellStyle = cellBold;
 
     var cell2 = sheet.cell(CellIndex.indexByString("A3"));
     cell2.value = TextCellValue("Start Date -  ${startDate}");

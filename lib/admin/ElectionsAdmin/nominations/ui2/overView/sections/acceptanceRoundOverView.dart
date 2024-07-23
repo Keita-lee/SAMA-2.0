@@ -9,12 +9,13 @@ class Acceptanceroundoverview extends StatefulWidget {
   String nominateAcceptStartDate;
   String nominateAcceptEndDate;
   String electionId;
-
+  String branch;
   Acceptanceroundoverview(
       {super.key,
       required this.nominateAcceptStartDate,
       required this.nominateAcceptEndDate,
-      required this.electionId});
+      required this.electionId,
+      required this.branch});
 
   @override
   State<Acceptanceroundoverview> createState() =>
@@ -132,7 +133,8 @@ class _AcceptanceroundoverviewState extends State<Acceptanceroundoverview> {
                   AcceptanceRoundExcel().exportAcceptance(
                       widget.nominateAcceptStartDate,
                       widget.nominateAcceptEndDate,
-                      membersWhoAccepted);
+                      membersWhoAccepted,
+                      widget.branch);
                 },
                 child: Text(
                   "Export Result in Excel",

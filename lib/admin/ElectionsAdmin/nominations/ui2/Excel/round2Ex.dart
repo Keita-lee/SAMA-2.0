@@ -1,7 +1,7 @@
 import 'package:excel/excel.dart';
 
 class Round2Excel {
-  exportRound2(startDate, endDate, electList) {
+  exportRound2(startDate, endDate, electList, branch) {
     final excel = Excel.createExcel();
     final sheet = excel.sheets[excel.getDefaultSheet() as String];
 
@@ -12,9 +12,12 @@ class Round2Excel {
       textWrapping: TextWrapping.WrapText,
       rotation: 0,
     );
-    var cell = sheet!.cell(CellIndex.indexByString("A1"));
+    var cell = sheet!.cell(CellIndex.indexByString("A2"));
     cell.value = TextCellValue("Round 2 Election");
     cell.cellStyle = cellBold;
+    var cellBrach = sheet!.cell(CellIndex.indexByString("A1"));
+    cellBrach.value = TextCellValue(branch);
+    cellBrach.cellStyle = cellBold;
 
     var cell2 = sheet.cell(CellIndex.indexByString("A3"));
     cell2.value = TextCellValue("Start Date -  ${startDate}");
