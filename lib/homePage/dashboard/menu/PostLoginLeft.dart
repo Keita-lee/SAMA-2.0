@@ -215,20 +215,30 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     HoverItem(
                       isActive: activeIndex == 0,
                       menuSize: widget.menuSize,
-                      description: 'Centre of Excellence',
-                      iconPath: "images/icon_centre_of.svg",
+                      description: "Dashboard",
+                      iconPath: "images/icon_dashboard.svg",
                       onPressed: () {
                         _handleItemClick(0);
-                        widget.changePage(1);
+                        widget.changePage(0);
                       },
                     ),
                     HoverItem(
                       isActive: activeIndex == 1,
                       menuSize: widget.menuSize,
+                      description: 'Centre of Excellence',
+                      iconPath: "images/icon_centre_of.svg",
+                      onPressed: () {
+                        _handleItemClick(1);
+                        widget.changePage(1);
+                      },
+                    ),
+                    HoverItem(
+                      isActive: activeIndex == 11,
+                      menuSize: widget.menuSize,
                       description: 'Member Benefits',
                       iconPath: "images/icon_benefits.svg",
                       onPressed: () {
-                        _handleItemClick(1);
+                        _handleItemClick(11);
                         widget.changePage(2);
                       },
                     ),

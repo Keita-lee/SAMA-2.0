@@ -41,7 +41,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
           ),
         ),*/
 
-        Row(
+        /*   Row(
           children: [
             Container(
               width: 25,
@@ -93,8 +93,8 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
             ),*/
           ],
         ),
-        Row(
-          children: [
+    */ /*  Row(
+         children: [
             Padding(
               padding: const EdgeInsets.only(right: 32),
               child: Container(
@@ -570,14 +570,13 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
               ),
             ),
           ],
-        ),
+        ), */
         SizedBox(
           height: MyUtility(context).height * 0.045,
         ),
-        Row(
-          children: [
-            SamaNotificationsBox(userNotification: widget.userNotification),
-            /* Container(
+        Row(children: [
+          SamaNotificationsBox(userNotification: widget.userNotification),
+          /* Container(
               width: MyUtility(context).width / 5.5,
               height: MyUtility(context).height * 0.6,
               decoration: BoxDecoration(
@@ -642,7 +641,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
                 ),
               ),
             ),*/
-            SizedBox(
+          /*       SizedBox(
               width: MyUtility(context).width * 0.01,
             ),
             Column(
@@ -1026,7 +1025,8 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         ),
         SizedBox(
           height: MyUtility(context).height * 0.05,
-        ),
+        ),*/
+        ])
       ],
     );
   }

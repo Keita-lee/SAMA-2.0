@@ -4,6 +4,8 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEventsComp/MemberContainer.dart';
 
+var id = "";
+
 class MemberEvents extends StatefulWidget {
   const MemberEvents({Key? key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class MemberEvents extends StatefulWidget {
 
 class _MemberEventsState extends State<MemberEvents> {
   var pageIndex = 0;
-  var id = "";
+
   //Popup member dialog
   Future openMemberEventsDialog(id) => showDialog(
       context: context,
@@ -25,10 +27,11 @@ class _MemberEventsState extends State<MemberEvents> {
         ));
       });
 
-  openEventDetails(id) {
+  openEventDetails(idValue) {
+    print(id);
     setState(() {
+      id = idValue;
       pageIndex = 1;
-      id = id;
     });
   }
 

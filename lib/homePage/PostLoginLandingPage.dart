@@ -61,11 +61,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       setState(() {
         userType = data.get('userType');
         profileUrl = data.get('profilePic');
-        if (data.get('userType') == "Admin") {
-          pageIndex = 1;
-        } else {
-          pageIndex = 0;
-        }
       });
     }
   }
