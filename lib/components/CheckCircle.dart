@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class CheckCircle extends StatefulWidget {
   final String name;
+  final bool? isCircle;
 
-  const CheckCircle({super.key, required this.name});
+  const CheckCircle({super.key, required this.name, this.isCircle});
 
   @override
   State<CheckCircle> createState() => _CheckCircleState();
@@ -28,7 +29,9 @@ class _CheckCircleState extends State<CheckCircle> {
               width: 20.0,
               height: 20.0,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: widget.isCircle == null
+                    ? BorderRadius.circular(10.0)
+                    : BorderRadius.circular(0),
                 border: Border.all(
                   color: Colors.grey,
                   width: 2.0,

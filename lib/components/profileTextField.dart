@@ -8,6 +8,8 @@ class ProfileTextField extends StatefulWidget {
   String? description;
   String? hintText;
   int? lines;
+  bool? isBold;
+  bool? isRounded;
 
   ProfileTextField(
       {super.key,
@@ -17,6 +19,8 @@ class ProfileTextField extends StatefulWidget {
       required this.textFieldType,
       required this.textfieldController,
       this.description,
+      this.isBold,
+      this.isRounded,
       this.hintText});
 
   @override
@@ -35,7 +39,8 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           child: Text(
             widget.description == null ? '' : widget.description!,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight:
+                  widget.isBold == null ? FontWeight.bold : FontWeight.normal,
               fontSize: 16,
               color: Color(0xFF6A6A6A),
             ),
@@ -46,7 +51,9 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           height: widget.customHeight != null ? widget.customHeight : 50,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: widget.isRounded == null
+                ? BorderRadius.circular(10)
+                : BorderRadius.circular(0),
             border: Border.all(
               color: Colors.black,
             ),
@@ -103,13 +110,15 @@ class ProfileDropDownField extends StatefulWidget {
   double customSize;
   String? description;
   List items;
+  final bool? isBold;
   final TextEditingController textfieldController;
   ProfileDropDownField(
       {super.key,
       required this.customSize,
       this.description,
       required this.items,
-      required this.textfieldController});
+      required this.textfieldController,
+      this.isBold});
 
   @override
   State<ProfileDropDownField> createState() => _ProfileDropDownFieldState();
@@ -127,7 +136,7 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
             child: Text(
               widget.description == null ? '' : widget.description!,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight:  widget.isBold == null ? FontWeight.bold : FontWeight.normal,
                 fontSize: 16,
                 color: Color(0xFF6A6A6A),
               ),
