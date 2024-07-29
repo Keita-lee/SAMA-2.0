@@ -4,14 +4,13 @@ import 'package:sama/member/productDisplay/cart/ui/payStackCon.dart';
 import 'package:sama/member/productDisplay/checkout/yourOrderTable/yourOrderTable.dart';
 
 class YourOrderCon extends StatefulWidget {
-  const YourOrderCon({super.key});
+  final GlobalKey<FormState> formKey;
+
+  const YourOrderCon({super.key, required this.formKey});
 
   @override
   State<YourOrderCon> createState() => _YourOrderConState();
 }
-
-//LIST OF PRODUCTS
-List orderedProducts = [];
 
 class _YourOrderConState extends State<YourOrderCon> {
   @override
@@ -49,9 +48,7 @@ class _YourOrderConState extends State<YourOrderCon> {
         ),
         Text(
           'Pay by Card, Scan to Pay, SnapScan, EFT(Ozow)',
-          style: GoogleFonts.openSans(
-            fontSize: 14
-          ),
+          style: GoogleFonts.openSans(fontSize: 14),
         ),
         const SizedBox(
           height: 10,
@@ -62,7 +59,12 @@ class _YourOrderConState extends State<YourOrderCon> {
         ),
         InkWell(
           onTap: () {
-            //ADD LOGIC
+            // form validation here
+            if (widget.formKey.currentState?.validate() ?? false) {
+              // ADD LOGIC
+            } else {
+              // ADD LOGIC
+            }
           },
           child: Container(
             width: 365,

@@ -6,17 +6,18 @@ import 'package:sama/components/profileTextField.dart';
 import '../../../../components/myutility.dart';
 
 class BillingDetailsForm extends StatefulWidget {
-  const BillingDetailsForm({super.key});
+  final GlobalKey<FormState> formKey;
+
+  const BillingDetailsForm({super.key, required this.formKey});
 
   @override
   State<BillingDetailsForm> createState() => _BillingDetailsFormState();
 }
 
 class _BillingDetailsFormState extends State<BillingDetailsForm> {
-//Key
-  final _formChekoutKey = GlobalKey<FormState>();
+  
 
-//form controllers
+  // form controllers
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final companyName = TextEditingController();
@@ -32,7 +33,6 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
     return Column(
       children: [
         Container(
-         // width: MyUtility(context).width * 0.45,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(8),
@@ -45,7 +45,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Form(
-              key: _formChekoutKey,
+              key: widget.formKey, 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -64,7 +64,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                           isBold: false,
                           description: 'First Name',
                           customSize: MyUtility(context).width * 0.20,
-                          textFieldType: '',
+                          textFieldType: 'stringType',
                           textfieldController: firstName),
                       const SizedBox(
                         width: 30,
@@ -74,7 +74,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                           isBold: false,
                           description: 'Last Name',
                           customSize: MyUtility(context).width * 0.20,
-                          textFieldType: '',
+                          textFieldType: 'stringType',
                           textfieldController: lastName)
                     ],
                   ),
@@ -115,7 +115,6 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       isBold: false,
                       description: 'Country / Region',
                       customSize: MyUtility(context).width * 0.42,
-                      //ADD AVAILABLE REGIONS to list
                       items: [],
                       textfieldController: regionName),
                   const SizedBox(
@@ -124,10 +123,10 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                   ProfileTextField(
                       isRounded: false,
                       isBold: false,
-                      hintText: 'Number and street name',
+                      hintText: 'Street Number',
                       description: 'Street Address',
                       customSize: MyUtility(context).width * 0.42,
-                      textFieldType: '',
+                      textFieldType: 'intType',
                       textfieldController: street),
                   const SizedBox(
                     height: 20,
@@ -135,8 +134,9 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                   ProfileTextField(
                       isRounded: false,
                       isBold: false,
+                      hintText: 'Street Name',
                       customSize: MyUtility(context).width * 0.42,
-                      textFieldType: '',
+                      textFieldType: 'stringType',
                       textfieldController: addres),
                   const SizedBox(
                     height: 20,
@@ -146,7 +146,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       isBold: false,
                       description: 'Town / City',
                       customSize: MyUtility(context).width * 0.42,
-                      textFieldType: '',
+                      textFieldType: 'stringType',
                       textfieldController: town),
                   const SizedBox(
                     height: 20,
@@ -155,7 +155,6 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       isBold: false,
                       description: 'Province / State',
                       customSize: MyUtility(context).width * 0.42,
-                      //ADD AVAILABLE Province / State to list
                       items: [],
                       textfieldController: state),
                   const SizedBox(
@@ -166,7 +165,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       isBold: false,
                       description: 'Postal Code',
                       customSize: MyUtility(context).width * 0.42,
-                      textFieldType: '',
+                      textFieldType: 'intType',
                       textfieldController: postal),
                   const SizedBox(
                     height: 50,

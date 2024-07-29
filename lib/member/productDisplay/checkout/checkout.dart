@@ -10,6 +10,8 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -35,13 +37,11 @@ class _CheckoutState extends State<Checkout> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //child
-                BillingDetailsForm(),
+                BillingDetailsForm(formKey: _formKey),
                 const SizedBox(
                   width: 20,
                 ),
-                YourOrderCon()
-                //child
+                YourOrderCon(formKey: _formKey)
               ],
             ),
           ),
