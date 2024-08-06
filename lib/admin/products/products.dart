@@ -12,6 +12,10 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 
+import 'productAdd&EditPages/digitalProduct.dart';
+import 'productAdd&EditPages/licensedProduct.dart';
+import 'productAdd&EditPages/physicalProduct.dart';
+
 class Products extends StatefulWidget {
   const Products({super.key});
 
@@ -22,6 +26,7 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   var pageIndex = 0;
   var productId = "";
+  final GlobalKey _menuKey = GlobalKey();
   changePageIndex(value, id) {
     setState(() {
       pageIndex = value;
@@ -50,7 +55,7 @@ class _ProductsState extends State<Products> {
                         style: TextStyle(
                             fontSize: 28, fontWeight: FontWeight.bold),
                       ),
-                      MyProductButtons(
+                    /*  MyProductButtons(
                         buttonText: 'Add new',
                         buttonColor: Color.fromARGB(255, 8, 55, 145),
                         borderColor: Color.fromARGB(255, 8, 55, 145),
@@ -58,7 +63,7 @@ class _ProductsState extends State<Products> {
                         onTap: () {
                           changePageIndex(2, "");
                         },
-                      )
+                      )*/
                     ],
                   ),
                   SizedBox(
@@ -102,6 +107,66 @@ class _ProductsState extends State<Products> {
                       ),
                       Spacer(),
                       FilterDropButton(),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      PopupMenuButton(
+                          key: _menuKey,
+                          onSelected: (value) {
+                            if (value == "physicalProduct") {
+                              changePageIndex(3, "");
+                            } else if (value == "digitalProduct") {
+                              changePageIndex(4, "");
+                            } else {
+                              changePageIndex(5, "");
+                            }
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry>[
+                                PopupMenuItem(
+                                  height: 35,
+                                  value: "physicalProduct",
+                                  child: const Text(
+                                    'Physical Product',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color.fromARGB(255, 85, 85, 85),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  height: 35,
+                                  value: "digitalProduct",
+                                  child: const Text(
+                                    'Digital Product',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color.fromARGB(255, 85, 85, 85),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  height: 35,
+                                  value: "licensedProduct",
+                                  child: const Text(
+                                    'Licensed Product',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color.fromARGB(255, 85, 85, 85),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                          child: MyProductButtons(
+                            buttonText: '    +   Add new      ',
+                            buttonColor: Color.fromARGB(255, 8, 55, 145),
+                            borderColor: Color.fromARGB(255, 8, 55, 145),
+                            textColor: Colors.white,
+                            onTap: () {
+                              dynamic state = _menuKey.currentState;
+                              state.showButtonMenu();
+                            },
+                          ))
                     ],
                   ),
                   const SizedBox(
@@ -130,7 +195,35 @@ class _ProductsState extends State<Products> {
           child: Center(
             child: ProductAdd(changePageIndex: changePageIndex),
           ),
-        )
+        ),
+        Visibility(
+          visible: pageIndex == 3 ? true : false,
+          child: Center(
+            child: PhysicalProduct(
+              productId: productId,
+              changePageIndex: changePageIndex,
+              type: "Physical Product",
+            ),
+          ),
+        ),
+        Visibility(
+          visible: pageIndex == 4 ? true : false,
+          child: Center(
+            child: DigitalProduct(
+                productId: productId,
+                changePageIndex: changePageIndex,
+                type: "Digital Product"),
+          ),
+        ),
+        Visibility(
+          visible: pageIndex == 5 ? true : false,
+          child: Center(
+            child: LicensedProduct(
+                productId: productId,
+                changePageIndex: changePageIndex,
+                type: "Licensed Product"),
+          ),
+        ),
       ],
     );
   }

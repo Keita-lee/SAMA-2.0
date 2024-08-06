@@ -60,12 +60,18 @@ class _ProductListViewState extends State<ProductListView> {
                     : const Color.fromARGB(38, 158, 158, 158),
                 title: data?["name"] ?? '',
                 type: data?["type"] ?? '',
-                isActive: data?['isActive'] ?? false,
+                isActive: data?['isActive'] == "Active" ? true : false,
                 onTapDelete: () {
                   deleteProduct(document.id);
                 },
                 onTapEdit: () {
-                  widget.changePageIndex(1, document.id);
+                  if (data?["type"] == "Physical Product") {
+                    widget.changePageIndex(3, document.id);
+                  } else if (data?["type"] == "Digital Product") {
+                    widget.changePageIndex(4, document.id);
+                  } else {
+                    widget.changePageIndex(5, document.id);
+                  }
                 },
               );
             },

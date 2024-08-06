@@ -66,7 +66,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     final data = await FirebaseFirestore.instance.collection('store').get();
     setState(() {
       for (var i = 0; i < data.docs.length; i++) {
-        if (data.docs[i]['isActive']) {
+        if (data.docs[i]['isActive'] == "Active") {
           allProduct.add(data.docs[i]);
         }
       }
@@ -80,7 +80,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
       "productPrice": 'Member Price. Includes VAT',
       "quantity": quantity != "" ? quantity : 1,
       "total":
-          '${double.parse(product['memberPrice']) * (quantity != "" ? quantity : 1)}',
+          '${double.parse(product['price']) * (quantity != "" ? quantity : 1)}',
       "id": product['id'],
       "productImage": product['imageUrl'],
     };
@@ -107,6 +107,9 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
       } /* */
       getProductQuantity(product['name'], 0);
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Added to Cart')),
+    );
   }
 
   @override
@@ -136,7 +139,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                     Row(
                       children: [
                         Text(
-                          'E-Store',
+                          'E - Store',
                           style: TextStyle(
                               fontSize: 35, fontWeight: FontWeight.bold),
                         ),
@@ -158,25 +161,23 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                         padding: const EdgeInsets.all(8.0),
                         child: ProductDisplayItem(
                             productName: allProduct[i]['name'],
-                            price: allProduct[i]['memberPrice'],
+                            price: allProduct[i]['price'],
                             priceInfo: 'Member Price. Includes VAT',
                             productDescription: allProduct[i]['description'],
                             productImage: allProduct[i]['imageUrl'],
                             readMore: () {
-                              changePageIndex(1, allProduct[i]['type']);
+                              /**/ changePageIndex(1, allProduct[i]['type']);
                               setState(() {
                                 title = allProduct[i]['name'];
-                                price = allProduct[i]['memberPrice'];
+                                price = allProduct[i]['price'];
                                 priceInfo = 'Member Price. Includes VAT';
                                 description = allProduct[i]['description'];
                                 productImage = allProduct[i]['imageUrl'];
-
-                                getProductQuantity(allProduct[i]['name'], 0);
                               });
                             },
                             buyProduct: () {
                               addProductToList(allProduct[i], "");
-                              changePageIndex(2, allProduct[i]['type']);
+                              changePageIndex(2, allProduct[i]['type']); /**/
                             }),
                       ), /* */
                   ],
@@ -219,7 +220,14 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
               Visibility(
                 visible: pageIndex == 3 ? true : false,
                 child: PurchaseHistory(changePageIndex: changePageIndex),
-              )
+              ),
+
+              Visibility(
+                visible: pageIndex == 4 ? true : false,
+                child: CartPage(
+                  products: cartProducts,
+                ),
+              ),
             ],
           ),
         ),

@@ -109,7 +109,6 @@ class _ProductAddState extends State<ProductAdd> {
     setState(() {
       var uuid = Uuid();
       skuController.text = uuid.v1().toString();
-      print("TEST");
     });
   }
 
