@@ -7,11 +7,11 @@ class PayStackCon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180,
+      width: 200,
       height: 60,
       color: Colors.white,
       child: Center(
-        child: Row(
+        child: Row(mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.lock),
             Text.rich(
