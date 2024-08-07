@@ -263,6 +263,16 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       },
                     ),
                     HoverItem(
+                      isActive: activeIndex == 15,
+                      menuSize: widget.menuSize,
+                      description: "Communities",
+                      iconPath: "",
+                      onPressed: () {
+                        _handleItemClick(15);
+                        widget.changePage(15);
+                      },
+                    ),
+                    HoverItem(
                       isActive: activeIndex == 4,
                       menuSize: widget.menuSize,
                       description: 'Branch Election',
@@ -369,7 +379,17 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       widget.changePage(10);
                     },
                   ),
-                  LeftMenuDropButton(
+                  HoverItem(
+                    isActive: activeIndex == 8,
+                    menuSize: widget.menuSize,
+                    description: "Communities",
+                    iconPath: "images/icon_categories.svg",
+                    onPressed: () {
+                      _handleItemClick(8);
+                      widget.changePage(16);
+                    },
+                  ),
+                  /*     LeftMenuDropButton(
                       isActive: activeIndex == 8,
                       menuSize: widget.menuSize,
                       description: "Membership Category",
@@ -401,6 +421,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                               //ADD PATH
                             }),
                       ]),
+                */
                   HoverItem(
                     isActive: activeIndex == 9,
                     menuSize: widget.menuSize,

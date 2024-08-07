@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/components/myutility.dart';
 
+import '../../ui/digitalQuantityWidget.dart';
+
 class CartItemDisplay extends StatefulWidget {
+  final Function(String, int) manageProductList;
   final String productImage;
   final String productName;
   final String productPrice;
@@ -10,6 +13,7 @@ class CartItemDisplay extends StatefulWidget {
   final String total;
   const CartItemDisplay(
       {super.key,
+      required this.manageProductList,
       required this.productImage,
       required this.productName,
       required this.productPrice,
@@ -75,14 +79,10 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                       ),
                     ),
                     Text(
-                      'First copy free for members',
-                      style: const TextStyle(fontSize: 20, color: Colors.red),
-                    ),
-                    Text(
                       widget.productPrice,
                       style: const TextStyle(
                           color: Color.fromRGBO(0, 159, 158, 1),
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -92,17 +92,13 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
           ),
           Container(
             width: MyUtility(context).width * 0.11,
-            child: Transform.scale(
-                scale: 0.8,
-                child: Center(
-                  child: Text(
-                    '${widget.qtyWidget}',
-                    style: const TextStyle(
-                        color: Color.fromRGBO(0, 159, 158, 1),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
+            child: Center(
+              child: DigitalQuantityWidget(
+                productQuantity: widget.qtyWidget,
+                getProductQuantity: widget.manageProductList,
+                title: widget.productName,
+              ),
+            ),
           ),
           SizedBox(
             width: MyUtility(context).width * 0.115,

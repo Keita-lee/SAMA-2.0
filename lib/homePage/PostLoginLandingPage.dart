@@ -10,6 +10,7 @@ import 'package:sama/admin/Events/EventDetails/EventDetails.dart';
 import 'package:sama/admin/Events/EventDetails/Ui/EventMemberList.dart';
 import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
+import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/products/products.dart';
@@ -30,6 +31,8 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/member/productDisplay/ProductListDisplay.dart';
 import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
+
+import '../member/communities/memberCommunities.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
   String userId;
@@ -148,6 +151,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       MemberElection(),
       Products(),
       ProductListDisplay(),
+      CommunitiesAdmin(),
+      MemberCommunities(),
 
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/

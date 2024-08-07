@@ -25,7 +25,8 @@ List<Widget> cartProducts = [
 */
 class CartPage extends StatefulWidget {
   List products;
-  CartPage({super.key, required this.products});
+  Function(int, String) changePageIndex;
+  CartPage({super.key, required this.products, required this.changePageIndex});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -33,14 +34,32 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   double total = 0;
-
+  List productList = [];
   @override
   void initState() {
+    productList.addAll(widget.products);
     for (int i = 0; i < widget.products.length; i++) {
       print(widget.products[i]['total']);
       total = total + double.parse(widget.products[i]['total']);
     }
     super.initState();
+  }
+
+  manageProductList(productName, quantity) {
+    setState(() {
+      var productIndex =
+          (productList).indexWhere((item) => item["name"] == productName);
+
+      productList[productIndex]['quantity'] = quantity;
+
+      productList[productIndex]['total'] =
+          '${double.parse(productList[productIndex]['price']) * quantity}';
+
+      for (int i = 0; i < widget.products.length; i++) {
+        print(widget.products[i]['total']);
+        total = total + double.parse(widget.products[i]['total']);
+      }
+    });
   }
 
   @override
@@ -67,12 +86,16 @@ class _CartPageState extends State<CartPage> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CartProductContainer(productItems: widget.products),
+              CartProductContainer(
+                  productItems: productList,
+                  manageProductList: manageProductList),
               const SizedBox(
                 width: 20,
               ),
               CartTotalContainer(
-                  products: widget.products, cartTotal: 'R $total')
+                  products: productList,
+                  cartTotal: 'R $total',
+                  changePageIndex: widget.changePageIndex)
             ],
           ),
         ),

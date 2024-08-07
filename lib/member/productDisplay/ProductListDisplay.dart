@@ -9,6 +9,8 @@ import 'package:sama/member/productDisplay/purchaseHistory/purchaseHistory.dart'
 import 'package:sama/member/productDisplay/ui/productDisplayItem.dart';
 import 'package:sama/components/myutility.dart';
 
+import 'checkout/checkout.dart';
+
 class ProductListDisplay extends StatefulWidget {
   const ProductListDisplay({super.key});
 
@@ -75,10 +77,13 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
   // Add a product to the cart list
   addProductToList(product, quantity) {
+    print(product);
+    print(quantity);
     var productSelected = {
-      "productName": product['name'],
+      "name": product['name'],
       "productPrice": 'Member Price. Includes VAT',
       "quantity": quantity != "" ? quantity : 1,
+      "price": '${double.parse(product['price'])}',
       "total":
           '${double.parse(product['price']) * (quantity != "" ? quantity : 1)}',
       "id": product['id'],
@@ -213,8 +218,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
               Visibility(
                 visible: pageIndex == 2 ? true : false,
                 child: CartPage(
-                  products: cartProducts,
-                ),
+                    products: cartProducts, changePageIndex: changePageIndex),
               ),
 
               Visibility(
@@ -224,9 +228,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
               Visibility(
                 visible: pageIndex == 4 ? true : false,
-                child: CartPage(
-                  products: cartProducts,
-                ),
+                child: Checkout(products: cartProducts),
               ),
             ],
           ),

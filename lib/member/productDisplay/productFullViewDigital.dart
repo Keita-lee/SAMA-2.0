@@ -54,7 +54,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
       "name": widget.title,
       "productPrice": 'Member Price. Includes VAT',
       "quantity": widget.productQuantity,
-      "memberPrice": widget.price,
+      "price": widget.price,
       "id": "",
       "imageUrl": widget.productImage,
     };

@@ -15,8 +15,12 @@ import 'package:url_launcher/url_launcher.dart';
 class CartTotalContainer extends StatefulWidget {
   final List products;
   final String cartTotal;
-  const CartTotalContainer(
-      {super.key, required this.products, required this.cartTotal});
+  Function(int, String) changePageIndex;
+  CartTotalContainer(
+      {super.key,
+      required this.products,
+      required this.cartTotal,
+      required this.changePageIndex});
 
   @override
   State<CartTotalContainer> createState() => _CartTotalContainerState();
@@ -195,7 +199,8 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
                 ),
                 InkWell(
                   onTap: () {
-                    sendPayment();
+                    //  sendPayment();
+                    widget.changePageIndex(4, "");
                   },
                   child: Container(
                     decoration: BoxDecoration(

@@ -3,7 +3,8 @@ import 'package:sama/member/productDisplay/checkout/ui/billingDetailsForm.dart';
 import 'package:sama/member/productDisplay/checkout/ui/yourOrderCon.dart';
 
 class Checkout extends StatefulWidget {
-  const Checkout({super.key});
+  List products;
+  Checkout({super.key, required this.products});
 
   @override
   State<Checkout> createState() => _CheckoutState();
@@ -41,7 +42,10 @@ class _CheckoutState extends State<Checkout> {
                 const SizedBox(
                   width: 20,
                 ),
-                YourOrderCon(formKey: _formKey)
+                YourOrderCon(
+                  formKey: _formKey,
+                  products: widget.products,
+                )
               ],
             ),
           ),

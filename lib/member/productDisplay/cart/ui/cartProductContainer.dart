@@ -6,7 +6,9 @@ import 'cartItemDisplay.dart';
 
 class CartProductContainer extends StatefulWidget {
   final List productItems;
-  const CartProductContainer({super.key, required this.productItems});
+  final Function(String, int) manageProductList;
+  CartProductContainer(
+      {super.key, required this.productItems, required this.manageProductList});
 
   @override
   State<CartProductContainer> createState() => _CartProductContainerState();
@@ -79,8 +81,9 @@ class _CartProductContainerState extends State<CartProductContainer> {
             child: Column(children: [
               for (int i = 0; i < (widget.productItems).length; i++)
                 CartItemDisplay(
+                    manageProductList: widget.manageProductList,
                     productImage: widget.productItems[i]['productImage'],
-                    productName: widget.productItems[i]['productName'],
+                    productName: widget.productItems[i]['name'],
                     productPrice: widget.productItems[i]['productPrice'],
                     qtyWidget: widget.productItems[i]['quantity'],
                     total: widget.productItems[i]['total']),
