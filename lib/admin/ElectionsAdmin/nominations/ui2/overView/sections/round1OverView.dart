@@ -98,7 +98,7 @@ class _Round1OverViewState extends State<Round1OverView> {
             Row(
               children: [
                 Text(
-                  "Round1 Nominations",
+                  "Round 1 Nominations",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,

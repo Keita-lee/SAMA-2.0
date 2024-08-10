@@ -4,7 +4,8 @@ import 'package:sama/member/productDisplay/checkout/ui/yourOrderCon.dart';
 
 class Checkout extends StatefulWidget {
   List products;
-  Checkout({super.key, required this.products});
+  double total;
+  Checkout({super.key, required this.products, required this.total});
 
   @override
   State<Checkout> createState() => _CheckoutState();
@@ -43,9 +44,9 @@ class _CheckoutState extends State<Checkout> {
                   width: 20,
                 ),
                 YourOrderCon(
-                  formKey: _formKey,
-                  products: widget.products,
-                )
+                    formKey: _formKey,
+                    products: widget.products,
+                    total: widget.total)
               ],
             ),
           ),

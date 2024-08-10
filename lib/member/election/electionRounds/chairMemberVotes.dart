@@ -227,7 +227,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Sama Number',
+                    child: Text('SAMA Number',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                   ),

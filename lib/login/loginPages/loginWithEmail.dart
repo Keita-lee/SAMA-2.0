@@ -33,6 +33,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   bool showRegisterBorder = false;
   bool showForgotPasswordBorder = false;
   bool showForgotSamaBorder = false;
+  bool showNonMemberBorder = false;
 
   BuildContext? dialogContext;
 
@@ -210,6 +211,36 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               "Not a member? Register Here.",
               style: TextStyle(
                   decoration: showRegisterBorder == true
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: Color.fromARGB(255, 8, 55, 145),
+                  decorationThickness: 2,
+                  fontSize: 16,
+                  color: const Color.fromARGB(255, 8, 55, 145)),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Material(
+                                child: PostLoginLandingPage(userId: "")),
+                          )));
+            },
+            onHover: (hovered) {
+              setState(() {
+                showNonMemberBorder = hovered;
+              });
+            },
+            child: Text(
+              "Non Member Login",
+              style: TextStyle(
+                  decoration: showNonMemberBorder == true
                       ? TextDecoration.underline
                       : TextDecoration.none,
                   decorationColor: Color.fromARGB(255, 8, 55, 145),

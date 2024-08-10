@@ -220,7 +220,7 @@ class _MemberElectionsRound2State extends State<MemberElectionsRound2> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Sama Number',
+                    child: Text('SAMA Number',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                   ),

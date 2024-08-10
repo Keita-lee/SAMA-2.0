@@ -85,7 +85,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
         Row(
           children: [
             Text(
-              "ChairPerson Election from ${CommonService().getDateInText(widget.chairPersonStartDate)} - ${CommonService().getDateInText(widget.chairPersonEndDate)}  ",
+              "Chairperson Election from ${CommonService().getDateInText(widget.chairPersonStartDate)} - ${CommonService().getDateInText(widget.chairPersonEndDate)}  ",
               style: TextStyle(
                   fontSize: 16,
                   color: Color(0xFF174486),
@@ -111,7 +111,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
                   TextSpan(
-                      text: 'ChairPerson Election',
+                      text: 'Chairperson Election',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -135,7 +135,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           height: 25,
         ),
         Text(
-          "ChairPerson Election Start Date:",
+          "Chairperson Election Start Date:",
           style: TextStyle(
               fontSize: 16,
               color: Color(0xFF174486),
@@ -192,7 +192,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
                   TextSpan(
-                      text: 'ChairPerson Election have',
+                      text: 'Chairperson Election have',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -216,7 +216,7 @@ class _PreviewChairPersonRoundState extends State<PreviewChairPersonRound> {
           height: 25,
         ),
         Text(
-          "ChairPerson Election End Date:",
+          "Chairperson Election End Date:",
           style: TextStyle(
               fontSize: 16,
               color: Color(0xFF174486),

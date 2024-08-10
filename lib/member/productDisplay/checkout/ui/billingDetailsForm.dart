@@ -15,8 +15,6 @@ class BillingDetailsForm extends StatefulWidget {
 }
 
 class _BillingDetailsFormState extends State<BillingDetailsForm> {
-  
-
   // form controllers
   final firstName = TextEditingController();
   final lastName = TextEditingController();
@@ -45,7 +43,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Form(
-              key: widget.formKey, 
+              key: widget.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -126,7 +124,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       hintText: 'Street Number',
                       description: 'Street Address',
                       customSize: MyUtility(context).width * 0.42,
-                      textFieldType: 'intType',
+                      textFieldType: 'stringType',
                       textfieldController: street),
                   const SizedBox(
                     height: 20,

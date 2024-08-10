@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Login/popups/validateDialog.dart';
@@ -112,6 +116,41 @@ class _AddPdfState extends State<AddPdf> {
         pdfLink.text = commData.get('pdfLink');
         communities = commData.get('communities');
       });
+    }
+  }
+
+  Future uploadFile(fileName, webImage) async {
+    final ref = FirebaseStorage.instance.ref().child('files').child(fileName);
+
+    var imageUrl = "";
+    await ref.putData(webImage!);
+    imageUrl = await ref.getDownloadURL();
+    print(imageUrl);
+    setState(() {
+      pdfLink.text = imageUrl;
+      fileUploadStatus = "Upload Complete";
+    });
+  }
+
+  var fileUploadStatus = "";
+  Future<void> pickFile() async {
+    setState(() {
+      fileUploadStatus = "";
+    });
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    //  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      for (var i = 0; i < result.files.length; i++) {
+        Uint8List? fileBytes = result.files[i].bytes;
+        var fileName = result.files[i].name;
+        fileUploadStatus = "Uploading ...";
+        await uploadFile(fileName, fileBytes);
+      }
+
+      // Upload file
     }
   }
 
@@ -232,13 +271,28 @@ class _AddPdfState extends State<AddPdf> {
           SizedBox(
             height: 15,
           ),
-          StyleButton(
-              description: "Upload PDF",
-              height: 55,
-              width: 175,
-              onTap: () {
-                widget.changePageIndex(0, "");
-              }),
+          Row(
+            children: [
+              StyleButton(
+                  description: "Upload File",
+                  height: 55,
+                  width: 175,
+                  onTap: () {
+                    pickFile();
+                    //   widget.changePageIndex(0, "");
+                  }),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                fileUploadStatus,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 146, 146, 146)),
+              ),
+            ],
+          ),
         ]);
   }
 }

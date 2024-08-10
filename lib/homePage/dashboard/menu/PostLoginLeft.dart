@@ -266,7 +266,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       isActive: activeIndex == 15,
                       menuSize: widget.menuSize,
                       description: "Communities",
-                      iconPath: "",
+                      iconPath: "images/icon_categories.svg",
                       onPressed: () {
                         _handleItemClick(15);
                         widget.changePage(15);

@@ -2,21 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/components/ui/pleaseLogin.dart';
 import 'package:sama/member/centerOfExcellence/ui/CommentContainer.dart';
 import 'package:sama/member/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:intl/intl.dart';
 
 class CenterOfExcellenceArticle extends StatefulWidget {
-  Function(int?)? changePage;
-  String? articleImage;
-  String? articleId;
-  CenterOfExcellenceArticle({
-    super.key,
-    required this.articleId,
-    required this.articleImage,
-    required this.changePage,
-  });
+  Function(int) changePage;
+  String articleImage;
+  String articleId;
+  String userType;
+
+  CenterOfExcellenceArticle(
+      {super.key,
+      required this.articleId,
+      required this.articleImage,
+      required this.changePage,
+      required this.userType});
 
   @override
   State<CenterOfExcellenceArticle> createState() =>
@@ -254,68 +257,79 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
                   SizedBox(
                     height: MyUtility(context).height * 0.035,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      'Your message:',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFF3D3D3D),
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  Container(
-                    width: MyUtility(context).width / 1.2,
-                    height: 65,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                    ),
-                    child: TextField(
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        ),
-                        controller: comment),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.035,
-                  ),
-                  SizedBox(
-                    width: MyUtility(context).width / 1.62,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: MyUtility(context).width * 0.065,
-                        height: 55,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xFF174486),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            addComment(comment.text);
-                            widget.changePage!(6);
-                          },
+                  Visibility(
+                    visible: widget.userType != "NonMember",
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
                           child: Text(
-                            'Submit',
+                            'Your message:',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                                fontSize: 18,
+                                color: Color(0xFF3D3D3D),
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                        Container(
+                          width: MyUtility(context).width / 1.2,
+                          height: 65,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                          ),
+                          child: TextField(
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              controller: comment),
+                        ),
+                        SizedBox(
+                          height: MyUtility(context).height * 0.035,
+                        ),
+                        SizedBox(
+                          width: MyUtility(context).width / 1.62,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              width: MyUtility(context).width * 0.065,
+                              height: 55,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color(0xFF174486),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  addComment(comment.text);
+                                  widget.changePage!(6);
+                                },
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
+                  Visibility(
+                      visible: widget.userType == "NonMember",
+                      child: PleaseLogin()),
                   SizedBox(
                     height: MyUtility(context).height * 0.035,
                   ),

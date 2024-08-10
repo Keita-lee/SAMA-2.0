@@ -32,6 +32,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   String productImage = "";
 
   var productQuantity = 0;
+  var total = 0.0;
 
   changePageIndex(value, type) {
     setState(() {
@@ -59,6 +60,12 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     }
 
     setState(() {});
+  }
+
+  getTotal(value) {
+    setState(() {
+      total = value;
+    });
   }
 
 //Get all products from firebase
@@ -218,7 +225,9 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
               Visibility(
                 visible: pageIndex == 2 ? true : false,
                 child: CartPage(
-                    products: cartProducts, changePageIndex: changePageIndex),
+                    products: cartProducts,
+                    changePageIndex: changePageIndex,
+                    getTotal: getTotal),
               ),
 
               Visibility(
@@ -228,7 +237,10 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
               Visibility(
                 visible: pageIndex == 4 ? true : false,
-                child: Checkout(products: cartProducts),
+                child: Checkout(
+                  products: cartProducts,
+                  total: total,
+                ),
               ),
             ],
           ),

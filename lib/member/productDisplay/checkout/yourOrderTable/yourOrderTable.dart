@@ -149,106 +149,111 @@ class _YourOrderTableState extends State<YourOrderTable> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 350,
-      //height: 500,
-      child: Center(
-        child: Table(
-          columnWidths: {0: FixedColumnWidth(220)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: [
-            const TableRow(
+    return Column(
+      children: [
+        SizedBox(
+          width: 350,
+          //height: 500,
+          child: Center(
+            child: Table(
+              columnWidths: {0: FixedColumnWidth(220)},
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Product',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                const TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'Product',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'Subtotal',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ...List.generate(
+                  widget.orderProduct.length,
+                  (index) => TableRow(
+                    children: [
+                      TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            ' ${widget.orderProduct[index]['name']} ${widget.orderProduct[index]['quantity']}',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            widget.orderProduct[index]['price'],
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Subtotal',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                TableRow(children: [
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        'Total',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                ),
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        '${total}',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ])
               ],
             ),
-            ...List.generate(
-              widget.orderProduct.length,
-              (index) => TableRow(
-                children: [
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        ' ${widget.orderProduct[index]['name']}  Amount x ${widget.orderProduct[index]['quantity']}',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        widget.orderProduct[index]['price'],
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ),
-                ],
+          ),
+        ),
+        Visibility(
+          visible: loadingState,
+          child: TableCell(
+            verticalAlignment: TableCellVerticalAlignment.middle,
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                'Awaiting Payment ....',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
-            TableRow(children: [
-              TableCell(
-                verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Total',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              TableCell(
-                verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    '${total}',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: loadingState,
-                child: TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Awaiting Payment ....',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-            ])
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

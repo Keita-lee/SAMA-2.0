@@ -7,9 +7,13 @@ import 'package:sama/components/ReuseableButton.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/homePage/dashboard/ui/samaNotificationsBox.dart';
 
+import 'nonMemberDashboard.dart';
+
 class PostLoginCenter extends StatefulWidget {
   List userNotification;
-  PostLoginCenter({super.key, required this.userNotification});
+  String userType;
+  PostLoginCenter(
+      {super.key, required this.userNotification, required this.userType});
 
   @override
   State<PostLoginCenter> createState() => _PostLoginCenterState();
@@ -21,6 +25,10 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Visibility(
+          visible: widget.userType == "NonMember",
+          child: NonMemberDashboard(),
+        ),
         /*    Container(
           width: MyUtility(context).width / 1.3,
           height: MyUtility(context).height / 3,
@@ -574,9 +582,11 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         SizedBox(
           height: MyUtility(context).height * 0.045,
         ),
-        Row(children: [
-          SamaNotificationsBox(userNotification: widget.userNotification),
-          /* Container(
+        Visibility(
+            visible: widget.userType != "NonMember",
+            child: Row(children: [
+              SamaNotificationsBox(userNotification: widget.userNotification),
+              /* Container(
               width: MyUtility(context).width / 5.5,
               height: MyUtility(context).height * 0.6,
               decoration: BoxDecoration(
@@ -641,7 +651,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
                 ),
               ),
             ),*/
-          /*       SizedBox(
+              /*       SizedBox(
               width: MyUtility(context).width * 0.01,
             ),
             Column(
@@ -1026,7 +1036,7 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         SizedBox(
           height: MyUtility(context).height * 0.05,
         ),*/
-        ])
+            ])),
       ],
     );
   }

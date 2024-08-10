@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../components/myutility.dart';
 import '../../../../../components/styleButton.dart';
@@ -52,7 +53,9 @@ class _ComPdfViewState extends State<ComPdfView> {
                             description: "Download",
                             height: 55,
                             width: 125,
-                            onTap: () {}),
+                            onTap: () {
+                              launchUrl(Uri.parse(widget.downloadUrl));
+                            }),
                       ],
                     ),
                     SizedBox(
@@ -72,6 +75,5 @@ class _ComPdfViewState extends State<ComPdfView> {
                     ),
                   ],
                 ))));
-    /* */
   }
 }

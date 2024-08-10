@@ -15,8 +15,13 @@ import 'package:http/http.dart' as http;
 class YourOrderCon extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   List products;
+  double total;
 
-  YourOrderCon({super.key, required this.formKey, required this.products});
+  YourOrderCon(
+      {super.key,
+      required this.formKey,
+      required this.products,
+      required this.total});
 
   @override
   State<YourOrderCon> createState() => _YourOrderConState();
@@ -61,7 +66,7 @@ class _YourOrderConState extends State<YourOrderCon> {
       },
       body: jsonEncode(<String, dynamic>{
         'email': email,
-        'amount': "${total * 100}",
+        'amount': "${widget.total * 100}",
         "currency": "ZAR",
       }),
     );
@@ -193,10 +198,10 @@ class _YourOrderConState extends State<YourOrderCon> {
         InkWell(
           onTap: () {
             // form validation here
-            if (widget.formKey.currentState?.validate() ?? false) {
-              sendPayment();
+            if (widget.formKey.currentState!.validate()) {
             } else {
-              // ADD LOGIC
+              sendPayment();
+              // Not Valid
             }
           },
           child: Container(

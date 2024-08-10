@@ -53,6 +53,17 @@ class CommonService {
     return '$month';
   }
 
+//Get Month and year from date
+  String getDateInTextTimeStamp(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    DateTime date = DateTime.parse(timestamp.toDate().toString());
+    String day = DateFormat('dd').format(dateTime);
+    String month = DateFormat('MMMM').format(dateTime);
+    String year = DateFormat('yyyy').format(dateTime);
+
+    return DateFormat('dd-MMM-yyy').format(date);
+  }
+
   String getTodaysDateText() {
     DateTime now = DateTime.now();
     String day = DateFormat('dd').format(now);

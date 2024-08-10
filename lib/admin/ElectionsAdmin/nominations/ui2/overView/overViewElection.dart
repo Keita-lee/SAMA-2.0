@@ -374,7 +374,7 @@ class _OverViewElectionState extends State<OverViewElection> {
                   });
                 },
                 tabIndexNumber: 5,
-                description: "ChairPerson",
+                description: "Chairperson",
                 customWidth: 150,
                 customColor1: Color.fromARGB(255, 211, 210, 210),
                 customColor2: Color(0xFF174486),

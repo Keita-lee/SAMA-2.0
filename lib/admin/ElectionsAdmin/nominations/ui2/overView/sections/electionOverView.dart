@@ -253,7 +253,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
                     widget.electionDateEnd, membersWhoAccepted, widget.branch);
               }),
           ElectionOverviewItem(
-              voteTitle: 'ChairPerson Election',
+              voteTitle: 'Chairperson Election',
               startDate: widget.chairPersonStart,
               endDate: widget.chairPersonEnd,
               exportToExcel: () {

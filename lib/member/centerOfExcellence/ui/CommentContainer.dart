@@ -29,7 +29,7 @@ class _CommentContainerState extends State<CommentContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width / 1.2,
-      height: MediaQuery.of(context).size.height * 0.2,
+      //   height: MediaQuery.of(context).size.height * 0.2,
       color: widget.backgroundColor,
       child: Padding(
           padding: const EdgeInsets.all(8.0),

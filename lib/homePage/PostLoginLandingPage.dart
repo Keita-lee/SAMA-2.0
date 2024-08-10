@@ -14,6 +14,7 @@ import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/products/products.dart';
+import 'package:sama/homePage/dashboard/nonMemberDashboard.dart';
 import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
 import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
 import 'package:sama/login/loginPages.dart';
@@ -51,7 +52,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   String articleImage = "";
   String profileUrl = "";
   var pageIndex = 0;
-  String userType = "";
+  String userType = "NonMember";
   double menuSize = 6.5;
   //get data of signed in user
   getUserData() async {
@@ -60,10 +61,14 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
-    if (data.exists) {
+    if (data.exists && widget.userId != "") {
       setState(() {
         userType = data.get('userType');
         profileUrl = data.get('profilePic');
+      });
+    } else {
+      setState(() {
+        userType = "NonMember";
       });
     }
   }
@@ -133,26 +138,38 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     }
 
     var pages = [
-      PostLoginCenter(userNotification: userNotification),
-      CenterOfExcellence(getArticleId: getArticleId, changePage: changePage),
+      PostLoginCenter(
+        userNotification: userNotification,
+        userType: userType,
+      ),
+      CenterOfExcellence(
+        getArticleId: getArticleId,
+        changePage: changePage,
+      ),
       MemberBenifits(),
       Profile(),
       CenterOfExcellenceList(),
       MemberBenefitsList(),
       CenterOfExcellenceArticle(
-          articleId: articleId,
-          changePage: changePage,
-          articleImage: articleImage),
+        articleId: articleId,
+        changePage: changePage,
+        articleImage: articleImage,
+        userType: userType,
+      ),
       AdminMedia(),
       AdminEvents(),
       MemberMedia(),
       MemberEvents(),
       NominationSetup(),
-      MemberElection(),
+      MemberElection(
+        userType: userType,
+      ),
       Products(),
       ProductListDisplay(),
       CommunitiesAdmin(),
-      MemberCommunities(),
+      MemberCommunities(
+        userType: userType,
+      ),
 
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
@@ -228,7 +245,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                               child: Text(
                                 userType == "Admin"
                                     ? 'Admin Portal'
-                                    : 'Member Portal',
+                                    : userType == "NonMember"
+                                        ? "SAMA Portal"
+                                        : 'Member Portal',
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Color(0xFF174486),
@@ -272,7 +291,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                               width: 10,
                             ),
                             Visibility(
-                              visible: userType != 'Admin',
+                              visible: userType != 'Admin' &&
+                                  userType != "NonMember",
                               child: Transform.scale(
                                 scale: 0.8,
                                 child: Container(
@@ -323,12 +343,14 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                               width: widthDevice / 10,
                             ),
                             Visibility(
-                                visible: userType != 'Admin',
+                                visible: userType != 'Admin' &&
+                                    userType != "NonMember",
                                 child: SamaTopTabBar()),
                             Spacer(),
                             SizedBox(width: 20),
                             Visibility(
-                              visible: userType != 'Admin',
+                              visible: userType != 'Admin' &&
+                                  userType != "NonMember",
                               child: IconButton(
                                 onPressed: () {},
                                 icon: SvgPicture.asset('images/icon_cart.svg',
@@ -337,93 +359,95 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                     color: Color.fromRGBO(73, 91, 155, 1)),
                               ),
                             ),
-                            Transform.scale(
-                              scale: 0.8,
-                              child: IconButton(
-                                onPressed: () {
-                                  openNotificationList();
-                                },
-                                icon: SvgPicture.asset(
-                                  'images/icon_bell.svg',
-                                  width: 20,
-                                  height: 20,
-                                  color: Color.fromRGBO(73, 91, 155, 1),
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: SvgPicture.asset(
-                                'images/icon_gear.svg',
-                                width: 20,
-                                height: 20,
-                                color: Color.fromRGBO(73, 91, 155, 1),
-                              ),
-                            ),
-                            Transform.scale(
-                                scale: 0.8,
-                                child: PopupMenuButton(
-                                  key: _menuKey,
-                                  onSelected: (value) {
-                                    if (value == "viewProfile") {
-                                      changePage(3);
-                                    } else if (value == "logout") {
-                                      openLogoutDialog();
-                                    }
-                                  },
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry>[
-                                    PopupMenuItem(
-                                      height: 22,
-                                      value: "viewProfile",
-                                      child: const Text(
-                                        'View Profile',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFF174486),
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      height: 22,
-                                      value: "logout",
-                                      child: const Text(
-                                        'Logout',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFF174486),
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Container(
-                                      width: 55,
-                                      height: 55,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(0.0),
-                                        child: profileUrl != ""
-                                            ? ImageNetwork(
-                                                onTap: () {
-                                                  dynamic state =
-                                                      _menuKey.currentState;
-                                                  state.showButtonMenu();
-                                                },
-                                                image: profileUrl!,
-                                                height: 55,
-                                                width: 55,
-                                              )
-                                            : Container(),
-                                      ),
+                            Visibility(
+                              visible: userType != "NonMember",
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      openNotificationList();
+                                    },
+                                    icon: SvgPicture.asset(
+                                      'images/icon_bell.svg',
+                                      width: 20,
+                                      height: 20,
+                                      color: Color.fromRGBO(73, 91, 155, 1),
                                     ),
                                   ),
-                                )),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: SvgPicture.asset(
+                                      'images/icon_gear.svg',
+                                      width: 20,
+                                      height: 20,
+                                      color: Color.fromRGBO(73, 91, 155, 1),
+                                    ),
+                                  ),
+                                  PopupMenuButton(
+                                    key: _menuKey,
+                                    onSelected: (value) {
+                                      if (value == "viewProfile") {
+                                        changePage(3);
+                                      } else if (value == "logout") {
+                                        openLogoutDialog();
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) =>
+                                        <PopupMenuEntry>[
+                                      PopupMenuItem(
+                                        height: 22,
+                                        value: "viewProfile",
+                                        child: const Text(
+                                          'View Profile',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xFF174486),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        height: 22,
+                                        value: "logout",
+                                        child: const Text(
+                                          'Logout',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xFF174486),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Container(
+                                        width: 55,
+                                        height: 55,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white,
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0.0),
+                                          child: profileUrl != ""
+                                              ? ImageNetwork(
+                                                  onTap: () {
+                                                    dynamic state =
+                                                        _menuKey.currentState;
+                                                    state.showButtonMenu();
+                                                  },
+                                                  image: profileUrl!,
+                                                  height: 55,
+                                                  width: 55,
+                                                )
+                                              : Container(),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                             SizedBox(
                               width: MyUtility(context).width * 0.04,
                             )
@@ -437,14 +461,13 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           PostLoginLeft(
                               changePage: changePage, menuSize: menuSize),
                           Transform.scale(
                             scale: 0.8,
-                            child: Center(
-                              child: pages[pageIndex],
-                            ),
+                            child: pages[pageIndex],
                           )
                         ],
                       ),

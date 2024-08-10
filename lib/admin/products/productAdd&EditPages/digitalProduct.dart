@@ -32,6 +32,7 @@ class _DigitalProductState extends State<DigitalProduct> {
   final downloadLink = TextEditingController();
   final price = TextEditingController();
   final spouseOfMember = TextEditingController();
+  final nonMemberPrice = TextEditingController();
 
   //var
   String imageUrl = '';
@@ -75,7 +76,8 @@ class _DigitalProductState extends State<DigitalProduct> {
       'priceType': priceType,
       'price': price.text,
       'downloadLink': downloadLink.text,
-      'spouseOfMember': spouseOfMember.text
+      'spouseOfMember': spouseOfMember.text,
+      'nonMemberPrice': nonMemberPrice.text
     };
 
     if (widget.productId == "") {
@@ -122,6 +124,7 @@ class _DigitalProductState extends State<DigitalProduct> {
         price.text = productData.get("price");
         downloadLink.text = productData.get("downloadLink");
         spouseOfMember.text = productData.get("spouseOfMember");
+        nonMemberPrice.text = productData.get("nonMemberPrice");
       });
     }
   }
@@ -309,10 +312,10 @@ class _DigitalProductState extends State<DigitalProduct> {
               ),
               MyProductButtons(
                 buttonText: 'Non-Member Pricing',
-                buttonColor: priceType == "'Non-Member Pricing"
+                buttonColor: priceType == "Non-Member Pricing"
                     ? Color.fromARGB(255, 8, 55, 145)
                     : Colors.grey,
-                borderColor: priceType == "'Non-Member Pricing"
+                borderColor: priceType == "Non-Member Pricing"
                     ? Color.fromARGB(255, 8, 55, 145)
                     : Colors.grey,
                 textColor: Colors.white,
@@ -335,14 +338,17 @@ class _DigitalProductState extends State<DigitalProduct> {
           ),
           Row(
             children: [
-              MyProductTextField(
-                  hintText: '0.00',
-                  textfieldController: price,
-                  textFieldWidth: MyUtility(context).width * 0.19,
-                  topPadding: 0,
-                  header: priceType == "Member Pricing"
-                      ? 'Member Price'
-                      : ' Non - Member Price'),
+              Visibility(
+                visible: priceType == "Member Pricing" ? true : false,
+                child: MyProductTextField(
+                    hintText: '0.00',
+                    textfieldController: price,
+                    textFieldWidth: MyUtility(context).width * 0.19,
+                    topPadding: 0,
+                    header: priceType == "Member Pricing"
+                        ? 'Member Price'
+                        : 'Non - Member Price'),
+              ),
               SizedBox(
                 width: 15,
               ),
@@ -354,6 +360,15 @@ class _DigitalProductState extends State<DigitalProduct> {
                     textFieldWidth: MyUtility(context).width * 0.19,
                     topPadding: 0,
                     header: "Spouse of Member Price"),
+              ),
+              Visibility(
+                visible: priceType == "Non-Member Pricing",
+                child: MyProductTextField(
+                    hintText: '0.00',
+                    textfieldController: nonMemberPrice,
+                    textFieldWidth: MyUtility(context).width * 0.19,
+                    topPadding: 0,
+                    header: "Non Member Price"),
               ),
             ],
           ),

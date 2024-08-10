@@ -31,6 +31,7 @@ class _PhysicalProductState extends State<PhysicalProduct> {
   final description = TextEditingController();
   final skuController = TextEditingController();
   final price = TextEditingController();
+  final nonMemberPrice = TextEditingController();
 
 //var
   String imageUrl = '';
@@ -73,7 +74,8 @@ class _PhysicalProductState extends State<PhysicalProduct> {
       'imageUrl': imageUrl,
       'isActive': status,
       'priceType': priceType,
-      'price': price.text
+      'price': price.text,
+      'nonMemberPrice': nonMemberPrice.text
     };
 
     if (widget.productId == "") {
@@ -118,6 +120,7 @@ class _PhysicalProductState extends State<PhysicalProduct> {
 
         priceType = productData.get("priceType");
         price.text = productData.get("price");
+        nonMemberPrice.text = productData.get("nonMemberPrice");
       });
     }
   }
@@ -289,10 +292,10 @@ class _PhysicalProductState extends State<PhysicalProduct> {
               ),
               MyProductButtons(
                 buttonText: 'Non-Member Pricing',
-                buttonColor: priceType == "'Non-Member Pricing"
+                buttonColor: priceType == "Non-Member Pricing"
                     ? Color.fromARGB(255, 8, 55, 145)
                     : Colors.grey,
-                borderColor: priceType == "'Non-Member Pricing"
+                borderColor: priceType == "Non-Member Pricing"
                     ? Color.fromARGB(255, 8, 55, 145)
                     : Colors.grey,
                 textColor: Colors.white,
@@ -313,14 +316,24 @@ class _PhysicalProductState extends State<PhysicalProduct> {
                 fontSize: 16,
                 letterSpacing: 1.1),
           ),
-          MyProductTextField(
-              hintText: '0.00',
-              textfieldController: price,
-              textFieldWidth: MyUtility(context).width * 0.19,
-              topPadding: 0,
-              header: priceType == "Member Pricing"
-                  ? 'Member Price'
-                  : ' Non - Member Price'),
+          Visibility(
+            visible: priceType == "Member Pricing",
+            child: MyProductTextField(
+                hintText: '0.00',
+                textfieldController: price,
+                textFieldWidth: MyUtility(context).width * 0.19,
+                topPadding: 0,
+                header: "Member Price"),
+          ),
+          Visibility(
+            visible: priceType == "Non-Member Pricing",
+            child: MyProductTextField(
+                hintText: '0.00',
+                textfieldController: nonMemberPrice,
+                textFieldWidth: MyUtility(context).width * 0.19,
+                topPadding: 0,
+                header: "Non Member Price"),
+          ),
           SizedBox(
             height: 15,
           ),

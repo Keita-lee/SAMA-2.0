@@ -26,7 +26,12 @@ List<Widget> cartProducts = [
 class CartPage extends StatefulWidget {
   List products;
   Function(int, String) changePageIndex;
-  CartPage({super.key, required this.products, required this.changePageIndex});
+  Function(double) getTotal;
+  CartPage(
+      {super.key,
+      required this.products,
+      required this.changePageIndex,
+      required this.getTotal});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -35,18 +40,13 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   double total = 0;
   List productList = [];
-  @override
-  void initState() {
-    productList.addAll(widget.products);
-    for (int i = 0; i < widget.products.length; i++) {
-      print(widget.products[i]['total']);
-      total = total + double.parse(widget.products[i]['total']);
-    }
-    super.initState();
-  }
 
-  manageProductList(productName, quantity) {
+  manageProductList(
+    productName,
+    quantity,
+  ) {
     setState(() {
+      total = 0;
       var productIndex =
           (productList).indexWhere((item) => item["name"] == productName);
 
@@ -58,11 +58,24 @@ class _CartPageState extends State<CartPage> {
       for (int i = 0; i < widget.products.length; i++) {
         print(widget.products[i]['total']);
         total = total + double.parse(widget.products[i]['total']);
+
+        widget.getTotal(total + double.parse(widget.products[i]['total']));
       }
     });
   }
 
   @override
+  void initState() {
+    productList.addAll(widget.products);
+    for (int i = 0; i < widget.products.length; i++) {
+      print(widget.products[i]['total']);
+      total = total + double.parse(widget.products[i]['total']);
+    }
+
+    super.initState();
+    //
+  }
+
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

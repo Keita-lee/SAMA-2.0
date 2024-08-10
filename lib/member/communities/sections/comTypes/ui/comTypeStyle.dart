@@ -9,12 +9,14 @@ class ComTypeStyle extends StatefulWidget {
   String title;
   String description;
   VoidCallback changePageIndex;
+  VoidCallback forumPage;
   ComTypeStyle(
       {super.key,
       required this.imagePath,
       required this.title,
       required this.description,
-      required this.changePageIndex});
+      required this.changePageIndex,
+      required this.forumPage});
 
   @override
   State<ComTypeStyle> createState() => _ComTypeStyleState();
@@ -105,7 +107,9 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
                       description: "Discussions",
                       height: 55,
                       width: 125,
-                      onTap: () {})
+                      onTap: () {
+                        widget.forumPage();
+                      })
                 ],
               ),
               /*   */
