@@ -106,87 +106,88 @@ class _MemberContainerState extends State<MemberContainer> {
           border: Border.all(
             color: Color(0xFFF8FAFF),
           )),
-      child: Row(
-        children: [
-          Container(
-            height: MyUtility(context).height * 0.1,
-            width: 10.0,
-            decoration: BoxDecoration(
-              color: Colors.blue.shade900,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                bottomLeft: Radius.circular(10.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /*Container(
+              height: MyUtility(context).height * 0.1,
+              width: 10.0,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade900,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  bottomLeft: Radius.circular(10.0),
+                ),
+              ),
+            ),*/
+            SizedBox(
+              width: 15,
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '${getDay(widget.dateTill)}\n',
+                    style: TextStyle(
+                      color: Color.fromARGB(176, 0, 0, 0),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '${getDayNumber(widget.dateTill)}',
+                    style: TextStyle(
+                      color: Color.fromARGB(176, 0, 0, 0),
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.025,
-          ),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '${getDay(widget.dateTill)}\n',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextSpan(
-                  text: '${getDayNumber(widget.dateTill)}',
-                  style: TextStyle(
-                    color: Colors.blue.shade900,
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            SizedBox(
+              width: 15,
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.025,
-          ),
-          Visibility(
-            visible: widget.eventImage == "" ? true : false,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("images/imageIcon.png"),
-                    fit: BoxFit.cover,
+            Visibility(
+              visible: widget.eventImage == "" ? true : false,
+              child: ClipRRect(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("images/imageIcon.png"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                width: MyUtility(context).width * 0.1,
-                height: MyUtility(context).height * 0.1,
-              ),
-            ),
-          ),
-          Visibility(
-            visible: widget.eventImage == "" ? false : true,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: ImageNetwork(
-                  image: widget.eventImage,
-                  width: MyUtility(context).width * 0.1,
-                  height: MyUtility(context).height * 0.1,
-                  fitWeb: BoxFitWeb.cover,
+                  width: 165,
+                  height: 130,
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).height * 0.025,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: MyUtility(context).width * 0.2,
+            Visibility(
+              visible: widget.eventImage == "" ? false : true,
+              child: ClipRRect(
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: ImageNetwork(
+                    image: widget.eventImage,
+                    width: 165,
+                    height: 130,
+                    fitWeb: BoxFitWeb.cover,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              color: Colors.amber,
+              width: MyUtility(context).width * 0.58,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -195,7 +196,7 @@ class _MemberContainerState extends State<MemberContainer> {
                       child: Text(
                         '${CommonService().getDateInText(widget.dateFrom)}',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 13,
                           color: Color(0xFF3D3D3D),
                           fontWeight: FontWeight.normal,
                         ),
@@ -203,48 +204,50 @@ class _MemberContainerState extends State<MemberContainer> {
                     ),
                   ),
                   SizedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Container(
-                        height: 30,
-                        child: Text(
-                          widget.eventName,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFF3D3D3D),
-                            fontWeight: FontWeight.bold,
-                          ),
+                    child: Container(
+                      height: 30,
+                      child: Text(
+                        widget.eventName,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromRGBO(0, 159, 158, 1),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 30,
-                    child: Text(
-                      widget.location,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
+                  Text(
+                    widget.location,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
+                  Row(crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        color: Colors.black,
+                        height: 60,
+                        width: 20,
+                      ),
+                      Spacer(),
+                      StyleButton(
+                          description: "View Details",
+                          fontSize: 13,
+                          height: 38,
+                          width: 60,
+                          onTap: () {
+                            widget.onPressed();
+                          }),
+                      
+                    ],
+                  )
                 ],
               ),
             ),
-          ),
-          Spacer(),
-          StyleButton(
-              description: "View Event",
-              height: 55,
-              width: 125,
-              onTap: () {
-                widget.onPressed();
-              }),
-          SizedBox(
-            width: 25,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

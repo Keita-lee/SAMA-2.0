@@ -14,6 +14,7 @@ class MediaContainerStyle extends StatefulWidget {
   String image;
   String duration;
   String releaseDate;
+  //String date;
   String category;
   String title;
   String id;
@@ -21,6 +22,7 @@ class MediaContainerStyle extends StatefulWidget {
   final VoidCallback? view;
   MediaContainerStyle(
       {super.key,
+     // required this.date,
       required this.adminType,
       required this.image,
       required this.duration,
@@ -50,17 +52,12 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 4.4,
-      height: 425,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: Color(0xFFD1D1D1),
-          )),
+      width: 315,
+      height: 335,
+      
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-        child: Column(
+        padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
               visible: widget.image == "" ? true : false,
@@ -71,7 +68,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                width: MyUtility(context).width / 4.0,
+                width: 300,
                 height: 200,
               ),
             ),
@@ -79,37 +76,44 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Visibility(
               visible: widget.image != "" ? true : false,
               child: Container(
-                width: MyUtility(context).width / 4.0,
+                width: 300,
                 height: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  
                   color: Color(0xFFD1D1D1),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
+                  
                   child: ImageNetwork(
                     image: widget.image,
                     fitWeb: BoxFitWeb.fill,
-                    width: MyUtility(context).width / 4.0,
+                    width: 300,
                     height: 200,
                   ),
                 ),
               ),
             ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-              height: 85,
-              child: Text(
-                (widget.title),
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal),
-              ),
+            const SizedBox(height: 10,),
+            //TO DO IMPLEMENT DATE OF VIDEO POSTED//////
+            Text(
+              '21 Jyly 2024',
+              style: TextStyle(
+                  fontSize: 12,
+                  letterSpacing: 1.2,
+                  color: Color.fromARGB(148, 158, 158, 158),
+                  fontWeight: FontWeight.w600),
             ),
-
-            Padding(
+            const SizedBox(height: 10,),
+            Text(
+              (widget.title),
+              style: TextStyle(
+                  fontSize: 16,
+                  height: 1,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+           /* Padding(
               padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: Row(
                 children: [
@@ -130,7 +134,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   ),
                 ],
               ),
-            ),
+            ),*/
 
             SizedBox(
               height: 10,
@@ -139,15 +143,17 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Visibility(
               visible: widget.adminType != "true" ? true : false,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   StyleButton(
+                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
                     onTap: () {
                       widget.view!();
                     },
-                    description: 'View',
-                    height: 55,
-                    width: MyUtility(context).width * 0.17,
+                    description: 'Play',
+                    height: 38,
+                    fontSize: 14,
+                    width: 110,
                   ),
                 ],
               ),
@@ -155,15 +161,17 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Visibility(
               visible: widget.adminType == "true" ? true : false,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   StyleButton(
+                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
                     onTap: () {
                       widget.onpress!();
                     },
                     description: 'Edit',
-                    height: 55,
-                    width: MyUtility(context).width * 0.17,
+                    height: 38,
+                    fontSize: 14,
+                    width: 110,
                   ),
                 ],
               ),

@@ -467,8 +467,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         children: [
                           PostLoginLeft(
                               changePage: changePage, menuSize: menuSize),
-                          Transform.scale(
-                            scale: 0.8,
+                          Container(
+                            
                             child: pages[pageIndex],
                           )
                         ],

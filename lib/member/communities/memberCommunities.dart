@@ -50,7 +50,7 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
     return Column(
       children: [
         Visibility(
-            visible: widget.userType == "NonMember", child: PleaseLogin()),
+            visible: widget.userType == "NonMember", child: PleaseLogin(pleaseLoginText: 'Access to this content is restricted. Please log in to view or sign up for membership today.',)),
         Visibility(
           visible: widget.userType != "NonMember",
           child: Column(

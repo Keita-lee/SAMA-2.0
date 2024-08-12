@@ -6,6 +6,7 @@ class StyleButton extends StatefulWidget {
   String? description;
   double? height;
   double? width;
+  double? fontSize;
   final Function()? onTap;
   Color? buttonColor;
   StyleButton(
@@ -14,6 +15,7 @@ class StyleButton extends StatefulWidget {
       required this.height,
       required this.width,
       required this.onTap,
+      this.fontSize,
       this.buttonColor});
 
   @override
@@ -41,7 +43,7 @@ class _StyleButtonState extends State<StyleButton> {
           widget.description!,
           style: TextStyle(
             color: Color.fromARGB(255, 255, 255, 255),
-            fontSize: 16,
+            fontSize: widget.fontSize == null ? 16 : widget.fontSize,
           ),
         ),
         onPressed: widget.onTap,

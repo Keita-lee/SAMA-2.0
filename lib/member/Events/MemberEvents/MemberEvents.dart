@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEventsComp/MemberContainer.dart';
@@ -40,12 +41,13 @@ class _MemberEventsState extends State<MemberEvents> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SamaBlueBanner(pageName: 'EVENTS'),
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -77,7 +79,7 @@ class _MemberEventsState extends State<MemberEvents> {
                     fontWeight: FontWeight.normal,
                   ),
                 ),
-              ),
+              ),*/
               StreamBuilder<QuerySnapshot>(
                 stream:
                     FirebaseFirestore.instance.collection('events').snapshots(),
@@ -107,12 +109,12 @@ class _MemberEventsState extends State<MemberEvents> {
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                             width: MyUtility(context).width * 0.9,
-                            decoration: ShapeDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              shape: RoundedRectangleBorder(
+                            decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
+                                color: Colors.white,
+                                border: Border.all(
+                                    color: Color.fromARGB(255, 212, 210, 210),
+                                    width: 1.5)),
                             child: MemberContainer(
                               eventImage: document['eventsImage']!,
                               eventName: document['title']!,

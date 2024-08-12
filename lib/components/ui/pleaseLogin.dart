@@ -5,7 +5,8 @@ import '../myutility.dart';
 import '../styleButton.dart';
 
 class PleaseLogin extends StatefulWidget {
-  const PleaseLogin({super.key});
+  final String pleaseLoginText;
+  const PleaseLogin({super.key, required this.pleaseLoginText});
 
   @override
   State<PleaseLogin> createState() => _PleaseLoginState();
@@ -15,97 +16,93 @@ class _PleaseLoginState extends State<PleaseLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MyUtility(context).width * 0.80,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            border: Border.all(
-                color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: MyUtility(context).width / 5,
-                        height: MyUtility(context).height / 4,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: AssetImage('images/lock.png'),
-                            fit: BoxFit.contain,
-                          ),
+      width: MyUtility(context).width * 0.80,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          border: Border.all(
+              color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
+      child: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                          image: AssetImage('images/lock.png'),
+                          fit: BoxFit.contain,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Please Login',
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Color.fromARGB(255, 8, 55, 145),
-                            fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Please Login',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 8, 55, 145),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      widget.pleaseLoginText,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 116, 116, 116),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        'Access to this content is restricted. Please log in to view or sign up for membership today.',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: MyUtility(context).width / 2.8,
-                          ),
-                          StyleButton(
-                              buttonColor:
-                                  const Color.fromARGB(255, 87, 87, 87),
-                              description: "LOGIN",
-                              height: 55,
-                              width: 125,
-                              onTap: () {}),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          StyleButton(
-                              buttonColor:
-                                  const Color.fromARGB(255, 87, 87, 87),
-                              description: "REGISTER",
-                              height: 55,
-                              width: 125,
-                              onTap: () {})
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-        ));
+                    ),
+                    Container(
+                      height: 15,
+                    ),
+                    
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(height: 50,),
+                Spacer(),
+                StyleButton(
+                    buttonColor: const Color.fromARGB(255, 87, 87, 87),
+                    description: "LOGIN",
+                    height: 40,
+                    width: 80,
+                    onTap: () {}),
+                SizedBox(
+                  width: 15,
+                ),
+                StyleButton(
+                    buttonColor: const Color.fromARGB(255, 87, 87, 87),
+                    description: "REGISTER",
+                    height: 40,
+                    width: 100,
+                    onTap: () {})
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

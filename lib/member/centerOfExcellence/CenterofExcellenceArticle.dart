@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/ui/pleaseLogin.dart';
 import 'package:sama/member/centerOfExcellence/ui/CommentContainer.dart';
 import 'package:sama/member/centerOfExcellence/ui/NewsContainer.dart';
@@ -118,242 +119,243 @@ class _CenterOfExcellenceArticleState extends State<CenterOfExcellenceArticle> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Center of Excellence',
-            style: TextStyle(
-                fontSize: 32,
-                color: Color(0xFF3D3D3D),
-                fontWeight: FontWeight.normal),
-          ),
-          SizedBox(
-            height: MyUtility(context).height * 0.05,
-          ),
-          Row(
+    return Column(
+      children: [
+        SamaBlueBanner(pageName: 'CENTRE OF EXCELLENCE'),
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: MyUtility(context).width / 4.7,
-                height: MyUtility(context).height * 0.25,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFFD1D1D1),
-                ),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: ImageNetwork(
-                      image: widget.articleImage!,
-                      fitWeb: BoxFitWeb.cover,
-                      width: MyUtility(context).width / 5.2,
-                      height: MyUtility(context).height * 0.25,
-                    )),
-              ),
               SizedBox(
-                width: MyUtility(context).width * 0.025,
+                height: 30,
               ),
-              SizedBox(
-                height: MyUtility(context).height * 0.22,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+             
+                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: Color(0xFF174486),
-                            fontWeight: FontWeight.bold),
+                    Container(
+                      width: 250,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFD1D1D1),
                       ),
+                      child: ClipRRect(
+                          child: ImageNetwork(
+                        image: widget.articleImage!,
+                        fitWeb: BoxFitWeb.cover,
+                        width: 250,
+                        height: 200,
+                      )),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        category,
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFF174486),
-                            fontWeight: FontWeight.normal),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Container(
+                      height: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Padding(
+                          //   padding: const EdgeInsets.only(bottom: 10),
+                          //   child: Text(
+                          //     category,
+                          //     style: TextStyle(
+                          //         fontSize: 18,
+                          //         color: Color(0xFF174486),
+                          //         fontWeight: FontWeight.normal),
+                          //   ),
+                          // ),
+                          Text(
+                            date,
+                            style: TextStyle(
+                                fontSize: 12,
+                                letterSpacing: 1.2,
+                                color: Color.fromARGB(148, 158, 158, 158),
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  color: Color.fromRGBO(0, 159, 158, 1),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      date,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFF3D3D3D),
-                          fontWeight: FontWeight.normal),
                     ),
                   ],
                 ),
+             
+              SizedBox(
+                height: MyUtility(context).height * 0.07,
               ),
-            ],
-          ),
-          SizedBox(
-            height: MyUtility(context).height * 0.07,
-          ),
-          SizedBox(
-            width: MyUtility(context).width - MyUtility(context).width * 0.25,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    description,
-                    style: TextStyle(color: Color(0xFF3D3D3D), fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.025,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      widget.changePage!(1);
-                    },
-                    child: Text(
-                      'Go back, view all articles',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF174486),
+              SizedBox(
+                width:
+                    MyUtility(context).width - MyUtility(context).width * 0.25,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        description,
+                        style:
+                            TextStyle(color: Color(0xFF3D3D3D), fontSize: 16),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.05,
-                  ),
-                  Text(
-                    '${comments.length.toString()} Comments',
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Color(0xFF174486),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.025,
-                  ),
-                  for (var i = 0; i < comments.length; i++)
-                    CommentContainer(
-                      image: comments[i]['username'],
-                      username: comments[i]['username'],
-                      time: _formatTime(comments[i]['date']),
-                      date: _formatDateTime(comments[i]['date']),
-                      comment: comments[i]['comment'],
-                      backgroundColor: i.isEven
-                          ? Color(0xFFFFF4D9)
-                          : Color.fromARGB(255, 255, 255, 255),
-                    ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.035,
-                  ),
-                  Text(
-                    'Leave a comment',
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Color(0xFF174486),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.035,
-                  ),
-                  Visibility(
-                    visible: widget.userType != "NonMember",
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Text(
-                            'Your message:',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFF3D3D3D),
-                                fontWeight: FontWeight.normal),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.025,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          widget.changePage!(1);
+                        },
+                        child: Text(
+                          'Go back, view all articles',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromRGBO(0, 159, 158, 1),
                           ),
                         ),
-                        Container(
-                          width: MyUtility(context).width / 1.2,
-                          height: 65,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Colors.black,
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.05,
+                      ),
+                      Text(
+                        '${comments.length.toString()} Comments',
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Color(0xFF174486),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.025,
+                      ),
+                      for (var i = 0; i < comments.length; i++)
+                        CommentContainer(
+                          image: comments[i]['username'],
+                          username: comments[i]['username'],
+                          time: _formatTime(comments[i]['date']),
+                          date: _formatDateTime(comments[i]['date']),
+                          comment: comments[i]['comment'],
+                          backgroundColor: i.isEven
+                              ? Color(0xFFFFF4D9)
+                              : Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.035,
+                      ),
+                      Text(
+                        'Leave a comment',
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Color(0xFF174486),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.035,
+                      ),
+                      Visibility(
+                        visible: widget.userType != "NonMember",
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Text(
+                                'Your message:',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal),
+                              ),
                             ),
-                          ),
-                          child: TextField(
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 10),
-                              ),
-                              controller: comment),
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.035,
-                        ),
-                        SizedBox(
-                          width: MyUtility(context).width / 1.62,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              width: MyUtility(context).width * 0.065,
-                              height: 55,
+                            Container(
+                              width: MyUtility(context).width / 1.2,
+                              height: 65,
                               decoration: BoxDecoration(
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xFF174486),
+                                border: Border.all(
+                                  color: Colors.black,
+                                ),
                               ),
-                              child: TextButton(
-                                onPressed: () {
-                                  addComment(comment.text);
-                                  widget.changePage!(6);
-                                },
-                                child: Text(
-                                  'Submit',
+                              child: TextField(
                                   style: TextStyle(
-                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    color: Colors.black,
+                                  ),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                  ),
+                                  controller: comment),
+                            ),
+                            SizedBox(
+                              height: MyUtility(context).height * 0.035,
+                            ),
+                            SizedBox(
+                              width: MyUtility(context).width / 1.62,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  width: MyUtility(context).width * 0.065,
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color(0xFF174486),
+                                  ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      addComment(comment.text);
+                                      widget.changePage!(6);
+                                    },
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                          visible: widget.userType == "NonMember",
+                          child: PleaseLogin(pleaseLoginText: 'Login to Comment on this article',)),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.035,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          widget.changePage!(1);
+                        },
+                        child: Text(
+                          'Go back, view all articles',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromRGBO(0, 159, 158, 1),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                      visible: widget.userType == "NonMember",
-                      child: PleaseLogin()),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.035,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      widget.changePage!(1);
-                    },
-                    child: Text(
-                      'Go back, view all articles',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF174486),
                       ),
-                    ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.1,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.1,
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
