@@ -106,6 +106,16 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       ),
                     ],
                   ),
+                  /*  const SizedBox(
+                    height: 20,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      description: 'Email',
+                      customSize: MyUtility(context).width * 0.20,
+                      textFieldType: 'stringType',
+                      textfieldController: email),*/
                   const SizedBox(
                     height: 20,
                   ),

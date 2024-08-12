@@ -66,7 +66,7 @@ class _YourOrderConState extends State<YourOrderCon> {
       },
       body: jsonEncode(<String, dynamic>{
         'email': email,
-        'amount': "${widget.total * 100}",
+        'amount': "${total * 100}",
         "currency": "ZAR",
       }),
     );
@@ -143,11 +143,17 @@ class _YourOrderConState extends State<YourOrderCon> {
     });
   }
 
+  getTotal(value) {
+    setState(() {
+      total = value;
+    });
+  }
+
   @override
   void initState() {
     getUserEmail();
 
-    total = total;
+    total = widget.total;
     super.initState();
   }
 
@@ -176,7 +182,8 @@ class _YourOrderConState extends State<YourOrderCon> {
                   style: GoogleFonts.openSans(fontSize: 18),
                 ),
                 //List here
-                YourOrderTable(orderProduct: widget.products)
+                YourOrderTable(
+                    orderProduct: widget.products, getTotal: getTotal)
               ],
             ),
           ),
@@ -199,8 +206,11 @@ class _YourOrderConState extends State<YourOrderCon> {
           onTap: () {
             // form validation here
             if (widget.formKey.currentState!.validate()) {
-            } else {
+              print("1");
               sendPayment();
+            } else {
+              print("2");
+
               // Not Valid
             }
           },
@@ -215,7 +225,7 @@ class _YourOrderConState extends State<YourOrderCon> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
                 child: Text(
-                  'Place Order',
+                  'Place Order ${widget.total}',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,

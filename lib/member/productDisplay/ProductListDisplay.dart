@@ -12,7 +12,8 @@ import 'package:sama/components/myutility.dart';
 import 'checkout/checkout.dart';
 
 class ProductListDisplay extends StatefulWidget {
-  const ProductListDisplay({super.key});
+  String userType;
+  ProductListDisplay({super.key, required this.userType});
 
   @override
   State<ProductListDisplay> createState() => _ProductListDisplayState();
@@ -156,13 +157,16 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                               fontSize: 35, fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
-                        StyleButton(
-                            description: "View Purchase History",
-                            height: 55,
-                            width: 125,
-                            onTap: () {
-                              changePageIndex(3, "");
-                            })
+                        Visibility(
+                          visible: widget.userType != "NonMember",
+                          child: StyleButton(
+                              description: "View Purchase History",
+                              height: 55,
+                              width: 125,
+                              onTap: () {
+                                changePageIndex(3, "");
+                              }),
+                        )
                       ],
                     ),
                     const SizedBox(

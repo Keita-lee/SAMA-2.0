@@ -12,8 +12,10 @@ import 'package:http/http.dart' as http;
 
 class YourOrderTable extends StatefulWidget {
   List orderProduct;
+  Function(double) getTotal;
 
-  YourOrderTable({super.key, required this.orderProduct});
+  YourOrderTable(
+      {super.key, required this.orderProduct, required this.getTotal});
 
   @override
   State<YourOrderTable> createState() => _YourOrderTableState();
@@ -144,6 +146,7 @@ class _YourOrderTableState extends State<YourOrderTable> {
     getUserEmail();
 
     total = total;
+    widget.getTotal(total);
     super.initState();
   }
 

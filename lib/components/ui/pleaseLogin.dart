@@ -37,13 +37,10 @@ class _PleaseLoginState extends State<PleaseLogin> {
                         width: MyUtility(context).width / 5,
                         height: MyUtility(context).height / 4,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Color.fromARGB(255, 255, 51, 0), width: 4),
-                          shape: BoxShape.circle,
                           color: Colors.white,
                           image: DecorationImage(
                             image: AssetImage('images/lock.png'),
-                            fit: BoxFit.scaleDown,
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ),

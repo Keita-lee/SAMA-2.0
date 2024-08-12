@@ -165,7 +165,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
         userType: userType,
       ),
       Products(),
-      ProductListDisplay(),
+      ProductListDisplay(
+        userType: userType,
+      ),
       CommunitiesAdmin(),
       MemberCommunities(
         userType: userType,
