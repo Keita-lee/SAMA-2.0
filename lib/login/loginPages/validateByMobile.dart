@@ -92,17 +92,36 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MyUtility(context).width / 3,
+        width: MyUtility(context).width / 1.5,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Validate by Mobile",
-                style: TextStyle(fontSize: 30, color: Colors.black),
+                "Password Reset",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
+              ),
+              Text.rich(
+                TextSpan(
+                  text: "Enter ",
+                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  children: [
+                    TextSpan(
+                      text: "one time pin",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: " sent to your phone number ",
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
               /*     Text(
                 "An OTP has been sent to 0821234567.",
@@ -120,34 +139,81 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
                 style: TextStyle(fontSize: 17, color: Colors.black),
               ),*/
               SizedBox(
-                height: 30,
-              ),
-              TextFieldStyling(
-                hintText: 'Add OTP',
-                textfieldController: otp,
-              ),
-              /*  SizedBox(
                 height: 15,
               ),
-              Text(
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width * 0.3,
+                    child: TextFieldStyling(
+                      hintText: 'Add OTP',
+                      textfieldController: otp,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: StyleButton(
+                      description: "Validate",
+                      height: 55,
+                      width: 100,
+                      onTap: () {
+                        validate();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Did not get an OTP?',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 5,
+              ),
+              /*Text(
                 "Your OTP has expired, please request a new OTP",
                 style: TextStyle(fontSize: 17, color: Colors.black),
               ),*/
+
+              Text(
+                'Please allow a few minutes for this to be sent',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              Row(
+                children: [
+                  Text(
+                    'if no OTP received after a few minutes ',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      OpenContructionPopup();
+                    },
+                    child: Text(
+                      "click to retry",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: const Color.fromRGBO(0, 159, 158, 1)),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 15,
               ),
-              StyleButton(
-                description: "Validate",
-                height: 55,
-                width: 100,
+              GestureDetector(
                 onTap: () {
-                  validate();
+                  widget.changePage(0);
                 },
+                child: Text(
+                  "Return to login",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromRGBO(0, 159, 158, 1)),
+                ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              InkWell(
+              /*InkWell(
                 onTap: () {
                   OpenContructionPopup();
                 },
@@ -157,7 +223,7 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
                       fontSize: 16,
                       color: const Color.fromARGB(255, 8, 55, 145)),
                 ),
-              ),
+              ),*/
             ]));
   }
 }

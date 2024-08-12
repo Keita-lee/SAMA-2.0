@@ -113,31 +113,81 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 3,
+      width: MyUtility(context).width / 1.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Login",
-            style: TextStyle(fontSize: 30, color: Colors.black),
+            style: TextStyle(
+                fontSize: 22,
+                color: Color.fromRGBO(0, 159, 158, 1),
+                fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 30,
+            height: 10,
           ),
-          Text(
-            "Please enter your SAMA number or your Email address to continue",
-            style: TextStyle(fontSize: 15, color: Colors.black),
+          Text.rich(
+            TextSpan(
+              text: "Login using your ",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+              children: [
+                TextSpan(
+                  text: "SAMA number",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                TextSpan(
+                  text: " or ",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                TextSpan(
+                  text: "Email address",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+              ],
+            ),
           ),
+
           SizedBox(
-            height: 15,
+            height: 5,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: TextFieldStyling(
-              hintText:
-                  'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)',
-              textfieldController: email,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MyUtility(context).width * 0.3,
+                  child: TextFieldStyling(
+                    hintText:
+                        'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)',
+                    textfieldController: email,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: StyleButton(
+                    description: "PROCEED",
+                    height: 55,
+                    width: 100,
+                    onTap: () {
+                      if (email.text.contains("@")) {
+                        checkEmail();
+                      } else {
+                        checkMemberNumber();
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
           Text(
@@ -147,32 +197,13 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               color: Colors.red,
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          InkWell(
-            onTap: () {
-              widget.changePage(2);
-            },
-            onHover: (hovered) {
-              setState(() {
-                showForgotPasswordBorder = hovered;
-              });
-            },
-            child: Text(
-              "Forgot Password? Help me",
-              style: TextStyle(
-                  decoration: showForgotPasswordBorder == true
-                      ? TextDecoration.underline
-                      : TextDecoration.none,
-                  decorationColor: Color.fromARGB(255, 8, 55, 145),
-                  decorationThickness: 2,
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 8, 55, 145)),
-            ),
+          Text(
+            "Need help?",
+            style: TextStyle(
+                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 15,
+            height: 5,
           ),
           InkWell(
             onTap: () {
@@ -184,21 +215,46 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               });
             },
             child: Text(
-              "Forgot SAMA Number? Help me",
+              "Help me retrieve my SAMA Number",
               style: TextStyle(
-                  decoration: showForgotSamaBorder == true
-                      ? TextDecoration.underline
-                      : TextDecoration.none,
-                  decorationColor: Color.fromARGB(255, 8, 55, 145),
-                  decorationThickness: 2,
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 8, 55, 145)),
+                decoration: showForgotSamaBorder == true
+                    ? TextDecoration.underline
+                    : TextDecoration.none,
+                decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                decorationThickness: 2,
+                fontSize: 16,
+                color: const Color.fromRGBO(0, 159, 158, 1),
+              ),
+            ),
+          ),
+
+          InkWell(
+            onTap: () {
+              widget.changePage(2);
+            },
+            onHover: (hovered) {
+              setState(() {
+                showForgotPasswordBorder = hovered;
+              });
+            },
+            child: Text(
+              "Reset my password",
+              style: TextStyle(
+                decoration: showForgotPasswordBorder == true
+                    ? TextDecoration.underline
+                    : TextDecoration.none,
+                decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                decorationThickness: 2,
+                fontSize: 16,
+                color: const Color.fromRGBO(0, 159, 158, 1),
+              ),
             ),
           ),
           SizedBox(
             height: 15,
           ),
-          InkWell(
+
+          /*InkWell(
             onTap: () {
               widget.changePage(9);
             },
@@ -221,38 +277,57 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           SizedBox(
             height: 15,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(
-                            child: Material(
-                                child: PostLoginLandingPage(userId: "")),
-                          )));
-            },
-            onHover: (hovered) {
-              setState(() {
-                showNonMemberBorder = hovered;
-              });
-            },
-            child: Text(
-              "Non Member Login",
-              style: TextStyle(
-                  decoration: showNonMemberBorder == true
-                      ? TextDecoration.underline
-                      : TextDecoration.none,
-                  decorationColor: Color.fromARGB(255, 8, 55, 145),
-                  decorationThickness: 2,
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 8, 55, 145)),
-            ),
+          ), */
+          Row(
+            children: [
+              Text(
+                'Dont have a profile? ',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.normal),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(
+                                child: Material(
+                                    child: PostLoginLandingPage(userId: "")),
+                              )));
+                },
+                onHover: (hovered) {
+                  setState(() {
+                    showNonMemberBorder = hovered;
+                  });
+                },
+                child: Text(
+                  "Register here",
+                  style: TextStyle(
+                    decoration: showNonMemberBorder == true
+                        ? TextDecoration.underline
+                        : TextDecoration.none,
+                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                    decorationThickness: 2,
+                    fontSize: 16,
+                    color: const Color.fromRGBO(0, 159, 158, 1),
+                  ),
+                ),
+              ),
+              Text(
+                ' as a member or create a free account',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.normal),
+              ),
+            ],
           ),
           SizedBox(
             height: 15,
           ),
-          StyleButton(
+          /*StyleButton(
             description: "Continue",
             height: 55,
             width: 100,
@@ -260,20 +335,20 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               if (email.text.contains("@")) {
                 checkEmail();
               } else {
-                checkMemberNumber();
+                checkMemberNumber();s
               }
             },
-          ),
+          ),*/
           // SizedBox(
           //   height: 150,
           // ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "SAMA Beta Version 1.1.0",
               style: TextStyle(fontSize: 13, color: Colors.black),
             ),
-          ),
+          ),*/
         ],
       ),
     );

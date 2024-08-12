@@ -119,39 +119,61 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MyUtility(context).width / 3,
+        width: MyUtility(context).width / 1.5,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Validate by Email Otp",
-                style: TextStyle(fontSize: 30, color: Colors.black),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Please check your email for an OTP pin",
-                style: TextStyle(fontSize: 18, color: Colors.black),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              TextFieldStyling(
-                hintText: 'Add OTP',
-                textfieldController: otp,
+                "Password Reset",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 15,
               ),
-              StyleButton(
-                description: "Validate",
-                height: 55,
-                width: 100,
-                onTap: () {
-                  validate();
-                },
+              Text.rich(
+                TextSpan(
+                  text: "Enter ",
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  children: [
+                    TextSpan(
+                      text: "one time pin",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: " sent to your email address ",
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width * 0.3,
+                    child: TextFieldStyling(
+                      hintText: 'Add OTP',
+                      textfieldController: otp,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: StyleButton(
+                      description: "VALIDATE",
+                      height: 55,
+                      width: 100,
+                      onTap: () {
+                        validate();
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 15,
@@ -163,10 +185,49 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                   color: Colors.red,
                 ),
               ),
+              Text('Did not get an OTP?',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                'Please allow a few minutes for this to be sent',
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
+              Row(
+                children: [
+                  Text(
+                    'if no OTP received after a few minutes ',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      OpenContructionPopup();
+                    },
+                    child: Text(
+                      "click to retry",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: const Color.fromRGBO(0, 159, 158, 1)),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 15,
               ),
-              InkWell(
+              GestureDetector(
+                onTap: () {
+                  widget.changePage(0);
+                },
+                child: Text(
+                  "Return to login",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromRGBO(0, 159, 158, 1)),
+                ),
+              ),
+              /*InkWell(
                 onTap: () {
                   OpenContructionPopup();
                 },
@@ -176,7 +237,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                       fontSize: 16,
                       color: const Color.fromARGB(255, 8, 55, 145)),
                 ),
-              ),
+              ),*/
             ]));
   }
 }

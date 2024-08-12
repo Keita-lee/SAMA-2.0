@@ -106,35 +106,77 @@ class _GetUsernameState extends State<GetUsername> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 3,
+      width: MyUtility(context).width / 1.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Retrieve SAMA Number",
-            style: TextStyle(fontSize: 30, color: Colors.black),
+            style: TextStyle(
+                fontSize: 20,
+                color: Color.fromRGBO(0, 159, 158, 1),
+                fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 30,
+            height: 15,
           ),
-          Text(
+          /*Text(
             "Enter your ${retrieveType}",
             style: TextStyle(fontSize: 16, color: Colors.black),
+          ),*/
+          Text.rich(
+            TextSpan(
+              text: "Enter your ",
+              style: TextStyle(fontSize: 15, color: Colors.black),
+              children: [
+                TextSpan(
+                  text: "email address",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: " to receive a one time pin ",
+                  style: TextStyle(fontSize: 15, color: Colors.black),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 15,
           ),
-          TextFieldStyling(
-            hintText: 'Enter here',
-            textfieldController: email,
+          Row(
+            children: [
+              SizedBox(
+                width: MyUtility(context).width * 0.3,
+                child: TextFieldStyling(
+                  hintText: 'Enter here',
+                  textfieldController: email,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: StyleButton(
+                  description: "SEND OTP",
+                  height: 55,
+                  width: 130,
+                  onTap: () {
+                    if (_character == SingingCharacter.email) {
+                      checkEmail();
+                    } else {
+                      checkMobileNumber();
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 15,
           ),
           Text(
-            "Send OTP to:",
-            style: TextStyle(fontSize: 17, color: Colors.black),
+            "Send One Time Pin to:",
+            style: TextStyle(
+                fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 8,
@@ -154,8 +196,9 @@ class _GetUsernameState extends State<GetUsername> {
                 },
               ),
               Text(
-                "To my Email Address",
-                style: TextStyle(fontSize: 17, color: Colors.black),
+                "My email address",
+                style: TextStyle(
+                    fontSize: 15, color: Color.fromRGBO(0, 159, 158, 1)),
               ),
             ],
           ),
@@ -174,15 +217,16 @@ class _GetUsernameState extends State<GetUsername> {
                 },
               ),
               Text(
-                "To my mobile no",
-                style: TextStyle(fontSize: 17, color: Colors.black),
+                "My cell phone number",
+                style: TextStyle(
+                    fontSize: 15, color: Color.fromRGBO(0, 159, 158, 1)),
               ),
             ],
           ),
           SizedBox(
             height: 15,
           ),
-          StyleButton(
+          /*StyleButton(
             description: "Send Verification",
             height: 55,
             width: 145,
@@ -193,8 +237,8 @@ class _GetUsernameState extends State<GetUsername> {
                 checkMobileNumber();
               }
             },
-          ),
-          SizedBox(
+          ),*/
+          /*SizedBox(
             height: 15,
           ),
           InkWell(
@@ -209,15 +253,15 @@ class _GetUsernameState extends State<GetUsername> {
           ),
           SizedBox(
             height: 15,
-          ),
+          ),*/
           GestureDetector(
             onTap: () {
               widget.changePage(0);
             },
             child: Text(
-              "Back to Login",
+              "Return to Login",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+                  fontSize: 16, color: const Color.fromRGBO(0, 159, 158, 1)),
             ),
           ),
         ],

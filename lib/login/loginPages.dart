@@ -9,6 +9,7 @@ import 'package:sama/Login/loginPages/resetPassword.dart';
 import 'package:sama/Login/loginPages/sendUsername.dart';
 import 'package:sama/Login/loginPages/validateByEmail.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/login/loginPages/choosePassword.dart';
 import 'package:sama/login/loginPages/displayUsername.dart';
 import 'package:sama/login/loginPages/getUserName.dart';
@@ -63,6 +64,7 @@ class _LoginPagesState extends State<LoginPages> {
   }
 
   Widget build(BuildContext context) {
+    bool showRegisterBorder = false;
     // pages to go to
     var pages = [
       LoginWithEmail(changePage: changePage, getEmail: getEmail),
@@ -103,43 +105,125 @@ class _LoginPagesState extends State<LoginPages> {
     ];
 
     return Container(
-      color: const Color.fromARGB(255, 8, 55, 145),
+      color: Color.fromARGB(255, 224, 232, 247),
       width: MyUtility(context).width,
       height: MyUtility(context).height,
-      child: Transform.scale(
-        scale: 0.8,
-        child: Center(
-          child: Container(
+      child: Column(
+        children: [
+          SizedBox(
+            height: MyUtility(context).height * 0.02,
+          ),
+          SizedBox(
             width: MyUtility(context).width / 1.5,
-            height: MyUtility(context).height / 1.2,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     Image(
-                        width: MyUtility(context).width / 4,
-                        height: MyUtility(context).height / 3.5,
+                        width: MyUtility(context).width / 12,
+                        height: MyUtility(context).height / 10.0,
                         image: AssetImage('images/sama_logo.png')),
-                    SizedBox(
-                      width: MyUtility(context).width / 1.5 -
-                          MyUtility(context).width / 4,
-                      height: MyUtility(context).height / 1.2,
-                      child: Center(
-                        child: pages[pageIndex],
-                      ),
+                    Text(
+                      "SAMA Member Protal",
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
+                ),
+                InkWell(
+                  onTap: () {},
+                  onHover: (hovered) {
+                    setState(() {
+                      showRegisterBorder = hovered;
+                    });
+                  },
+                  child: Text(
+                    "Visit the website",
+                    style: TextStyle(
+                        decoration: showRegisterBorder == true
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        decorationThickness: 2,
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1)),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            width: MyUtility(context).width / 1.5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: StyleButton(
+                    description: "REGISTER",
+                    height: 50,
+                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                    width: 130,
+                    onTap: () {
+                      changePage(9);
+                    },
+                  ),
                 ),
               ],
             ),
           ),
-        ),
+          Column(
+            children: [
+              Container(
+                width: MyUtility(context).width / 1.5,
+                height: MyUtility(context).height / 1.8,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5),
+                  ), // Straighten the bottom corners
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MyUtility(context).width * 0.04,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MyUtility(context).width / 1.5 -
+                              MyUtility(context).width / 5,
+                          height: MyUtility(context).height / 1.8,
+                          child: Center(
+                            child: pages[pageIndex],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                ),
+                child: Image.asset(
+                  'images/bannerBackground.jpg',
+                  width: MyUtility(context).width / 1.5,
+                  height: 20,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

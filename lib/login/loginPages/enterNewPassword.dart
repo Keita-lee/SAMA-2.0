@@ -77,7 +77,6 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
 
 //If user exist send link
       if (users.docs.length >= 1) {
-      
         final userCredential = await _auth.signInWithEmailAndPassword(
             email: widget.email!, password: users.docs[0].get('password'));
 
@@ -104,38 +103,38 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 3,
+      width: MyUtility(context).width / 1.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Reset Password",
-            style: TextStyle(fontSize: 30, color: Colors.black),
+            "Create New Password",
+            style: TextStyle(
+                fontSize: 20,
+                color: Color.fromRGBO(0, 159, 158, 1),
+                fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 30,
+            height: 15,
           ),
           Text(
-            "Thank you, validation succesful.",
-            style: TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          SizedBox(
-            height: 30,
+            "Enter new password",
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           Text(
-            "Please enter your new password",
-            style: TextStyle(fontSize: 16, color: Colors.black),
+            "Your passsword should have a minimum of 8 characters, 1 uppercase letter and 1 special character",
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           SizedBox(
-            height: 30,
+            height: 15,
           ),
           /* TextFieldStyling(
             hintText: 'Password',
             textfieldController: password,
           ),*/
           Container(
-            width: MyUtility(context).width,
+            width: MyUtility(context).width * 0.3,
             height: 45,
             decoration: BoxDecoration(
                 color: Color.fromARGB(255, 255, 255, 255),
@@ -168,23 +167,33 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
             height: 15,
           ),
           SizedBox(
-            height: 15,
-          ),
-          TextFieldStyling(
-            hintText: 'Confirm Password',
-            textfieldController: passwordCheck,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          PasswordStrengthChecker(
-            strength: passNotifier,
+            width: MyUtility(context).width * 0.3,
+            child: PasswordStrengthChecker(
+              strength: passNotifier,
+            ),
           ),
           SizedBox(
-            height: 50,
+            height: 15,
+          ),
+          Text(
+            "Confirm password",
+            style: TextStyle(fontSize: 15, color: Colors.black),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: MyUtility(context).width * 0.3,
+            child: TextFieldStyling(
+              hintText: 'Confirm Password',
+              textfieldController: passwordCheck,
+            ),
+          ),
+          SizedBox(
+            height: 20,
           ),
           StyleButton(
-            description: "Reset",
+            description: "RESET",
             height: 55,
             width: 85,
             onTap: () {

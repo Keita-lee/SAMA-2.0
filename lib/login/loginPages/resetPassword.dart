@@ -82,35 +82,70 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 3,
+      width: MyUtility(context).width / 1.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Reset Password",
-            style: TextStyle(fontSize: 30, color: Colors.black),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            "Enter your SAMA Number",
-            style: TextStyle(fontSize: 16, color: Colors.black),
+            "Password Reset",
+            style: TextStyle(
+                fontSize: 22,
+                color: Color.fromRGBO(0, 159, 158, 1),
+                fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 15,
           ),
-          TextFieldStyling(
-            hintText: 'Enter here',
-            textfieldController: email,
+          Text.rich(
+            TextSpan(
+              text: "Enter your ",
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              children: [
+                TextSpan(
+                  text: "SAMA number",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                TextSpan(
+                  text: " to receive a one time pin ",
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: MyUtility(context).width * 0.3,
+                child: TextFieldStyling(
+                  hintText: 'Enter here',
+                  textfieldController: email,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: StyleButton(
+                  description: "SEND OTP",
+                  height: 55,
+                  width: 145,
+                  onTap: () {
+                    checkEmail();
+                  },
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 15,
           ),
           Text(
-            "Send OTP to:",
-            style: TextStyle(fontSize: 17, color: Colors.black),
+            "Send One Time Pin To:",
+            style: TextStyle(
+                fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 8,
@@ -118,7 +153,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           Row(
             children: [
               Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
+                activeColor: Color.fromRGBO(0, 159, 158, 1),
                 value: SingingCharacter.email,
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
@@ -129,14 +164,15 @@ class _ResetPasswordState extends State<ResetPassword> {
               ),
               Text(
                 "To my Email Address",
-                style: TextStyle(fontSize: 17, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromRGBO(0, 159, 158, 1)),
               ),
             ],
           ),
           Row(
             children: [
               Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
+                activeColor: Color.fromRGBO(0, 159, 158, 1),
                 value: SingingCharacter.mobile,
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
@@ -147,45 +183,61 @@ class _ResetPasswordState extends State<ResetPassword> {
               ),
               Text(
                 "To my mobile no",
-                style: TextStyle(fontSize: 17, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromRGBO(0, 159, 158, 1)),
               ),
             ],
           ),
           SizedBox(
             height: 15,
           ),
-          StyleButton(
+          /*StyleButton(
             description: "Reset Password",
             height: 55,
             width: 145,
             onTap: () {
               checkEmail();
             },
+          ),*/
+          Text(
+            "Need help?",
+            style: TextStyle(
+                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 15,
+            height: 5,
           ),
           InkWell(
             onTap: () {
               OpenContructionPopup();
             },
             child: Text(
-              "Need help? CONTACT SAMA",
+              "Help me retrieve my SAMA number",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+                fontSize: 16,
+                color: const Color.fromRGBO(0, 159, 158, 1),
+                decoration: TextDecoration.underline,
+                decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                decorationThickness: 2.0,
+              ),
             ),
           ),
           SizedBox(
             height: 15,
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               widget.changePage(0);
             },
             child: Text(
-              "Back to Login",
+              "Return to Login",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromARGB(255, 8, 55, 145)),
+                fontSize: 16,
+                color: const Color.fromRGBO(0, 159, 158, 1),
+                decoration: TextDecoration.underline,
+                decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                decorationThickness: 2.0,
+              ),
             ),
           ),
         ],
