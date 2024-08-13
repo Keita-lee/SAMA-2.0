@@ -223,352 +223,357 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       }
     }
 
-    return Container(
-      color: Colors.white,
-      width: MyUtility(context).width * 0.50,
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 5, bottom: 25),
-                child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, top: 25),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color.fromARGB(255, 255, 255, 255),
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: Color.fromARGB(255, 169, 170, 170),
+            )),
+        width: MyUtility(context).width * 0.50,
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Spacer(),
-                    StyleButton(
-                        description: "View Events",
-                        height: 55,
-                        width: 125,
-                        onTap: () {
-                          widget.closeDialog();
-                        }),
-                  ],
-                ),
-              ),
-              Text(
-                'Events Details',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Visibility(
-                        visible: eventsImage == "" ? true : false,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("images/imageIcon.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            width: MyUtility(context).width * 0.15,
-                            height: MyUtility(context).height * 0.15,
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: eventsImage == "" ? false : true,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: ImageNetwork(
-                              image: eventsImage,
-                              width: MyUtility(context).width * 0.15,
-                              height: MyUtility(context).height * 0.15,
-                              fitWeb: BoxFitWeb.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  SizedBox(
-                    width: MyUtility(context).width * 0.25,
-                    child: Text(
-                      _title.text,
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Start Date: ' + _date.text,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '   ',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'End Date: ' + endDate.text,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Time ' + _times.text,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              /*     Container(
-                width: MyUtility(context).width * 0.75,
-                height: MyUtility(context).height * 0.13,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(42, 81, 125, 162)),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                            //width: MyUtility(context).width * 0.15,
-                            child: EventText(
-                                title: _title.text,
-                                date: _date.text,
-                                endDate: endDate.text,
-                                timeFrom: _times.text,
-                                timeTill: '')),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-          */
-              Column(
-                //mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: QuillEditor.basic(
-                      configurations: QuillEditorConfigurations(
-                        controller: quillController,
-                        sharedConfigurations: const QuillSharedConfigurations(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Member Pricing:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      _memberPricing.text,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Event Provider:',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            _eventProvider.text,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.normal,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'CPD Accreditation:',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            _CPDAccreditation.text,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xFF3D3D3D),
-                              fontWeight: FontWeight.normal,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                width: MyUtility(context).width * 0.75,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 300,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'How many people:',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xFF3D3D3D),
-                                  fontWeight: FontWeight.bold,
+                        Visibility(
+                          visible: eventsImage == "" ? true : false,
+                          child: ClipRRect(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("images/imageIcon.png"),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              SizedBox(width: 10),
-                              DropdownButton<int>(
-                                value: _selectedNumber,
-                                items: List.generate(10, (index) {
-                                  return DropdownMenuItem<int>(
-                                    value: index + 1,
-                                    child: Text((index + 1).toString()),
-                                  );
-                                }),
-                                onChanged: (int? newValue) {
-                                  setState(() {
-                                    _selectedNumber = newValue!;
-                                  });
-                                },
-                              ),
-                            ],
+                              width: 185,
+                              height: 150,
+                            ),
                           ),
-                          Visibility(
-                            visible: checkIfMadeBooking ? true : false,
+                        ),
+                        Visibility(
+                          visible: eventsImage == "" ? false : true,
+                          child: ClipRRect(
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: ImageNetwork(
+                                image: eventsImage,
+                                width: 210,
+                                height: 160,
+                                fitWeb: BoxFitWeb.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 25,
+                    ),
+                    SizedBox(
+                      height: 500,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MyUtility(context).width * 0.25,
                             child: Text(
-                              'Booking amount made - ${attendeesAlreadyAdded}',
+                              _title.text,
                               style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xFF3D3D3D),
+                                fontSize: 18,
+                                color: Color.fromRGBO(0, 159, 158, 1),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'From: ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF3D3D3D),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: _date.text,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF3D3D3D),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '   to   ' + endDate.text,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF3D3D3D),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '\nTime: ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF3D3D3D),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: _times.text,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF3D3D3D),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.50 - 310,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: QuillEditor.basic(
+                                configurations: QuillEditorConfigurations(
+                                  controller: quillController,
+                                  sharedConfigurations:
+                                      const QuillSharedConfigurations(),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Spacer(),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Event Organizer: ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: _eventProvider.text,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '\nCPD Accreditation: ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: _CPDAccreditation.text,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF3D3D3D),
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 35,
+                          ),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.50 - 310,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 300,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Number of Attendees:',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xFF3D3D3D),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Container(
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: const Color.fromARGB(
+                                                        176, 158, 158, 158))),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child:
+                                                  DropdownButtonHideUnderline(
+                                                child: DropdownButton<int>(
+                                                  value: _selectedNumber,
+                                                  elevation: 0,
+                                                  items: List.generate(10,
+                                                      (index) {
+                                                    return DropdownMenuItem<
+                                                        int>(
+                                                      value: index + 1,
+                                                      child: Text((index + 1)
+                                                          .toString()),
+                                                    );
+                                                  }),
+                                                  onChanged: (int? newValue) {
+                                                    setState(() {
+                                                      _selectedNumber =
+                                                          newValue!;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Visibility(
+                                        visible:
+                                            checkIfMadeBooking ? true : false,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 5),
+                                            child: Text(
+                                              'Booking amount made  -  ${attendeesAlreadyAdded}',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF3D3D3D),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                Visibility(
+                                  visible: checkIfMadeBooking ? true : false,
+                                  child: StyleButton(
+                                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                                    description: 'Update Booking',
+                                    fontSize: 13,
+                                    height: 40,
+                                    width: 110,
+                                    onTap: () {
+                                      updateBooking();
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Visibility(
+                                  visible: checkIfMadeBooking ? false : true,
+                                  child: StyleButton(
+                                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                                    description: 'Book Now',
+                                    height: 40,
+                                    fontSize: 13,
+                                    width: 110,
+                                    onTap: () {
+                                      confirmBooking();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
-                      ),
-                    ),
-                    Spacer(),
-                    Visibility(
-                      visible: checkIfMadeBooking ? true : false,
-                      child: StyleButton(
-                        description: 'Update Booking',
-                        height: 55,
-                        width: 150,
-                        onTap: () {
-                          updateBooking();
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Visibility(
-                      visible: checkIfMadeBooking ? false : true,
-                      child: StyleButton(
-                        description: 'Confirm Booking',
-                        height: 55,
-                        width: 150,
-                        onTap: () {
-                          confirmBooking();
-                        },
                       ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-            ],
+
+                /*     Container(
+                  width: MyUtility(context).width * 0.75,
+                  height: MyUtility(context).height * 0.13,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(42, 81, 125, 162)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                              //width: MyUtility(context).width * 0.15,
+                              child: EventText(
+                                  title: _title.text,
+                                  date: _date.text,
+                                  endDate: endDate.text,
+                                  timeFrom: _times.text,
+                                  timeTill: '')),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+            */
+                Column(
+                  //mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /*Text(
+                      'Member Pricing:',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        _memberPricing.text,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF3D3D3D),
+                          fontWeight: FontWeight.normal,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),*/
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

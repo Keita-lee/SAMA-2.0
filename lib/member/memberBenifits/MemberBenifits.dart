@@ -9,6 +9,8 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/memberBenifits/memberDetailsDialog.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
+import '../../components/banner/samaBlueBanner.dart';
+
 class MemberBenifits extends StatefulWidget {
   const MemberBenifits({super.key});
 
@@ -19,6 +21,10 @@ class MemberBenifits extends StatefulWidget {
 class _MemberBenifitsState extends State<MemberBenifits> {
   final ScrollController _scrollController = ScrollController();
   String userType = "";
+  var pageIndex = 0;
+  var benefitsId = '';
+
+  var logoImage = '';
 
   getUserData() async {
     final data = await FirebaseFirestore.instance
@@ -31,6 +37,14 @@ class _MemberBenifitsState extends State<MemberBenifits> {
         userType = data.get('userType');
       });
     }
+  }
+
+  opMemberDetails(id, image) {
+    setState(() {
+      logoImage = image;
+      benefitsId = id;
+      pageIndex = 1;
+    });
   }
 
   BuildContext? dialogContext;
@@ -66,107 +80,121 @@ class _MemberBenifitsState extends State<MemberBenifits> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'SAMA Member Benefits',
-            style: TextStyle(
-                fontSize: 32,
-                color: Color(0xFF3D3D3D),
-                fontWeight: FontWeight.normal),
-          ),
-          SizedBox(
-            height: MyUtility(context).height * 0.05,
-          ),
-          Visibility(
-            visible: userType == "Admin" ? true : false,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: MyUtility(context).width -
-                        MyUtility(context).width / 3.7,
-                  ),
-                  StyleButton(
-                      description: "Add Benefit",
-                      height: 55,
-                      width: 125,
-                      onTap: () {
-                        openMemberDialog("");
-                      })
-                ],
+    return Column(
+      children: [
+        SamaBlueBanner(
+          pageName: 'MEMBER BENEFITS',
+        ),
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 25,
               ),
-            ),
-          ),
-          StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('memberBenefits')
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: snapshot error');
-                }
-                if (!snapshot.hasData) {
-                  return const Text('Loading...');
-                }
-
-                final List<DocumentSnapshot> documents = snapshot.data!.docs;
-                if (documents.isEmpty) {
-                  return Center(child: Text('No class yet'));
-                }
-
-                return Container(
-                  width:
-                      MyUtility(context).width - MyUtility(context).width / 4,
-                  height: MyUtility(context).height / 1.4,
-                  //color: Colors.transparent,
-                  child: DraggableScrollbar.rrect(
-                    alwaysVisibleScrollThumb: true,
-                    backgroundColor: Color.fromARGB(255, 8, 55, 145),
-                    controller: _scrollController,
-                    padding: EdgeInsets.zero,
-                    child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: documents.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final DocumentSnapshot document = documents[index];
-
-                          return InkWell(
-                            onTap: () {
-                              openMemberDetailsDialog(
-                                  document['id'], document['logo']);
-                            },
-                            child: CompanyContainer(
-                              userType: userType,
-                              image: document['logo'],
-                              companyname: document['companyName'],
-                              discription: document['companyDescription'],
-                              editCompanyDetails: () {
-                                openMemberDialog(document['id']);
-                              },
-                              openMemberDetails: () {
-                                openMemberDetailsDialog(
-                                    document['id'], document['logo']);
-                              },
-                            ),
-                          );
-                        }),
+              Visibility(
+                visible: userType == "Admin" ? true : false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: MyUtility(context).width -
+                            MyUtility(context).width / 3.7,
+                      ),
+                      StyleButton(
+                          description: "Add Benefit",
+                          height: 55,
+                          width: 125,
+                          onTap: () {
+                            openMemberDialog("");
+                          })
+                    ],
                   ),
-                );
-              })
+                ),
+              ),
+              Visibility(
+                visible: pageIndex == 0,
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('memberBenefits')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: snapshot error');
+                      }
+                      if (!snapshot.hasData) {
+                        return const Text('Loading...');
+                      }
 
-          /*  CompanyContainer(
-              image: 'images/company.jpg',
-              companyname: 'Company name',
-              discription: 'Description of company')*/
-        ],
-      ),
+                      final List<DocumentSnapshot> documents =
+                          snapshot.data!.docs;
+                      if (documents.isEmpty) {
+                        return Center(child: Text('No class yet'));
+                      }
+
+                      return Container(
+                        width: MyUtility(context).width * 0.55,
+                        height: MyUtility(context).height / 1.4,
+                        //color: Colors.transparent,
+                        /* child: DraggableScrollbar.rrect(
+                          alwaysVisibleScrollThumb: true,
+                          backgroundColor: Color.fromARGB(255, 8, 55, 145),
+                          controller: _scrollController,
+                          padding: EdgeInsets.zero,*/
+                        child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: documents.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final DocumentSnapshot document =
+                                  documents[index];
+
+                              return InkWell(
+                                onTap: () {
+                                  opMemberDetails(
+                                      document['id'], document['logo']);
+                                  /*openMemberDetailsDialog(
+                                      document['id'], document['logo']);*/
+                                },
+                                child: CompanyContainer(
+                                  userType: userType,
+                                  image: document['logo'],
+                                  companyname: document['companyName'],
+                                  discription: document['companyDescription'],
+                                  editCompanyDetails: () {
+                                    openMemberDialog(document['id']);
+                                  },
+                                  openMemberDetails: () {
+                                    opMemberDetails(
+                                        document['id'], document['logo']);
+                                    /*openMemberDetailsDialog(
+                                        document['id'], document['logo']);*/
+                                  },
+                                ),
+                              );
+                            }),
+                      );
+                    }),
+              ),
+              Visibility(
+                  visible: pageIndex == 1,
+                  child: MemberDetailsDialog(
+                      id: benefitsId,
+                      userType: userType,
+                      logo: logoImage,
+                      closeDialog: () => Navigator.pop(dialogContext!)))
+
+              /*  CompanyContainer(
+                  image: 'images/company.jpg',
+                  companyname: 'Company name',
+                  discription: 'Description of company')*/
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

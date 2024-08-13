@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/productDisplay/cart/cartPage.dart';
 import 'package:sama/member/productDisplay/productFullViewCoding.dart';
@@ -135,27 +136,23 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: MyUtility(context).width * 0.75,
+        width: MyUtility(context).width - MyUtility(context).width / 6.5,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SamaBlueBanner(pageName: 'E - STORE'),
               SizedBox(
                 height: MyUtility(context).height * 0.08,
               ),
               Visibility(
                 visible: pageIndex == 0 ? true : false,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       children: [
-                        Text(
-                          'E - Store',
-                          style: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold),
-                        ),
                         Spacer(),
                         Visibility(
                           visible: widget.userType != "NonMember",

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsDialog.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/components/styleButton.dart';
 
 class MemberDetailsDialog extends StatefulWidget {
   String? id;
@@ -62,7 +63,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
     }
   }
 
-  BuildContext? dialogContext;
+  /*BuildContext? dialogContext;
 
   //Dialog for benifits
   Future openMemberDialog(benifitId) => showDialog(
@@ -70,10 +71,12 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
       builder: (context) {
         dialogContext = context;
         return Dialog(
-            child: MemberBenifitsDialogState(
-                id: benifitId,
-                closeDialog: () => Navigator.pop(dialogContext!)));
-      });
+          child: MemberBenifitsDialogState(
+            id: benifitId,
+            closeDialog: () => Navigator.pop(dialogContext!),
+          ),
+        );
+      });*/
   @override
   void initState() {
     getCompanyData();
@@ -82,327 +85,396 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width / 2.5 - 15,
-      height: MyUtility(context).height / 1.4,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return SizedBox(
+      width: MyUtility(context).width * 0.60,
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      widget.closeDialog!();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        "X",
-                        style: TextStyle(fontSize: 30, color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              /**/ ImageNetwork(
-                image: widget.logo!,
-                width: MyUtility(context).width / 2.5 - 15,
-                height: 350,
-                fitWeb: BoxFitWeb.contain,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Color.fromARGB(255, 8, 55, 145),
-                //   height: 80,
-                width: MyUtility(context).width / 2.5 - 45,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        companyName,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          height: 0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        companyDescription,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "We are able to offer SAMA members the following",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                companyBenifits,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 19, 19, 19),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Contact",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 55, 145),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: phoneNumber == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/phone.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      phoneNumber,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: email == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/email.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      email,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: web == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/web.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      web,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: address == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/address.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      address,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: facebook == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/facebook.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      facebook,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: twitter == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/twitter3.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      twitter,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: linkedIn == "" ? false : true,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'images/linkedin_icon_135436.svg',
-                      width: 35,
-                      height: 35,
-                      colorFilter: ColorFilter.mode(
-                          Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      linkedIn,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
+              Spacer(),
+              StyleButton(
+                  description: 'Back',
+                  height: 40,
+                  width: 60,
+                  fontSize: 13,
+                  buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                  onTap: (){
+                    //ADD LOGIC
+                  }),
             ],
           ),
-        ),
+          const SizedBox(height: 25,),
+          Container(
+            width: MyUtility(context).width * 0.60,
+            //height: MyUtility(context).height / 1.4,
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  color: Color.fromARGB(255, 173, 173, 173),
+                )),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ImageNetwork(
+                          image: widget.logo!,
+                          width: 100,
+                          height: 100,
+                          fitWeb: BoxFitWeb.contain,
+                        ),
+                        SizedBox(
+                          width: 25,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              companyName,
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 159, 158, 1),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                height: 1,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            SizedBox(
+                              width: MyUtility(context).width * 0.60 - 325,
+                              child: Text(
+                                companyDescription,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              companyBenifits,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 19, 19, 19),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                height: 1,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Visibility(
+                              visible: phoneNumber == "" ? false : true,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Phone:    ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  Text(
+                                    phoneNumber,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w200,
+                                      height: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Visibility(
+                              visible: email == "" ? false : true,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Email:     ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  Text(
+                                    email,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor:
+                                          Color.fromRGBO(0, 159, 158, 1),
+                                      color: Color.fromRGBO(0, 159, 158, 1),
+                                      fontWeight: FontWeight.w200,
+                                      height: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Visibility(
+                              visible: web == "" ? false : true,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Web:       ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  Text(
+                                    web,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor:
+                                          Color.fromRGBO(0, 159, 158, 1),
+                                      color: Color.fromRGBO(0, 159, 158, 1),
+                                      fontWeight: FontWeight.w200,
+                                      height: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Visibility(
+                              visible: address == "" ? false : true,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Address: ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  Text(
+                                    address,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w200,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Wrap(
+                              children: [
+                                Visibility(
+                                  visible: facebook == "" ? false : true,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'images/facebook.svg',
+                                        width: 25,
+                                        height: 25,
+                                        colorFilter: ColorFilter.mode(
+                                            Color.fromRGBO(0, 159, 158, 1),
+                                            BlendMode.srcIn),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      /*Text(
+                                        facebook,
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(0, 159, 158, 1),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w200,
+                                          height: 1,
+                                        ),
+                                      ),*/
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 25,
+                                ),
+                                Visibility(
+                                  visible: twitter == "" ? false : true,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'images/twitter3.svg',
+                                        width: 25,
+                                        height: 25,
+                                        colorFilter: ColorFilter.mode(
+                                            Color.fromRGBO(0, 159, 158, 1),
+                                            BlendMode.srcIn),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      /*Text(
+                                        twitter,
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(0, 159, 158, 1),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w200,
+                                          height: 1,
+                                        ),
+                                      ),*/
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 25,
+                                ),
+                                Visibility(
+                                  visible: linkedIn == "" ? false : true,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'images/linkedin_icon_135436.svg',
+                                        width: 25,
+                                        height: 25,
+                                        colorFilter: ColorFilter.mode(
+                                            Color.fromRGBO(0, 159, 158, 1),
+                                            BlendMode.srcIn),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      /*Text(
+                                        linkedIn,
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(0, 159, 158, 1),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w200,
+                                          height: 1,
+                                        ),
+                                      ),*/
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    /**/
+
+                    /* Visibility(
+                      visible: phoneNumber == "" ? false : true,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/phone.svg',
+                            width: 35,
+                            height: 35,
+                            colorFilter: ColorFilter.mode(
+                                Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Visibility(
+                      visible: email == "" ? false : true,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/email.svg',
+                            width: 35,
+                            height: 35,
+                            colorFilter: ColorFilter.mode(
+                                Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Visibility(
+                      visible: web == "" ? false : true,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/web.svg',
+                            width: 35,
+                            height: 35,
+                            colorFilter: ColorFilter.mode(
+                                Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Visibility(
+                      visible: address == "" ? false : true,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/address.svg',
+                            width: 35,
+                            height: 35,
+                            colorFilter: ColorFilter.mode(
+                                Color.fromARGB(255, 8, 55, 145), BlendMode.srcIn),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          
+                        ],
+                      ),
+                    ),*/
+
+                    SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

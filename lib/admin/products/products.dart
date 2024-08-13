@@ -8,6 +8,7 @@ import 'package:sama/admin/products/UI/productListItem.dart';
 import 'package:sama/admin/products/UI/productListTop.dart';
 import 'package:sama/admin/products/productAdd&EditPages/productAdd.dart';
 import 'package:sama/admin/products/productAdd&EditPages/productEditPage.dart';
+import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -38,6 +39,8 @@ class _ProductsState extends State<Products> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SamaBlueBanner(pageName: 'PRODUCTS'),
+        SizedBox(height: 25,),
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: Center(

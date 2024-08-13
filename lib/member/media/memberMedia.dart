@@ -129,7 +129,7 @@ class _MemberMediaState extends State<MemberMedia> {
                 }
 
                 return Container(
-                  color: const Color.fromARGB(137, 255, 193, 7),
+                  //color: const Color.fromARGB(137, 255, 193, 7),
                   width: MyUtility(context).width < 1680 ? 900 : 1200,
                   //width: MyUtility(context).width / 1.6,
                    /* width: MyUtility(context).width -

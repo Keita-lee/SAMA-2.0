@@ -7,6 +7,8 @@ import 'package:image_network/image_network.dart';
 import 'package:sama/admin/products/UI/myProductButtons.dart';
 import 'package:sama/components/myutility.dart';
 
+import '../../../components/styleButton.dart';
+
 class ProductDisplayItem extends StatefulWidget {
   final String productName;
   final String productDescription;
@@ -54,7 +56,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
           border: Border.all(
               color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +70,8 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                width: MyUtility(context).width / 7,
-                height: 200,
+                width: 180,
+                height: 180,
               ),
             ),
             Visibility(
@@ -77,17 +79,17 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               child: ImageNetwork(
                 fitWeb: BoxFitWeb.cover,
                 image: widget.productImage,
-                width: MyUtility(context).width / 7,
-                height: 200,
+                width: 180,
+                height: 180,
               ),
             ),
             const SizedBox(
               width: 15,
             ),
             Container(
-              //color: Colors.amber,
-              width: MyUtility(context).width * 0.50,
-              height: 200,
+              
+              width: MyUtility(context).width * 0.70 - 280,
+              height: 180,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +97,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                   Text(
                     widget.productName,
                     style: const TextStyle(
-                      fontSize: 28,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -136,36 +138,38 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                           Text(
                             'R ${widget.price}',
                             style: const TextStyle(
-                                fontSize: 25, color: Colors.teal),
+                                fontSize: 20, color: Colors.teal),
                           ),
                           Text(
                             widget.priceInfo,
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 13,
                             ),
                           ),
                         ],
                       ),
                       Spacer(),
-                      MyProductButtons(
-                        buttonText: 'Read More',
-                        buttonColor: Color.fromARGB(255, 212, 210, 210),
-                        borderColor: Color.fromARGB(255, 212, 210, 210),
-                        textColor: Colors.black,
-                        onTap: () {
-                          widget.readMore();
-                        },
-                      ),
+                      StyleButton(
+                          fontSize: 13,
+                          description: 'Read More',
+                          height: 40,
+                          width: 110,
+                          buttonTextColor: Colors.black,
+                          buttonColor: Color.fromARGB(255, 212, 210, 210),
+                          onTap: () {
+                            widget.readMore();
+                          }),
                       const SizedBox(
                         width: 15,
                       ),
                       Visibility(
                         visible: isDigital,
-                        child: MyProductButtons(
-                          buttonText: 'Buy Now',
+                        child: StyleButton(
+                          fontSize: 13,
                           buttonColor: Colors.teal,
-                          borderColor: Colors.teal,
-                          textColor: Colors.white,
+                          description: 'Buy Now',
+                          height: 40,
+                          width: 100,
                           onTap: () {
                             widget.buyProduct();
                           },

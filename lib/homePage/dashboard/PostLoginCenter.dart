@@ -27,7 +27,10 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
       children: [
         Visibility(
           visible: widget.userType == "NonMember",
-          child: NonMemberDashboard(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 50, left: 50),
+            child: NonMemberDashboard(),
+          ),
         ),
         /*    Container(
           width: MyUtility(context).width / 1.3,
@@ -585,7 +588,10 @@ class _PostLoginCenterState extends State<PostLoginCenter> {
         Visibility(
             visible: widget.userType != "NonMember",
             child: Row(children: [
-              SamaNotificationsBox(userNotification: widget.userNotification),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: SamaNotificationsBox(userNotification: widget.userNotification),
+              ),
               /* Container(
               width: MyUtility(context).width / 5.5,
               height: MyUtility(context).height * 0.6,

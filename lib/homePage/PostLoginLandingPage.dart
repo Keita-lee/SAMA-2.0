@@ -14,8 +14,10 @@ import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/products/products.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/homePage/dashboard/nonMemberDashboard.dart';
 import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
+import 'package:sama/homePage/dashboard/ui/onHoverButtons.dart';
 import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
@@ -349,6 +351,36 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                     userType != "NonMember",
                                 child: SamaTopTabBar()),
                             Spacer(),
+                            Visibility(
+                                visible: userType == 'NonMember',
+                                child: Row(
+                                  children: [
+                                    OnHoverButtons(
+                                        onTap: () {
+                                          //ADD LOGIC
+                                        },
+                                        height: 35,
+                                        width: 60,
+                                        baseColor:
+                                            Color.fromRGBO(237, 157, 4, 1),
+                                        hoverColor:
+                                            Color.fromRGBO(19, 43, 81, 1),
+                                        description: 'LOGIN'),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    OnHoverButtons(
+                                        onTap: () {
+                                          //ADD LOGIC
+                                        },
+                                        height: 35,
+                                        width: 60,
+                                        baseColor: Color(0xFF174486),
+                                        hoverColor:
+                                            Color.fromRGBO(19, 43, 81, 1),
+                                        description: 'REGISTER')
+                                  ],
+                                )),
                             SizedBox(width: 20),
                             Visibility(
                               visible: userType != 'Admin' &&
@@ -468,7 +500,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                           PostLoginLeft(
                               changePage: changePage, menuSize: menuSize),
                           Container(
-                            
                             child: pages[pageIndex],
                           )
                         ],

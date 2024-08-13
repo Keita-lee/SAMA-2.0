@@ -99,7 +99,7 @@ class _MemberContainerState extends State<MemberContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.22,
+      //width: MyUtility(context).width * 0.22,
       decoration: BoxDecoration(
           color: Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(10.0),
@@ -184,8 +184,7 @@ class _MemberContainerState extends State<MemberContainer> {
               width: 15,
             ),
             Container(
-              color: Colors.amber,
-              width: MyUtility(context).width * 0.58,
+              width: MyUtility(context).width * 0.60 - 295,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,10 +223,10 @@ class _MemberContainerState extends State<MemberContainer> {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  Row(crossAxisAlignment: CrossAxisAlignment.end,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        color: Colors.black,
                         height: 60,
                         width: 20,
                       ),
@@ -236,11 +235,11 @@ class _MemberContainerState extends State<MemberContainer> {
                           description: "View Details",
                           fontSize: 13,
                           height: 38,
-                          width: 60,
+                          buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                          width: 50,
                           onTap: () {
                             widget.onPressed();
                           }),
-                      
                     ],
                   )
                 ],

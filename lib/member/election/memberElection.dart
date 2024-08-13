@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/member/election/electionRounds/acceptanceRound.dart';
@@ -302,7 +303,19 @@ class _MemberElectionState extends State<MemberElection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-              visible: widget.userType == "NonMember", child: PleaseLogin(pleaseLoginText: 'Access to this content is restricted. Please log in to view or sign up for membership today.',)),
+              visible: widget.userType == "NonMember",
+              child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SamaBlueBanner(pageName: 'BRANCH VOTING'),
+                  Padding(
+                    padding: const EdgeInsets.only( top: 25),
+                    child: PleaseLogin(
+                      pleaseLoginText:
+                          'Access to this content is restricted. Please log in to view or sign up for membership today.',
+                    ),
+                  ),
+                ],
+              )),
           Visibility(
             visible: widget.userType != "NonMember",
             child: Column(children: [

@@ -6,6 +6,7 @@ import 'package:sama/admin/ElectionsAdmin/nominations/ui/branchVotingContainer.d
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/nominationForm.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/previewElection/sections/previewNominations.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui2/overView/overViewElection.dart';
+import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
 
 import 'ui2/manageElection.dart';
@@ -74,6 +75,7 @@ class _NominationSetupState extends State<NominationSetup> {
   Widget build(BuildContext context) {
     return Container(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SamaBlueBanner(pageName: 'ELECTIONS'),
       //Conditional Container
       /* Container(
         height: 180,

@@ -44,96 +44,100 @@ class _MemberEventsState extends State<MemberEvents> {
         SamaBlueBanner(pageName: 'EVENTS'),
         Visibility(
           visible: pageIndex == 0 ? true : false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Events',
-                    style: TextStyle(
-                      fontSize: 36,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.normal,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 50, top: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /*Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Events',
+                      style: TextStyle(
+                        fontSize: 36,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Events module v1.1',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.normal,
+                    SizedBox(width: 10),
+                    Text(
+                      'Events module v1.1',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text(
-                  'Upcoming',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal,
-                  ),
+                  ],
                 ),
-              ),*/
-              StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('events').snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Error: snapshot error');
-                  }
-                  if (!snapshot.hasData) {
-                    return const Text('Loading...');
-                  }
-
-                  final List<DocumentSnapshot> documents = snapshot.data!.docs;
-                  if (documents.isEmpty) {
-                    return Center(child: Text('No Media & Webinars yet'));
-                  }
-
-                  return Container(
-                    width: MyUtility(context).width -
-                        (MyUtility(context).width * 0.25),
-                    height: 700,
-                    child: ListView.builder(
-                      itemCount: documents.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final DocumentSnapshot document = documents[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: MyUtility(context).width * 0.9,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                border: Border.all(
-                                    color: Color.fromARGB(255, 212, 210, 210),
-                                    width: 1.5)),
-                            child: MemberContainer(
-                              eventImage: document['eventsImage']!,
-                              eventName: document['title']!,
-                              location: document['_location']!,
-                              dateFrom: document['date']!,
-                              dateTill: document['date']!,
-                              onPressed: () {
-                                openEventDetails(document['id']);
-                                //  openMemberEventsDialog(document['id']);
-                              },
-                            ),
-                          ),
-                        );
-                      },
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Text(
+                    'Upcoming',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.normal,
                     ),
-                  );
-                },
-              ),
-            ],
+                  ),
+                ),*/
+                StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection('events').snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error: snapshot error');
+                    }
+                    if (!snapshot.hasData) {
+                      return const Text('Loading...');
+                    }
+            
+                    final List<DocumentSnapshot> documents = snapshot.data!.docs;
+                    if (documents.isEmpty) {
+                      return Center(child: Text('No Media & Webinars yet'));
+                    }
+            
+                    return Container(
+                      
+                      width: MyUtility(context).width * 0.60
+                          ,
+                      height: 700,
+                      child: ListView.builder(
+                        itemCount: documents.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot document = documents[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MyUtility(context).width * 0.9,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: Color.fromARGB(255, 212, 210, 210),
+                                      width: 1.5)),
+                              child: MemberContainer(
+                                eventImage: document['eventsImage']!,
+                                eventName: document['title']!,
+                                location: document['_location']!,
+                                dateFrom: document['date']!,
+                                dateTill: document['date']!,
+                                onPressed: () {
+                                  openEventDetails(document['id']);
+                                  //  openMemberEventsDialog(document['id']);
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         Visibility(

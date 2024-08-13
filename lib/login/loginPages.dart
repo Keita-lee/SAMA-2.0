@@ -17,6 +17,8 @@ import 'package:sama/login/loginPages/validateByEmailOtp.dart';
 import 'package:sama/login/loginPages/validateByMobile.dart';
 import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
 
+import '../homePage/PostLoginLandingPage.dart';
+
 class LoginPages extends StatefulWidget {
   LoginPages({super.key});
 
@@ -134,7 +136,15 @@ class _LoginPagesState extends State<LoginPages> {
                   ],
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Material(
+                                  child: Material(
+                                      child: PostLoginLandingPage(userId: "")),
+                                )));
+                  },
                   onHover: (hovered) {
                     setState(() {
                       showRegisterBorder = hovered;
