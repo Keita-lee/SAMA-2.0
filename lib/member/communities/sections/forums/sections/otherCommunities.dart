@@ -31,6 +31,10 @@ class _OtherCommunitiesState extends State<OtherCommunities> {
               child: ForumSectionTypeStyle(
                 title: widget.otherCommunityTypes[i]['title'],
                 description: widget.otherCommunityTypes[i]['description'],
+                postText: '', // Placeholder for post text
+                userImageUrl: '', // Placeholder for user image URL
+                postTime: '', // Placeholder for post time
+                userName: '', // Placeholder for user name
               ))
       ],
     );

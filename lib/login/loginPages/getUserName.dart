@@ -184,7 +184,7 @@ class _GetUsernameState extends State<GetUsername> {
           Row(
             children: [
               Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
+                activeColor: Color.fromRGBO(0, 159, 158, 1),
                 value: SingingCharacter.email,
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
@@ -205,7 +205,7 @@ class _GetUsernameState extends State<GetUsername> {
           Row(
             children: [
               Radio<SingingCharacter>(
-                activeColor: Color.fromARGB(255, 8, 55, 145),
+                activeColor: Color.fromRGBO(0, 159, 158, 1),
                 value: SingingCharacter.mobile,
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
@@ -254,14 +254,18 @@ class _GetUsernameState extends State<GetUsername> {
           SizedBox(
             height: 15,
           ),*/
-          GestureDetector(
+          InkWell(
             onTap: () {
               widget.changePage(0);
             },
             child: Text(
               "Return to Login",
               style: TextStyle(
-                  fontSize: 16, color: const Color.fromRGBO(0, 159, 158, 1)),
+                  fontSize: 16,
+                  color: const Color.fromRGBO(0, 159, 158, 1),
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 2.0,
+                  decorationColor: Color.fromRGBO(0, 159, 158, 1)),
             ),
           ),
         ],

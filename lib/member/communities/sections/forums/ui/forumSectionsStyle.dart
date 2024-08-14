@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sama/member/communities/sections/forums/ui/LastPost.dart';
 
 import '../../../../../components/myutility.dart';
 
 class ForumSectionTypeStyle extends StatefulWidget {
   String title;
   String description;
-  ForumSectionTypeStyle(
-      {super.key, required this.title, required this.description});
+  final String postText;
+  final String userImageUrl;
+  final String postTime;
+  final String userName;
+  ForumSectionTypeStyle({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.postText,
+    required this.userImageUrl,
+    required this.postTime,
+    required this.userName,
+  });
 
   @override
   State<ForumSectionTypeStyle> createState() => _ForumSectionTypeStyleState();
@@ -27,64 +39,87 @@ class _ForumSectionTypeStyleState extends State<ForumSectionTypeStyle> {
           )),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
+        child: Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Container(
+              width: MyUtility(context).width * 0.06,
+              child: Icon(
+                FontAwesomeIcons.commentMedical,
+                size: 24.0,
+                color: Colors.black,
+              ),
+            ),
+            Column(
               children: [
-                Column(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${widget.title}',
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Color.fromARGB(255, 8, 55, 145),
-                          fontWeight: FontWeight.w100),
-                      textAlign: TextAlign.start,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      '${widget.description}',
-                      style: const TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 90, 90, 90),
-                          fontWeight: FontWeight.w100),
-                      textAlign: TextAlign.start,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Topic',
+                          '${widget.title}',
                           style: const TextStyle(
-                              fontSize: 15,
-                              color: Color.fromARGB(255, 90, 90, 90),
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 8, 55, 145),
                               fontWeight: FontWeight.w100),
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(
-                          width: 15,
+                          height: 5,
                         ),
-                        Text(
-                          'Post',
-                          style: const TextStyle(
-                              fontSize: 15,
-                              color: Color.fromARGB(255, 90, 90, 90),
-                              fontWeight: FontWeight.w100),
-                          textAlign: TextAlign.start,
+                        SizedBox(
+                          height: MyUtility(context).height * 0.065,
+                          width: MyUtility(context).width * 0.5,
+                          child: Text(
+                            '${widget.description}',
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 90, 90, 90),
+                                fontWeight: FontWeight.w100),
+                            textAlign: TextAlign.start,
+                            softWrap: true,
+                          ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Topic',
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 90, 90, 90),
+                                  fontWeight: FontWeight.w100),
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              'Post',
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 90, 90, 90),
+                                  fontWeight: FontWeight.w100),
+                              textAlign: TextAlign.start,
+                            ),
+                          ],
+                        )
                       ],
-                    )
+                    ),
                   ],
                 ),
               ],
+            ),
+            LastPost(
+              text: widget.postText,
+              userImageUrl: widget.userImageUrl,
+              postTime: widget.postTime,
+              userName: widget.userName,
             ),
           ],
         ),

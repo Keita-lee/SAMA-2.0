@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/utility.dart';
 import 'package:sama/member/communities/sections/forums/sections/viewTopic/viewTopic.dart';
 
 import '../../../../../components/service/commonService.dart';
@@ -63,29 +64,36 @@ class _TopicsState extends State<Topics> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          communityTitle,
-          style: const TextStyle(
-              fontSize: 24,
-              color: Color.fromARGB(255, 75, 75, 75),
-              fontWeight: FontWeight.bold),
-          textAlign: TextAlign.start,
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            communityTitle,
+            style: TextStyle(
+                fontSize: 32,
+                color: Colors.grey[800],
+                fontWeight: FontWeight.normal),
+            textAlign: TextAlign.start,
+          ),
         ),
         SizedBox(
           height: 15,
         ),
         Visibility(
           visible: pageIndex == 0 ? true : false,
-          child: Row(
-            children: [
-              StyleButton(
-                  description: "New Topic",
-                  height: 55,
-                  width: 125,
-                  onTap: () {
-                    changePageIndex(1);
-                  })
-            ],
+          child: SizedBox(
+            width: MyUtility(context).width / 1.2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                StyleButton(
+                    description: "New Topic",
+                    height: 55,
+                    width: 125,
+                    onTap: () {
+                      changePageIndex(1);
+                    })
+              ],
+            ),
           ),
         ),
         Visibility(
@@ -133,6 +141,14 @@ class _TopicsState extends State<Topics> {
                   child: ForumSectionTypeStyle(
                     title: communityDiscussion[i]['subject'],
                     description: communityDiscussion[i]['createdBy']['name'],
+                    postText: communityDiscussion[i]['description'] ?? '',
+                    userImageUrl: communityDiscussion[i]['createdBy']
+                            ['profileImage'] ??
+                        '',
+                    postTime: CommonService()
+                        .getDateInTextTimeStamp(communityDiscussion[i]['date']),
+                    userName: communityDiscussion[i]['createdBy']['name'] ??
+                        'Anonymous',
                   ),
                 ),
             ],

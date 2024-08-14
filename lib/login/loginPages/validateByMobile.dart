@@ -100,7 +100,7 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
               Text(
                 "Password Reset",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     color: Color.fromRGBO(0, 159, 158, 1),
                     fontWeight: FontWeight.bold),
               ),
@@ -110,15 +110,16 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
               Text.rich(
                 TextSpan(
                   text: "Enter ",
-                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   children: [
                     TextSpan(
                       text: "one time pin",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     TextSpan(
                       text: " sent to your phone number ",
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -167,7 +168,10 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
                 height: 10,
               ),
               Text('Did not get an OTP?',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 16)),
               SizedBox(
                 height: 5,
               ),
@@ -178,13 +182,13 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
 
               Text(
                 'Please allow a few minutes for this to be sent',
-                style: TextStyle(fontSize: 15, color: Colors.black),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               Row(
                 children: [
                   Text(
                     'if no OTP received after a few minutes ',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                   InkWell(
                     onTap: () {
@@ -193,8 +197,12 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
                     child: Text(
                       "click to retry",
                       style: TextStyle(
-                          fontSize: 16,
-                          color: const Color.fromRGBO(0, 159, 158, 1)),
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 2.0,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                      ),
                     ),
                   ),
                 ],
@@ -209,8 +217,12 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
                 child: Text(
                   "Return to login",
                   style: TextStyle(
-                      fontSize: 16,
-                      color: const Color.fromRGBO(0, 159, 158, 1)),
+                    decoration: TextDecoration.underline,
+                    decorationThickness: 2.0,
+                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                    fontSize: 16,
+                    color: const Color.fromRGBO(0, 159, 158, 1),
+                  ),
                 ),
               ),
               /*InkWell(

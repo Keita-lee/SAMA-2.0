@@ -99,7 +99,7 @@ class _ValidateByMobileGetUsernameState
               Text(
                 "Retrieve my SAMA number",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     color: Color.fromRGBO(0, 159, 158, 1),
                     fontWeight: FontWeight.bold),
               ),
@@ -109,17 +109,18 @@ class _ValidateByMobileGetUsernameState
               Text.rich(
                 TextSpan(
                   text: "Enter ",
-                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   children: [
                     TextSpan(
                       text: "one time pin",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(0, 159, 158, 1)),
+                          fontSize: 16,
+                          color: Colors.black),
                     ),
                     TextSpan(
                       text: " sent to your cell phone number ",
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -184,19 +185,21 @@ class _ValidateByMobileGetUsernameState
               ),*/
               Text('Did not get an OTP?',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black)),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 16)),
               SizedBox(
                 height: 5,
               ),
               Text(
                 'Please allow a few minutes for this to be sent',
-                style: TextStyle(fontSize: 15, color: Colors.black),
+                style: TextStyle(fontSize: 16, color: Colors.black),
               ),
               Row(
                 children: [
                   Text(
                     'if no OTP received after a few minutes ',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   InkWell(
                     onTap: () {
@@ -206,7 +209,10 @@ class _ValidateByMobileGetUsernameState
                       "click to retry",
                       style: TextStyle(
                           fontSize: 16,
-                          color: const Color.fromRGBO(0, 159, 158, 1)),
+                          color: const Color.fromRGBO(0, 159, 158, 1),
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2.0,
+                          decorationColor: Color.fromRGBO(0, 159, 158, 1)),
                     ),
                   ),
                 ],
@@ -222,7 +228,10 @@ class _ValidateByMobileGetUsernameState
                   "Return to login",
                   style: TextStyle(
                       fontSize: 16,
-                      color: const Color.fromRGBO(0, 159, 158, 1)),
+                      color: const Color.fromRGBO(0, 159, 158, 1),
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2.0,
+                      decorationColor: Color.fromRGBO(0, 159, 158, 1)),
                 ),
               ),
               /*InkWell(

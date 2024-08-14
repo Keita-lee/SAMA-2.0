@@ -14,26 +14,30 @@ class _ForumHeaderStyleState extends State<ForumHeaderStyle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Container(
           width: MyUtility(context).width / 1.2,
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 8, 55, 145),
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: Color(0xFFD1D1D1),
-              )),
+            color: Color.fromARGB(255, 8, 55, 145),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
-                Text(
-                  '${widget.title}',
-                  style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    '${widget.title}',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
+                    textAlign: TextAlign.start,
+                  ),
                 ),
                 Spacer(),
                 Text(

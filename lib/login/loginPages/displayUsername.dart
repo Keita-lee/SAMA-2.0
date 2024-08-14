@@ -57,34 +57,35 @@ class _DisplayUsernameState extends State<DisplayUsername> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MyUtility(context).width / 3,
+        width: MyUtility(context).width / 1.5,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "SAMA Number Retrieved ",
-                style: TextStyle(fontSize: 30, color: Colors.black),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Your SAMA Number:",
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                "Retrieved my SAMA Number ",
+                style: TextStyle(
+                    fontSize: 22, color: Color.fromRGBO(0, 159, 158, 1)),
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
+                "Thank you, Your SAMA number has been sent to your email address.",
+                style: TextStyle(fontSize: 17, color: Colors.grey[600]),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              /*Text(
                 username.text,
                 style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
+              ),*/
 
               /*  TextFieldStyling(
                 hintText: 'SAMA Number',
                 textfieldController: username,
-              ),*/
+              ),
               SizedBox(
                 height: 15,
               ),
@@ -101,7 +102,22 @@ class _DisplayUsernameState extends State<DisplayUsername> {
                   width: 175,
                   onTap: () {
                     widget.changePage(0);
-                  }),
+                  }),*/
+              InkWell(
+                onTap: () {
+                  widget.changePage(0);
+                },
+                child: Text(
+                  "Return to Login",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: const Color.fromRGBO(0, 159, 158, 1),
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                    decorationThickness: 2.0,
+                  ),
+                ),
+              ),
             ]));
   }
 }

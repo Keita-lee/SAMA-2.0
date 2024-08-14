@@ -1,18 +1,22 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sama/member/communities/sections/forums/sections/otherCommunities.dart';
+import 'dart:convert';
 
-import 'sections/otherCommunities.dart';
-import 'sections/yourCommunity.dart';
+import 'package:sama/member/communities/sections/forums/sections/yourCommunity.dart'; // For JSON decoding
 
 class Forums extends StatefulWidget {
   String resourceType;
   Function(int, String) changePageIndex;
   List communityTypeList;
-  Forums(
-      {super.key,
-      required this.resourceType,
-      required this.changePageIndex,
-      required this.communityTypeList});
+
+  Forums({
+    super.key,
+    required this.resourceType,
+    required this.changePageIndex,
+    required this.communityTypeList,
+  });
+
   @override
   State<Forums> createState() => _ForumsState();
 }
@@ -22,16 +26,41 @@ class _ForumsState extends State<Forums> {
   String yourCommunityDescription = "";
   List otherCommunityTypes = [];
 
+  // Variables to hold the latest post information
+  String latestPostText = '';
+  String latestUserImageUrl = '';
+  String latestPostTime = '';
+  String latestUserName = '';
+
   @override
   void initState() {
     var data = widget.resourceType.split(" - ");
-
-    var typeIndex = (widget.communityTypeList)
-        .indexWhere((item) => item["title"] == data[1]);
+    var typeIndex =
+        widget.communityTypeList.indexWhere((item) => item["title"] == data[1]);
 
     youCommunityTitle = widget.communityTypeList[typeIndex]['title'];
     yourCommunityDescription =
         widget.communityTypeList[typeIndex]['description'];
+
+    // Find the latest post data
+    var communityDiscussions =
+        widget.communityTypeList[typeIndex]['discussions'] ?? [];
+    if (communityDiscussions.isNotEmpty) {
+      // Correct sorting logic here
+      communityDiscussions.sort((a, b) {
+        Timestamp dateA = a['date'];
+        Timestamp dateB = b['date'];
+        return dateB.compareTo(dateA); // Sorting by date descending
+      });
+
+      var latestDiscussion = communityDiscussions.first;
+      latestPostText = extractPlainText(
+          latestDiscussion['description']); // Extract plain text
+      latestUserImageUrl = latestDiscussion['createdBy']['profileImage'] ?? '';
+      latestPostTime = getDateInTextTimeStamp(
+          latestDiscussion['date']); // Use the local method
+      latestUserName = latestDiscussion['createdBy']['name'] ?? 'Anonymous';
+    }
 
     for (var i = 0; i < widget.communityTypeList.length; i++) {
       if (youCommunityTitle != widget.communityTypeList[i]['title']) {
@@ -43,13 +72,33 @@ class _ForumsState extends State<Forums> {
     super.initState();
   }
 
+  // Local method for date formatting
+  String getDateInTextTimeStamp(Timestamp timestamp) {
+    DateTime date = timestamp.toDate();
+    return "${date.day}-${date.month}-${date.year} ${date.hour}:${date.minute}";
+  }
+
+  // Method to extract plain text from JSON string
+  String extractPlainText(String jsonString) {
+    try {
+      var decoded = jsonDecode(jsonString);
+      if (decoded is List && decoded.isNotEmpty) {
+        var firstInsert = decoded.first['insert'];
+        return firstInsert.toString();
+      }
+    } catch (e) {
+      print('Error parsing description: $e');
+    }
+    return jsonString; // Return original if parsing fails
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          /*Row(
             children: [
               Text(
                 'Forums',
@@ -60,9 +109,9 @@ class _ForumsState extends State<Forums> {
                 textAlign: TextAlign.start,
               ),
             ],
-          ),
+          ),*/
           SizedBox(
-            height: 25,
+            height: 0,
           ),
           YourCommunity(
             resourceType: widget.resourceType,
@@ -70,6 +119,10 @@ class _ForumsState extends State<Forums> {
             changePageIndex: widget.changePageIndex,
             yourCommunityTitle: youCommunityTitle,
             yourCommunityDescription: yourCommunityDescription,
+            postText: latestPostText,
+            userImageUrl: latestUserImageUrl,
+            postTime: latestPostTime,
+            userName: latestUserName,
           ),
           SizedBox(
             height: 25,

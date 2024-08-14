@@ -141,7 +141,8 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                   children: [
                     TextSpan(
                       text: "one time pin",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     TextSpan(
                       text: " sent to your email address ",
@@ -176,7 +177,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 5,
               ),
               Text(
                 messageText,
@@ -207,8 +208,12 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                     child: Text(
                       "click to retry",
                       style: TextStyle(
-                          fontSize: 16,
-                          color: const Color.fromRGBO(0, 159, 158, 1)),
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 2.0,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                      ),
                     ),
                   ),
                 ],
@@ -223,8 +228,12 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                 child: Text(
                   "Return to login",
                   style: TextStyle(
-                      fontSize: 16,
-                      color: const Color.fromRGBO(0, 159, 158, 1)),
+                    fontSize: 16,
+                    color: const Color.fromRGBO(0, 159, 158, 1),
+                    decoration: TextDecoration.underline,
+                    decorationThickness: 2.0,
+                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                  ),
                 ),
               ),
               /*InkWell(
