@@ -10,14 +10,13 @@ import 'package:sama/Login/loginPages/sendUsername.dart';
 import 'package:sama/Login/loginPages/validateByEmail.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/loginPages/choosePassword.dart';
 import 'package:sama/login/loginPages/displayUsername.dart';
 import 'package:sama/login/loginPages/getUserName.dart';
 import 'package:sama/login/loginPages/validateByEmailOtp.dart';
 import 'package:sama/login/loginPages/validateByMobile.dart';
 import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
-
-import '../homePage/PostLoginLandingPage.dart';
 
 class LoginPages extends StatefulWidget {
   LoginPages({super.key});
@@ -189,7 +188,7 @@ class _LoginPagesState extends State<LoginPages> {
             children: [
               Container(
                 width: MyUtility(context).width / 1.5,
-                height: MyUtility(context).height / 1.8,
+                //height: MyUtility(context).height / 1.8,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -197,26 +196,29 @@ class _LoginPagesState extends State<LoginPages> {
                     topRight: Radius.circular(5),
                   ), // Straighten the bottom corners
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MyUtility(context).width * 0.04,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MyUtility(context).width / 1.5 -
-                              MyUtility(context).width / 5,
-                          height: MyUtility(context).height / 1.8,
-                          child: Center(
-                            child: pages[pageIndex],
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 35, bottom: 45),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MyUtility(context).width * 0.04,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MyUtility(context).width / 1.5 -
+                                MyUtility(context).width / 5,
+                            // height: MyUtility(context).height / 1.8,
+                            child: Center(
+                              child: pages[pageIndex],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               ClipRRect(
