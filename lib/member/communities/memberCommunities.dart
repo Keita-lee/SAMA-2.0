@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/ui/pleaseLogin.dart';
 import 'package:sama/member/communities/sections/forums/sections/topics.dart';
 import 'package:sama/member/communities/sections/resources/resources.dart';
@@ -49,12 +48,7 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SamaBlueBanner(pageName: 'COMMUNITIES'),
-        SizedBox(
-          height: 25,
-        ),
         Visibility(
             visible: widget.userType == "NonMember",
             child: PleaseLogin(
@@ -67,6 +61,20 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  'Communities',
+                  style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               Visibility(
                   visible: pageIndex == 0 ? true : false,
                   child: ComTypes(changePageIndex: changePageIndex)),
