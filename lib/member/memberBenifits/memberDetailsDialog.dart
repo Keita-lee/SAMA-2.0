@@ -148,7 +148,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                               height: 15,
                             ),
                             SizedBox(
-                              width: MyUtility(context).width * 0.60 - 325,
+                              width: MyUtility(context).width * 0.60 - 225,
                               child: Text(
                                 companyDescription,
                                 style: TextStyle(
@@ -162,13 +162,16 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                             SizedBox(
                               height: 20,
                             ),
-                            Text(
-                              companyBenifits,
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 19, 19, 19),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                height: 1,
+                            SizedBox(
+                              width: MyUtility(context).width * 0.60 - 225,
+                              child: Text(
+                                companyBenifits,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 19, 19, 19),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -265,26 +268,29 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                             ),
                             Visibility(
                               visible: address == "" ? false : true,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Address: ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      height: 1,
+                              child: SizedBox(
+                                width: MyUtility(context).width * 0.60 - 225,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Address: ',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    address,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w200,
-                                      height: 0,
+                                    Text(
+                                      address,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w200,
+                                        height: 0,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(
