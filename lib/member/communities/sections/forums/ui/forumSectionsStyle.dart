@@ -45,7 +45,7 @@ class _ForumSectionTypeStyleState extends State<ForumSectionTypeStyle> {
               width: MyUtility(context).width * 0.06,
               child: Icon(
                 FontAwesomeIcons.commentMedical,
-                size: 24.0,
+                size: 45.0,
                 color: Colors.black,
               ),
             ),

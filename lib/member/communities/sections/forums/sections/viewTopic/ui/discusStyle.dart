@@ -1,94 +1,149 @@
 import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:image_network/image_network.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../../components/myutility.dart';
 
 class DiscusStyle extends StatefulWidget {
-  String profileUrl;
-  String name;
-  String date;
-  String description;
-  DiscusStyle(
-      {super.key,
-      required this.profileUrl,
-      required this.name,
-      required this.date,
-      required this.description});
+  final String profileUrl;
+  final String name;
+  final String date;
+  final String description;
+
+  DiscusStyle({
+    super.key,
+    required this.profileUrl,
+    required this.name,
+    required this.date,
+    required this.description,
+  });
 
   @override
   State<DiscusStyle> createState() => _DiscusStyleState();
 }
 
 class _DiscusStyleState extends State<DiscusStyle> {
-  var myJSON;
-  QuillController quillController = QuillController.basic();
+  late final QuillController quillController;
+  late final DateTime parsedDate;
 
   @override
   void initState() {
-    myJSON = jsonDecode(widget.description);
-    quillController = QuillController(
-        readOnly: true,
-        document: Document.fromJson(myJSON),
-        selection: TextSelection.collapsed(offset: 0));
-
     super.initState();
+
+    // Parse JSON description
+    var myJSON = jsonDecode(widget.description);
+    quillController = QuillController(
+      readOnly: true,
+      document: Document.fromJson(myJSON),
+      selection: TextSelection.collapsed(offset: 0),
+    );
+
+    // Parse the custom date format
+    final dateFormat = DateFormat('dd-MMM-yyyy');
+    parsedDate = dateFormat.parse(widget.date);
   }
 
   @override
   Widget build(BuildContext context) {
+    // Format the date
+    String formattedDate = DateFormat('MMMM d, y, h:mm a').format(parsedDate);
+
     return Column(
       children: [
         Container(
           width: MyUtility(context).width / 1.2,
           height: 100,
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 241, 241, 241),
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: Color(0xFFD1D1D1),
-              )),
+            color: Color.fromARGB(255, 241, 241, 241),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+            border: Border.all(
+              color: Color(0xFFD1D1D1),
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
+                  ClipOval(
                     child: Container(
-                      width: 85,
-                      height: 85,
+                      width: 75,
+                      height: 75,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
+                        shape: BoxShape.circle,
                         color: Colors.white,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(0.0),
-                        child: widget.profileUrl != ""
-                            ? ImageNetwork(
-                                image: widget.profileUrl!,
-                                height: 85,
-                                width: 85,
-                              )
-                            : Container(),
-                      ),
+                      child: widget.profileUrl.isNotEmpty
+                          ? Image.network(
+                              widget.profileUrl,
+                              width: 75,
+                              height: 75,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.grey,
+                                );
+                              },
+                            )
+                          : Icon(
+                              Icons.person,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
                     ),
                   ),
-                  SizedBox(
-                    width: 15,
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.name,
+                          style: TextStyle(
+                            fontSize: 19,
+                            color: Color.fromARGB(255, 8, 55, 145),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Text(
+                              'Other',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              'Student, Intern, and Community Service Doctors Community (your community)',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 8, 55, 145),
+                                fontWeight: FontWeight.normal,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    widget.name,
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Color.fromARGB(255, 8, 55, 145),
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ), /**/
                 ],
               ),
             ),
@@ -97,30 +152,80 @@ class _DiscusStyleState extends State<DiscusStyle> {
         Container(
           width: MyUtility(context).width / 1.2,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: Color(0xFFD1D1D1),
-              )),
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10.0),
+              bottomRight: Radius.circular(10.0),
+            ),
+            border: Border.all(
+              color: Color(0xFFD1D1D1),
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 5),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.date,
+                      formattedDate,
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 87, 87, 87),
-                          fontWeight: FontWeight.bold),
+                        fontSize: 15,
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.start,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton.icon(
+                          onPressed: () {
+                            // Your delete action here
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Color.fromARGB(255, 8, 55, 145),
+                          ),
+                          label: Text(
+                            'Delete',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 8, 55, 145),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        TextButton.icon(
+                          onPressed: () {
+                            // Your edit action here
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                            color: Color.fromARGB(255, 8, 55, 145),
+                          ),
+                          label: Text(
+                            'Edit',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 8, 55, 145),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 8,
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: Container(
+                    height: 0.5,
+                    width: MyUtility(context).width / 1.2,
+                    color: Colors.grey[400],
+                  ),
                 ),
+                SizedBox(height: 8),
                 Container(
                   width: MyUtility(context).width / 1.2,
                   height: 100,
@@ -135,8 +240,6 @@ class _DiscusStyleState extends State<DiscusStyle> {
             ),
           ),
         ),
-
-        /*  */
       ],
     );
   }

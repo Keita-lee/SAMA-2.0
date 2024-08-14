@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/service/commonService.dart';
+import 'package:sama/components/utility.dart';
 
 import '../../../../../../components/styleButton.dart';
 import 'sections/addComment.dart';
@@ -49,18 +50,26 @@ class _ViewTopicState extends State<ViewTopic> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [],
+          SizedBox(
+            width: MyUtility(context).width / 1.2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                StyleButton(
+                    description: "Reply",
+                    height: 55,
+                    width: 125,
+                    onTap: () {
+                      setState(() {
+                        pageIndex = 1;
+                      });
+                    }),
+              ],
+            ),
           ),
-          StyleButton(
-              description: "Reply",
-              height: 55,
-              width: 125,
-              onTap: () {
-                setState(() {
-                  pageIndex = 1;
-                });
-              }),
+          SizedBox(
+            height: 15,
+          ),
           Visibility(
             visible: pageIndex == 1 ? true : false,
             child: AddComment(
@@ -72,19 +81,22 @@ class _ViewTopicState extends State<ViewTopic> {
               subject: widget.title,
             ),
           ),
-          Text(
+          /*Text(
             widget.title,
             style: TextStyle(
                 fontSize: 25,
                 color: Color.fromARGB(255, 87, 87, 87),
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.start,
-          ),
-          DiscusStyle(
-            profileUrl: widget.createdBy['profileImage'],
-            name: widget.createdBy['name'],
-            date: widget.date,
-            description: widget.description,
+          ),*/
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: DiscusStyle(
+              profileUrl: widget.createdBy['profileImage'],
+              name: widget.createdBy['name'],
+              date: widget.date,
+              description: widget.description,
+            ),
           ),
           for (var i = 0; i < widget.commentDiscussions.length; i++)
             Padding(

@@ -141,14 +141,14 @@ class _TopicsState extends State<Topics> {
                   child: ForumSectionTypeStyle(
                     title: communityDiscussion[i]['subject'],
                     description: communityDiscussion[i]['createdBy']['name'],
-                    postText: communityDiscussion[i]['description'] ?? '',
+                    postText: CommonService()
+                        .getDateInTextTimeStamp(communityDiscussion[i]['date']),
                     userImageUrl: communityDiscussion[i]['createdBy']
                             ['profileImage'] ??
                         '',
-                    postTime: CommonService()
-                        .getDateInTextTimeStamp(communityDiscussion[i]['date']),
-                    userName: communityDiscussion[i]['createdBy']['name'] ??
+                    postTime: communityDiscussion[i]['createdBy']['name'] ??
                         'Anonymous',
+                    userName: '',
                   ),
                 ),
             ],
