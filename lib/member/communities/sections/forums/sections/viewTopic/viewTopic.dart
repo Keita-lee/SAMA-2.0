@@ -90,7 +90,7 @@ class _ViewTopicState extends State<ViewTopic> {
             textAlign: TextAlign.start,
           ),*/
           Padding(
-            padding: const EdgeInsets.only(left: 5),
+            padding: const EdgeInsets.only(left: 10),
             child: DiscusStyle(
               profileUrl: widget.createdBy['profileImage'],
               name: widget.createdBy['name'],

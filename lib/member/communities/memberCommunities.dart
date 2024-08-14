@@ -62,7 +62,7 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 5),
+                padding: const EdgeInsets.only(left: 15),
                 child: Text(
                   'Communities',
                   style: TextStyle(

@@ -81,7 +81,7 @@ class _TopicsState extends State<Topics> {
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: SizedBox(
-            width: MyUtility(context).width / 1.2,
+            width: MyUtility(context).width / 1.205,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
