@@ -183,9 +183,16 @@ class _RegisterState extends State<Register> {
   sendOTPToUser() async {
     String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
     print(randomOtp);
-    await sendOtp(otp: randomOtp, email: email.text);
-    widget.getEmailChangeType('registerPage');
-    widget.changePage(14);
+    try {
+      await sendOtp(otp: randomOtp, email: email.text);
+      widget.getEmailChangeType('registerPage');
+      widget.changePage(14);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to send OTP')),
+      );
+    }
   }
 
   @override
