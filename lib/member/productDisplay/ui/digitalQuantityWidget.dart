@@ -71,14 +71,14 @@ class _DigitalQuantityWidgetState extends State<DigitalQuantityWidget> {
                   ),
                 ),
                 const SizedBox(
-                  width: 30,
+                  width: 10,
                 ),
                 Text(
                   '$_amount',
                   style: TextStyle(fontSize: 20.0),
                 ),
                 const SizedBox(
-                  width: 30,
+                  width: 10,
                 ),
                 InkWell(
                     borderRadius: BorderRadius.circular(50),

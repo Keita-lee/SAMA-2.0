@@ -5,7 +5,12 @@ import 'package:sama/member/productDisplay/checkout/ui/yourOrderCon.dart';
 class Checkout extends StatefulWidget {
   List products;
   double total;
-  Checkout({super.key, required this.products, required this.total});
+  Function(int, String) changePageIndex;
+  Checkout(
+      {super.key,
+      required this.products,
+      required this.total,
+      required this.changePageIndex});
 
   @override
   State<Checkout> createState() => _CheckoutState();
@@ -44,9 +49,11 @@ class _CheckoutState extends State<Checkout> {
                   width: 20,
                 ),
                 YourOrderCon(
-                    formKey: _formKey,
-                    products: widget.products,
-                    total: widget.total)
+                  formKey: _formKey,
+                  products: widget.products,
+                  total: widget.total,
+                  changePageIndex: widget.changePageIndex,
+                )
               ],
             ),
           ),

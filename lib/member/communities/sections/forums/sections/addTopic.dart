@@ -38,7 +38,7 @@ class _AddTopicState extends State<AddTopic> {
 
   addTopicToDatabase() {
     var topicData = {
-      "date": DateTime.now(),
+      "date": Timestamp.now(),
       "subject": subject.text,
       "description": jsonEncode(quillController.document.toDelta().toJson()),
       "discussions": [],

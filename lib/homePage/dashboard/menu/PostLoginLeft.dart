@@ -68,6 +68,8 @@ class _HoverItemState extends State<HoverItem> {
                     ),
                     Text(
                       widget.description,
+                      maxLines: null,
+                      overflow: TextOverflow.visible,
                       style: GoogleFonts.openSans(
                           fontSize: 14, fontWeight: FontWeight.w500),
                     ),

@@ -6,6 +6,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/admin/products/UI/myProductButtons.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/utils/quillUtils.dart';
 
 import '../../../components/styleButton.dart';
 
@@ -38,11 +39,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
 
   @override
   void initState() {
-    myJSON = jsonDecode(widget.productDescription);
-    quillController = QuillController(
-        readOnly: true,
-        document: Document.fromJson(myJSON),
-        selection: TextSelection.collapsed(offset: 0));
+    quillController = handleDescription(widget.productDescription, true, true);
     super.initState();
   }
 
@@ -77,7 +74,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
             Visibility(
               visible: widget.productImage != "" ? true : false,
               child: ImageNetwork(
-                fitWeb: BoxFitWeb.cover,
+                fitWeb: BoxFitWeb.contain,
                 image: widget.productImage,
                 width: 180,
                 height: 180,
@@ -87,7 +84,6 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               width: 15,
             ),
             Container(
-              
               width: MyUtility(context).width * 0.70 - 280,
               height: 180,
               child: Column(

@@ -54,7 +54,7 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                 Visibility(
                   visible: widget.productImage != "" ? true : false,
                   child: ImageNetwork(
-                    fitWeb: BoxFitWeb.cover,
+                    fitWeb: BoxFitWeb.contain,
                     image: widget.productImage,
                     width: MyUtility(context).width / 15,
                     height: 100,
@@ -68,14 +68,13 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: MyUtility(context).width / 4.5,
+                      width: MyUtility(context).width / 5,
                       child: Text(
                         widget.productName,
+                        maxLines: null,
                         style: const TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600),
-                        overflow: TextOverflow.ellipsis,
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                        overflow: TextOverflow.visible,
                       ),
                     ),
                     Text(

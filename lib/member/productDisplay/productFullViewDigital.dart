@@ -6,6 +6,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:sama/member/productDisplay/ui/ProductFullView.dart';
 import 'package:sama/member/productDisplay/ui/digitalQuantityWidget.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/utils/quillUtils.dart';
 
 class ProductFullViewDigital extends StatefulWidget {
   String title;
@@ -44,11 +45,8 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
 
   @override
   void initState() {
-    myJSON = jsonDecode(widget.description);
-    quillController = QuillController(
-        readOnly: true,
-        document: Document.fromJson(myJSON),
-        selection: TextSelection.collapsed(offset: 0));
+    // myJSON = jsonDecode(widget.description);
+    quillController = handleDescription(widget.description, true, false);
     super.initState();
     product = {
       "name": widget.title,
@@ -96,9 +94,9 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
                 color: Colors.white,
               ),
               child: QuillEditor.basic(
-                configurations: QuillEditorConfigurations(
-                  controller: quillController,
-                  sharedConfigurations: const QuillSharedConfigurations(),
+                controller: quillController,
+                configurations: const QuillEditorConfigurations(
+                  sharedConfigurations: QuillSharedConfigurations(),
                 ),
               ),
             ),

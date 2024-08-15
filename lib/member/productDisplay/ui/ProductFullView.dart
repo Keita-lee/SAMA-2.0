@@ -55,7 +55,7 @@ class _ProductFullViewState extends State<ProductFullView> {
             Visibility(
               visible: widget.productImage != "" ? true : false,
               child: ImageNetwork(
-                fitWeb: BoxFitWeb.cover,
+                fitWeb: BoxFitWeb.contain,
                 image: widget.productImage,
                 width: MyUtility(context).width / 7,
                 height: 200,

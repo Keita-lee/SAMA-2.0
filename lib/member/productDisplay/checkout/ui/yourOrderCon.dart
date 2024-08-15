@@ -1,3 +1,5 @@
+import 'dart:js' as js;
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/member/productDisplay/cart/ui/payStackCon.dart';
@@ -14,6 +16,7 @@ import 'package:http/http.dart' as http;
 
 class YourOrderCon extends StatefulWidget {
   final GlobalKey<FormState> formKey;
+  Function(int, String) changePageIndex;
   List products;
   double total;
 
@@ -21,7 +24,8 @@ class YourOrderCon extends StatefulWidget {
       {super.key,
       required this.formKey,
       required this.products,
-      required this.total});
+      required this.total,
+      required this.changePageIndex});
 
   @override
   State<YourOrderCon> createState() => _YourOrderConState();
@@ -41,7 +45,10 @@ class _YourOrderConState extends State<YourOrderCon> {
         return Dialog(
             child: ValidateDialog(
                 description: "Payment received , please check your emails",
-                closeDialog: () => Navigator.pop(context!)));
+                closeDialog: () {
+                  widget.changePageIndex(0, "");
+                  Navigator.pop(context);
+                }));
       });
 
   getUserEmail() async {
@@ -53,6 +60,14 @@ class _YourOrderConState extends State<YourOrderCon> {
     if (data.exists) {
       email = data.get('email');
     }
+  }
+
+  double getTotal() {
+    double total = widget.products.fold(0.0, (sum, item) {
+      return sum + double.parse(item['total']);
+    });
+
+    return total;
   }
 
 //Send payment
@@ -143,7 +158,7 @@ class _YourOrderConState extends State<YourOrderCon> {
     });
   }
 
-  getTotal(value) {
+  getTotals(value) {
     setState(() {
       total = value;
     });
@@ -153,7 +168,7 @@ class _YourOrderConState extends State<YourOrderCon> {
   void initState() {
     getUserEmail();
 
-    total = widget.total;
+    total = getTotal();
     super.initState();
   }
 
@@ -183,7 +198,9 @@ class _YourOrderConState extends State<YourOrderCon> {
                 ),
                 //List here
                 YourOrderTable(
-                    orderProduct: widget.products, getTotal: getTotal)
+                    orderProduct: widget.products,
+                    getTotal: getTotals,
+                    total: total.toString()),
               ],
             ),
           ),
@@ -225,7 +242,7 @@ class _YourOrderConState extends State<YourOrderCon> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
                 child: Text(
-                  'Place Order ${widget.total}',
+                  'Place Order $total',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,

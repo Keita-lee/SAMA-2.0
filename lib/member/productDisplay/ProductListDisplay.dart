@@ -241,6 +241,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                 child: Checkout(
                   products: cartProducts,
                   total: total,
+                  changePageIndex: changePageIndex,
                 ),
               ),
             ],

@@ -13,9 +13,13 @@ import 'package:http/http.dart' as http;
 class YourOrderTable extends StatefulWidget {
   List orderProduct;
   Function(double) getTotal;
+  String total;
 
   YourOrderTable(
-      {super.key, required this.orderProduct, required this.getTotal});
+      {super.key,
+      required this.orderProduct,
+      required this.getTotal,
+      required this.total});
 
   @override
   State<YourOrderTable> createState() => _YourOrderTableState();
@@ -60,7 +64,7 @@ class _YourOrderTableState extends State<YourOrderTable> {
       },
       body: jsonEncode(<String, dynamic>{
         'email': email,
-        'amount': "${total * 100}",
+        'amount': "${widget.total * 100}",
         "currency": "ZAR",
       }),
     );
@@ -139,14 +143,10 @@ class _YourOrderTableState extends State<YourOrderTable> {
 
   @override
   void initState() {
-    for (int i = 0; i < widget.orderProduct.length; i++) {
-      print(widget.orderProduct[i]['total']);
-      total = total + double.parse(widget.orderProduct[i]['total']);
-    }
+    print(widget.orderProduct);
     getUserEmail();
 
-    total = total;
-    widget.getTotal(total);
+    //widget.getTotal(getTotal());
     super.initState();
   }
 
@@ -232,7 +232,7 @@ class _YourOrderTableState extends State<YourOrderTable> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        '${total}',
+                        '${widget.total}',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
