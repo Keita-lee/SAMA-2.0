@@ -59,6 +59,8 @@ dependencies:
   flutter_quill: ^10.0.1
   url_launcher: ^6.3.0
   font_awesome_flutter: ^10.7.0
+  collection: ^1.18.0
+  zxcvbn: ^1.0.0
 
 
 dev_dependencies:

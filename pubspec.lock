@@ -90,7 +90,7 @@ packages:
     source: hosted
     version: "3.12.5"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
@@ -1122,6 +1122,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  zxcvbn:
+    dependency: "direct main"
+    description:
+      name: zxcvbn
+      sha256: "5d860ab87c0e7f295902697afd364aa722d89d4e5839e8800ad1b0faf3d63b08"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
 sdks:
   dart: ">=3.4.3 <4.0.0"
   flutter: ">=3.22.0"

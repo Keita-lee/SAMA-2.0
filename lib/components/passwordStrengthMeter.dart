@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
+import 'package:zxcvbn/zxcvbn.dart';
 
 enum CustomPassStrength implements PasswordStrengthItem {
   weak,
   medium,
-  strong;
+  strong,
+  veryStrong;
 
   @override
   Color get statusColor {
@@ -14,6 +16,8 @@ enum CustomPassStrength implements PasswordStrengthItem {
       case CustomPassStrength.medium:
         return Colors.orange;
       case CustomPassStrength.strong:
+        return Colors.lightGreen;
+      case CustomPassStrength.veryStrong:
         return Colors.green;
     }
   }
@@ -27,6 +31,8 @@ enum CustomPassStrength implements PasswordStrengthItem {
         return const Text('Medium');
       case CustomPassStrength.strong:
         return const Text('Strong');
+      case CustomPassStrength.veryStrong:
+        return const Text('Very Strong');
       default:
         return null;
     }
@@ -41,22 +47,49 @@ enum CustomPassStrength implements PasswordStrengthItem {
         return 0.4;
       case CustomPassStrength.strong:
         return 0.75;
+      case CustomPassStrength.veryStrong:
+        return 1.0;
       default:
         return 0.0;
     }
   }
 
   static CustomPassStrength? calculate({required String text}) {
-    // Implement your custom logic here
     if (text.isEmpty) {
       return null;
     }
-    if (text.length < 8) {
+
+    // Enforce at least one uppercase letter
+    if (!RegExp(r'[A-Z]').hasMatch(text)) {
       return CustomPassStrength.weak;
-    } else if (text.length < 10) {
-      return CustomPassStrength.medium;
-    } else {
-      return CustomPassStrength.strong;
+    }
+
+    // Enforce at least one lowercase letter
+    if (!RegExp(r'[a-z]').hasMatch(text)) {
+      return CustomPassStrength.weak;
+    }
+
+    // Enforce at least one special character
+    if (!RegExp(r'[!@#\$&*~]').hasMatch(text)) {
+      return CustomPassStrength.weak;
+    }
+
+    // password strength using zxcvbn
+    final zxcvbn = Zxcvbn();
+    final result = zxcvbn.evaluate(text);
+
+    switch (result.score) {
+      case 0:
+      case 1:
+        return CustomPassStrength.weak;
+      case 2:
+        return CustomPassStrength.medium;
+      case 3:
+        return CustomPassStrength.strong;
+      case 4:
+        return CustomPassStrength.veryStrong;
+      default:
+        return CustomPassStrength.weak;
     }
   }
 }
