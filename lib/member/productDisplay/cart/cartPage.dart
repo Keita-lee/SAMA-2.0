@@ -83,12 +83,15 @@ class _CartPageState extends State<CartPage> {
       children: [
         Row(
           children: [
-            Text(
-              'My Cart',
-              style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(55, 94, 144, 1)),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Text(
+                'My Cart',
+                style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(55, 94, 144, 1)),
+              ),
             ),
           ],
         ),

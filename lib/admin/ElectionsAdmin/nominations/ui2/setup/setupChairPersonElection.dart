@@ -128,7 +128,7 @@ class _SetupChairPersonElectionState extends State<SetupChairPersonElection> {
                   Row(
                     children: [
                       Text(
-                        "Chairperson Eletions",
+                        "Chairperson Election",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

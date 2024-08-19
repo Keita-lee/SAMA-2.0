@@ -28,12 +28,15 @@ class _CheckoutState extends State<Checkout> {
         children: [
           Row(
             children: [
-              Text(
-                'Checkout',
-                style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(55, 94, 144, 1)),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  'Checkout',
+                  style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(55, 94, 144, 1)),
+                ),
               ),
             ],
           ),
