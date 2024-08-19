@@ -3,25 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
-import 'package:sama/admin/ElectionsAdmin/NominationAcceptance/NominationAcceptance.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/nominationsSetup.dart';
 import 'package:sama/admin/Events/AdminEvents/Event.dart';
-import 'package:sama/admin/Events/EventDetails/EventDetails.dart';
-import 'package:sama/admin/Events/EventDetails/Ui/EventMemberList.dart';
-import 'package:sama/admin/Events/NewEvent/NewEvent.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/products/products.dart';
 import 'package:sama/admin/transactions/transactionsAdmin.dart';
-import 'package:sama/components/styleButton.dart';
-import 'package:sama/homePage/dashboard/nonMemberDashboard.dart';
 import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
 import 'package:sama/homePage/dashboard/ui/onHoverButtons.dart';
 import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
 import 'package:sama/login/loginPages.dart';
-import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEvents.dart';
 import 'package:sama/member/centerOfExcellence/CenterOfExcellence.dart';
 import 'package:sama/member/centerOfExcellence/CenterofExcellenceArticle.dart';
@@ -55,7 +48,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   String articleImage = "";
   String profileUrl = "";
   var pageIndex = 0;
-  String userType = "NonMember";
+  String userType = "";
   double menuSize = 6.5;
   //get data of signed in user
   getUserData() async {
@@ -117,7 +110,14 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
 
   @override
   void initState() {
-    getUserData();
+    if (widget.userId == "") {
+      setState(() {
+        userType = "NonMember";
+      });
+    } else {
+      getUserData();
+    }
+
     getUserNotificationList();
     super.initState();
   }

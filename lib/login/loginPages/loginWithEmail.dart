@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/loginPages/register.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
@@ -174,32 +175,45 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width * 0.3,
-                  child: TextFieldStyling(
-                    hintText:
-                        'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)',
-                    textfieldController: email,
+            child: Focus(
+              onKeyEvent: (node, event) {
+                if (event.logicalKey == LogicalKeyboardKey.enter) {
+                  if (email.text.contains("@")) {
+                    return checkEmail();
+                  } else {
+                    return checkMemberNumber();
+                  }
+                } else {
+                  return KeyEventResult.ignored;
+                }
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width * 0.3,
+                    child: TextFieldStyling(
+                      hintText:
+                          'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)',
+                      textfieldController: email,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25),
-                  child: StyleButton(
-                    description: "PROCEED",
-                    height: 55,
-                    width: 100,
-                    onTap: () {
-                      if (email.text.contains("@")) {
-                        checkEmail();
-                      } else {
-                        checkMemberNumber();
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: StyleButton(
+                      description: "PROCEED",
+                      height: 55,
+                      width: 100,
+                      onTap: () {
+                        if (email.text.contains("@")) {
+                          checkEmail();
+                        } else {
+                          checkMemberNumber();
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Text(

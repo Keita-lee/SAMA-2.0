@@ -524,11 +524,30 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
                           SizedBox(
                             width: MyUtility(context).width * 0.015,
                           ),
-                          ProfileTextField(
+                          ProfileDropDownField(
+                            description: "Qualification month",
+                            items: [
+                              "January",
+                              "February",
+                              "March",
+                              "April",
+                              "May",
+                              "June",
+                              "July",
+                              "August",
+                              "September ",
+                              "October",
+                              "November",
+                              "December",
+                            ],
+                            customSize: MyUtility(context).width / 7,
+                            textfieldController: qualificationMonth,
+                          ),
+                          /*  ProfileTextField(
                               customSize: MyUtility(context).width / 7,
                               description: "Qualification month",
                               textfieldController: qualificationMonth,
-                              textFieldType: "stringType")
+                              textFieldType: "stringType")*/
                         ],
                       ),
                       SizedBox(
