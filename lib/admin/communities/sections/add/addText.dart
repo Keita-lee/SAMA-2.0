@@ -244,10 +244,13 @@ class _AddTextState extends State<AddText> {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: QuillEditor.basic(
-              configurations: QuillEditorConfigurations(
-                controller: quillController,
-                sharedConfigurations: const QuillSharedConfigurations(),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: quillController,
+                  sharedConfigurations: const QuillSharedConfigurations(),
+                ),
               ),
             ),
           ),
