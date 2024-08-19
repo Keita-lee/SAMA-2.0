@@ -236,21 +236,24 @@ class _MediaFormState extends State<MediaForm> {
                               ),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: DropdownButtonFormField(
-                              value: selectedCategory,
-                              items: categories.map((category) {
-                                return DropdownMenuItem(
-                                  value: category,
-                                  child: Text(category),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedCategory = value!;
-                                });
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Category',
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: DropdownButtonFormField(
+                                value: selectedCategory,
+                                items: categories.map((category) {
+                                  return DropdownMenuItem(
+                                    value: category,
+                                    child: Text(category),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedCategory = value!;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  labelText: ' Category',
+                                ),
                               ),
                             ),
                           ),
@@ -269,7 +272,7 @@ class _MediaFormState extends State<MediaForm> {
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SizedBox(
                         width: 35,
@@ -282,13 +285,16 @@ class _MediaFormState extends State<MediaForm> {
                       SizedBox(
                         width: 8,
                       ),
-                      StyleButton(
-                          description: "Select Duration",
-                          height: 55,
-                          width: 150,
-                          onTap: () {
-                            selectDurationPopup();
-                          }),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 1.5),
+                        child: StyleButton(
+                            description: "Select Duration",
+                            height: 55,
+                            width: 150,
+                            onTap: () {
+                              selectDurationPopup();
+                            }),
+                      ),
                     ],
                   ),
                   SizedBox(height: 20),

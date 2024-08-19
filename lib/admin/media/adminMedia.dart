@@ -78,7 +78,8 @@ class _AdminMediaState extends State<AdminMedia> {
       'Corona Virus - COVID-19',
       'Courses',
     ];
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SamaBlueBanner(pageName: 'Media & Webinars'),
         SizedBox(
@@ -98,7 +99,6 @@ class _AdminMediaState extends State<AdminMedia> {
           padding: EdgeInsets.only(left: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            
             Text(selectCategory.text),
             MediaHeaderSection(
                 controller: selectCategory,
@@ -138,17 +138,18 @@ class _AdminMediaState extends State<AdminMedia> {
                     }
 
                     return Container(
-                     width: MyUtility(context).width < 1680 ? 900 : 1200,
-                  //width: MyUtility(context).width / 1.6,
-                   /* width: MyUtility(context).width -
+                      width: MyUtility(context).width < 1680 ? 900 : 1200,
+                      //width: MyUtility(context).width / 1.6,
+                      /* width: MyUtility(context).width -
                         (MyUtility(context).width * 0.25),*/
-                    height: MyUtility(context).height * 0.60,
+                      height: MyUtility(context).height * 0.60,
                       child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: MyUtility(context).width < 1680 ? 3 : 4,
-                          childAspectRatio: 0.88,
-                          ),
+                                  crossAxisCount:
+                                      MyUtility(context).width < 1680 ? 3 : 4,
+                                  childAspectRatio: 0.88,
+                                  mainAxisSpacing: 16.0),
                           itemCount: documents.length,
                           itemBuilder: (BuildContext context, int index) {
                             final DocumentSnapshot document = documents[index];

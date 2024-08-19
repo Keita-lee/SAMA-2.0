@@ -113,7 +113,8 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
           Padding(
             padding: const EdgeInsets.only(left: 35),
             child: Container(
-              width: MyUtility(context).width - (MyUtility(context).width * 0.25),
+              width:
+                  MyUtility(context).width - (MyUtility(context).width * 0.25),
               child: Wrap(
                 alignment: WrapAlignment.start,
                 children: [
@@ -130,10 +131,10 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                           header: allArticles[i]['title'],
                           onPressed: () {
                             setState(() {
-                              widget.getArticleId!(
-                                  allArticles[i]['id'], allArticles[i]['image']);
+                              widget.getArticleId!(allArticles[i]['id'],
+                                  allArticles[i]['image']);
                             });
-            
+
                             widget.changePage!(6);
                           },
                           onArticleEdit: () {
@@ -144,6 +145,9 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
               ),
             ),
           ),
+          SizedBox(
+            height: MyUtility(context).height * 0.03,
+          )
         ],
       ),
     );

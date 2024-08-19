@@ -34,59 +34,63 @@ class _MediaHeaderSectionState extends State<MediaHeaderSection> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: MyUtility(context).width / 1.8,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Select a Category",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Color(0xFF6A6A6A),
+      child: SizedBox(
+        width: MyUtility(context).width * 0.8,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          //crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            /*SizedBox(
+              width: MyUtility(context).width / 1.85, 
+            ),*/
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Select a Category",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Color(0xFF6A6A6A),
+                  ),
                 ),
-              ),
-              DropdownMenu<String>(
-                width: 250,
-                controller: widget.controller,
-                requestFocusOnTap: true,
-                label: const Text(''),
-                onSelected: (value) {
-                  setState(() {
-                    if (value == "All") {
-                      widget.getCategoryValue("");
-                    } else {
-                      widget.getCategoryValue(value!);
-                    }
-                  });
-                },
-                dropdownMenuEntries:
-                    items.map<DropdownMenuEntry<String>>((value) {
-                  return DropdownMenuEntry<String>(
-                    value: value,
-                    label: value,
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          StyleButton(
-              description: "Upload New",
-              height: 55,
-              width: 125,
-              onTap: () {
-                widget.openMediaForm();
-              })
-        ],
+                DropdownMenu<String>(
+                  width: 250,
+                  controller: widget.controller,
+                  requestFocusOnTap: true,
+                  label: const Text(''),
+                  onSelected: (value) {
+                    setState(() {
+                      if (value == "All") {
+                        widget.getCategoryValue("");
+                      } else {
+                        widget.getCategoryValue(value!);
+                      }
+                    });
+                  },
+                  dropdownMenuEntries:
+                      items.map<DropdownMenuEntry<String>>((value) {
+                    return DropdownMenuEntry<String>(
+                      value: value,
+                      label: value,
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            StyleButton(
+                description: "Upload New",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  widget.openMediaForm();
+                })
+          ],
+        ),
       ),
     );
   }

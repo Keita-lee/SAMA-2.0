@@ -288,22 +288,25 @@ class _CenterOfExcellenceDialogState extends State<CenterOfExcellenceDialog> {
                           color: const Color.fromARGB(255, 51, 51, 51),
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: TextFormField(
-                      minLines: 10,
-                      maxLines: 10,
-                      controller: description,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 153, 147, 147),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Description',
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 199, 199, 199),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: TextFormField(
+                        minLines: 10,
+                        maxLines: 10,
+                        controller: description,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 153, 147, 147),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: ' Description',
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 199, 199, 199),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ))),

@@ -136,7 +136,8 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
             child: Text(
               widget.description == null ? '' : widget.description!,
               style: TextStyle(
-                fontWeight:  widget.isBold == null ? FontWeight.bold : FontWeight.normal,
+                fontWeight:
+                    widget.isBold == null ? FontWeight.bold : FontWeight.normal,
                 fontSize: 16,
                 color: Color(0xFF6A6A6A),
               ),
