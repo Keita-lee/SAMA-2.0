@@ -1,8 +1,8 @@
-import 'package:excel/excel.dart';
+//import 'package:excel/excel.dart';
 
 class AcceptanceRoundExcel {
   exportAcceptance(startDate, endDate, acpList, branch) {
-    final excel = Excel.createExcel();
+    /*   final excel = Excel.createExcel();
     final sheet = excel.sheets[excel.getDefaultSheet() as String];
 
     for (int i = 0; i < 3; i++) sheet!.setColumnWidth(i, 20);
@@ -58,6 +58,6 @@ class AcceptanceRoundExcel {
       cell11.value = TextCellValue(acpList[i]['result']);
     }
 
-    var fileBytes = excel.save(fileName: 'AcceptanceRound.xlsx');
+    var fileBytes = excel.save(fileName: 'AcceptanceRound.xlsx');*/
   }
 }

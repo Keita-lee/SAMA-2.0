@@ -1,8 +1,8 @@
-import 'package:excel/excel.dart';
+//import 'package:excel/excel.dart';
 
 class ChairPersonEx {
   exportChairPerson(startDate, endDate, chairList, branch) {
-    final excel = Excel.createExcel();
+    /* final excel = Excel.createExcel();
     final sheet = excel.sheets[excel.getDefaultSheet() as String];
 
     for (int i = 0; i < 3; i++) sheet!.setColumnWidth(i, 20);
@@ -64,6 +64,6 @@ class ChairPersonEx {
       cell11.value = TextCellValue(chairList[i]['votes']);
     }
 
-    var fileBytes = excel.save(fileName: 'ChairPersonRound.xlsx');
+    var fileBytes = excel.save(fileName: 'ChairPersonRound.xlsx');*/
   }
 }

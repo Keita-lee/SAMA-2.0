@@ -1,4 +1,4 @@
-import 'package:excel/excel.dart';
+//import 'package:excel/excel.dart';
 
 class ExportAllData {
   exportAllData(
@@ -15,7 +15,7 @@ class ExportAllData {
       chairEnd,
       chairList,
       branch) {
-    final excel = Excel.createExcel();
+    /* final excel = Excel.createExcel();
 
     final Round1Sheet = excel.sheets[excel.getDefaultSheet() as String];
     final Round2Sheet = excel.sheets[excel.getDefaultSheet() as String];
@@ -217,6 +217,6 @@ class ExportAllData {
       var chair11 = Chair4Sheet.cell(CellIndex.indexByString("e${i + 7}"));
       chair11.value = TextCellValue(chairList[i]['votes']);
     }
-    var fileBytes = excel.save(fileName: '${branch}.xlsx');
+    var fileBytes = excel.save(fileName: '${branch}.xlsx');*/
   }
 }
