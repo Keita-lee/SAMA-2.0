@@ -89,9 +89,9 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
               },
               controller: widget.textfieldController,
               style: TextStyle(
-                color: Color.fromARGB(255, 153, 147, 147),
+                color: /*Color.fromARGB(255, 153, 147, 147)*/ Color(0xFF6A6A6A),
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.normal,
               ),
               decoration: InputDecoration(
                 contentPadding: new EdgeInsets.only(left: 12.0),

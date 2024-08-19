@@ -201,222 +201,228 @@ class _NewEventState extends State<NewEvent> {
             child: Container(
               height: MyUtility(context).height * 1.8,
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Events',
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Color(0xFF174486),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Spacer(),
-                          MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                widget.closeDialog();
-                              },
-                              child: Icon(Icons.cancel),
+                child: SizedBox(
+                  width: MyUtility(context).width * 0.515,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Events',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Color(0xFF174486),
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AddEventsImage(
-                        networkImageUrl: eventsImage,
-                        updateUrl: getEventsImageUrl,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          EventTxtField(
-                            controller: _title,
-                            textSection: 'Title',
-                            customWidth:
-                                MediaQuery.of(context).size.width * 0.50,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          DateSelecter(
-                            customSize:
-                                MediaQuery.of(context).size.width * 0.25,
-                            controller: _date,
-                            refresh: () {},
-                            description: 'Start Date',
-                          ),
-                          DateSelecter(
-                            customSize:
-                                MediaQuery.of(context).size.width * 0.25,
-                            controller: endDate,
-                            refresh: () {},
-                            description: 'End Date',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.15,
-                            child: EventTxtField(
-                              controller: _times,
-                              textSection: 'Start-EndTime',
+                            Spacer(),
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  widget.closeDialog();
+                                },
+                                child: Icon(Icons.cancel),
+                              ),
                             ),
-                          ),
-                          StyleButton(
-                            description: 'Select time',
-                            onTap: () {
-                              openStartEndTimes();
-                            },
-                            height: 55,
-                            width: 150,
-                          ),
-                          EventTxtField(
-                            controller: _event,
-                            textSection: 'Type of Event',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          EventTxtField(
-                            controller: _location,
-                            textSection: 'Location',
-                          ),
-                          EventTxtField(
-                            controller: _area,
-                            textSection: 'Area',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          EventTxtField(
-                            controller: _memberPricing,
-                            textSection: 'Member Pricing',
-                          ),
-                          EventTxtField(
-                            controller: _eventProvider,
-                            textSection: 'Event Provider',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          EventTxtField(
-                            controller: _CPDAccreditation,
-                            textSection: 'CPD Accreditation',
-                          ),
-                          EventTxtField(
-                            controller: _memberAmount,
-                            textSection: 'Maximum Attendees ',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: QuillToolbar.simple(
-                        configurations: QuillSimpleToolbarConfigurations(
-                          controller: quillController,
-                          sharedConfigurations:
-                              const QuillSharedConfigurations(),
+                          ],
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: MyUtility(context).width / 2,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: QuillEditor.basic(
-                        configurations: QuillEditorConfigurations(
-                          controller: quillController,
-                          sharedConfigurations:
-                              const QuillSharedConfigurations(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AddEventsImage(
+                          networkImageUrl: eventsImage,
+                          updateUrl: getEventsImageUrl,
                         ),
                       ),
-                    ),
-                    /*    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: EventDescriptionTextField(
-                        controller: _description,
-                        textSection: 'Description',
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            EventTxtField(
+                              controller: _title,
+                              textSection: 'Title',
+                              customWidth:
+                                  MediaQuery.of(context).size.width * 0.515,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),*/
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          StyleButton(
-                            description: 'Save Event',
-                            onTap: () {
-                              createUpdateEvent();
-                            },
-                            height: 55,
-                            width: 150,
-                          ),
-                          /*  SizedBox(
-                            width: 10,
-                          ),
-                          Visibility(
-                            visible: widget.id != "" ? true : false,
-                            child: StyleButton(
-                              description: 'View Attendees',
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            DateSelecter(
+                              customSize:
+                                  MediaQuery.of(context).size.width * 0.25,
+                              controller: _date,
+                              refresh: () {},
+                              description: 'Start Date',
+                            ),
+                            DateSelecter(
+                              customSize:
+                                  MediaQuery.of(context).size.width * 0.25,
+                              controller: endDate,
+                              refresh: () {},
+                              description: 'End Date',
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              child: EventTxtField(
+                                controller: _times,
+                                textSection: 'Start-EndTime',
+                              ),
+                            ),
+                            StyleButton(
+                              description: 'Select time',
                               onTap: () {
-                                openViewEventAtt();
+                                openStartEndTimes();
                               },
                               height: 55,
                               width: 150,
                             ),
-                          ),*/
-                        ],
+                            EventTxtField(
+                              controller: _event,
+                              textSection: 'Type of Event',
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            EventTxtField(
+                              controller: _location,
+                              textSection: 'Location',
+                            ),
+                            EventTxtField(
+                              controller: _area,
+                              textSection: 'Area',
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            EventTxtField(
+                              controller: _memberPricing,
+                              textSection: 'Member Pricing',
+                            ),
+                            EventTxtField(
+                              controller: _eventProvider,
+                              textSection: 'Event Provider',
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            EventTxtField(
+                              controller: _CPDAccreditation,
+                              textSection: 'CPD Accreditation',
+                            ),
+                            EventTxtField(
+                              controller: _memberAmount,
+                              textSection: 'Maximum Attendees ',
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: QuillToolbar.simple(
+                          configurations: QuillSimpleToolbarConfigurations(
+                            controller: quillController,
+                            sharedConfigurations:
+                                const QuillSharedConfigurations(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MyUtility(context).width * 0.51,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: QuillEditor.basic(
+                            configurations: QuillEditorConfigurations(
+                              controller: quillController,
+                              sharedConfigurations:
+                                  const QuillSharedConfigurations(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      /*    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: EventDescriptionTextField(
+                          controller: _description,
+                          textSection: 'Description',
+                        ),
+                      ),*/
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            StyleButton(
+                              description: 'Save Event',
+                              onTap: () {
+                                createUpdateEvent();
+                              },
+                              height: 55,
+                              width: 150,
+                            ),
+                            /*  SizedBox(
+                              width: 10,
+                            ),
+                            Visibility(
+                              visible: widget.id != "" ? true : false,
+                              child: StyleButton(
+                                description: 'View Attendees',
+                                onTap: () {
+                                  openViewEventAtt();
+                                },
+                                height: 55,
+                                width: 150,
+                              ),
+                            ),*/
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
