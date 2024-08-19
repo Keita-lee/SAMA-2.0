@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -98,10 +99,12 @@ class _ValidateByMobileGetUsernameState
             children: [
               Text(
                 "Retrieve my SAMA number",
-                style: TextStyle(
-                    fontSize: 22,
-                    color: Color.fromRGBO(0, 159, 158, 1),
-                    fontWeight: FontWeight.bold),
+                style: GoogleFonts.openSans(
+                  fontSize: 22,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -0.5,
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -109,18 +112,30 @@ class _ValidateByMobileGetUsernameState
               Text.rich(
                 TextSpan(
                   text: "Enter ",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  style: GoogleFonts.openSans(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
+                  ),
                   children: [
                     TextSpan(
                       text: "one time pin",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.black),
+                      style: GoogleFonts.openSans(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                     TextSpan(
                       text: " sent to your cell phone number ",
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                      style: GoogleFonts.openSans(
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                   ],
                 ),
@@ -184,22 +199,33 @@ class _ValidateByMobileGetUsernameState
                 },
               ),*/
               Text('Did not get an OTP?',
-                  style: TextStyle(
+                  style: GoogleFonts.openSans(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
+                      letterSpacing: -0.5,
                       fontSize: 16)),
               SizedBox(
                 height: 5,
               ),
               Text(
                 'Please allow a few minutes for this to be sent',
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
               Row(
                 children: [
                   Text(
                     'if no OTP received after a few minutes ',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
+                    ),
                   ),
                   InkWell(
                     onTap: () {
@@ -207,11 +233,13 @@ class _ValidateByMobileGetUsernameState
                     },
                     child: Text(
                       "click to retry",
-                      style: TextStyle(
+                      style: GoogleFonts.openSans(
                           fontSize: 16,
                           color: const Color.fromRGBO(0, 159, 158, 1),
                           decoration: TextDecoration.underline,
                           decorationThickness: 2.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: -0.5,
                           decorationColor: Color.fromRGBO(0, 159, 158, 1)),
                     ),
                   ),
@@ -226,11 +254,13 @@ class _ValidateByMobileGetUsernameState
                 },
                 child: Text(
                   "Return to login",
-                  style: TextStyle(
+                  style: GoogleFonts.openSans(
                       fontSize: 16,
                       color: const Color.fromRGBO(0, 159, 158, 1),
                       decoration: TextDecoration.underline,
                       decorationThickness: 2.0,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
                       decorationColor: Color.fromRGBO(0, 159, 158, 1)),
                 ),
               ),

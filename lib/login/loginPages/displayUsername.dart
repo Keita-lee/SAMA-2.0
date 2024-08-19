@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -64,15 +65,23 @@ class _DisplayUsernameState extends State<DisplayUsername> {
             children: [
               Text(
                 "Retrieved my SAMA Number ",
-                style: TextStyle(
-                    fontSize: 22, color: Color.fromRGBO(0, 159, 158, 1)),
+                style: GoogleFonts.openSans(
+                  fontSize: 22,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  letterSpacing: -0.5,
+                ),
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
                 "Thank you, Your SAMA number has been sent to your email address.",
-                style: TextStyle(fontSize: 17, color: Colors.grey[600]),
+                style: GoogleFonts.openSans(
+                  fontSize: 17,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -109,12 +118,14 @@ class _DisplayUsernameState extends State<DisplayUsername> {
                 },
                 child: Text(
                   "Return to Login",
-                  style: TextStyle(
+                  style: GoogleFonts.openSans(
                     fontSize: 16,
                     color: const Color.fromRGBO(0, 159, 158, 1),
                     decoration: TextDecoration.underline,
                     decorationColor: Color.fromRGBO(0, 159, 158, 1),
                     decorationThickness: 2.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
                   ),
                 ),
               ),

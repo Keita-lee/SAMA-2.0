@@ -47,20 +47,23 @@ class _RegisterTextfieldStyleState extends State<RegisterTextfieldStyle> {
                 color: const Color.fromARGB(255, 51, 51, 51),
               ),
               borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: TextFormField(
-            controller: widget.textfieldController,
-            style: TextStyle(
-              color: Color.fromARGB(255, 153, 147, 147),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: "   ${widget.hintText}",
-              hintStyle: TextStyle(
-                color: Color.fromARGB(255, 199, 199, 199),
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: TextFormField(
+              controller: widget.textfieldController,
+              style: TextStyle(
+                color: Color.fromARGB(255, 153, 147, 147),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "${widget.hintText}",
+                hintStyle: TextStyle(
+                  color: Color.fromARGB(255, 199, 199, 199),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ),
@@ -241,16 +244,15 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Container(
       //     width: MyUtility(context).width / 1.5,
-      height: MyUtility(context).height / 2,
-      child: SingleChildScrollView(
-          child: Row(
+      //height: MyUtility(context).height / 2,
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /*  Image(
-              width: MyUtility(context).width / 6,
-              height: MyUtility(context).height / 3.5,
-              image: AssetImage('images/sama_logo.png')),*/
+          width: MyUtility(context).width / 6,
+          height: MyUtility(context).height / 3.5,
+          image: AssetImage('images/sama_logo.png')),*/
           SizedBox(
             width: MyUtility(context).width / 3,
             child: Column(
@@ -343,7 +345,7 @@ class _RegisterState extends State<Register> {
                 ]),
           ),
         ],
-      )),
+      ),
     );
   }
 }

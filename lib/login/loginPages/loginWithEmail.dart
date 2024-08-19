@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/loginPages/register.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 
@@ -121,10 +122,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         children: [
           Text(
             "Login",
-            style: TextStyle(
-                fontSize: 22,
-                color: Color.fromRGBO(0, 159, 158, 1),
-                fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              color: Color.fromRGBO(0, 159, 158, 1),
+            ),
           ),
           SizedBox(
             height: 10,
@@ -132,27 +133,37 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           Text.rich(
             TextSpan(
               text: "Login using your ",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 fontSize: 16,
                 color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
               ),
               children: [
                 TextSpan(
                   text: "SAMA number",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                  style: GoogleFonts.openSans(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    letterSpacing: -0.5,
+                  ),
                 ),
                 TextSpan(
                   text: " or ",
-                  style: TextStyle(
+                  style: GoogleFonts.openSans(
                     fontSize: 16,
                     color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
                   ),
                 ),
                 TextSpan(
                   text: "Email address",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                  style: GoogleFonts.openSans(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ],
             ),
@@ -200,8 +211,12 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           Text(
             "Need help?",
-            style: TextStyle(
-                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 5,
@@ -217,12 +232,14 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             },
             child: Text(
               "Help me retrieve my SAMA Number",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 decoration: showForgotSamaBorder == true
                     ? TextDecoration.underline
                     : TextDecoration.none,
                 decorationColor: Color.fromRGBO(0, 159, 158, 1),
                 decorationThickness: 2,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
                 fontSize: 16,
                 color: const Color.fromRGBO(0, 159, 158, 1),
               ),
@@ -240,12 +257,14 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             },
             child: Text(
               "Reset my password",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 decoration: showForgotPasswordBorder == true
                     ? TextDecoration.underline
                     : TextDecoration.none,
                 decorationColor: Color.fromRGBO(0, 159, 158, 1),
                 decorationThickness: 2,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
                 fontSize: 16,
                 color: const Color.fromRGBO(0, 159, 158, 1),
               ),
@@ -283,10 +302,12 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             children: [
               Text(
                 'Dont have a profile? ',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.normal),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
               InkWell(
                 onTap: () {
@@ -299,12 +320,14 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                 },
                 child: Text(
                   "Register here",
-                  style: TextStyle(
+                  style: GoogleFonts.openSans(
                     decoration: showNonMemberBorder == true
                         ? TextDecoration.underline
                         : TextDecoration.none,
                     decorationColor: Color.fromRGBO(0, 159, 158, 1),
                     decorationThickness: 2,
+                    letterSpacing: -0.5,
+                    fontWeight: FontWeight.w500,
                     fontSize: 16,
                     color: const Color.fromRGBO(0, 159, 158, 1),
                   ),
@@ -312,10 +335,12 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               ),
               Text(
                 ' as a member or create a free account',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.normal),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
             ],
           ),

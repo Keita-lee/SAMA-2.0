@@ -17,6 +17,7 @@ import 'package:sama/login/loginPages/getUserName.dart';
 import 'package:sama/login/loginPages/validateByEmailOtp.dart';
 import 'package:sama/login/loginPages/validateByMobile.dart';
 import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPages extends StatefulWidget {
   LoginPages({super.key});
@@ -106,7 +107,7 @@ class _LoginPagesState extends State<LoginPages> {
     ];
 
     return Container(
-      color: Color.fromARGB(255, 224, 232, 247),
+      color: Color(0xFFF8FAFF),
       width: MyUtility(context).width,
       height: MyUtility(context).height,
       child: Column(
@@ -122,15 +123,15 @@ class _LoginPagesState extends State<LoginPages> {
                 Row(
                   children: [
                     Image(
-                        width: MyUtility(context).width / 12,
-                        height: MyUtility(context).height / 10.0,
+                        width: MyUtility(context).width / 10,
+                        height: MyUtility(context).height / 8.0,
                         image: AssetImage('images/sama_logo.png')),
                     Text(
-                      "SAMA Member Protal",
-                      style: TextStyle(
+                      "SAMA Member Portal",
+                      style: GoogleFonts.openSans(
                           fontSize: 22,
                           color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -190,12 +191,15 @@ class _LoginPagesState extends State<LoginPages> {
                 width: MyUtility(context).width / 1.5,
                 //height: MyUtility(context).height / 1.8,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5),
-                    topRight: Radius.circular(5),
-                  ), // Straighten the bottom corners
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5),
+                    ), // Straighten the bottom corners
+                    border: Border.all(
+                      color: Colors.grey[300]!,
+                      width: 1.0,
+                    )),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 35, bottom: 45),
                   child: Row(
@@ -215,6 +219,9 @@ class _LoginPagesState extends State<LoginPages> {
                               child: pages[pageIndex],
                             ),
                           ),
+                          SizedBox(
+                            height: MyUtility(context).height * 0.02,
+                          ),
                         ],
                       ),
                     ],
@@ -229,7 +236,7 @@ class _LoginPagesState extends State<LoginPages> {
                 child: Image.asset(
                   'images/bannerBackground.jpg',
                   width: MyUtility(context).width / 1.5,
-                  height: 20,
+                  height: MyUtility(context).height * 0.04,
                   fit: BoxFit.cover,
                 ),
               ),

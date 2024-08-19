@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
@@ -110,21 +111,33 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
         children: [
           Text(
             "Create New Password",
-            style: TextStyle(
-                fontSize: 20,
-                color: Color.fromRGBO(0, 159, 158, 1),
-                fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 20,
+              color: Color.fromRGBO(0, 159, 158, 1),
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 15,
           ),
           Text(
             "Enter new password",
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(
+              fontSize: 16.5,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+              letterSpacing: -0.5,
+            ),
           ),
           Text(
             "Your passsword should have a minimum of 8 characters, 1 uppercase letter and 1 special character",
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 15,
@@ -177,7 +190,12 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
           ),
           Text(
             "Confirm password",
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: GoogleFonts.openSans(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 10,

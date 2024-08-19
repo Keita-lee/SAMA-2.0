@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
@@ -89,10 +90,12 @@ class _ResetPasswordState extends State<ResetPassword> {
         children: [
           Text(
             "Password Reset",
-            style: TextStyle(
-                fontSize: 22,
-                color: Color.fromRGBO(0, 159, 158, 1),
-                fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 22,
+              color: Color.fromRGBO(0, 159, 158, 1),
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 15,
@@ -100,16 +103,29 @@ class _ResetPasswordState extends State<ResetPassword> {
           Text.rich(
             TextSpan(
               text: "Enter your ",
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+                color: Colors.grey[600],
+                letterSpacing: -0.5,
+                fontWeight: FontWeight.w500,
+              ),
               children: [
                 TextSpan(
                   text: "SAMA number",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                  style: GoogleFonts.openSans(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    letterSpacing: -0.5,
+                  ),
                 ),
                 TextSpan(
                   text: " to receive a one time pin ",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  style: GoogleFonts.openSans(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    letterSpacing: -0.5,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -144,8 +160,12 @@ class _ResetPasswordState extends State<ResetPassword> {
           ),
           Text(
             "Send One Time Pin To:",
-            style: TextStyle(
-                fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 8,
@@ -164,8 +184,12 @@ class _ResetPasswordState extends State<ResetPassword> {
               ),
               Text(
                 "To my Email Address",
-                style: TextStyle(
-                    fontSize: 16, color: Color.fromRGBO(0, 159, 158, 1)),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
             ],
           ),
@@ -183,8 +207,12 @@ class _ResetPasswordState extends State<ResetPassword> {
               ),
               Text(
                 "To my mobile no",
-                style: TextStyle(
-                    fontSize: 16, color: Color.fromRGBO(0, 159, 158, 1)),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
             ],
           ),
@@ -201,8 +229,12 @@ class _ResetPasswordState extends State<ResetPassword> {
           ),*/
           Text(
             "Need help?",
-            style: TextStyle(
-                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 5,
@@ -213,12 +245,14 @@ class _ResetPasswordState extends State<ResetPassword> {
             },
             child: Text(
               "Help me retrieve my SAMA number",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 fontSize: 16,
                 color: const Color.fromRGBO(0, 159, 158, 1),
                 decoration: TextDecoration.underline,
                 decorationColor: Color.fromRGBO(0, 159, 158, 1),
                 decorationThickness: 2.0,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
               ),
             ),
           ),
@@ -231,12 +265,14 @@ class _ResetPasswordState extends State<ResetPassword> {
             },
             child: Text(
               "Return to Login",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 fontSize: 16,
                 color: const Color.fromRGBO(0, 159, 158, 1),
                 decoration: TextDecoration.underline,
                 decorationColor: Color.fromRGBO(0, 159, 158, 1),
                 decorationThickness: 2.0,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
               ),
             ),
           ),

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
@@ -112,11 +113,13 @@ class _GetUsernameState extends State<GetUsername> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Retrieve SAMA Number",
-            style: TextStyle(
-                fontSize: 20,
-                color: Color.fromRGBO(0, 159, 158, 1),
-                fontWeight: FontWeight.bold),
+            "Retrieve my SAMA Number",
+            style: GoogleFonts.openSans(
+              fontSize: 20,
+              color: Color.fromRGBO(0, 159, 158, 1),
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 15,
@@ -128,15 +131,29 @@ class _GetUsernameState extends State<GetUsername> {
           Text.rich(
             TextSpan(
               text: "Enter your ",
-              style: TextStyle(fontSize: 15, color: Colors.black),
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
+              ),
               children: [
                 TextSpan(
                   text: "email address",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: GoogleFonts.openSans(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    letterSpacing: -0.5,
+                  ),
                 ),
                 TextSpan(
                   text: " to receive a one time pin ",
-                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  style: GoogleFonts.openSans(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ],
             ),
@@ -175,8 +192,12 @@ class _GetUsernameState extends State<GetUsername> {
           ),
           Text(
             "Send One Time Pin to:",
-            style: TextStyle(
-                fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           SizedBox(
             height: 8,
@@ -197,8 +218,12 @@ class _GetUsernameState extends State<GetUsername> {
               ),
               Text(
                 "My email address",
-                style: TextStyle(
-                    fontSize: 15, color: Color.fromRGBO(0, 159, 158, 1)),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
             ],
           ),
@@ -218,8 +243,12 @@ class _GetUsernameState extends State<GetUsername> {
               ),
               Text(
                 "My cell phone number",
-                style: TextStyle(
-                    fontSize: 15, color: Color.fromRGBO(0, 159, 158, 1)),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
             ],
           ),
@@ -260,11 +289,13 @@ class _GetUsernameState extends State<GetUsername> {
             },
             child: Text(
               "Return to Login",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                   fontSize: 16,
                   color: const Color.fromRGBO(0, 159, 158, 1),
                   decoration: TextDecoration.underline,
                   decorationThickness: 2.0,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
                   decorationColor: Color.fromRGBO(0, 159, 158, 1)),
             ),
           ),

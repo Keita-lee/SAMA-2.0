@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -98,7 +99,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         children: [
           Text(
             "Login",
-            style: TextStyle(
+            style: GoogleFonts.openSans(
                 fontSize: 22,
                 color: Color.fromRGBO(0, 159, 158, 1),
                 fontWeight: FontWeight.bold),
@@ -109,16 +110,29 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           Text.rich(
             TextSpan(
               text: "Enter your ",
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+                color: Colors.grey[600],
+                letterSpacing: -0.5,
+                fontWeight: FontWeight.w500,
+              ),
               children: [
                 TextSpan(
                   text: "password ",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    letterSpacing: -0.5,
+                  ),
                 ),
                 TextSpan(
                   text: "to continue",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    letterSpacing: -0.5,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -153,8 +167,12 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           ),
           Text(
             "Need help?",
-            style: TextStyle(
-                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+            style: GoogleFonts.openSans(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           InkWell(
             onTap: () {
@@ -167,13 +185,15 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
             },
             child: Text(
               "Reset my password",
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 decoration: showForgotPasswordBorder == true
                     ? TextDecoration.underline
                     : TextDecoration.none,
                 decorationColor: Color.fromRGBO(0, 159, 158, 1),
                 decorationThickness: 2,
                 fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
                 color: const Color.fromRGBO(0, 159, 158, 1),
               ),
             ),
@@ -185,10 +205,12 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
             children: [
               Text(
                 'Dont have a profile? ',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.normal),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
               InkWell(
                 onTap: () {
@@ -207,22 +229,26 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                 },
                 child: Text(
                   "Register here",
-                  style: TextStyle(
+                  style: GoogleFonts.openSans(
                       decoration: showNonMemberBorder == true
                           ? TextDecoration.underline
                           : TextDecoration.none,
                       decorationColor: Color.fromRGBO(0, 159, 158, 1),
                       decorationThickness: 2,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
                       fontSize: 16,
                       color: const Color.fromRGBO(0, 159, 158, 1)),
                 ),
               ),
               Text(
                 ' as a member or create a free account',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.normal),
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
               ),
             ],
           ),
