@@ -270,7 +270,7 @@ class _MediaFormState extends State<MediaForm> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Row(
+                  /* Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -343,7 +343,7 @@ class _MediaFormState extends State<MediaForm> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20),*/
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

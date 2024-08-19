@@ -58,45 +58,50 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
               color: Colors.black,
             ),
           ),
-          child: TextFormField(
-            maxLines: widget.lines == null ? 1 : widget.lines,
-            validator: (value) {
-              if (widget.textFieldType == "") {
+          child: Padding(
+            padding: widget.customHeight != null
+                ? EdgeInsets.only(top: 10.0)
+                : EdgeInsets.zero,
+            child: TextFormField(
+              maxLines: widget.lines == null ? 1 : widget.lines,
+              validator: (value) {
+                if (widget.textFieldType == "") {
+                  return null;
+                }
+                if (value == null ||
+                    value.isEmpty && widget.textFieldType != "") {
+                  return 'Please enter a value';
+                }
+
+                if (num.tryParse(value) == null &&
+                    widget.textFieldType == "intType") {
+                  return 'Please enter number value';
+                }
+                if ((value == null ||
+                        value.isEmpty ||
+                        !value.contains('@') ||
+                        !value.contains('.')) &&
+                    widget.textFieldType == "emailType") {
+                  return 'Invalid Email';
+                }
+
                 return null;
-              }
-              if (value == null ||
-                  value.isEmpty && widget.textFieldType != "") {
-                return 'Please enter a value';
-              }
-
-              if (num.tryParse(value) == null &&
-                  widget.textFieldType == "intType") {
-                return 'Please enter number value';
-              }
-              if ((value == null ||
-                      value.isEmpty ||
-                      !value.contains('@') ||
-                      !value.contains('.')) &&
-                  widget.textFieldType == "emailType") {
-                return 'Invalid Email';
-              }
-
-              return null;
-            },
-            controller: widget.textfieldController,
-            style: TextStyle(
-              color: Color.fromARGB(255, 153, 147, 147),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            decoration: InputDecoration(
-              contentPadding: new EdgeInsets.only(left: 12.0),
-              border: InputBorder.none,
-              hintText: widget.hintText,
-              hintStyle: TextStyle(
-                color: Color.fromARGB(255, 199, 199, 199),
+              },
+              controller: widget.textfieldController,
+              style: TextStyle(
+                color: Color.fromARGB(255, 153, 147, 147),
                 fontSize: 16,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.bold,
+              ),
+              decoration: InputDecoration(
+                contentPadding: new EdgeInsets.only(left: 12.0),
+                border: InputBorder.none,
+                hintText: widget.hintText,
+                hintStyle: TextStyle(
+                  color: Color.fromARGB(255, 199, 199, 199),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ),
