@@ -1,8 +1,8 @@
-import 'package:excel/excel.dart';
+//import 'package:excel/excel.dart';
 
 class Round1Excel {
   exportRound1(startDate, endDate, nomList, branch) {
-    final excel = Excel.createExcel();
+    /*final excel = Excel.createExcel();
     final sheet = excel.sheets[excel.getDefaultSheet() as String];
 
     for (int i = 0; i < 3; i++) sheet!.setColumnWidth(i, 20);
@@ -57,6 +57,6 @@ class Round1Excel {
       cell11.value = TextCellValue(nomList[i]['nominations']);
     }
 
-    var fileBytes = excel.save(fileName: 'Round1.xlsx');
+    var fileBytes = excel.save(fileName: 'Round1.xlsx');*/
   }
 }
