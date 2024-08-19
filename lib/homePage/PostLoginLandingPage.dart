@@ -14,6 +14,7 @@ import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/products/products.dart';
+import 'package:sama/admin/transactions/transactionsAdmin.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/homePage/dashboard/nonMemberDashboard.dart';
 import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
@@ -174,7 +175,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       MemberCommunities(
         userType: userType,
       ),
-
+      TransactionsAdmin()
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
 

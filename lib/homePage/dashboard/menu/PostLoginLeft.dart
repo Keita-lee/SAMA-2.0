@@ -444,6 +444,16 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       widget.changePage(12);
                     },
                   ),
+                  HoverItem(
+                    isActive: activeIndex == 11,
+                    menuSize: widget.menuSize,
+                    description: "Transactions",
+                    iconPath: "images/icon_estore.svg",
+                    onPressed: () {
+                      _handleItemClick(11);
+                      widget.changePage(17);
+                    },
+                  ),
                   /*HoverItem(
                     menuSize: widget.menuSize,
                     description: "Announcements",
