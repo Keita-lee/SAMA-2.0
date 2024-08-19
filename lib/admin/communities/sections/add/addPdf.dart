@@ -91,6 +91,7 @@ class _AddPdfState extends State<AddPdf> {
           .set(communityData)
           .whenComplete(() {
         descriptionPopup("Data Saved");
+        widget.changePageIndex(0, "");
       });
     } else {
       await FirebaseFirestore.instance
@@ -99,6 +100,7 @@ class _AddPdfState extends State<AddPdf> {
           .update(communityData)
           .whenComplete(() {
         descriptionPopup("Data Saved");
+        widget.changePageIndex(0, "");
       });
     }
   }

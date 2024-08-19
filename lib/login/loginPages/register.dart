@@ -119,6 +119,7 @@ class _RegisterState extends State<Register> {
   bool showAlreadyAMemberBorder = false;
 
   bool _isLoading = false;
+  var loadingError = "";
 
   final FocusNode _focusNode = FocusNode();
 
@@ -199,11 +200,12 @@ class _RegisterState extends State<Register> {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
       await _auth.createUserWithEmailAndPassword(
-        email: email.text,
+        email: email.text.toLowerCase(),
         password: "Cp123456",
       );
     } catch (error) {
       setState(() {
+        openValidateDialog('This email has already been used');
         _isLoading = false;
       });
     }

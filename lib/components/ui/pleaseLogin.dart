@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/login/loginPages.dart';
 
 import '../myutility.dart';
 import '../styleButton.dart';
@@ -74,21 +75,31 @@ class _PleaseLoginState extends State<PleaseLogin> {
                     Container(
                       height: 15,
                     ),
-                    
                   ],
                 ),
               ],
             ),
             Row(
               children: [
-                Container(height: 50,),
+                Container(
+                  height: 50,
+                ),
                 Spacer(),
                 StyleButton(
                     buttonColor: const Color.fromARGB(255, 87, 87, 87),
                     description: "LOGIN",
                     height: 40,
                     width: 80,
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Material(
+                                    child: LoginPages(
+                                      pageIndex: 0,
+                                    ),
+                                  )));
+                    }),
                 SizedBox(
                   width: 15,
                 ),
@@ -97,7 +108,16 @@ class _PleaseLoginState extends State<PleaseLogin> {
                     description: "REGISTER",
                     height: 40,
                     width: 100,
-                    onTap: () {})
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Material(
+                                    child: LoginPages(
+                                      pageIndex: 9,
+                                    ),
+                                  )));
+                    })
               ],
             ),
           ],

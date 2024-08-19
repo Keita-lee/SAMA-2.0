@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/homePage/dashboard/ui/onHoverButtons.dart';
+import 'package:sama/login/loginPages.dart';
 
 import '../../components/myutility.dart';
 
@@ -17,7 +18,9 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width < 1600 ? MyUtility(context).width * 0.75 : MyUtility(context).width * 0.55,
+      width: MyUtility(context).width < 1600
+          ? MyUtility(context).width * 0.75
+          : MyUtility(context).width * 0.55,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -52,7 +55,9 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                   width: 15,
                 ),
                 SizedBox(
-                  width:  MyUtility(context).width < 1600 ? MyUtility(context).width * 0.57 : MyUtility(context).width * 0.37,
+                  width: MyUtility(context).width < 1600
+                      ? MyUtility(context).width * 0.57
+                      : MyUtility(context).width * 0.37,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -132,7 +137,14 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  //TO DO ADD LOGIC
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Material(
+                                                child: LoginPages(
+                                                  pageIndex: 9,
+                                                ),
+                                              )));
                                 },
                               ),
                             ),

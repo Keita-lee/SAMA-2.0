@@ -304,11 +304,12 @@ class _MemberElectionState extends State<MemberElection> {
         children: [
           Visibility(
               visible: widget.userType == "NonMember",
-              child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SamaBlueBanner(pageName: 'BRANCH VOTING'),
                   Padding(
-                    padding: const EdgeInsets.only( top: 25),
+                    padding: const EdgeInsets.only(top: 25),
                     child: PleaseLogin(
                       pleaseLoginText:
                           'Access to this content is restricted. Please log in to view or sign up for membership today.',
