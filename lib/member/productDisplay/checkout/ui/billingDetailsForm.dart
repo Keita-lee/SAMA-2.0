@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/CheckCircle.dart';
@@ -6,9 +7,11 @@ import 'package:sama/components/profileTextField.dart';
 import '../../../../components/myutility.dart';
 
 class BillingDetailsForm extends StatefulWidget {
+  final TextEditingController emailController;
   final GlobalKey<FormState> formKey;
 
-  const BillingDetailsForm({super.key, required this.formKey});
+  const BillingDetailsForm(
+      {super.key, required this.formKey, required this.emailController});
 
   @override
   State<BillingDetailsForm> createState() => _BillingDetailsFormState();
@@ -25,6 +28,9 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
   final town = TextEditingController();
   final state = TextEditingController();
   final postal = TextEditingController();
+
+  final bool isMember =
+      FirebaseAuth.instance.currentUser == null ? false : true;
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +181,19 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       customSize: MyUtility(context).width * 0.42,
                       textFieldType: 'intType',
                       textfieldController: postal),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Visibility(
+                    visible: !isMember,
+                    child: ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        description: 'Email Address',
+                        customSize: MyUtility(context).width * 0.42,
+                        textFieldType: 'emailType',
+                        textfieldController: widget.emailController),
+                  ),
                   const SizedBox(
                     height: 50,
                   ),

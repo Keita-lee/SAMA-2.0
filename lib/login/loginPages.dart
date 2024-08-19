@@ -20,7 +20,8 @@ import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPages extends StatefulWidget {
-  LoginPages({super.key});
+  final int? pageIndex;
+  LoginPages({super.key, this.pageIndex});
 
   @override
   State<LoginPages> createState() => _LoginPagesState();
@@ -62,6 +63,7 @@ class _LoginPagesState extends State<LoginPages> {
 
   @override
   void initState() {
+    pageIndex = widget.pageIndex ?? 0;
     super.initState();
   }
 

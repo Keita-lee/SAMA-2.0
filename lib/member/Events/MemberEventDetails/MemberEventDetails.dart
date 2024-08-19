@@ -88,6 +88,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         _memberAmount.text = data.get('_memberAmount');
         myJSON = jsonDecode(data.get('_description'));
         quillController = QuillController(
+            readOnly: true,
             document: Document.fromJson(myJSON),
             selection: TextSelection.collapsed(offset: 0));
       });
@@ -465,7 +466,8 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Padding(
-                                            padding: const EdgeInsets.only(top: 5),
+                                            padding:
+                                                const EdgeInsets.only(top: 5),
                                             child: Text(
                                               'Booking amount made  -  ${attendeesAlreadyAdded}',
                                               style: TextStyle(

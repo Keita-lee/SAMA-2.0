@@ -98,12 +98,12 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                   width: 60,
                   fontSize: 13,
                   buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                  onTap: (){
-                    //ADD LOGIC
-                  }),
+                  onTap: () => widget.closeDialog()),
             ],
           ),
-          const SizedBox(height: 25,),
+          const SizedBox(
+            height: 25,
+          ),
           Container(
             width: MyUtility(context).width * 0.60,
             //height: MyUtility(context).height / 1.4,
@@ -217,7 +217,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                                       height: 1,
                                     ),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     email,
                                     style: TextStyle(
                                       fontSize: 16,

@@ -83,8 +83,9 @@ class _MemberEventsState extends State<MemberEvents> {
                   ),
                 ),*/
                 StreamBuilder<QuerySnapshot>(
-                  stream:
-                      FirebaseFirestore.instance.collection('events').snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection('events')
+                      .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
@@ -93,16 +94,15 @@ class _MemberEventsState extends State<MemberEvents> {
                     if (!snapshot.hasData) {
                       return const Text('Loading...');
                     }
-            
-                    final List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+                    final List<DocumentSnapshot> documents =
+                        snapshot.data!.docs;
                     if (documents.isEmpty) {
                       return Center(child: Text('No Media & Webinars yet'));
                     }
-            
+
                     return Container(
-                      
-                      width: MyUtility(context).width * 0.60
-                          ,
+                      width: MyUtility(context).width * 0.60,
                       height: 700,
                       child: ListView.builder(
                         itemCount: documents.length,

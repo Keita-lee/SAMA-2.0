@@ -15,6 +15,7 @@ import '../../../../login/popups/validateDialog.dart';
 import 'package:http/http.dart' as http;
 
 class YourOrderCon extends StatefulWidget {
+  TextEditingController email;
   final GlobalKey<FormState> formKey;
   Function(int, String) changePageIndex;
   List products;
@@ -25,7 +26,8 @@ class YourOrderCon extends StatefulWidget {
       required this.formKey,
       required this.products,
       required this.total,
-      required this.changePageIndex});
+      required this.changePageIndex,
+      required this.email});
 
   @override
   State<YourOrderCon> createState() => _YourOrderConState();
@@ -72,6 +74,7 @@ class _YourOrderConState extends State<YourOrderCon> {
 
 //Send payment
   Future<void> sendPayment() async {
+    print(widget.email);
     final response = await http.post(
       Uri.parse('https://api.paystack.co/transaction/initialize'),
       headers: <String, String>{
@@ -80,7 +83,9 @@ class _YourOrderConState extends State<YourOrderCon> {
             'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
       },
       body: jsonEncode(<String, dynamic>{
-        'email': email,
+        'email': FirebaseAuth.instance.currentUser != null
+            ? email
+            : widget.email.text,
         'amount': "${total * 100}",
         "currency": "ZAR",
       }),
@@ -96,6 +101,7 @@ class _YourOrderConState extends State<YourOrderCon> {
 
       launchUrl(Uri.parse(decode['data']['authorization_url']));
     } else {
+      print('error ${response.statusCode} ${response.body}');
       throw Exception('Failed .');
     } /* */
   }
@@ -135,7 +141,7 @@ class _YourOrderConState extends State<YourOrderCon> {
       "paymentRef": reference,
       "products": products,
       "date": DateTime.now(),
-      "user": FirebaseAuth.instance.currentUser!.uid
+      "user": FirebaseAuth.instance.currentUser?.uid ?? '0'
     };
 
     FirebaseFirestore.instance.collection('storeHistory').add(productHistory);

@@ -185,7 +185,11 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                       id: benefitsId,
                       userType: userType,
                       logo: logoImage,
-                      closeDialog: () => Navigator.pop(dialogContext!)))
+                      closeDialog: () {
+                        setState(() {
+                          pageIndex = 0;
+                        });
+                      }))
 
               /*  CompanyContainer(
                   image: 'images/company.jpg',

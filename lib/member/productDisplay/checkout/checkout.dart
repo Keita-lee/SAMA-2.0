@@ -18,7 +18,7 @@ class Checkout extends StatefulWidget {
 
 class _CheckoutState extends State<Checkout> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -47,7 +47,10 @@ class _CheckoutState extends State<Checkout> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BillingDetailsForm(formKey: _formKey),
+                BillingDetailsForm(
+                  formKey: _formKey,
+                  emailController: emailController,
+                ),
                 const SizedBox(
                   width: 20,
                 ),
@@ -56,6 +59,7 @@ class _CheckoutState extends State<Checkout> {
                   products: widget.products,
                   total: widget.total,
                   changePageIndex: widget.changePageIndex,
+                  email: emailController,
                 )
               ],
             ),

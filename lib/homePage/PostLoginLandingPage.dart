@@ -358,7 +358,13 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                   children: [
                                     OnHoverButtons(
                                         onTap: () {
-                                          //ADD LOGIC
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Material(
+                                                      child: LoginPages(),
+                                                    )),
+                                          );
                                         },
                                         height: 35,
                                         width: 60,
@@ -372,7 +378,15 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                     ),
                                     OnHoverButtons(
                                         onTap: () {
-                                          //ADD LOGIC
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Material(
+                                                      child: LoginPages(
+                                                        pageIndex: 9,
+                                                      ),
+                                                    )),
+                                          );
                                         },
                                         height: 35,
                                         width: 60,
