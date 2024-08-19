@@ -169,7 +169,17 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       isBold: false,
                       description: 'Province / State',
                       customSize: MyUtility(context).width * 0.42,
-                      items: [],
+                      items: [
+                        "Eastern Cape",
+                        "Free State",
+                        "Gauteng",
+                        "KwaZulu-Natal",
+                        "Limpopo",
+                        "Mpumalanga",
+                        "North West",
+                        "Northern Cape",
+                        "Western Cape[n 2]"
+                      ],
                       textfieldController: state),
                   const SizedBox(
                     height: 20,
