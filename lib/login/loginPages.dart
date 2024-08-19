@@ -63,7 +63,7 @@ class _LoginPagesState extends State<LoginPages> {
 
   @override
   void initState() {
-    pageIndex = widget.pageIndex ?? 0;
+    pageIndex = widget.pageIndex ?? 5;
     super.initState();
   }
 

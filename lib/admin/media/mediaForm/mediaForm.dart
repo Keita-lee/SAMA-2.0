@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,6 +15,7 @@ import 'package:sama/components/yesNoDialog.dart';
 class MediaForm extends StatefulWidget {
   Function closeDialog;
   String id;
+
   MediaForm({super.key, required this.closeDialog, required this.id});
 
   @override
@@ -23,7 +23,7 @@ class MediaForm extends StatefulWidget {
 }
 
 class _MediaFormState extends State<MediaForm> {
-  //var
+  // Var
   String mediaImageUrl = "";
   String releaseDate = "";
 
@@ -37,12 +37,6 @@ class _MediaFormState extends State<MediaForm> {
   var myJSON;
   QuillController quillController = QuillController.basic();
 
-  getMediaImageUrl(value) {
-    setState(() {
-      mediaImageUrl = value;
-    });
-  }
-
   List<String> categories = [
     'Webinar',
     'SAMA News',
@@ -55,15 +49,33 @@ class _MediaFormState extends State<MediaForm> {
   ];
   String? selectedCategory;
 
-//getUrlForMediaImae
+  // set image URL when selected
+  getMediaImageUrl(value) {
+    setState(() {
+      mediaImageUrl = value;
+    });
+  }
+
+  // set the media image URL
   getUrlForMediaImage(value) {
     setState(() {
       mediaImageUrl = value;
     });
   }
 
-//save add data to firebase
+  // get YouTube thumbnail from YouTube link
+  String getYouTubeThumbnailUrl(String url) {
+    final videoId = Uri.parse(url).queryParameters['v'];
+    return 'https://img.youtube.com/vi/$videoId/0.jpg';
+  }
+
+  // save the form data to Firebase
   saveData() async {
+    // If no image is selected, use the YouTube thumbnail
+    if (mediaImageUrl.isEmpty && urlLink.text.isNotEmpty) {
+      mediaImageUrl = getYouTubeThumbnailUrl(urlLink.text);
+    }
+
     var mediaData = {
       "title": title.text,
       "duration": duration.text,
