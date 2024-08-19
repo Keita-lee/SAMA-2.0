@@ -91,6 +91,7 @@ class _AddTextState extends State<AddText> {
           .set(communityData)
           .whenComplete(() {
         descriptionPopup("Data Saved");
+        widget.changePageIndex(0, "");
       });
     } else {
       await FirebaseFirestore.instance
@@ -99,6 +100,7 @@ class _AddTextState extends State<AddText> {
           .update(communityData)
           .whenComplete(() {
         descriptionPopup("Data Saved");
+        widget.changePageIndex(0, "");
       });
     }
   }
