@@ -17,7 +17,7 @@ class AcceptNomination extends StatefulWidget {
 class _AcceptNominationState extends State<AcceptNomination> {
   var acceptedStatus = false;
   var read = false;
-  var noNomination = false;
+  var noNomination = true;
   var notificationId = "";
 
   //get nomination made by user
@@ -34,6 +34,7 @@ class _AcceptNominationState extends State<AcceptNomination> {
         acceptedStatus = data.docs[0]['data.accept'];
         read = data.docs[0]['read'];
         notificationId = data.docs[0]['id'];
+        noNomination = false;
         print(data.docs[0]);
       });
     } else {
