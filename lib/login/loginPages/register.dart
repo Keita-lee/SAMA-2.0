@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -114,14 +115,18 @@ class _RegisterState extends State<Register> {
 
   bool showAlreadyAMemberBorder = false;
 
+  bool _isLoading = false;
+
+  final FocusNode _focusNode = FocusNode();
+
   //Dialog for product form
-  Future openValidateDialog() => showDialog(
+  Future openValidateDialog(String message) => showDialog(
       context: context,
       builder: (context) {
         dialogContext = context;
         return Dialog(
             child: ValidateDialog(
-                description: "Fields are Missing",
+                description: message,
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
   createClient(id) async {
@@ -163,7 +168,28 @@ class _RegisterState extends State<Register> {
   sendEmailVerificationLink() async {
     widget.getEmail(email.text);
     if (email.text == "" || lastName.text == "" || firstName.text == "") {
-      openValidateDialog();
+      openValidateDialog('Fields are missing');
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    // Query Firestore to check if the email already exists
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email.text.toLowerCase())
+        .get();
+
+    // Check if any document exists with the given email
+    if (querySnapshot.docs.isNotEmpty) {
+      // Email already exists
+      if (!mounted) return;
+      openValidateDialog('This email has already been used');
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
@@ -173,11 +199,19 @@ class _RegisterState extends State<Register> {
         email: email.text,
         password: "Cp123456",
       );
-    } catch (error) {}
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
 
     await createClient(_auth.currentUser!.uid);
 
     sendOTPToUser();
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   sendOTPToUser() async {
@@ -261,13 +295,24 @@ class _RegisterState extends State<Register> {
                     padding: const EdgeInsets.all(15.0),
                     child: Row(
                       children: [
-                        StyleButton(
-                            description: "Submit",
-                            height: 55,
-                            width: 125,
-                            onTap: () {
+                        KeyboardListener(
+                          focusNode: _focusNode,
+                          autofocus: true,
+                          onKeyEvent: (KeyEvent event) {
+                            if (HardwareKeyboard.instance.isLogicalKeyPressed(
+                                LogicalKeyboardKey.enter)) {
                               sendEmailVerificationLink();
-                            }),
+                            }
+                          },
+                          child: StyleButton(
+                              waiting: _isLoading,
+                              description: "Submit",
+                              height: 55,
+                              width: 125,
+                              onTap: () {
+                                sendEmailVerificationLink();
+                              }),
+                        ),
                       ],
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/Login/loginPages/register.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 
 import 'package:sama/components/email/sendOtp.dart';
@@ -289,13 +290,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Material(
-                                child: Material(
-                                    child: PostLoginLandingPage(userId: "")),
-                              )));
+                  widget.changePage(9);
                 },
                 onHover: (hovered) {
                   setState(() {

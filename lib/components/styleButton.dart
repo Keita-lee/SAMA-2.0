@@ -10,6 +10,7 @@ class StyleButton extends StatefulWidget {
   final Function()? onTap;
   Color? buttonColor;
   Color? buttonTextColor;
+  bool? waiting;
   StyleButton(
       {super.key,
       required this.description,
@@ -18,7 +19,8 @@ class StyleButton extends StatefulWidget {
       required this.width,
       required this.onTap,
       this.fontSize,
-      this.buttonColor});
+      this.buttonColor,
+      this.waiting});
 
   @override
   State<StyleButton> createState() => _StyleButtonState();
@@ -41,15 +43,24 @@ class _StyleButtonState extends State<StyleButton> {
                 : Color.fromARGB(255, 8, 55, 145),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-        child: Text(
-          widget.description!,
-          style: TextStyle(
-            color: widget.buttonTextColor == null
-                ? Color.fromARGB(255, 255, 255, 255)
-                : widget.buttonTextColor,
-            fontSize: widget.fontSize == null ? 16 : widget.fontSize,
-          ),
-        ),
+        child: widget.waiting != null && widget.waiting == true
+            ? SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                  color: Colors.white,
+                ),
+              )
+            : Text(
+                widget.description!,
+                style: TextStyle(
+                  color: widget.buttonTextColor == null
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : widget.buttonTextColor,
+                  fontSize: widget.fontSize == null ? 16 : widget.fontSize,
+                ),
+              ),
         onPressed: widget.onTap,
       ),
     );
