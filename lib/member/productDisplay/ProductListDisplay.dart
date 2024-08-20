@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +11,14 @@ import 'package:sama/member/productDisplay/productFullViewDigital.dart';
 import 'package:sama/member/productDisplay/purchaseHistory/purchaseHistory.dart';
 import 'package:sama/member/productDisplay/ui/productDisplayItem.dart';
 import 'package:sama/components/myutility.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sama/utils/cartUtils.dart';
 import 'checkout/checkout.dart';
 
 class ProductListDisplay extends StatefulWidget {
   String userType;
-  ProductListDisplay({super.key, required this.userType});
+  int? pageIndex;
+  ProductListDisplay({super.key, required this.userType, this.pageIndex});
 
   @override
   State<ProductListDisplay> createState() => _ProductListDisplayState();
@@ -33,7 +37,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   String description = "";
   String productImage = "";
 
-  var productQuantity = 0;
+  var productQuantity = 1;
   var total = 0.0;
 
   changePageIndex(value, type) {
@@ -43,15 +47,16 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     });
   }
 
-  getProductQuantity(productName, amount) {
+  getProductQuantity(productName, amount) async {
+    List cart = await getCart();
     var productIndex =
-        (cartProducts).indexWhere((item) => item["productName"] == productName);
+        (cart).indexWhere((item) => item["productName"] == productName);
 
     if (amount == 0) {
       if (productIndex == -1) {
         productQuantity = 0;
       } else {
-        productQuantity = cartProducts[productIndex]['quantity'];
+        productQuantity = cart[productIndex]['quantity'];
       }
     } else {
       if (productIndex == -1) {
@@ -61,12 +66,29 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
       }
     }
 
-    setState(() {});
+    setState(() {
+      cartProducts = cart;
+    });
   }
 
   getTotal(value) {
+    print('overall total: $value');
     setState(() {
       total = value;
+    });
+  }
+
+  deleteItem(String name) async {
+    await deleteProduct(name, getProductQuantity);
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Product deleted')),
+    );
+
+    List cart = await getCart();
+    setState(() {
+      cartProducts = cart;
     });
   }
 
@@ -85,49 +107,66 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   }
 
   // Add a product to the cart list
-  addProductToList(product, quantity) {
+  addProductToList(product, quantity) async {
     print(product);
     print(quantity);
-    var productSelected = {
-      "name": product['name'],
-      "productPrice": 'Member Price. Includes VAT',
-      "quantity": quantity != "" ? quantity : 1,
-      "price": '${double.parse(product['price'])}',
-      "total":
-          '${double.parse(product['price']) * (quantity != "" ? quantity : 1)}',
-      "id": product['id'],
-      "productImage": product['imageUrl'],
-    };
+    await addProduct(product, quantity, getProductQuantity);
 
-    setState(() {
-      var productIndex = (cartProducts)
-          .indexWhere((item) => item["productName"] == product['name']);
-
-      if (productIndex == -1) {
-        cartProducts.add(productSelected);
-      } else {
-        if (quantity == "") {
-          cartProducts[productIndex]['quantity'] =
-              cartProducts[productIndex]['quantity'] + 1;
-
-          cartProducts[productIndex]['total'] =
-              '${double.parse(cartProducts[productIndex]['total']) * cartProducts[productIndex]['quantity']}';
-        } else {
-          cartProducts[productIndex]['quantity'] = quantity;
-
-          cartProducts[productIndex]['total'] =
-              '${double.parse(cartProducts[productIndex]['total']) * quantity}';
-        }
-      } /* */
-      getProductQuantity(product['name'], 0);
-    });
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Added to Cart')),
+      const SnackBar(content: Text('Added to Cart')),
     );
+    List cart = await getCart();
+    setState(() {
+      cartProducts = cart;
+    });
+
+    // var productSelected = {
+    //   "name": product['name'],
+    //   "productPrice": 'Member Price. Includes VAT',
+    //   "quantity": quantity != "" ? quantity : 1,
+    //   "price": '${double.parse(product['price'])}',
+    //   "total":
+    //       '${double.parse(product['price']) * (quantity != "" ? quantity : 1)}',
+    //   "id": product['id'],
+    //   "productImage": product['imageUrl'],
+    // };
+
+    // setState(() {
+    //   var productIndex = (cartProducts)
+    //       .indexWhere((item) => item["productName"] == product['name']);
+
+    //   if (productIndex == -1) {
+    //     cartProducts.add(productSelected);
+    //   } else {
+    //     if (quantity == "") {
+    //       cartProducts[productIndex]['quantity'] =
+    //           cartProducts[productIndex]['quantity'] + 1;
+
+    //       cartProducts[productIndex]['total'] =
+    //           '${double.parse(cartProducts[productIndex]['total']) * cartProducts[productIndex]['quantity']}';
+    //     } else {
+    //       cartProducts[productIndex]['quantity'] = quantity;
+
+    //       cartProducts[productIndex]['total'] =
+    //           '${double.parse(cartProducts[productIndex]['total']) * quantity}';
+    //     }
+    //   } /* */
+
+    //   getProductQuantity(product['name'], 0);
+    // });
+
+    // Store the updated cart in secure storage
+    // await _storage.write(key: 'cart', value: jsonEncode(cartProducts));
   }
 
   @override
   void initState() {
+    if (widget.pageIndex != null) {
+      print("redirect");
+      changePageIndex(widget.pageIndex, "");
+      return;
+    }
     getAllProducts();
     super.initState();
   }
@@ -169,30 +208,47 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                     const SizedBox(
                       height: 35,
                     ),
-                    for (int i = 0; i < allProduct.length; i++)
-                      Padding(
+                    Container(
+                      height: MyUtility(context).height * 1.25,
+                      width: MyUtility(context).width -
+                          MyUtility(context).width / 3.5,
+                      child: GridView.builder(
                         padding: const EdgeInsets.all(8.0),
-                        child: ProductDisplayItem(
-                            productName: allProduct[i]['name'],
-                            price: allProduct[i]['price'],
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3, // 3 items per row
+                          crossAxisSpacing: 8.0,
+                          mainAxisSpacing: 8.0,
+                          childAspectRatio:
+                              1.5 / 1.9, // Adjust the aspect ratio as needed
+                        ),
+                        itemCount: allProduct.length,
+                        itemBuilder: (context, index) {
+                          return ProductDisplayItem(
+                            productName: allProduct[index]['name'],
+                            price: allProduct[index]['price'],
                             priceInfo: 'Member Price. Includes VAT',
-                            productDescription: allProduct[i]['description'],
-                            productImage: allProduct[i]['imageUrl'],
+                            productDescription: allProduct[index]
+                                ['description'],
+                            productImage: allProduct[index]['imageUrl'],
                             readMore: () {
-                              /**/ changePageIndex(1, allProduct[i]['type']);
+                              changePageIndex(1, allProduct[index]['type']);
                               setState(() {
-                                title = allProduct[i]['name'];
-                                price = allProduct[i]['price'];
+                                title = allProduct[index]['name'];
+                                price = allProduct[index]['price'];
                                 priceInfo = 'Member Price. Includes VAT';
-                                description = allProduct[i]['description'];
-                                productImage = allProduct[i]['imageUrl'];
+                                description = allProduct[index]['description'];
+                                productImage = allProduct[index]['imageUrl'];
                               });
                             },
                             buyProduct: () {
-                              addProductToList(allProduct[i], "");
-                              changePageIndex(2, allProduct[i]['type']); /**/
-                            }),
-                      ), /* */
+                              addProductToList(allProduct[index], "");
+                              changePageIndex(2, allProduct[index]['type']);
+                            },
+                          );
+                        },
+                      ),
+                    ), /* */
                   ],
                 ),
               ), //&& productType == "Digital Product"
@@ -226,6 +282,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
               Visibility(
                 visible: pageIndex == 2 ? true : false,
                 child: CartPage(
+                    delete: deleteItem,
                     products: cartProducts,
                     changePageIndex: changePageIndex,
                     getTotal: getTotal),

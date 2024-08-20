@@ -33,6 +33,11 @@ class ProductFullView extends StatefulWidget {
 
 class _ProductFullViewState extends State<ProductFullView> {
   @override
+  void initState() {
+    print(widget.productQuantity);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -112,10 +117,10 @@ class _ProductFullViewState extends State<ProductFullView> {
                       buttonColor: Color.fromARGB(255, 212, 210, 210),
                       borderColor: Color.fromARGB(255, 212, 210, 210),
                       textColor: Colors.black,
-                      onTap: () {
+                      onTap: () async {
                         print(widget.product);
 
-                        widget.buyProduct(
+                        await widget.buyProduct(
                             widget.product, widget.productQuantity);
 
                         /*Navigator.push(
@@ -133,8 +138,8 @@ class _ProductFullViewState extends State<ProductFullView> {
                       buttonColor: Colors.teal,
                       borderColor: Colors.teal,
                       textColor: Colors.white,
-                      onTap: () {
-                        widget.buyProduct(
+                      onTap: () async {
+                        await widget.buyProduct(
                             widget.product, widget.productQuantity);
 
                         widget.changePageIndex(2, "");

@@ -26,6 +26,7 @@ import 'package:sama/homePage/dashboard/menu/PostLoginLeft.dart';
 
 import 'package:sama/components/myutility.dart';
 import 'package:sama/member/productDisplay/ProductListDisplay.dart';
+import 'package:sama/member/productDisplay/cart/cartPage.dart';
 import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
 
@@ -175,7 +176,11 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       MemberCommunities(
         userType: userType,
       ),
-      TransactionsAdmin()
+      TransactionsAdmin(),
+      ProductListDisplay(
+        userType: userType,
+        pageIndex: 2,
+      ),
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
 
@@ -400,12 +405,44 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                             Visibility(
                               visible: userType != 'Admin' &&
                                   userType != "NonMember",
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: SvgPicture.asset('images/icon_cart.svg',
-                                    width: 24,
-                                    height: 24,
-                                    color: Color.fromRGBO(73, 91, 155, 1)),
+                              child: Stack(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      changePage(18);
+                                    },
+                                    icon: SvgPicture.asset(
+                                      'images/icon_cart.svg',
+                                      width: 20,
+                                      height: 20,
+                                      color: Color(0xFF174486),
+                                    ),
+                                  ),
+                                  // Positioned(
+                                  //   right: 0,
+                                  //   top: 0,
+                                  //   child: Container(
+                                  //     padding: EdgeInsets.all(2),
+                                  //     decoration: BoxDecoration(
+                                  //       color: Color.fromRGBO(73, 91, 155, 1),
+                                  //       borderRadius: BorderRadius.circular(12),
+                                  //     ),
+                                  //     constraints: BoxConstraints(
+                                  //       minWidth: 20,
+                                  //       minHeight: 20,
+                                  //     ),
+                                  //     child: Text(
+                                  //       '3', // Replace '3' with your dynamic cart item count
+                                  //       style: TextStyle(
+                                  //         color: Colors.white,
+                                  //         fontSize: 12,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //       textAlign: TextAlign.center,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
                               ),
                             ),
                             Visibility(

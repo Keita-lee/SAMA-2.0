@@ -1,15 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/utils/cartUtils.dart';
 
 class DigitalQuantityWidget extends StatefulWidget {
   int productQuantity;
   String title;
+  bool? canDelete;
   Function(String, int) getProductQuantity;
+  Function(String)? deleteProduct;
   DigitalQuantityWidget(
       {super.key,
       required this.productQuantity,
       required this.title,
-      required this.getProductQuantity});
+      required this.getProductQuantity,
+      this.canDelete,
+      this.deleteProduct});
 
   @override
   State<DigitalQuantityWidget> createState() => _DigitalQuantityWidgetState();
@@ -17,6 +22,7 @@ class DigitalQuantityWidget extends StatefulWidget {
 
 class _DigitalQuantityWidgetState extends State<DigitalQuantityWidget> {
   int _amount = 1;
+  bool _canDelete = false;
 
   void _incrementAmount() {
     setState(() {
@@ -31,12 +37,19 @@ class _DigitalQuantityWidgetState extends State<DigitalQuantityWidget> {
         _amount--;
         widget.getProductQuantity(widget.title, _amount);
       });
+    } else {
+      if (_canDelete && widget.deleteProduct != null) {
+        widget.deleteProduct!(widget.title);
+      }
     }
   }
 
   @override
   void initState() {
     super.initState();
+    widget.canDelete != null
+        ? _canDelete = widget.canDelete!
+        : _canDelete = false;
     _amount = widget.productQuantity;
   }
 

@@ -207,7 +207,9 @@ class _YourOrderTableState extends State<YourOrderTable> {
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Text(
-                            widget.orderProduct[index]['price'],
+                            (double.parse(widget.orderProduct[index]['price']) *
+                                    widget.orderProduct[index]['quantity'])
+                                .toString(),
                             style: TextStyle(fontSize: 14),
                           ),
                         ),

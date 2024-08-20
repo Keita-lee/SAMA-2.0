@@ -9,6 +9,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sama/utils/cartUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../login/popups/validateDialog.dart';
@@ -37,8 +38,16 @@ class _YourOrderConState extends State<YourOrderCon> {
   var total = 0.0;
   String email = "";
   bool loadingState = false;
-
+  List products = [];
   String reference = "";
+
+  Future<void> _getCart() async {
+    List cart = await getCart();
+    setState(() {
+      products = cart;
+      total = getTotal();
+    });
+  }
 
   //Dialog for payment popup
   Future successPopup() => showDialog(
@@ -65,7 +74,7 @@ class _YourOrderConState extends State<YourOrderCon> {
   }
 
   double getTotal() {
-    double total = widget.products.fold(0.0, (sum, item) {
+    double total = products.fold(0.0, (sum, item) {
       return sum + double.parse(item['total']);
     });
 
@@ -126,13 +135,13 @@ class _YourOrderConState extends State<YourOrderCon> {
                     qtyWidget: widget.productItems[i]['quantity'],
      */
 
-    for (int i = 0; i < widget.products.length; i++) {
+    for (int i = 0; i < products.length; i++) {
       var product = {
-        "productImage": widget.products[i]['productImage'],
-        "productName": widget.products[i]['productName'],
-        "productPrice": widget.products[i]['productPrice'],
-        "quantity": widget.products[i]['quantity'],
-        "downloadLink": widget.products[i]['downloadLink'],
+        "productImage": products[i]['productImage'],
+        "productName": products[i]['productName'],
+        "productPrice": products[i]['productPrice'],
+        "quantity": products[i]['quantity'],
+        "downloadLink": products[i]['downloadLink'],
       };
       products.add(product);
     }
@@ -173,7 +182,7 @@ class _YourOrderConState extends State<YourOrderCon> {
   @override
   void initState() {
     getUserEmail();
-
+    _getCart();
     total = getTotal();
     super.initState();
   }
@@ -204,7 +213,7 @@ class _YourOrderConState extends State<YourOrderCon> {
                 ),
                 //List here
                 YourOrderTable(
-                    orderProduct: widget.products,
+                    orderProduct: products,
                     getTotal: getTotals,
                     total: total.toString()),
               ],

@@ -46,15 +46,15 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.70,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          border: Border.all(
-              color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
+      width: MyUtility(context).width * 0.50,
+      // decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(10),
+      //     color: Colors.white,
+      //     border: Border.all(
+      //         color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -67,8 +67,8 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                width: 180,
-                height: 180,
+                width: MyUtility(context).width * 0.2,
+                height: MyUtility(context).width * 0.18,
               ),
             ),
             Visibility(
@@ -76,40 +76,41 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               child: ImageNetwork(
                 fitWeb: BoxFitWeb.contain,
                 image: widget.productImage,
-                width: 180,
-                height: 180,
+                width: MyUtility(context).width * 0.2,
+                height: MyUtility(context).width * 0.18,
               ),
             ),
             const SizedBox(
-              width: 15,
+              height: 20,
             ),
             Container(
               width: MyUtility(context).width * 0.70 - 280,
-              height: 180,
+              height: 110,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.productName,
+                    maxLines: null,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Container(
-                    width: MyUtility(context).width / 1.5,
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: QuillEditor.basic(
-                      configurations: QuillEditorConfigurations(
-                        controller: quillController,
-                        sharedConfigurations: const QuillSharedConfigurations(),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   width: MyUtility(context).width / 1.5,
+                  //   height: 55,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //   ),
+                  //   child: QuillEditor.basic(
+                  //     configurations: QuillEditorConfigurations(
+                  //       controller: quillController,
+                  //       sharedConfigurations: const QuillSharedConfigurations(),
+                  //     ),
+                  //   ),
+                  // ),
                   /*  SizedBox(
                     width: MyUtility(context).width / 3.5,
                     height: 30,
@@ -122,56 +123,61 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),*/
-                  Spacer(),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'R ${widget.price}',
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.teal),
-                          ),
-                          Text(
-                            widget.priceInfo,
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      StyleButton(
-                          fontSize: 13,
-                          description: 'Read More',
-                          height: 40,
-                          width: 110,
-                          buttonTextColor: Colors.black,
-                          buttonColor: Color.fromARGB(255, 212, 210, 210),
-                          onTap: () {
-                            widget.readMore();
-                          }),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Visibility(
-                        visible: isDigital,
-                        child: StyleButton(
-                          fontSize: 13,
-                          buttonColor: Colors.teal,
-                          description: 'Buy Now',
-                          height: 40,
-                          width: 100,
-                          onTap: () {
-                            widget.buyProduct();
-                          },
-                        ),
-                      ),
-                    ],
+                  // Spacer(),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   mainAxisSize: MainAxisSize.max,
+                        //   children: [
+                        //     Text(
+                        //       'R ${widget.price}',
+                        //       style: const TextStyle(
+                        //           fontSize: 20, color: Colors.teal),
+                        //     ),
+                        //     Text(
+                        //       widget.priceInfo,
+                        //       style: const TextStyle(
+                        //         fontSize: 13,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        //Spacer(),
+
+                        StyleButton(
+                            fontSize: 13,
+                            description: 'View Options',
+                            height: 40,
+                            width: 110,
+                            buttonTextColor: Colors.white,
+                            buttonColor: Color.fromRGBO(0, 159, 159, 1),
+                            onTap: () {
+                              widget.readMore();
+                            }),
+                        // const SizedBox(
+                        //   width: 15,
+                        // ),
+                        // Visibility(
+                        //   visible: isDigital,
+                        //   child: StyleButton(
+                        //     fontSize: 13,
+                        //     buttonColor: Colors.teal,
+                        //     description: 'Buy Now',
+                        //     height: 40,
+                        //     width: 100,
+                        //     onTap: () {
+                        //       widget.buyProduct();
+                        //     },
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   )
                 ],
               ),

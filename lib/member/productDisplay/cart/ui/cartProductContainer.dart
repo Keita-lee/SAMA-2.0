@@ -1,14 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/utils/cartUtils.dart';
 
 import 'cartItemDisplay.dart';
 
 class CartProductContainer extends StatefulWidget {
   final List productItems;
+  final Function(String) delete;
   final Function(String, int) manageProductList;
   CartProductContainer(
-      {super.key, required this.productItems, required this.manageProductList});
+      {super.key,
+      required this.productItems,
+      required this.manageProductList,
+      required this.delete});
 
   @override
   State<CartProductContainer> createState() => _CartProductContainerState();
@@ -81,6 +86,7 @@ class _CartProductContainerState extends State<CartProductContainer> {
             child: Column(children: [
               for (int i = 0; i < (widget.productItems).length; i++)
                 CartItemDisplay(
+                    delete: widget.delete,
                     manageProductList: widget.manageProductList,
                     productImage: widget.productItems[i]['productImage'],
                     productName: widget.productItems[i]['name'],

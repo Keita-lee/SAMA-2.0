@@ -11,6 +11,7 @@ class CartItemDisplay extends StatefulWidget {
   final String productPrice;
   final int qtyWidget;
   final String total;
+  final Function(String) delete;
   const CartItemDisplay(
       {super.key,
       required this.manageProductList,
@@ -18,7 +19,8 @@ class CartItemDisplay extends StatefulWidget {
       required this.productName,
       required this.productPrice,
       required this.qtyWidget,
-      required this.total});
+      required this.total,
+      required this.delete});
 
   @override
   State<CartItemDisplay> createState() => _CartItemDisplayState();
@@ -96,6 +98,8 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                 productQuantity: widget.qtyWidget,
                 getProductQuantity: widget.manageProductList,
                 title: widget.productName,
+                canDelete: true,
+                deleteProduct: widget.delete,
               ),
             ),
           ),

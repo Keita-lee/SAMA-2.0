@@ -6,6 +6,7 @@ import 'package:sama/member/productDisplay/cart/ui/cartProductContainer.dart';
 import 'package:sama/member/productDisplay/cart/ui/cartTotalContainer.dart';
 import 'package:sama/member/productDisplay/cart/ui/quantityWidget.dart';
 import 'package:sama/member/productDisplay/ui/digitalQuantityWidget.dart';
+import 'package:sama/utils/cartUtils.dart';
 
 /*
 List<Widget> cartProducts = [
@@ -27,11 +28,13 @@ class CartPage extends StatefulWidget {
   List products;
   Function(int, String) changePageIndex;
   Function(double) getTotal;
+  Function(String) delete;
   CartPage(
       {super.key,
       required this.products,
       required this.changePageIndex,
-      required this.getTotal});
+      required this.getTotal,
+      required this.delete});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -44,36 +47,55 @@ class _CartPageState extends State<CartPage> {
   manageProductList(
     productName,
     quantity,
-  ) {
+  ) async {
+    await updateProductQuantity(productName, quantity);
+    List cart = await getCart();
     setState(() {
+      productList = cart;
       total = 0;
       var productIndex =
-          (productList).indexWhere((item) => item["name"] == productName);
+          (cart).indexWhere((item) => item["name"] == productName);
 
-      productList[productIndex]['quantity'] = quantity;
+      cart[productIndex]['quantity'] = quantity;
 
-      productList[productIndex]['total'] =
-          '${double.parse(productList[productIndex]['price']) * quantity}';
+      cart[productIndex]['total'] =
+          '${double.parse(cart[productIndex]['price']) * quantity}';
 
-      for (int i = 0; i < widget.products.length; i++) {
-        print(widget.products[i]['total']);
-        total = total + double.parse(widget.products[i]['total']);
-
-        widget.getTotal(total + double.parse(widget.products[i]['total']));
+      for (int i = 0; i < cart.length; i++) {
+        print('total ${cart[i]['total']}');
+        total = total + double.parse(cart[i]['total']);
       }
+
+      widget.getTotal(total);
     });
   }
 
   @override
   void initState() {
-    productList.addAll(widget.products);
-    for (int i = 0; i < widget.products.length; i++) {
-      print(widget.products[i]['total']);
-      total = total + double.parse(widget.products[i]['total']);
-    }
+    getCartProducts();
 
     super.initState();
     //
+  }
+
+  getCartProducts() async {
+    List cart = await getCart();
+    var newTotal = 0.0;
+    for (int i = 0; i < cart.length; i++) {
+      print(cart[i]['total']);
+      newTotal += double.parse(cart[i]['total']);
+    }
+    total = newTotal;
+    widget.getTotal(total);
+
+    setState(() {
+      productList = cart;
+    });
+  }
+
+  void deleteProduct(String productName) async {
+    await widget.delete(productName);
+    await getCartProducts();
   }
 
   Widget build(BuildContext context) {
@@ -103,6 +125,7 @@ class _CartPageState extends State<CartPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CartProductContainer(
+                  delete: deleteProduct,
                   productItems: productList,
                   manageProductList: manageProductList),
               const SizedBox(
