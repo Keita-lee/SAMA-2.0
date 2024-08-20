@@ -32,6 +32,7 @@ class ProductFullView extends StatefulWidget {
 }
 
 class _ProductFullViewState extends State<ProductFullView> {
+  bool hasAddedToCart = false;
   @override
   void initState() {
     print(widget.productQuantity);
@@ -112,24 +113,41 @@ class _ProductFullViewState extends State<ProductFullView> {
                     SizedBox(
                       width: MyUtility(context).width * 0.09,
                     ),
-                    MyProductButtons(
-                      buttonText: 'Add to Cart',
-                      buttonColor: Color.fromARGB(255, 212, 210, 210),
-                      borderColor: Color.fromARGB(255, 212, 210, 210),
-                      textColor: Colors.black,
-                      onTap: () async {
-                        print(widget.product);
+                    hasAddedToCart == false
+                        ? MyProductButtons(
+                            buttonText: 'Add to Cart',
+                            buttonColor: Color.fromARGB(255, 212, 210, 210),
+                            borderColor: Color.fromARGB(255, 212, 210, 210),
+                            textColor: Colors.black,
+                            onTap: () async {
+                              print(widget.product);
 
-                        await widget.buyProduct(
-                            widget.product, widget.productQuantity);
-
-                        /*Navigator.push(
+                              await widget.buyProduct(
+                                  widget.product, widget.productQuantity);
+                              setState(() {
+                                hasAddedToCart = true;
+                              });
+                              /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const CartPage()),
                         );*/
-                      },
-                    ),
+                            },
+                          )
+                        : MyProductButtons(
+                            buttonText: 'Go to Cart',
+                            buttonColor: Color.fromARGB(255, 8, 55, 145),
+                            borderColor: Color.fromARGB(255, 8, 55, 145),
+                            textColor: Colors.white,
+                            onTap: () async {
+                              widget.changePageIndex(2, "");
+                              /*Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CartPage()),
+                        );*/
+                            },
+                          ),
                     const SizedBox(
                       width: 15,
                     ),
