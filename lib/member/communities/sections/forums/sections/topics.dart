@@ -81,7 +81,7 @@ class _TopicsState extends State<Topics> {
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: SizedBox(
-            width: MyUtility(context).width / 1.205,
+            width: MyUtility(context).width / 1.3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -138,17 +138,20 @@ class _TopicsState extends State<Topics> {
                       changePageIndex(2);
                     });
                   },
-                  child: ForumSectionTypeStyle(
-                    title: communityDiscussion[i]['subject'],
-                    description: communityDiscussion[i]['createdBy']['name'],
-                    postText: CommonService()
-                        .getDateInTextTimeStamp(communityDiscussion[i]['date']),
-                    userImageUrl: communityDiscussion[i]['createdBy']
-                            ['profileImage'] ??
-                        '',
-                    postTime: communityDiscussion[i]['createdBy']['name'] ??
-                        'Anonymous',
-                    userName: '',
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ForumSectionTypeStyle(
+                      title: communityDiscussion[i]['subject'],
+                      description: communityDiscussion[i]['createdBy']['name'],
+                      postText: CommonService().getDateInTextTimeStamp(
+                          communityDiscussion[i]['date']),
+                      userImageUrl: communityDiscussion[i]['createdBy']
+                              ['profileImage'] ??
+                          '',
+                      postTime: communityDiscussion[i]['createdBy']['name'] ??
+                          'Anonymous',
+                      userName: '',
+                    ),
                   ),
                 ),
             ],

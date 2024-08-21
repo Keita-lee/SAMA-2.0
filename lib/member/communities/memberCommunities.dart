@@ -57,46 +57,49 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
             )),
         Visibility(
           visible: widget.userType != "NonMember",
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  'Communities',
-                  style: TextStyle(
-                      fontSize: 35,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.normal),
-                  textAlign: TextAlign.start,
+          child: Padding(
+            padding: const EdgeInsets.all(35.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    'Communities',
+                    style: TextStyle(
+                        fontSize: 35,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.normal),
+                    textAlign: TextAlign.start,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Visibility(
-                  visible: pageIndex == 0 ? true : false,
-                  child: ComTypes(changePageIndex: changePageIndex)),
-              Visibility(
-                  visible: pageIndex == 1 ? true : false,
-                  child: Resources(
-                    changePageIndex: changePageIndex,
-                    resourceType: resourceType,
-                  )),
-              Visibility(
-                  visible: pageIndex == 2 ? true : false,
-                  child: Forums(
+                SizedBox(
+                  height: 15,
+                ),
+                Visibility(
+                    visible: pageIndex == 0 ? true : false,
+                    child: ComTypes(changePageIndex: changePageIndex)),
+                Visibility(
+                    visible: pageIndex == 1 ? true : false,
+                    child: Resources(
                       changePageIndex: changePageIndex,
                       resourceType: resourceType,
-                      communityTypeList: communityTypeList)),
-              Visibility(
-                  visible: pageIndex == 3 ? true : false,
-                  child: Topics(
-                      changePageIndex: changePageIndex,
-                      resourceType: resourceType,
-                      communityTypeList: communityTypeList)),
-            ],
+                    )),
+                Visibility(
+                    visible: pageIndex == 2 ? true : false,
+                    child: Forums(
+                        changePageIndex: changePageIndex,
+                        resourceType: resourceType,
+                        communityTypeList: communityTypeList)),
+                Visibility(
+                    visible: pageIndex == 3 ? true : false,
+                    child: Topics(
+                        changePageIndex: changePageIndex,
+                        resourceType: resourceType,
+                        communityTypeList: communityTypeList)),
+              ],
+            ),
           ),
         ),
       ],

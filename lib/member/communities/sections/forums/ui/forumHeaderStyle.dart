@@ -16,7 +16,7 @@ class _ForumHeaderStyleState extends State<ForumHeaderStyle> {
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Container(
-          width: MyUtility(context).width / 1.2,
+          width: MyUtility(context).width / 1.3,
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 8, 55, 145),
             borderRadius: BorderRadius.only(

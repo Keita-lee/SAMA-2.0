@@ -29,8 +29,8 @@ class _ForumSectionTypeStyleState extends State<ForumSectionTypeStyle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 1.2,
-      height: 135,
+      width: MyUtility(context).width / 1.3,
+      height: 145,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),

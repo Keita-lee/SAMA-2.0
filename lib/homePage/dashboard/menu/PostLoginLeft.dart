@@ -32,7 +32,7 @@ class _HoverItemState extends State<HoverItem> {
   Widget build(BuildContext context) {
     if (widget.menuSize == 6.5) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 2),
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
@@ -277,7 +277,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     HoverItem(
                       isActive: activeIndex == 4,
                       menuSize: widget.menuSize,
-                      description: 'Branch Election',
+                      description: 'Branch Voting',
                       iconPath: "images/icon_voting.svg",
                       onPressed: () {
                         _handleItemClick(4);
@@ -334,7 +334,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       _handleItemClick(2);
                     },
                   ),
-                  HoverItem(
+                  /*   HoverItem(
                     isActive: activeIndex == 3,
                     menuSize: widget.menuSize,
                     description: "Publications",
@@ -342,7 +342,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     onPressed: () {
                       _handleItemClick(3);
                     },
-                  ),
+                  ),*/
                   HoverItem(
                     isActive: activeIndex == 4,
                     menuSize: widget.menuSize,
@@ -437,7 +437,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                   HoverItem(
                     isActive: activeIndex == 10,
                     menuSize: widget.menuSize,
-                    description: "Branch Election",
+                    description: "Branch Voting",
                     iconPath: "images/icon_voting.svg",
                     onPressed: () {
                       _handleItemClick(10);

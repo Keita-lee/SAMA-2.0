@@ -51,7 +51,7 @@ class _ViewTopicState extends State<ViewTopic> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: MyUtility(context).width / 1.2,
+            width: MyUtility(context).width / 1.3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

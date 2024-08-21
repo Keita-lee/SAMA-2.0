@@ -53,7 +53,7 @@ class _DiscusStyleState extends State<DiscusStyle> {
     return Column(
       children: [
         Container(
-          width: MyUtility(context).width / 1.205,
+          width: MyUtility(context).width / 1.3,
           height: 100,
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 241, 241, 241),
@@ -150,7 +150,7 @@ class _DiscusStyleState extends State<DiscusStyle> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.205,
+          width: MyUtility(context).width / 1.3,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(

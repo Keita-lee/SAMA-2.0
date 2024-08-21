@@ -81,6 +81,8 @@ class _MemberBenifitsState extends State<MemberBenifits> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SamaBlueBanner(
           pageName: 'MEMBER BENEFITS',
@@ -88,6 +90,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
         Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 height: 25,
@@ -136,46 +139,49 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                         return Center(child: Text('No class yet'));
                       }
 
-                      return Container(
-                        width: MyUtility(context).width * 0.55,
-                        height: MyUtility(context).height / 1.4,
-                        //color: Colors.transparent,
-                        /* child: DraggableScrollbar.rrect(
-                          alwaysVisibleScrollThumb: true,
-                          backgroundColor: Color.fromARGB(255, 8, 55, 145),
-                          controller: _scrollController,
-                          padding: EdgeInsets.zero,*/
-                        child: ListView.builder(
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          width: MyUtility(context).width * 0.55,
+                          height: MyUtility(context).height / 1.4,
+                          //color: Colors.transparent,
+                          /* child: DraggableScrollbar.rrect(
+                            alwaysVisibleScrollThumb: true,
+                            backgroundColor: Color.fromARGB(255, 8, 55, 145),
                             controller: _scrollController,
-                            itemCount: documents.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final DocumentSnapshot document =
-                                  documents[index];
+                            padding: EdgeInsets.zero,*/
+                          child: ListView.builder(
+                              controller: _scrollController,
+                              itemCount: documents.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final DocumentSnapshot document =
+                                    documents[index];
 
-                              return InkWell(
-                                onTap: () {
-                                  opMemberDetails(
-                                      document['id'], document['logo']);
-                                  /*openMemberDetailsDialog(
-                                      document['id'], document['logo']);*/
-                                },
-                                child: CompanyContainer(
-                                  userType: userType,
-                                  image: document['logo'],
-                                  companyname: document['companyName'],
-                                  discription: document['companyDescription'],
-                                  editCompanyDetails: () {
-                                    openMemberDialog(document['id']);
-                                  },
-                                  openMemberDetails: () {
+                                return InkWell(
+                                  onTap: () {
                                     opMemberDetails(
                                         document['id'], document['logo']);
                                     /*openMemberDetailsDialog(
                                         document['id'], document['logo']);*/
                                   },
-                                ),
-                              );
-                            }),
+                                  child: CompanyContainer(
+                                    userType: userType,
+                                    image: document['logo'],
+                                    companyname: document['companyName'],
+                                    discription: document['companyDescription'],
+                                    editCompanyDetails: () {
+                                      openMemberDialog(document['id']);
+                                    },
+                                    openMemberDetails: () {
+                                      opMemberDetails(
+                                          document['id'], document['logo']);
+                                      /*openMemberDetailsDialog(
+                                          document['id'], document['logo']);*/
+                                    },
+                                  ),
+                                );
+                              }),
+                        ),
                       );
                     }),
               ),

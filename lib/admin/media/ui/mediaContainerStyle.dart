@@ -22,7 +22,7 @@ class MediaContainerStyle extends StatefulWidget {
   final VoidCallback? view;
   MediaContainerStyle(
       {super.key,
-     // required this.date,
+      // required this.date,
       required this.adminType,
       required this.image,
       required this.duration,
@@ -54,10 +54,10 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
     return Container(
       width: 315,
       height: 335,
-      
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
               visible: widget.image == "" ? true : false,
@@ -79,11 +79,9 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                 width: 300,
                 height: 200,
                 decoration: BoxDecoration(
-                  
                   color: Color(0xFFD1D1D1),
                 ),
                 child: ClipRRect(
-                  
                   child: ImageNetwork(
                     image: widget.image,
                     fitWeb: BoxFitWeb.fill,
@@ -93,17 +91,21 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             //TO DO IMPLEMENT DATE OF VIDEO POSTED//////
             Text(
-              '21 Jyly 2024',
+              '21 July 2024',
               style: TextStyle(
                   fontSize: 12,
                   letterSpacing: 1.2,
                   color: Color.fromARGB(148, 158, 158, 158),
                   fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               (widget.title),
               style: TextStyle(
@@ -113,7 +115,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   fontWeight: FontWeight.bold),
             ),
             Spacer(),
-           /* Padding(
+            /* Padding(
               padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: Row(
                 children: [

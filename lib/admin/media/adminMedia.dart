@@ -81,7 +81,7 @@ class _AdminMediaState extends State<AdminMedia> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SamaBlueBanner(pageName: 'Media & Webinars'),
+        SamaBlueBanner(pageName: 'MEDIA & WEBINARS'),
         SizedBox(
           height: 30,
         ),

@@ -88,7 +88,7 @@ class _SamaTopTabBarState extends State<SamaTopTabBar>
                 ),
               ),
             ),
-            Tooltip(
+            /*   Tooltip(
               verticalOffset: 38,
               textStyle: TextStyle(
                   color: Color.fromRGBO(55, 94, 144, 1), fontSize: 12),
@@ -112,6 +112,7 @@ class _SamaTopTabBarState extends State<SamaTopTabBar>
                 ),
               ),
             ),
+         */
           ],
         ),
       ),

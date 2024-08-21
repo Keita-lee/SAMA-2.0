@@ -181,7 +181,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SamaBlueBanner(pageName: 'E - STORE'),
+              SamaBlueBanner(pageName: 'E-STORE'),
               SizedBox(
                 height: MyUtility(context).height * 0.08,
               ),
@@ -190,20 +190,24 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Spacer(),
-                        Visibility(
-                          visible: widget.userType != "NonMember",
-                          child: StyleButton(
-                              description: "View Purchase History",
-                              height: 55,
-                              width: 125,
-                              onTap: () {
-                                changePageIndex(3, "");
-                              }),
-                        )
-                      ],
+                    SizedBox(
+                      width: MyUtility(context).width -
+                          MyUtility(context).width / 3.5,
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          Visibility(
+                            visible: widget.userType != "NonMember",
+                            child: StyleButton(
+                                description: "View Purchase History",
+                                height: 55,
+                                width: 125,
+                                onTap: () {
+                                  changePageIndex(3, "");
+                                }),
+                          )
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 35,

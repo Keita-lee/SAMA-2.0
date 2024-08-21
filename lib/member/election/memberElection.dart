@@ -320,18 +320,23 @@ class _MemberElectionState extends State<MemberElection> {
           Visibility(
             visible: widget.userType != "NonMember",
             child: Column(children: [
-              Text(
-                'Branch Election',
-                style: TextStyle(
-                  fontSize: 36,
-                  color: Color.fromARGB(255, 24, 69, 126),
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Branch Election',
+                    style: TextStyle(
+                      fontSize: 36,
+                      color: Color.fromARGB(255, 24, 69, 126),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 20,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElectionTabStyle(
                     changePage: () {
