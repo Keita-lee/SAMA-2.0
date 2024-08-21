@@ -4,6 +4,7 @@ import 'package:sama/components/ui/pleaseLogin.dart';
 import 'package:sama/member/communities/sections/forums/sections/topics.dart';
 import 'package:sama/member/communities/sections/resources/resources.dart';
 
+import '../../components/banner/samaBlueBanner.dart';
 import 'sections/comTypes/comTypes.dart';
 import 'sections/forums/forums.dart';
 
@@ -49,6 +50,7 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SamaBlueBanner(pageName: 'COMMUNITIES'),
         Visibility(
             visible: widget.userType == "NonMember",
             child: PleaseLogin(
@@ -63,17 +65,6 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Communities',
-                    style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.grey[800],
-                        fontWeight: FontWeight.normal),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
                 SizedBox(
                   height: 15,
                 ),

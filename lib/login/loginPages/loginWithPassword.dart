@@ -52,7 +52,9 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
               builder: (context) => Material(
                     child: Material(
                         child: PostLoginLandingPage(
-                            userId: userCredential.user!.uid)),
+                      userId: userCredential.user!.uid,
+                      activeIndex: 0,
+                    )),
                   )),
         );
       }
@@ -219,7 +221,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                       MaterialPageRoute(
                           builder: (context) => Material(
                                 child: Material(
-                                    child: PostLoginLandingPage(userId: "")),
+                                    child: PostLoginLandingPage(
+                                  userId: "",
+                                  activeIndex: 0,
+                                )),
                               )));
                 },
                 onHover: (hovered) {

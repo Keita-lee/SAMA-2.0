@@ -144,7 +144,10 @@ class _LoginPagesState extends State<LoginPages> {
                         MaterialPageRoute(
                             builder: (context) => Material(
                                   child: Material(
-                                      child: PostLoginLandingPage(userId: "")),
+                                      child: PostLoginLandingPage(
+                                    userId: "",
+                                    activeIndex: 0,
+                                  )),
                                 )));
                   },
                   onHover: (hovered) {

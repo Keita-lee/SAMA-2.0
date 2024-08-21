@@ -9,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sama/homePage/dashboard/menu/ui/leftMenuDropButton.dart';
 import 'package:sama/homePage/dashboard/menu/ui/memberCategoriesDrop.dart';
 
+import '../../PostLoginLandingPage.dart';
+
 class HoverItem extends StatefulWidget {
   double menuSize;
   String description;
@@ -124,8 +126,14 @@ class _HoverItemState extends State<HoverItem> {
 
 class PostLoginLeft extends StatefulWidget {
   double menuSize;
+
   Function(int) changePage;
-  PostLoginLeft({super.key, required this.menuSize, required this.changePage});
+  int activeIndex;
+  PostLoginLeft(
+      {super.key,
+      required this.menuSize,
+      required this.changePage,
+      required this.activeIndex});
 
   @override
   State<PostLoginLeft> createState() => _PostLoginLeftState();
@@ -147,7 +155,24 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
     });
   }
 
-  void _handleItemClick(int index) {
+  void _handleItemClick(int index, int pageIndex) async {
+    setState(() {
+      if (pageIndex != -1) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Material(
+                      child: PostLoginLandingPage(
+                          pageIndex: pageIndex,
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          activeIndex: index),
+                    ))).whenComplete(() {
+          setState(() {
+            activeIndex = index;
+          });
+        });
+      }
+    });
     setState(() {
       activeIndex = index;
     });
@@ -220,7 +245,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: "Dashboard",
                       iconPath: "images/icon_dashboard.svg",
                       onPressed: () {
-                        _handleItemClick(0);
+                        _handleItemClick(0, 0);
                         widget.changePage(0);
                       },
                     ),
@@ -230,7 +255,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Centre of Excellence',
                       iconPath: "images/icon_centre_of.svg",
                       onPressed: () {
-                        _handleItemClick(1);
+                        _handleItemClick(1, 1);
                         widget.changePage(1);
                       },
                     ),
@@ -240,7 +265,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Member Benefits',
                       iconPath: "images/icon_benefits.svg",
                       onPressed: () {
-                        _handleItemClick(11);
+                        _handleItemClick(11, 11);
                         widget.changePage(2);
                       },
                     ),
@@ -250,7 +275,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Media & Webinars',
                       iconPath: "images/icon_media.svg",
                       onPressed: () {
-                        _handleItemClick(2);
+                        _handleItemClick(2, 7);
                         widget.changePage(7);
                       },
                     ),
@@ -260,7 +285,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Events',
                       iconPath: "images/icon_events.svg",
                       onPressed: () {
-                        _handleItemClick(3);
+                        _handleItemClick(3, 8);
                         widget.changePage(8);
                       },
                     ),
@@ -270,7 +295,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: "Communities",
                       iconPath: "images/icon_categories.svg",
                       onPressed: () {
-                        _handleItemClick(15);
+                        _handleItemClick(15, 15);
                         widget.changePage(15);
                       },
                     ),
@@ -280,7 +305,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Branch Voting',
                       iconPath: "images/icon_voting.svg",
                       onPressed: () {
-                        _handleItemClick(4);
+                        _handleItemClick(4, 4);
                         widget.changePage(11);
                       },
                     ),
@@ -290,7 +315,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'E-Store',
                       iconPath: "images/icon_estore.svg",
                       onPressed: () {
-                        _handleItemClick(5);
+                        _handleItemClick(5, 13);
                         widget.changePage(13);
                       },
                     ),
@@ -310,7 +335,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Dashboard",
                     iconPath: "images/icon_dashboard.svg",
                     onPressed: () {
-                      _handleItemClick(0);
+                      _handleItemClick(0, 0);
                       widget.changePage(0);
                     },
                   ),
@@ -321,7 +346,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     iconPath: "images/icon_centre_of.svg",
                     onPressed: () {
                       widget.changePage(1);
-                      _handleItemClick(1);
+                      _handleItemClick(1, 1);
                     },
                   ),
                   HoverItem(
@@ -331,7 +356,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     iconPath: "images/icon_media.svg",
                     onPressed: () {
                       widget.changePage(9);
-                      _handleItemClick(2);
+                      _handleItemClick(2, 9);
                     },
                   ),
                   /*   HoverItem(
@@ -349,7 +374,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Coding Academy",
                     iconPath: "images/icons_coding.svg",
                     onPressed: () {
-                      _handleItemClick(4);
+                      _handleItemClick(4, -1);
                     },
                   ),
                   HoverItem(
@@ -358,7 +383,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Professional Development",
                     iconPath: "images/icon_prof_dev.svg",
                     onPressed: () {
-                      _handleItemClick(5);
+                      _handleItemClick(5, -1);
                     },
                   ),
                   HoverItem(
@@ -367,7 +392,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "E-Store",
                     iconPath: "images/icon_estore.svg",
                     onPressed: () {
-                      _handleItemClick(6);
+                      _handleItemClick(6, 14);
                       widget.changePage(14);
                     },
                   ),
@@ -377,7 +402,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Events",
                     iconPath: "images/icon_events.svg",
                     onPressed: () {
-                      _handleItemClick(7);
+                      _handleItemClick(7, 10);
                       widget.changePage(10);
                     },
                   ),
@@ -387,7 +412,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Communities",
                     iconPath: "images/icon_categories.svg",
                     onPressed: () {
-                      _handleItemClick(8);
+                      _handleItemClick(8, 16);
                       widget.changePage(16);
                     },
                   ),
@@ -430,7 +455,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Member Benefits",
                     iconPath: "images/icon_benefits.svg",
                     onPressed: () {
-                      _handleItemClick(9);
+                      _handleItemClick(9, 2);
                       widget.changePage(2);
                     },
                   ),
@@ -440,7 +465,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Branch Voting",
                     iconPath: "images/icon_voting.svg",
                     onPressed: () {
-                      _handleItemClick(10);
+                      _handleItemClick(10, 12);
                       widget.changePage(12);
                     },
                   ),

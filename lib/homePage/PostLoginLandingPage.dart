@@ -34,7 +34,13 @@ import '../member/communities/memberCommunities.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
   String userId;
-  PostLoginLandingPage({super.key, required this.userId});
+  int? pageIndex;
+  int activeIndex;
+  PostLoginLandingPage(
+      {super.key,
+      required this.userId,
+      this.pageIndex,
+      required this.activeIndex});
 
   @override
   State<PostLoginLandingPage> createState() => _PostLoginLandingPageState();
@@ -48,7 +54,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   String articleId = "";
   String articleImage = "";
   String profileUrl = "";
-  var pageIndex = 0;
+
   String userType = "";
   double menuSize = 6.5;
   //get data of signed in user
@@ -125,6 +131,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    var pageIndex = widget.pageIndex != null ? widget.pageIndex : 0;
     changeSideMenuSize() {
       setState(() {
         if (menuSize == 18) {
@@ -553,9 +560,12 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           PostLoginLeft(
-                              changePage: changePage, menuSize: menuSize),
+                            changePage: changePage,
+                            menuSize: menuSize,
+                            activeIndex: widget.activeIndex,
+                          ),
                           Container(
-                            child: pages[pageIndex],
+                            child: pages[pageIndex!],
                           )
                         ],
                       ),

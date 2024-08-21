@@ -101,7 +101,11 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           context,
           MaterialPageRoute(
               builder: (context) => Material(
-                    child: Material(child: PostLoginLandingPage(userId: uid)),
+                    child: Material(
+                        child: PostLoginLandingPage(
+                      userId: uid,
+                      activeIndex: 0,
+                    )),
                   )));
     });
     /**/ // var userId = FirebaseAuth.instance.currentUser!.uid;
