@@ -45,7 +45,7 @@ class _YourOrderConState extends State<YourOrderCon> {
     List cart = await getCart();
     setState(() {
       products = cart;
-      total = getTotal();
+      total = getTotal(cart);
     });
   }
 
@@ -73,8 +73,8 @@ class _YourOrderConState extends State<YourOrderCon> {
     }
   }
 
-  double getTotal() {
-    double total = products.fold(0.0, (sum, item) {
+  double getTotal(List cart) {
+    double total = cart.fold(0.0, (sum, item) {
       return sum + double.parse(item['total']);
     });
 
@@ -183,7 +183,6 @@ class _YourOrderConState extends State<YourOrderCon> {
   void initState() {
     getUserEmail();
     _getCart();
-    total = getTotal();
     super.initState();
   }
 

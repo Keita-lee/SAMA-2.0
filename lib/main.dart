@@ -5,6 +5,7 @@ import 'package:sama/Myhome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(

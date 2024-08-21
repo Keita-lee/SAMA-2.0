@@ -62,6 +62,7 @@ dependencies:
   collection: ^1.18.0
   zxcvbn: ^1.0.0
   flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.3.2
 
 
 dev_dependencies:
