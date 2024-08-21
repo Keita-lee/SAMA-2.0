@@ -136,9 +136,9 @@ class _ProductFullViewState extends State<ProductFullView> {
                           )
                         : MyProductButtons(
                             buttonText: 'Go to Cart',
-                            buttonColor: Color.fromARGB(255, 8, 55, 145),
-                            borderColor: Color.fromARGB(255, 8, 55, 145),
-                            textColor: Colors.white,
+                            buttonColor: Color.fromARGB(255, 212, 210, 210),
+                            borderColor: Color.fromARGB(255, 212, 210, 210),
+                            textColor: Colors.black,
                             onTap: () async {
                               widget.changePageIndex(2, "");
                               /*Navigator.push(

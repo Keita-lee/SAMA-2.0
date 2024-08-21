@@ -71,9 +71,9 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     });
   }
 
-  getTotal(value) {
-    print('overall total: $value');
+  getTotal(value, cart) async {
     setState(() {
+      cartProducts = cart;
       total = value;
     });
   }
@@ -83,7 +83,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Product deleted')),
+      const SnackBar(content: Text('Product removed from cart')),
     );
 
     List cart = await getCart();

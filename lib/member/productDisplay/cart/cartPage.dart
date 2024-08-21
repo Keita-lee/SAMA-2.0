@@ -27,7 +27,7 @@ List<Widget> cartProducts = [
 class CartPage extends StatefulWidget {
   List products;
   Function(int, String) changePageIndex;
-  Function(double) getTotal;
+  Function(double, List) getTotal;
   Function(String) delete;
   CartPage(
       {super.key,
@@ -48,25 +48,22 @@ class _CartPageState extends State<CartPage> {
     productName,
     quantity,
   ) async {
-    await updateProductQuantity(productName, quantity);
-    List cart = await getCart();
+    List<Map<String, dynamic>> cart =
+        await updateProductQuantity(productName, quantity);
+
+    // var productIndex = (cart).indexWhere((item) => item["name"] == productName);
+    // cart[productIndex]['quantity'] = quantity;
+    // cart[productIndex]['total'] =
+    //     '${double.parse(cart[productIndex]['price']) * quantity}';
+
     setState(() {
-      productList = cart;
       total = 0;
-      var productIndex =
-          (cart).indexWhere((item) => item["name"] == productName);
-
-      cart[productIndex]['quantity'] = quantity;
-
-      cart[productIndex]['total'] =
-          '${double.parse(cart[productIndex]['price']) * quantity}';
-
       for (int i = 0; i < cart.length; i++) {
         print('total ${cart[i]['total']}');
         total = total + double.parse(cart[i]['total']);
       }
-
-      widget.getTotal(total);
+      widget.getTotal(total, cart);
+      productList = cart;
     });
   }
 
@@ -86,7 +83,7 @@ class _CartPageState extends State<CartPage> {
       newTotal += double.parse(cart[i]['total']);
     }
     total = newTotal;
-    widget.getTotal(total);
+    widget.getTotal(total, cart);
 
     setState(() {
       productList = cart;
