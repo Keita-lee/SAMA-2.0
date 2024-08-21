@@ -28,8 +28,8 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: MyUtility(context).width / 1.3,
-        height: 280,
+        width: MyUtility(context).width / 1.5,
+        height: 230,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
@@ -53,14 +53,14 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    width: MyUtility(context).width / 7,
-                    height: 180,
+                    width: MyUtility(context).width / 10,
+                    height: 130,
                   ),
                   SizedBox(
                     width: 35,
                   ),
                   SizedBox(
-                    width: MyUtility(context).width / 1.8,
+                    width: MyUtility(context).width / 1.95,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,

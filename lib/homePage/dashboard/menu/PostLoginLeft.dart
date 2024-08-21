@@ -124,6 +124,8 @@ class _HoverItemState extends State<HoverItem> {
   }
 }
 
+int activeIndex = 0;
+
 class PostLoginLeft extends StatefulWidget {
   double menuSize;
 
@@ -142,7 +144,7 @@ class PostLoginLeft extends StatefulWidget {
 class _PostLoginLeftState extends State<PostLoginLeft> {
   var pages = [];
   String userType = "";
-  int activeIndex = 0;
+
   int? currentOpenDropdown;
 
   void toggleDropdown(int index) {
@@ -156,23 +158,29 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
   }
 
   void _handleItemClick(int index, int pageIndex) async {
-    setState(() {
-      if (pageIndex != -1) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Material(
-                      child: PostLoginLandingPage(
-                          pageIndex: pageIndex,
-                          userId: FirebaseAuth.instance.currentUser!.uid,
-                          activeIndex: index),
-                    ))).whenComplete(() {
-          setState(() {
-            activeIndex = index;
-          });
+    setState(() {});
+    if (pageIndex != -1) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Material(
+                    child: PostLoginLandingPage(
+                        pageIndex: pageIndex,
+                        userId: FirebaseAuth.instance.currentUser != null
+                            ? FirebaseAuth.instance.currentUser!.uid
+                            : "",
+                        activeIndex: index),
+                  ))).whenComplete(() {
+        setState(() {
+          print(index);
+          print(index);
+          print(index);
+          print(index);
+          activeIndex = index;
         });
-      }
-    });
+      });
+    }
+
     setState(() {
       activeIndex = index;
     });
@@ -335,7 +343,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Dashboard",
                     iconPath: "images/icon_dashboard.svg",
                     onPressed: () {
-                      _handleItemClick(0, 0);
+                      //_handleItemClick(0, 0);
                       widget.changePage(0);
                     },
                   ),

@@ -256,7 +256,7 @@ class _YourOrderConState extends State<YourOrderCon> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
                 child: Text(
-                  'Place Order $total',
+                  'Place Order',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,

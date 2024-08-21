@@ -302,12 +302,12 @@ class _MemberElectionState extends State<MemberElection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SamaBlueBanner(pageName: 'BRANCH VOTING'),
           Visibility(
               visible: widget.userType == "NonMember",
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SamaBlueBanner(pageName: 'BRANCH VOTING'),
                   Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: PleaseLogin(
@@ -319,133 +319,127 @@ class _MemberElectionState extends State<MemberElection> {
               )),
           Visibility(
             visible: widget.userType != "NonMember",
-            child: Column(children: [
-              Row(
-                children: [
-                  Text(
-                    'Branch Election',
-                    style: TextStyle(
-                      fontSize: 36,
-                      color: Color.fromARGB(255, 24, 69, 126),
-                      fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElectionTabStyle(
-                    changePage: () {
-                      setState(() {
-                        pageIndex = 0;
-                      });
-                    },
-                    tabIndexNumber: 0,
-                    description: "Overview",
-                    customWidth: 150,
-                    customColor1: Color.fromARGB(255, 211, 210, 210),
-                    customColor2: Color.fromARGB(255, 0, 159, 158),
-                    pageIndex: pageIndex,
-                  ),
-                  ElectionTabStyle(
-                    changePage: () {
-                      setState(() {
-                        pageIndex = 1;
-                      });
-                    },
-                    tabIndexNumber: 1,
-                    description: "Nominations",
-                    customWidth: 150,
-                    customColor1: Color.fromARGB(255, 211, 210, 210),
-                    customColor2: Color.fromARGB(255, 0, 159, 158),
-                    pageIndex: pageIndex,
-                  ),
-                  /* ElectionTabStyle(
-              changePage: () {
-                setState(() {
-                  pageIndex = 2;
-                });
-              },
-              tabIndexNumber: 2,
-              description: "Acceptance Round",
-              customWidth: 180,
-              customColor1: Color.fromARGB(255, 211, 210, 210),
-              customColor2: Color.fromARGB(255, 0, 159, 158),
-              pageIndex: pageIndex,
-            ),*/
-                  ElectionTabStyle(
-                    changePage: () {
-                      setState(() {
-                        pageIndex = 3;
-                      });
-                    },
-                    tabIndexNumber: 3,
-                    description: "Voting",
-                    customWidth: 150,
-                    customColor1: Color.fromARGB(255, 211, 210, 210),
-                    customColor2: Color.fromARGB(255, 0, 159, 158),
-                    pageIndex: pageIndex,
-                  ),
-                  ElectionTabStyle(
-                    changePage: () {
-                      setState(() {
-                        pageIndex = 4;
-                      });
-                    },
-                    tabIndexNumber: 4,
-                    description: "Chairperson",
-                    customWidth: 150,
-                    customColor1: Color.fromARGB(255, 211, 210, 210),
-                    customColor2: Color.fromARGB(255, 0, 159, 158),
-                    pageIndex: pageIndex,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Visibility(
-                visible: pageIndex == 0 ? true : false,
-                child: Container(
-                    width: MyUtility(context).width * 0.8,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                          color: Color(0xFFD1D1D1),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ElectionTabStyle(
+                          changePage: () {
+                            setState(() {
+                              pageIndex = 0;
+                            });
+                          },
+                          tabIndexNumber: 0,
+                          description: "Overview",
+                          customWidth: 150,
+                          customColor1: Color.fromARGB(255, 211, 210, 210),
+                          customColor2: Color.fromARGB(255, 0, 159, 158),
+                          pageIndex: pageIndex,
+                        ),
+                        ElectionTabStyle(
+                          changePage: () {
+                            setState(() {
+                              pageIndex = 1;
+                            });
+                          },
+                          tabIndexNumber: 1,
+                          description: "Nominations",
+                          customWidth: 150,
+                          customColor1: Color.fromARGB(255, 211, 210, 210),
+                          customColor2: Color.fromARGB(255, 0, 159, 158),
+                          pageIndex: pageIndex,
+                        ),
+                        /* ElectionTabStyle(
+                                changePage: () {
+                  setState(() {
+                    pageIndex = 2;
+                  });
+                                },
+                                tabIndexNumber: 2,
+                                description: "Acceptance Round",
+                                customWidth: 180,
+                                customColor1: Color.fromARGB(255, 211, 210, 210),
+                                customColor2: Color.fromARGB(255, 0, 159, 158),
+                                pageIndex: pageIndex,
+                              ),*/
+                        ElectionTabStyle(
+                          changePage: () {
+                            setState(() {
+                              pageIndex = 3;
+                            });
+                          },
+                          tabIndexNumber: 3,
+                          description: "Voting",
+                          customWidth: 150,
+                          customColor1: Color.fromARGB(255, 211, 210, 210),
+                          customColor2: Color.fromARGB(255, 0, 159, 158),
+                          pageIndex: pageIndex,
+                        ),
+                        ElectionTabStyle(
+                          changePage: () {
+                            setState(() {
+                              pageIndex = 4;
+                            });
+                          },
+                          tabIndexNumber: 4,
+                          description: "Chairperson",
+                          customWidth: 150,
+                          customColor1: Color.fromARGB(255, 211, 210, 210),
+                          customColor2: Color.fromARGB(255, 0, 159, 158),
+                          pageIndex: pageIndex,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Visibility(
+                      visible: pageIndex == 0 ? true : false,
+                      child: Container(
+                          width: MyUtility(context).width * 0.8,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                color: Color(0xFFD1D1D1),
+                              )),
+                          child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: ElectionStatus(
+                                  startDate: currentStartDate,
+                                  endDate: currentEndDate,
+                                  status: votingStatus,
+                                  statusClosingDate: votingClosingDate,
+                                  branch: branch))),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                        width: MyUtility(context).width * 0.8,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(
+                              color: Color(0xFFD1D1D1),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: electionPages[pageIndex],
                         )),
-                    child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ElectionStatus(
-                            startDate: currentStartDate,
-                            endDate: currentEndDate,
-                            status: votingStatus,
-                            statusClosingDate: votingClosingDate,
-                            branch: branch))),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                  width: MyUtility(context).width * 0.8,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(
-                        color: Color(0xFFD1D1D1),
-                      )),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: electionPages[pageIndex],
-                  )),
-              SizedBox(
-                height: 15,
-              ),
-            ]),
+                    SizedBox(
+                      height: 15,
+                    ),
+                  ]),
+            ),
           ),
         ],
       ),
