@@ -46,16 +46,18 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
             ),
           ),
         ),
+        const SizedBox(height: 10,),
         Container(
           width: widget.customSize,
           height: widget.customHeight != null ? widget.customHeight : 50,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: widget.isRounded == null
-                ? BorderRadius.circular(10)
+                ? BorderRadius.circular(8)
                 : BorderRadius.circular(0),
             border: Border.all(
-              color: Colors.black,
+              width: 0.5,
+              color: Color.fromARGB(255, 102, 102, 102),
             ),
           ),
           child: Padding(

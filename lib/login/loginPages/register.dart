@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/email/sendOtp.dart';
+import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -246,7 +247,8 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //     width: MyUtility(context).width / 1.5,
+      //color: Colors.amber,
+          //width: MyUtility(context).width ,
       //height: MyUtility(context).height / 2,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -265,7 +267,7 @@ class _RegisterState extends State<Register> {
                     "Register",
                     style: GoogleFonts.openSans(
                       textStyle:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       color: Color.fromRGBO(0, 159, 158, 1),
                     ),
                   ),
@@ -278,7 +280,8 @@ class _RegisterState extends State<Register> {
                         "Already have a profile?",
                         style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                          ),
                           color: Colors.grey[600],
                         ),
                       ),
@@ -292,8 +295,13 @@ class _RegisterState extends State<Register> {
                         child: Text(
                           "Click to login",
                           style: GoogleFonts.openSans(
+                            decorationThickness: 2,
+                            height: 1.1,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color.fromRGBO(0, 159, 158, 1),
                             textStyle: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                            ),
                             color: Color.fromRGBO(0, 159, 158, 1),
                           ),
                         ),
@@ -309,22 +317,22 @@ class _RegisterState extends State<Register> {
                     children: [
                       Row(
                         children: [
-                          SizedBox(
-                            width: MyUtility(context).width / 5,
-                            child: TextFieldStyling(
-                              hintText: 'First Name',
-                              textfieldController: firstName,
-                            ),
+                          ProfileTextField(
+                            isBold: false,
+                            description: 'First name',
+                            textfieldController: firstName,
+                            customSize: MyUtility(context).width / 5,
+                            textFieldType: '',
                           ),
                           SizedBox(
                             width: 15,
                           ),
-                          SizedBox(
-                            width: MyUtility(context).width / 5,
-                            child: TextFieldStyling(
-                              hintText: 'Last Name',
-                              textfieldController: lastName,
-                            ),
+                         ProfileTextField(
+                            isBold: false,
+                            description: 'Surname',
+                            textfieldController: lastName,
+                            customSize: MyUtility(context).width / 5,
+                            textFieldType: '',
                           ),
                         ],
                       ),
@@ -343,15 +351,15 @@ class _RegisterState extends State<Register> {
                         textfieldController: lastName,
                       ),*/
                       SizedBox(
-                        height: 25,
+                        height: 15,
                       ),
-                      SizedBox(
-                        width: MyUtility(context).width / 5,
-                        child: TextFieldStyling(
-                          hintText: 'Email',
-                          textfieldController: email,
-                        ),
-                      ),
+                      ProfileTextField(
+                            isBold: false,
+                            description: 'Email address',
+                            textfieldController: email,
+                            customSize: MyUtility(context).width / 2.45,
+                            textFieldType: '',
+                          ),
                       /*  RegisterTextfieldStyle(
                         description: "Email",
                         hintText: "Email",
@@ -360,7 +368,7 @@ class _RegisterState extends State<Register> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.only(top: 25),
                     child: Row(
                       children: [
                         KeyboardListener(
@@ -373,6 +381,7 @@ class _RegisterState extends State<Register> {
                             }
                           },
                           child: StyleButton(
+                            buttonColor: Color.fromRGBO(24, 69, 126, 1),
                               waiting: _isLoading,
                               description: "Next",
                               height: 55,
@@ -384,10 +393,8 @@ class _RegisterState extends State<Register> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
+                  
+                  /*InkWell(
                     onTap: () {
                       widget.changePage(0);
                     },
@@ -407,7 +414,7 @@ class _RegisterState extends State<Register> {
                           fontSize: 16,
                           color: const Color.fromARGB(255, 8, 55, 145)),
                     ),
-                  ),
+                  ),*/
                 ]),
           ),
         ],
