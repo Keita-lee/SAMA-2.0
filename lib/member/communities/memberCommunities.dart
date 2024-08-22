@@ -49,25 +49,29 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SamaBlueBanner(pageName: 'COMMUNITIES'),
+        SizedBox(
+          height: 30,
+        ),
         Visibility(
             visible: widget.userType == "NonMember",
-            child: PleaseLogin(
-              pleaseLoginText:
-                  'Access to this content is restricted. Please log in to view or sign up for membership today.',
-            )),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: PleaseLogin(
+                  pleaseLoginText:
+                      'Access to this content is restricted. Please log in to view or sign up for membership today.',
+                ))),
         Visibility(
           visible: widget.userType != "NonMember",
           child: Padding(
-            padding: const EdgeInsets.all(35.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 15,
-                ),
                 Visibility(
                     visible: pageIndex == 0 ? true : false,
                     child: ComTypes(changePageIndex: changePageIndex)),

@@ -17,7 +17,7 @@ class _PleaseLoginState extends State<PleaseLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.80,
+      width: MyUtility(context).width / 1.3,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,

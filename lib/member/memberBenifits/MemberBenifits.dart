@@ -87,123 +87,127 @@ class _MemberBenifitsState extends State<MemberBenifits> {
         SamaBlueBanner(
           pageName: 'MEMBER BENEFITS',
         ),
-        Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                visible: userType == "Admin" ? true : false,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: MyUtility(context).width -
-                            MyUtility(context).width / 3.7,
-                      ),
-                      StyleButton(
-                          description: "Add Benefit",
-                          height: 55,
-                          width: 125,
-                          onTap: () {
-                            openMemberDialog("");
-                          })
-                    ],
+        SizedBox(
+          height: 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Visibility(
+                  visible: userType == "Admin" ? true : false,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: MyUtility(context).width -
+                              MyUtility(context).width / 3.7,
+                        ),
+                        StyleButton(
+                            description: "Add Benefit",
+                            height: 55,
+                            width: 125,
+                            onTap: () {
+                              openMemberDialog("");
+                            })
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: pageIndex == 0,
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('memberBenefits')
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: snapshot error');
-                      }
-                      if (!snapshot.hasData) {
-                        return const Text('Loading...');
-                      }
+                Visibility(
+                  visible: pageIndex == 0,
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('memberBenefits')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: snapshot error');
+                        }
+                        if (!snapshot.hasData) {
+                          return const Text('Loading...');
+                        }
 
-                      final List<DocumentSnapshot> documents =
-                          snapshot.data!.docs;
-                      if (documents.isEmpty) {
-                        return Center(child: Text('No class yet'));
-                      }
+                        final List<DocumentSnapshot> documents =
+                            snapshot.data!.docs;
+                        if (documents.isEmpty) {
+                          return Center(child: Text('No class yet'));
+                        }
 
-                      return Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          width: MyUtility(context).width * 0.55,
-                          height: MyUtility(context).height / 1.4,
-                          //color: Colors.transparent,
-                          /* child: DraggableScrollbar.rrect(
+                        return Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Container(
+                            width: MyUtility(context).width * 0.55,
+                            height: MyUtility(context).height / 1.4,
+                            //color: Colors.transparent,
+                            /* child: DraggableScrollbar.rrect(
                             alwaysVisibleScrollThumb: true,
                             backgroundColor: Color.fromARGB(255, 8, 55, 145),
                             controller: _scrollController,
                             padding: EdgeInsets.zero,*/
-                          child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: documents.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final DocumentSnapshot document =
-                                    documents[index];
+                            child: ListView.builder(
+                                controller: _scrollController,
+                                itemCount: documents.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final DocumentSnapshot document =
+                                      documents[index];
 
-                                return InkWell(
-                                  onTap: () {
-                                    opMemberDetails(
-                                        document['id'], document['logo']);
-                                    /*openMemberDetailsDialog(
-                                        document['id'], document['logo']);*/
-                                  },
-                                  child: CompanyContainer(
-                                    userType: userType,
-                                    image: document['logo'],
-                                    companyname: document['companyName'],
-                                    discription: document['companyDescription'],
-                                    editCompanyDetails: () {
-                                      openMemberDialog(document['id']);
-                                    },
-                                    openMemberDetails: () {
+                                  return InkWell(
+                                    onTap: () {
                                       opMemberDetails(
                                           document['id'], document['logo']);
                                       /*openMemberDetailsDialog(
-                                          document['id'], document['logo']);*/
+                                        document['id'], document['logo']);*/
                                     },
-                                  ),
-                                );
-                              }),
-                        ),
-                      );
-                    }),
-              ),
-              Visibility(
-                  visible: pageIndex == 1,
-                  child: MemberDetailsDialog(
-                      id: benefitsId,
-                      userType: userType,
-                      logo: logoImage,
-                      closeDialog: () {
-                        setState(() {
-                          pageIndex = 0;
-                        });
-                      }))
+                                    child: CompanyContainer(
+                                      userType: userType,
+                                      image: document['logo'],
+                                      companyname: document['companyName'],
+                                      discription:
+                                          document['companyDescription'],
+                                      editCompanyDetails: () {
+                                        openMemberDialog(document['id']);
+                                      },
+                                      openMemberDetails: () {
+                                        opMemberDetails(
+                                            document['id'], document['logo']);
+                                        /*openMemberDetailsDialog(
+                                          document['id'], document['logo']);*/
+                                      },
+                                    ),
+                                  );
+                                }),
+                          ),
+                        );
+                      }),
+                ),
+                Visibility(
+                    visible: pageIndex == 1,
+                    child: MemberDetailsDialog(
+                        id: benefitsId,
+                        userType: userType,
+                        logo: logoImage,
+                        closeDialog: () {
+                          setState(() {
+                            pageIndex = 0;
+                          });
+                        }))
 
-              /*  CompanyContainer(
+                /*  CompanyContainer(
                   image: 'images/company.jpg',
                   companyname: 'Company name',
                   discription: 'Description of company')*/
-            ],
+              ],
+            ),
           ),
-        ),
+        )
       ],
     );
   }

@@ -173,140 +173,141 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: MyUtility(context).width - MyUtility(context).width / 6.5,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SamaBlueBanner(pageName: 'E-STORE'),
-              SizedBox(
-                height: MyUtility(context).height * 0.08,
-              ),
-              Visibility(
+    return SizedBox(
+      width: MyUtility(context).width - MyUtility(context).width / 6.5,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SamaBlueBanner(pageName: 'E-STORE'),
+            SizedBox(
+              height: 30,
+            ),
+            Visibility(
                 visible: pageIndex == 0 ? true : false,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: MyUtility(context).width -
-                          MyUtility(context).width / 3.5,
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          Visibility(
-                            visible: widget.userType != "NonMember",
-                            child: StyleButton(
-                                description: "View Purchase History",
-                                height: 55,
-                                width: 125,
-                                onTap: () {
-                                  changePageIndex(3, "");
-                                }),
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 35,
-                    ),
-                    Container(
-                      height: MyUtility(context).height * 1.25,
-                      width: MyUtility(context).width -
-                          MyUtility(context).width / 3.5,
-                      child: GridView.builder(
-                        padding: const EdgeInsets.all(8.0),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3, // 3 items per row
-                          crossAxisSpacing: 8.0,
-                          mainAxisSpacing: 8.0,
-                          childAspectRatio:
-                              1.5 / 1.9, // Adjust the aspect ratio as needed
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MyUtility(context).width -
+                            MyUtility(context).width / 3.5,
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Visibility(
+                              visible: widget.userType != "NonMember",
+                              child: StyleButton(
+                                  description: "View Purchase History",
+                                  height: 55,
+                                  width: 125,
+                                  onTap: () {
+                                    changePageIndex(3, "");
+                                  }),
+                            )
+                          ],
                         ),
-                        itemCount: allProduct.length,
-                        itemBuilder: (context, index) {
-                          return ProductDisplayItem(
-                            productName: allProduct[index]['name'],
-                            price: allProduct[index]['price'],
-                            priceInfo: 'Member Price. Includes VAT',
-                            productDescription: allProduct[index]
-                                ['description'],
-                            productImage: allProduct[index]['imageUrl'],
-                            readMore: () {
-                              changePageIndex(1, allProduct[index]['type']);
-                              setState(() {
-                                title = allProduct[index]['name'];
-                                price = allProduct[index]['price'];
-                                priceInfo = 'Member Price. Includes VAT';
-                                description = allProduct[index]['description'];
-                                productImage = allProduct[index]['imageUrl'];
-                              });
-                            },
-                            buyProduct: () {
-                              addProductToList(allProduct[index], "");
-                              changePageIndex(2, allProduct[index]['type']);
-                            },
-                          );
-                        },
                       ),
-                    ), /* */
-                  ],
-                ),
-              ), //&& productType == "Digital Product"
-              Visibility(
-                visible: pageIndex == 1 ? true : false,
-                child: ProductFullViewDigital(
-                  title: title,
-                  price: price,
-                  priceInfo: priceInfo,
-                  description: description,
-                  productImage: productImage,
-                  changePageIndex: changePageIndex,
-                  buyProduct: addProductToList,
-                  productQuantity: productQuantity,
-                  getProductQuantity: getProductQuantity,
-                ),
+                      const SizedBox(
+                        height: 35,
+                      ),
+                      Container(
+                        height: MyUtility(context).height * 1.25,
+                        width: MyUtility(context).width -
+                            MyUtility(context).width / 3.5,
+                        child: GridView.builder(
+                          padding: const EdgeInsets.all(8.0),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, // 3 items per row
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio:
+                                1.5 / 1.9, // Adjust the aspect ratio as needed
+                          ),
+                          itemCount: allProduct.length,
+                          itemBuilder: (context, index) {
+                            return ProductDisplayItem(
+                              productName: allProduct[index]['name'],
+                              price: allProduct[index]['price'],
+                              priceInfo: 'Member Price. Includes VAT',
+                              productDescription: allProduct[index]
+                                  ['description'],
+                              productImage: allProduct[index]['imageUrl'],
+                              readMore: () {
+                                changePageIndex(1, allProduct[index]['type']);
+                                setState(() {
+                                  title = allProduct[index]['name'];
+                                  price = allProduct[index]['price'];
+                                  priceInfo = 'Member Price. Includes VAT';
+                                  description =
+                                      allProduct[index]['description'];
+                                  productImage = allProduct[index]['imageUrl'];
+                                });
+                              },
+                              buyProduct: () {
+                                addProductToList(allProduct[index], "");
+                                changePageIndex(2, allProduct[index]['type']);
+                              },
+                            );
+                          },
+                        ),
+                      ), /* */
+                    ],
+                  ),
+                )), //&& productType == "Digital Product"
+            Visibility(
+              visible: pageIndex == 1 ? true : false,
+              child: ProductFullViewDigital(
+                title: title,
+                price: price,
+                priceInfo: priceInfo,
+                description: description,
+                productImage: productImage,
+                changePageIndex: changePageIndex,
+                buyProduct: addProductToList,
+                productQuantity: productQuantity,
+                getProductQuantity: getProductQuantity,
               ),
-              /*  Visibility(
-                visible: pageIndex == 1 && productType == "Coding Product"
-                    ? true
-                    : false,
-                child: ProductFullViewCoding(
-                  title: title,
-                  price: price,
-                  priceInfo: priceInfo,
-                  description: description,
-                  productImage: productImage,
-                  changePageIndex: changePageIndex,
-                ),
-              ),*/
-              Visibility(
-                visible: pageIndex == 2 ? true : false,
-                child: CartPage(
-                    delete: deleteItem,
-                    products: cartProducts,
-                    changePageIndex: changePageIndex,
-                    getTotal: getTotal),
+            ),
+            /*  Visibility(
+              visible: pageIndex == 1 && productType == "Coding Product"
+                  ? true
+                  : false,
+              child: ProductFullViewCoding(
+                title: title,
+                price: price,
+                priceInfo: priceInfo,
+                description: description,
+                productImage: productImage,
+                changePageIndex: changePageIndex,
               ),
-
-              Visibility(
-                visible: pageIndex == 3 ? true : false,
-                child: PurchaseHistory(changePageIndex: changePageIndex),
-              ),
-
-              Visibility(
-                visible: pageIndex == 4 ? true : false,
-                child: Checkout(
+            ),*/
+            Visibility(
+              visible: pageIndex == 2 ? true : false,
+              child: CartPage(
+                  delete: deleteItem,
                   products: cartProducts,
-                  total: total,
                   changePageIndex: changePageIndex,
-                ),
+                  getTotal: getTotal),
+            ),
+
+            Visibility(
+              visible: pageIndex == 3 ? true : false,
+              child: PurchaseHistory(changePageIndex: changePageIndex),
+            ),
+
+            Visibility(
+              visible: pageIndex == 4 ? true : false,
+              child: Checkout(
+                products: cartProducts,
+                total: total,
+                changePageIndex: changePageIndex,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

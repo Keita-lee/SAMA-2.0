@@ -28,7 +28,7 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: MyUtility(context).width / 1.5,
+        width: MyUtility(context).width / 1.3,
         height: 230,
         decoration: BoxDecoration(
             color: Colors.white,

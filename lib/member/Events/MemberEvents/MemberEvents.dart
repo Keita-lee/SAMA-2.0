@@ -42,10 +42,13 @@ class _MemberEventsState extends State<MemberEvents> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SamaBlueBanner(pageName: 'EVENTS'),
+        SizedBox(
+          height: 30,
+        ),
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: Padding(
-            padding: const EdgeInsets.only(left: 50, top: 25),
+            padding: const EdgeInsets.only(left: 50, top: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

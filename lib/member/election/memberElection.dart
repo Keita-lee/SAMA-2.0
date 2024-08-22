@@ -303,24 +303,29 @@ class _MemberElectionState extends State<MemberElection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SamaBlueBanner(pageName: 'BRANCH VOTING'),
+          SizedBox(
+            height: 30,
+          ),
           Visibility(
               visible: widget.userType == "NonMember",
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: PleaseLogin(
-                      pleaseLoginText:
-                          'Access to this content is restricted. Please log in to view or sign up for membership today.',
-                    ),
-                  ),
-                ],
-              )),
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: PleaseLogin(
+                          pleaseLoginText:
+                              'Access to this content is restricted. Please log in to view or sign up for membership today.',
+                        ),
+                      ),
+                    ],
+                  ))),
           Visibility(
             visible: widget.userType != "NonMember",
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -404,7 +409,7 @@ class _MemberElectionState extends State<MemberElection> {
                     Visibility(
                       visible: pageIndex == 0 ? true : false,
                       child: Container(
-                          width: MyUtility(context).width * 0.8,
+                          width: MyUtility(context).width / 1.4,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
@@ -424,7 +429,7 @@ class _MemberElectionState extends State<MemberElection> {
                       height: 15,
                     ),
                     Container(
-                        width: MyUtility(context).width * 0.8,
+                        width: MyUtility(context).width / 1.4,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10.0),

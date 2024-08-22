@@ -343,7 +343,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Dashboard",
                     iconPath: "images/icon_dashboard.svg",
                     onPressed: () {
-                      //_handleItemClick(0, 0);
+                      _handleItemClick(0, 0);
                       widget.changePage(0);
                     },
                   ),
