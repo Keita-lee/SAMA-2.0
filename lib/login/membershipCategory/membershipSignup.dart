@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/myutility.dart';
+import 'package:sama/login/membershipCategory/pages/applicationProfile.dart';
 import 'package:sama/login/membershipCategory/pages/category.dart';
 import 'package:sama/login/membershipCategory/pages/paymentMethods.dart';
 
@@ -271,6 +272,10 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
                   title: applicationSelected,
                   nextSection: nextSection,
                   applicationPrice: applicationPrice),
+            ),
+            Visibility(
+              visible: sectionIndex == 3,
+              child: ApplicationProfile(),
             ),
           ],
         ),
