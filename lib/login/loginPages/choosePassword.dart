@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
+import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -94,65 +96,92 @@ class _ChoosePasswordState extends State<ChoosePassword> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Confirm Password",
-            style: TextStyle(fontSize: 30, color: Colors.black),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            "Password",
-            style: TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            width: MyUtility(context).width,
-            height: 45,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                border: Border.all(
-                  color: const Color.fromARGB(255, 51, 51, 51),
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: TextFormField(
-              controller: password,
-              style: TextStyle(
-                color: Color.fromARGB(255, 153, 147, 147),
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              onChanged: (value) {
-                passNotifier.value = CustomPassStrength.calculate(text: value);
-              },
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Enter Here",
-                hintStyle: TextStyle(
-                  color: Color.fromARGB(255, 199, 199, 199),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+            "Create a Password",
+            style: GoogleFonts.openSans(
+              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              color: Color.fromRGBO(0, 159, 158, 1),
             ),
           ),
           SizedBox(
             height: 15,
           ),
-          TextFieldStyling(
-            hintText: 'Confirm Password',
-            textfieldController: passwordCheck,
+          Text(
+            "Enter password",
+            style: GoogleFonts.openSans(
+              textStyle: TextStyle(
+                fontSize: 16,
+              ),
+              color: Colors.grey[600],
+            ),
           ),
-          SizedBox(height: 20),
+          SizedBox(
+            width: 15,
+          ),
+          ProfileTextField(
+              isBold: false,
+              fontSize: 13,
+              description:
+                  'Your password should have a minimum of 8 characters, 1 uppercase and 1 special character',
+              customSize: MyUtility(context).width,
+              textFieldType: 'IntType',
+              textfieldController: password),
+          // Container(
+          //   width: MyUtility(context).width,
+          //   height: 45,
+          //   decoration: BoxDecoration(
+          //       color: Color.fromARGB(255, 255, 255, 255),
+          //       border: Border.all(
+          //         color: const Color.fromARGB(255, 51, 51, 51),
+          //       ),
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: TextFormField(
+          //     controller: password,
+          //     style: TextStyle(
+          //       color: Color.fromARGB(255, 153, 147, 147),
+          //       fontSize: 16,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //     onChanged: (value) {
+          //       passNotifier.value = CustomPassStrength.calculate(text: value);
+          //     },
+          //     decoration: InputDecoration(
+          //       border: InputBorder.none,
+          //       hintText: "Enter Here",
+          //       hintStyle: TextStyle(
+          //         color: Color.fromARGB(255, 199, 199, 199),
+          //         fontSize: 20,
+          //         fontWeight: FontWeight.w400,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          SizedBox(
+            height: 15,
+          ),
           PasswordStrengthChecker(
+            configuration: PasswordStrengthCheckerConfiguration(
+              height: 28,
+              borderWidth: 0.5,
+              inactiveBorderColor: const Color.fromARGB(255, 126, 126, 126),
+              externalBorderRadius: BorderRadius.circular(30),
+            ),
             strength: passNotifier,
           ),
+
+          SizedBox(height: 20),
+          ProfileTextField(
+              isBold: false,
+              description: 'Confirm Password',
+              customSize: MyUtility(context).width,
+              textFieldType: 'IntType',
+              textfieldController: passwordCheck),
           SizedBox(
             height: 15,
           ),
           StyleButton(
-              description: "Submit & Login",
+              description: "Create",
+              fontSize: 15,
+              buttonColor: Color.fromRGBO(24, 69, 126, 1),
               height: 55,
               width: 125,
               onTap: () {

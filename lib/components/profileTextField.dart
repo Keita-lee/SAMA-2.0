@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfileTextField extends StatefulWidget {
   double customSize;
@@ -10,12 +11,13 @@ class ProfileTextField extends StatefulWidget {
   int? lines;
   bool? isBold;
   bool? isRounded;
-
+  double? fontSize;
   ProfileTextField(
       {super.key,
       this.lines,
       required this.customSize,
       this.customHeight,
+      this.fontSize,
       required this.textFieldType,
       required this.textfieldController,
       this.description,
@@ -38,10 +40,10 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           visible: widget.description == null ? false : true,
           child: Text(
             widget.description == null ? '' : widget.description!,
-            style: TextStyle(
+            style: GoogleFonts.openSans(
               fontWeight:
                   widget.isBold == null ? FontWeight.bold : FontWeight.normal,
-              fontSize: 16,
+              fontSize: widget.fontSize == null? 16 : widget.fontSize,
               color: Color(0xFF6A6A6A),
             ),
           ),
