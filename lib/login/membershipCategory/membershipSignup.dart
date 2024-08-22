@@ -71,6 +71,9 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
       "paymentOptions": [
         {
           "title": 'Free Membership',
+          "info": "",
+          "month": " R0.00",
+          "annual": "R 0.00"
         }
       ]
     },
@@ -187,8 +190,74 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
           "month": "R0.00",
           "annual": "R 0.00"
         },
-      ]
+      ],
     },
+    {
+      "applicationType": "Doctors Employed Outside Public Service",
+      "paymentOptions": [
+        {
+          "title": "4th Year After Qualification",
+          "info":
+              "After two years of Internship and one year of \nCommunity service. Can be employed by Government, \nworking in Private Practice or fall under EDOPS. \nSAMJ included.",
+          "month": "R382.00",
+          "annual": "R4584.00"
+        },
+        {
+          "title": "Full Time Other MP",
+          "info":
+              "EDOPS (Employed Doctors Outside Public\n Sector). Municipality/Research. Regional/Community Health.\n SA Defence Force Permanent. National\n Health Insurance. SAMJ \nincluded. Full time University/Private/Mine\n hospital/NGO/ Contracted to Government \nemployed. SAMJ included.",
+          "month": "R515.75",
+          "annual": "R6189.00"
+        },
+        {
+          "title": "Part Time MP",
+          "info":
+              "Working part time \nin Private Practice, \nGovernment or EDOPS. SAMJ included.",
+          "month": "R302.00",
+          "annual": "R3624.00"
+        },
+        {
+          "title": "Other Practitioner",
+          "info":
+              "Working/ employed in the\n Industry, Commercial, Medical Aid\n or Managed Health Care. \nSAMJ included.",
+          "month": "R515.00",
+          "annual": "R6180.00"
+        },
+        {
+          "title": "Spouse of Member -",
+          "info":
+              "The spouse of a full SAMA \nmember will pay a reduced member rate. \nThe spouse will not receive a separate journal\n as the SAMJ will be posted to the main \nmember only. Should a spouse like \nto receive his/her own copy of\n the SAMJ, a special reduced member\n rate will apply for the 2nd copy\n. Can be employed by Government, \nworking in Private Practice or \nfall under EDOPS (Employed Doctors Outside \nPublic Sector).",
+          "month": "R298.00",
+          "annual": "R3576.00"
+        },
+        {
+          "title": "Unattached (with journals)",
+          "info": "Overseas membership\n receiving the SAMJ.",
+          "month": "R552.00",
+          "annual": "R6624.00"
+        },
+        {
+          "title": "Unattached",
+          "info": "Overseas membership\n without receiving the SAMJ.",
+          "month": "R125.00",
+          "annual": "R1500.00"
+        },
+        {
+          "title": "Retired",
+          "info":
+              "Retired members only. SAMJ not\n included. If a member would like \nto participate in the CPD programme,\n they need to subscribe to the SAMJ. A \nspecial reduced member rate\n will apply.",
+          "month": "R115.00",
+          "annual": "R1380.00"
+        },
+        {
+          "title": "Life Member - R0.00",
+          "info":
+              "Member for 40 years. \nNo SAMJ included. Should a Life\n member like to receive a copy the SAMJ,\n a special reduced member rate will\n apply. Can still be in Private \nPractice, employed by Government or fall under\n EDOPS or can be retired.",
+          "month": "R0.00",
+          "annual": "R 0.00"
+        },
+      ]
+    }
   ];
 
   @override
@@ -275,7 +344,9 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
             ),
             Visibility(
               visible: sectionIndex == 3,
-              child: ApplicationProfile(),
+              child: ApplicationProfile(
+                nextSection: nextSection,
+              ),
             ),
           ],
         ),
