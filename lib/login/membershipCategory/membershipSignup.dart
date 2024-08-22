@@ -340,7 +340,8 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
               child: PaymentMethod(
                   title: applicationSelected,
                   nextSection: nextSection,
-                  applicationPrice: applicationPrice),
+                  applicationPrice: applicationPrice,
+                  applicationCategory: applicationCategory),
             ),
             Visibility(
               visible: sectionIndex == 3,

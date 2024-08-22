@@ -10,11 +10,13 @@ class PaymentMethod extends StatefulWidget {
   String title;
   String applicationPrice;
   Function(int) nextSection;
+  String applicationCategory;
   PaymentMethod(
       {super.key,
       required this.title,
       required this.applicationPrice,
-      required this.nextSection});
+      required this.nextSection,
+      required this.applicationCategory});
 
   @override
   State<PaymentMethod> createState() => _PaymentMethodState();
@@ -44,15 +46,14 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     children: [
                       PaymentTextreu(
                           boldText: 'Application Type',
-                          secondText: 'PRIVATE PRACTICE'),
+                          secondText: widget.title),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 5, bottom: 5),
                           child: PaymentTextreu(
                               boldText: 'Category',
-                              secondText:
-                                  'Medically qualified spouse of full member'),
+                              secondText: widget.applicationCategory),
                         ),
                       ),
                       PaymentTextreu(boldText: 'Annual', secondText: 'R4584'),
@@ -81,7 +82,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     Column(
                       children: [
                         PaymentTextPr(
-                            boldText: 'Pro-rata Amount', secondText: 'R1490'),
+                            boldText: 'Pro-rata Amount',
+                            secondText: widget.applicationPrice),
                         PaymentTextPr(
                             boldText: 'For Period',
                             secondText: 'Aug 2024 - Dec 2024'),
