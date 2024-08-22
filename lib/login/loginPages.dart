@@ -73,7 +73,6 @@ class _LoginPagesState extends State<LoginPages> {
     bool showRegisterBorder = false;
     // pages to go to
     var pages = [
-      MembershipSignUp(),
       LoginWithEmail(changePage: changePage, getEmail: getEmail),
       LoginWithPassword(
         changePage: changePage,
@@ -90,6 +89,10 @@ class _LoginPagesState extends State<LoginPages> {
       SendUsername(changePage: changePage),
       ValidateByEmail(changePage: changePage),
       AccessDenied(changePage: changePage),
+      Register(
+          changePage: changePage,
+          getEmailChangeType: getEmailChangeType,
+          getEmail: getEmail),
       ChoosePassword(changePage: changePage),
       GetUsername(
           changePage: changePage,
@@ -104,7 +107,8 @@ class _LoginPagesState extends State<LoginPages> {
       ValidateByEmailOtp(
           changePage: changePage,
           email: email,
-          emailChangeType: emailChangeType)
+          emailChangeType: emailChangeType),
+      MembershipSignUp(),
     ];
 
     return Container(

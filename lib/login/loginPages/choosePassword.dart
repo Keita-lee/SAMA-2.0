@@ -10,6 +10,7 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/login/membershipCategory/memberCategory.dart';
+import 'package:sama/login/membershipCategory/membershipSignup.dart';
 
 class ChoosePassword extends StatefulWidget {
   Function(int) changePage;
@@ -67,13 +68,17 @@ class _ChoosePasswordState extends State<ChoosePassword> {
       if (_auth.currentUser != null) {
         _auth.currentUser!
             .updatePassword(password.text)
-            .whenComplete(() => Navigator.push(
+            .whenComplete(
+              () => widget.changePage(15)
+
+              /*  Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Material(
-                            child: MemberCategory(),
-                          )),
-                ))
+                      builder: (context) =>
+                          Material(child: MembershipSignUp() //MemberCategory(),
+                              ))*/
+              ,
+            )
             .catchError((e) {
           print(e);
         });
@@ -117,44 +122,44 @@ class _ChoosePasswordState extends State<ChoosePassword> {
           SizedBox(
             width: 15,
           ),
-          ProfileTextField(
+          /*  ProfileTextField(
               isBold: false,
               fontSize: 13,
               description:
                   'Your password should have a minimum of 8 characters, 1 uppercase and 1 special character',
               customSize: MyUtility(context).width,
               textFieldType: 'IntType',
-              textfieldController: password),
-          // Container(
-          //   width: MyUtility(context).width,
-          //   height: 45,
-          //   decoration: BoxDecoration(
-          //       color: Color.fromARGB(255, 255, 255, 255),
-          //       border: Border.all(
-          //         color: const Color.fromARGB(255, 51, 51, 51),
-          //       ),
-          //       borderRadius: BorderRadius.all(Radius.circular(5))),
-          //   child: TextFormField(
-          //     controller: password,
-          //     style: TextStyle(
-          //       color: Color.fromARGB(255, 153, 147, 147),
-          //       fontSize: 16,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //     onChanged: (value) {
-          //       passNotifier.value = CustomPassStrength.calculate(text: value);
-          //     },
-          //     decoration: InputDecoration(
-          //       border: InputBorder.none,
-          //       hintText: "Enter Here",
-          //       hintStyle: TextStyle(
-          //         color: Color.fromARGB(255, 199, 199, 199),
-          //         fontSize: 20,
-          //         fontWeight: FontWeight.w400,
-          //       ),
-          //     ),
-          //   ),
-          // ),
+              textfieldController: password),*/
+          Container(
+            width: MyUtility(context).width,
+            height: 45,
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                border: Border.all(
+                  color: Color.fromARGB(255, 153, 147, 147),
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: TextFormField(
+              controller: password,
+              style: TextStyle(
+                color: Color.fromARGB(255, 153, 147, 147),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              onChanged: (value) {
+                passNotifier.value = CustomPassStrength.calculate(text: value);
+              },
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "",
+                hintStyle: TextStyle(
+                  color: Color.fromARGB(255, 199, 199, 199),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
           SizedBox(
             height: 15,
           ),
@@ -167,7 +172,6 @@ class _ChoosePasswordState extends State<ChoosePassword> {
             ),
             strength: passNotifier,
           ),
-
           SizedBox(height: 20),
           ProfileTextField(
               isBold: false,

@@ -12,6 +12,8 @@ import 'package:sama/login/registerFinished.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/components/constants.dart' as constants;
 
+import '../../loginPages/membershipSignUp.dart';
+
 class ApplicationProfile extends StatefulWidget {
   Function(int) nextSection;
   ApplicationProfile({super.key, required this.nextSection});
@@ -126,7 +128,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Material(child: RegisterFinished())));
+            builder: (context) => Material(child: MeshipRegFinished())));
   }
 
 //Select a date popup

@@ -180,6 +180,7 @@ class _RegisterState extends State<Register> {
 
     setState(() {
       _isLoading = true;
+      FirebaseAuth.instance.signOut();
     });
 
     // Query Firestore to check if the email already exists
@@ -248,7 +249,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Container(
       //color: Colors.amber,
-          //width: MyUtility(context).width ,
+      //width: MyUtility(context).width ,
       //height: MyUtility(context).height / 2,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -327,7 +328,7 @@ class _RegisterState extends State<Register> {
                           SizedBox(
                             width: 15,
                           ),
-                         ProfileTextField(
+                          ProfileTextField(
                             isBold: false,
                             description: 'Surname',
                             textfieldController: lastName,
@@ -354,12 +355,12 @@ class _RegisterState extends State<Register> {
                         height: 15,
                       ),
                       ProfileTextField(
-                            isBold: false,
-                            description: 'Email address',
-                            textfieldController: email,
-                            customSize: MyUtility(context).width / 2.45,
-                            textFieldType: '',
-                          ),
+                        isBold: false,
+                        description: 'Email address',
+                        textfieldController: email,
+                        customSize: MyUtility(context).width / 2.45,
+                        textFieldType: '',
+                      ),
                       /*  RegisterTextfieldStyle(
                         description: "Email",
                         hintText: "Email",
@@ -381,7 +382,7 @@ class _RegisterState extends State<Register> {
                             }
                           },
                           child: StyleButton(
-                            buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                              buttonColor: Color.fromRGBO(24, 69, 126, 1),
                               waiting: _isLoading,
                               description: "Next",
                               height: 55,
@@ -393,7 +394,7 @@ class _RegisterState extends State<Register> {
                       ],
                     ),
                   ),
-                  
+
                   /*InkWell(
                     onTap: () {
                       widget.changePage(0);
