@@ -12,6 +12,7 @@ class ProfileTextField extends StatefulWidget {
   bool? isBold;
   bool? isRounded;
   double? fontSize;
+
   ProfileTextField(
       {super.key,
       this.lines,
@@ -42,13 +43,16 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
             widget.description == null ? '' : widget.description!,
             style: GoogleFonts.openSans(
               fontWeight:
-                  widget.isBold == null ? FontWeight.bold : FontWeight.normal,
-              fontSize: widget.fontSize == null? 16 : widget.fontSize,
+                  widget.isBold == null ? FontWeight.w500 : FontWeight.normal,
+              fontSize: widget.fontSize == null ? 16 : widget.fontSize,
+              letterSpacing: -0.5,
               color: Color(0xFF6A6A6A),
             ),
           ),
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Container(
           width: widget.customSize,
           height: widget.customHeight != null ? widget.customHeight : 50,
@@ -58,8 +62,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                 ? BorderRadius.circular(8)
                 : BorderRadius.circular(0),
             border: Border.all(
-              width: 0.5,
-              color: Color.fromARGB(255, 102, 102, 102),
+              color: Colors.grey,
             ),
           ),
           child: Padding(
@@ -92,10 +95,11 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                 return null;
               },
               controller: widget.textfieldController,
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 color: /*Color.fromARGB(255, 153, 147, 147)*/ Color(0xFF6A6A6A),
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontSize: widget.fontSize == null ? 16 : widget.fontSize,
+                //fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
                 contentPadding: new EdgeInsets.only(left: 12.0),
@@ -144,13 +148,17 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
             visible: widget.description == null ? false : true,
             child: Text(
               widget.description == null ? '' : widget.description!,
-              style: TextStyle(
+              style: GoogleFonts.openSans(
                 fontWeight:
-                    widget.isBold == null ? FontWeight.bold : FontWeight.normal,
+                    widget.isBold == null ? FontWeight.w500 : FontWeight.normal,
                 fontSize: 16,
+                letterSpacing: -0.5,
                 color: Color(0xFF6A6A6A),
               ),
             ),
+          ),
+          const SizedBox(
+            height: 10,
           ),
           DropdownMenu<String>(
             width: widget.customSize,
