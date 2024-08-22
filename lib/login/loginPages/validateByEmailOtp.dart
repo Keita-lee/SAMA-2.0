@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/email/sendSAMANumber.dart';
+import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 
@@ -126,7 +127,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Password Reset",
+                "Validate your email address",
                 style: GoogleFonts.openSans(
                   fontSize: 20,
                   color: Color.fromRGBO(0, 159, 158, 1),
@@ -139,7 +140,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
               ),
               Text.rich(
                 TextSpan(
-                  text: "Enter ",
+                  text: "A ",
                   style: GoogleFonts.openSans(
                     fontSize: 16,
                     color: Colors.grey[600],
@@ -156,7 +157,8 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                       ),
                     ),
                     TextSpan(
-                      text: " sent to your email address ",
+                      text:
+                          " has been sent sent to your email address, please enter it here ",
                       style: GoogleFonts.openSans(
                         fontSize: 16,
                         color: Colors.grey[600],
@@ -168,20 +170,19 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 5,
               ),
               Row(
                 children: [
-                  SizedBox(
-                    width: MyUtility(context).width * 0.3,
-                    child: TextFieldStyling(
-                      hintText: 'Add OTP',
-                      textfieldController: otp,
-                    ),
-                  ),
+                  ProfileTextField(
+                      customSize: MyUtility(context).width * 0.3,
+                      textFieldType: 'intType',
+                      textfieldController: otp),
                   Padding(
-                    padding: const EdgeInsets.only(left: 25),
+                    padding: const EdgeInsets.only(left: 25, top: 10),
                     child: StyleButton(
+                      fontSize: 12,
+                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
                       description: "VALIDATE",
                       height: 55,
                       width: 100,
@@ -253,7 +254,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
               SizedBox(
                 height: 15,
               ),
-              GestureDetector(
+             /* GestureDetector(
                 onTap: () {
                   widget.changePage(0);
                 },
@@ -270,7 +271,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                   ),
                 ),
               ),
-              /*InkWell(
+              InkWell(
                 onTap: () {
                   OpenContructionPopup();
                 },
