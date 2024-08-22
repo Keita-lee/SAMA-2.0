@@ -25,6 +25,7 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
             "Membership Sign Up",
             style: GoogleFonts.openSans(
               fontSize: 22,
+              fontWeight: FontWeight.bold,
               color: Color.fromRGBO(0, 159, 158, 1),
               letterSpacing: -0.5,
             ),
@@ -46,16 +47,17 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
           Text(
             "Your application is currently pending approval, and you\'ll be notified by email once it\'s confirmed. In the meantime, feel free to continue browsing the portal with limited access. We\'re exited to have you on board and look forward to supporting you in your professional journey!",
             style: GoogleFonts.openSans(
-              fontSize: 17,
+              fontSize: 16,
               color: Colors.grey[600],
               fontWeight: FontWeight.w500,
               letterSpacing: -0.5,
             ),
           ),
           SizedBox(
-            height: 15,
+            height: 25,
           ),
           StyleButton(
+            fontSize: 14,
             description: "CONTINUE",
             height: 50,
             buttonColor: Color.fromRGBO(0, 159, 158, 1),
