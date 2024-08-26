@@ -53,7 +53,7 @@ class _HistoryProductDisplayState extends State<HistoryProductDisplay> {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage("images/imageIcon.png"),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                               width: MyUtility(context).width / 7,
@@ -65,7 +65,7 @@ class _HistoryProductDisplayState extends State<HistoryProductDisplay> {
                                 ? true
                                 : false,
                             child: ImageNetwork(
-                              fitWeb: BoxFitWeb.cover,
+                              fitWeb: BoxFitWeb.contain,
                               image: widget.products[i]['productImage'],
                               width: MyUtility(context).width / 7,
                               height: 200,
@@ -82,23 +82,39 @@ class _HistoryProductDisplayState extends State<HistoryProductDisplay> {
                                 width: MyUtility(context).width / 3,
                                 child: Text(
                                   widget.products[i]['productName'],
+                                  maxLines: null,
                                   style: const TextStyle(
-                                      overflow: TextOverflow.ellipsis,
                                       fontSize: 22,
                                       fontWeight: FontWeight.w400),
-                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              SizedBox(
+                                width: MyUtility(context).width / 3,
+                                child: Text(
+                                  'R ${widget.products[i]['productPrice']}',
+                                  maxLines: null,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(0, 159, 158, 1)),
                                 ),
                               ),
                               SizedBox(
                                 height: 25,
                               ),
-                              MyProductButtons(
-                                buttonText: 'Download',
-                                buttonColor: Colors.teal,
-                                borderColor: Colors.teal,
-                                textColor: Colors.white,
-                                onTap: () {},
-                              ),
+                              widget.products[i]['downloadLink'] != null ||
+                                      widget.products[i]['downloadLink'] == ''
+                                  ? const SizedBox.shrink()
+                                  : MyProductButtons(
+                                      buttonText: 'Download',
+                                      buttonColor: Colors.teal,
+                                      borderColor: Colors.teal,
+                                      textColor: Colors.white,
+                                      onTap: () {},
+                                    ),
                             ],
                           ),
                         ],

@@ -106,8 +106,8 @@ class _YourOrderTableState extends State<YourOrderTable> {
     for (int i = 0; i < widget.orderProduct.length; i++) {
       var product = {
         "productImage": widget.orderProduct[i]['productImage'],
-        "productName": widget.orderProduct[i]['productName'],
-        "productPrice": widget.orderProduct[i]['productPrice'],
+        "productName": widget.orderProduct[i]['name'],
+        "productPrice": widget.orderProduct[i]['price'],
         "quantity": widget.orderProduct[i]['quantity'],
         "downloadLink": widget.orderProduct[i]['downloadLink'],
       };

@@ -2,6 +2,7 @@ import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/email/sendPaymentConfirmation.dart';
 import 'package:sama/member/productDisplay/cart/ui/payStackCon.dart';
 import 'package:sama/member/productDisplay/checkout/yourOrderTable/yourOrderTable.dart';
 import 'dart:async';
@@ -38,13 +39,13 @@ class _YourOrderConState extends State<YourOrderCon> {
   var total = 0.0;
   String email = "";
   bool loadingState = false;
-  List products = [];
+  List cartProducts = [];
   String reference = "";
 
   Future<void> _getCart() async {
     List cart = await getCart();
     setState(() {
-      products = cart;
+      cartProducts = cart;
       total = getTotal(cart);
     });
   }
@@ -126,8 +127,8 @@ class _YourOrderConState extends State<YourOrderCon> {
     );
   }
 
-  savePaymentsToHistory() {
-    List products = [];
+  savePaymentsToHistory() async {
+    List<Map<String, dynamic>> products = [];
     /*
     productImage: widget.productItems[i]['productImage'],
                     productName: widget.productItems[i]['productName'],
@@ -135,13 +136,15 @@ class _YourOrderConState extends State<YourOrderCon> {
                     qtyWidget: widget.productItems[i]['quantity'],
      */
 
-    for (int i = 0; i < products.length; i++) {
+    for (int i = 0; i < cartProducts.length; i++) {
       var product = {
-        "productImage": products[i]['productImage'],
-        "productName": products[i]['productName'],
-        "productPrice": products[i]['productPrice'],
-        "quantity": products[i]['quantity'],
-        "downloadLink": products[i]['downloadLink'],
+        "productImage": cartProducts[i]['productImage'],
+        "productName": cartProducts[i]['name'] ?? '',
+        "productPrice": cartProducts[i]['price'],
+        "quantity": cartProducts[i]['quantity'],
+        "downloadLink": cartProducts[i]['downloadLink'] ?? '',
+        "productType": cartProducts[i]['type'],
+        "productId": cartProducts[i]['id'],
       };
       products.add(product);
     }
@@ -153,7 +156,27 @@ class _YourOrderConState extends State<YourOrderCon> {
       "user": FirebaseAuth.instance.currentUser?.uid ?? '0'
     };
 
-    FirebaseFirestore.instance.collection('storeHistory').add(productHistory);
+    try {
+      await FirebaseFirestore.instance
+          .collection('storeHistory')
+          .add(productHistory);
+      String name = 'SAMA Customer';
+      if (FirebaseAuth.instance.currentUser != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get();
+        name = userDoc.get('firstName');
+      }
+
+      sendPaymentConfirmation(
+          email: email,
+          customerName: name,
+          totalPrice: total.toString(),
+          refNo: reference);
+    } catch (e) {
+      print('could not add user history $e');
+    }
   }
 
   afterPaymentMade() {
@@ -212,7 +235,7 @@ class _YourOrderConState extends State<YourOrderCon> {
                 ),
                 //List here
                 YourOrderTable(
-                    orderProduct: products,
+                    orderProduct: cartProducts,
                     getTotal: getTotals,
                     total: total.toString()),
               ],
