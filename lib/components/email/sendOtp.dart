@@ -37,7 +37,7 @@ Future sendOtp({
   required String otp,
   required String email,
 }) async {
-  final serviceId = 'service_u27dfto';
+  final serviceId = 'service_e806g0h';
   final templateId = 'template_v14zgxi';
   final userId = '282VyjdH5FOLIffwK';
   createOtpVerification(email, otp);
@@ -49,7 +49,7 @@ Future sendOtp({
         'template_id': templateId,
         'user_id': userId,
         'template_params': {
-          'otp': otp,
+          'number': otp,
           'user_email': email,
         }
       }));

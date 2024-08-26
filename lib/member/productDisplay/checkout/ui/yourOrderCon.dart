@@ -129,13 +129,6 @@ class _YourOrderConState extends State<YourOrderCon> {
 
   savePaymentsToHistory() async {
     List<Map<String, dynamic>> products = [];
-    /*
-    productImage: widget.productItems[i]['productImage'],
-                    productName: widget.productItems[i]['productName'],
-                    productPrice: widget.productItems[i]['productPrice'],
-                    qtyWidget: widget.productItems[i]['quantity'],
-     */
-
     for (int i = 0; i < cartProducts.length; i++) {
       var product = {
         "productImage": cartProducts[i]['productImage'],

@@ -14,7 +14,7 @@ Future sendElectionUpdate({
 }) async {
   final serviceId = 'service_e806g0h';
   final templateId = 'template_2tv3c3b';
-  final userId = 'Y7fK8KSxu782pD-Q7';
+  final userId = 'Jmk16IabzDvgmXBeJ';
   // createOtpVerification(email, otp);
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
   final response = await http.post(url,
