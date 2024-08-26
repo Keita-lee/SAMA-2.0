@@ -30,6 +30,7 @@ import 'package:sama/member/productDisplay/cart/cartPage.dart';
 import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
 
+import '../BugReport/bugReport.dart';
 import '../member/communities/memberCommunities.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
@@ -112,6 +113,16 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
             child: NotificationList(
           closeDialog: () => Navigator.pop(context),
           notificationsList: userNotification,
+        ));
+      });
+
+  //popup for notification
+  Future openReportPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: BugReport(
+          closeDialog: () => Navigator.pop(context),
         ));
       });
 
@@ -471,7 +482,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      openReportPopup();
+                                    },
                                     icon: SvgPicture.asset(
                                       'images/icon_gear.svg',
                                       width: 20,
