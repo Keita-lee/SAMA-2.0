@@ -136,7 +136,7 @@ class _JournalCheckBoxState extends State<JournalCheckBox> {
           Text(
             widget.title,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: Colors.grey[700],
             ),
           ),
