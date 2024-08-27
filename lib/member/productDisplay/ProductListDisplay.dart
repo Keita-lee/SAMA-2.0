@@ -13,6 +13,7 @@ import 'package:sama/member/productDisplay/ui/productDisplayItem.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sama/utils/cartUtils.dart';
+import '../../components/email/sendPaymentConfirmation.dart';
 import 'checkout/checkout.dart';
 
 class ProductListDisplay extends StatefulWidget {
@@ -204,7 +205,12 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                                   height: 55,
                                   width: 125,
                                   onTap: () {
-                                    changePageIndex(3, "");
+                                    sendPaymentConfirmation(
+                                        email: "ChrisPotgieter145@gmail.com",
+                                        customerName: "Customer Nme",
+                                        totalPrice: "123",
+                                        refNo: "rft");
+                                    //    changePageIndex(3, "");
                                   }),
                             )
                           ],

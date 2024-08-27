@@ -8,8 +8,8 @@ Future sendSamaNumber({
   required String samaNumber,
   required String email,
 }) async {
-  final serviceId = 'service_u27dfto';
-  final templateId = 'template_pi7g8zd';
+  final serviceId = 'service_e806g0h';
+  final templateId = 'template_v14zgxi';
   final userId = '282VyjdH5FOLIffwK';
   // createOtpVerification(email, otp);
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
@@ -20,7 +20,7 @@ Future sendSamaNumber({
         'template_id': templateId,
         'user_id': userId,
         'template_params': {
-          'samaNumber': samaNumber,
+          'number': samaNumber,
           'user_email': email,
         }
       }));
