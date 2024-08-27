@@ -220,6 +220,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
           return Dialog(
               child: LogoutPopup(closeDialog: () => Navigator.pop(context!)));
         });
+
 // logUserOut
     logOut() {
       final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -233,6 +234,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       );
     }
 
+    //var heightDevice = MediaQuery.of(context).size.height;
     var heightDevice = MediaQuery.of(context).size.height;
 
     var widthDevice = MediaQuery.of(context).size.width;
