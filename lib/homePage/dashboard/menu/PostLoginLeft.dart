@@ -386,12 +386,12 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     },
                   ),
                   HoverItem(
-                    isActive: activeIndex == 5,
+                    isActive: activeIndex == 19,
                     menuSize: widget.menuSize,
                     description: "Professional Development",
                     iconPath: "images/icon_prof_dev.svg",
                     onPressed: () {
-                      _handleItemClick(5, -1);
+                      _handleItemClick(19, 19);
                     },
                   ),
                   HoverItem(
