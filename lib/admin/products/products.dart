@@ -40,10 +40,13 @@ class _ProductsState extends State<Products> {
     return Column(
       children: [
         SamaBlueBanner(pageName: 'PRODUCTS'),
-        SizedBox(height: 25,),
+        SizedBox(
+          height: 25,
+        ),
         Visibility(
           visible: pageIndex == 0 ? true : false,
-          child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: SizedBox(
               width: MyUtility(context).width * 0.60,
               child: Column(
@@ -58,7 +61,7 @@ class _ProductsState extends State<Products> {
                         style: TextStyle(
                             fontSize: 28, fontWeight: FontWeight.bold),
                       ),
-                    /*  MyProductButtons(
+                      /*  MyProductButtons(
                         buttonText: 'Add new',
                         buttonColor: Color.fromARGB(255, 8, 55, 145),
                         borderColor: Color.fromARGB(255, 8, 55, 145),
