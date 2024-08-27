@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/CustomSearchBar.dart';
 import 'package:sama/components/utility.dart';
 import 'package:sama/member/communities/sections/forums/sections/viewTopic/viewTopic.dart';
 
@@ -36,6 +37,13 @@ class _TopicsState extends State<Topics> {
   var createdBy = {};
   List discussions = [];
   String subject = "";
+  String _searchText = "";
+
+  void _onSearch(String value) {
+    setState(() {
+      _searchText = value;
+    });
+  }
 
   //update pageindex and get Id type
   changePageIndex(value) {
@@ -46,17 +54,31 @@ class _TopicsState extends State<Topics> {
 
   @override
   void initState() {
-    var data = widget.resourceType.split(" - ");
+    setState(() {
+      var data = widget.resourceType.split(" - ");
 
-    var typeIndex = (widget.communityTypeList)
-        .indexWhere((item) => item["title"] == data[1]);
+      var typeIndex = (widget.communityTypeList)
+          .indexWhere((item) => item["title"] == data[1]);
 
-    communityTitle = widget.communityTypeList[typeIndex]['title'];
-    communityId = widget.communityTypeList[typeIndex]['id'];
-    communityDiscussion
-        .addAll(widget.communityTypeList[typeIndex]['discussions']);
-    communityDiscussion.sort((b, a) => a["date"].compareTo(b["date"]));
+      communityTitle = widget.communityTypeList[typeIndex]['title'];
+      communityId = widget.communityTypeList[typeIndex]['id'];
+      communityDiscussion
+          .addAll(widget.communityTypeList[typeIndex]['discussions']);
+      communityDiscussion.sort((b, a) => a["date"].compareTo(b["date"]));
+    });
+
     super.initState();
+  }
+
+  List get _filteredDiscussions {
+    if (_searchText.isEmpty) {
+      return communityDiscussion;
+    } else {
+      return communityDiscussion
+          .where((item) =>
+              item['subject'].toLowerCase().contains(_searchText.toLowerCase()))
+          .toList();
+    }
   }
 
   @override
@@ -81,10 +103,20 @@ class _TopicsState extends State<Topics> {
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: SizedBox(
-            width: MyUtility(context).width / 1.3,
+            width: MyUtility(context).width * 0.77,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomSearchBar(
+                      onSearch: _onSearch,
+                      width: 250,
+                    ),
+                  ],
+                ),
                 StyleButton(
                     description: "New Topic",
                     height: 55,
@@ -122,18 +154,18 @@ class _TopicsState extends State<Topics> {
           child: Column(
             children: [
               ForumHeaderStyle(title: "Topics"),
-              for (var i = 0; i < communityDiscussion.length; i++)
+              for (var i = 0; i < _filteredDiscussions.length; i++)
                 InkWell(
                   onTap: () {
                     setState(() {
-                      title = communityDiscussion[i]['subject'];
-                      description = communityDiscussion[i]['description'];
-                      createdBy = communityDiscussion[i]['createdBy'];
+                      title = _filteredDiscussions[i]['subject'];
+                      description = _filteredDiscussions[i]['description'];
+                      createdBy = _filteredDiscussions[i]['createdBy'];
                       commentDiscussions =
-                          communityDiscussion[i]['discussions'];
+                          _filteredDiscussions[i]['discussions'];
 
                       date = CommonService().getDateInTextTimeStamp(
-                          communityDiscussion[i]['date']);
+                          _filteredDiscussions[i]['date']);
 
                       changePageIndex(2);
                     });
@@ -141,14 +173,14 @@ class _TopicsState extends State<Topics> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ForumSectionTypeStyle(
-                      title: communityDiscussion[i]['subject'],
-                      description: communityDiscussion[i]['createdBy']['name'],
+                      title: _filteredDiscussions[i]['subject'],
+                      description: _filteredDiscussions[i]['createdBy']['name'],
                       postText: CommonService().getDateInTextTimeStamp(
-                          communityDiscussion[i]['date']),
-                      userImageUrl: communityDiscussion[i]['createdBy']
+                          _filteredDiscussions[i]['date']),
+                      userImageUrl: _filteredDiscussions[i]['createdBy']
                               ['profileImage'] ??
                           '',
-                      postTime: communityDiscussion[i]['createdBy']['name'] ??
+                      postTime: _filteredDiscussions[i]['createdBy']['name'] ??
                           'Anonymous',
                       userName: '',
                     ),

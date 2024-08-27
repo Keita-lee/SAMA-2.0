@@ -125,13 +125,15 @@ class ProfileDropDownField extends StatefulWidget {
   List items;
   final bool? isBold;
   final TextEditingController textfieldController;
+  final Function? onChanged;
   ProfileDropDownField(
       {super.key,
       required this.customSize,
       this.description,
       required this.items,
       required this.textfieldController,
-      this.isBold});
+      this.isBold,
+      this.onChanged});
 
   @override
   State<ProfileDropDownField> createState() => _ProfileDropDownFieldState();
@@ -169,6 +171,10 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
               setState(() {
                 widget.textfieldController.text = value!;
               });
+
+              if (widget.onChanged != null) {
+                widget.onChanged!();
+              }
             },
             dropdownMenuEntries:
                 widget.items.map<DropdownMenuEntry<String>>((value) {

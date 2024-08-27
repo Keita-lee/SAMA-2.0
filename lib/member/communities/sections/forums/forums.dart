@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sama/components/myutility.dart';
 import 'package:sama/member/communities/sections/forums/sections/otherCommunities.dart';
+import 'package:sama/components/CustomSearchBar.dart';
 import 'dart:convert';
 
 import 'package:sama/member/communities/sections/forums/sections/yourCommunity.dart'; // For JSON decoding
