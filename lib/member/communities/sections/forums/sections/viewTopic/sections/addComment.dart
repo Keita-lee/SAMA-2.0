@@ -45,7 +45,7 @@ class _AddCommentState extends State<AddComment> {
 
   addTopicToDatabase() {
     var topicData = {
-      "date": DateTime.now(),
+      "date": Timestamp.now(),
       "description": jsonEncode(quillController.document.toDelta().toJson()),
       "createdBy": {
         "name": name,
@@ -122,6 +122,7 @@ class _AddCommentState extends State<AddComment> {
           ),
           child: QuillEditor.basic(
             configurations: QuillEditorConfigurations(
+              padding: EdgeInsets.all(8.0),
               controller: quillController,
               sharedConfigurations: const QuillSharedConfigurations(),
             ),
