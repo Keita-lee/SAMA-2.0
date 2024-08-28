@@ -117,6 +117,9 @@ class _TopicsState extends State<Topics> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  width: 20.0,
+                ),
                 StyleButton(
                     description: "New Topic",
                     height: 55,
