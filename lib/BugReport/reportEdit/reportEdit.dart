@@ -21,7 +21,8 @@ class _ReportEditState extends State<ReportEdit> {
   final page = TextEditingController();
   final releaseDate = TextEditingController();
   final whoBugReported = TextEditingController();
-  var date = DateTime.now();
+  final howResolved = TextEditingController();
+
   //get details for cpd item
   getReportDetails() async {
     DocumentSnapshot reportData = await FirebaseFirestore.instance
@@ -32,7 +33,7 @@ class _ReportEditState extends State<ReportEdit> {
     if (reportData.exists) {
       setState(() {
         issue.text = reportData.get("issue");
-        date = reportData.get("releaseDate");
+
         page.text = reportData.get("page");
         whoBugReported.text = reportData.get("whoReportedBug");
       });
@@ -43,12 +44,11 @@ class _ReportEditState extends State<ReportEdit> {
   saveReport(status) async {
     var reportData = {
       "id": widget.reportId,
-      "releaseDate": "",
       "whoReportedBug": whoBugReported.text,
       "issue": issue.text,
       "reportedBug": "",
       "page": page.text,
-      "howResolved": "",
+      "howResolved": howResolved.text,
       "status": status
     };
 
@@ -148,10 +148,11 @@ class _ReportEditState extends State<ReportEdit> {
                 ),
                 MyProductTextField(
                   hintText: 'How was the issue resolved',
-                  textfieldController: issue,
+                  textfieldController: howResolved,
                   textFieldWidth: MyUtility(context).width * 0.75,
                   topPadding: 0,
-                  header: 'Issue',
+                  lines: 4,
+                  header: 'How Resolved',
                 ),
               ]),
             ])));

@@ -66,6 +66,8 @@ class _BugReportListState extends State<BugReportList> {
                         child: ListView.builder(
                           itemCount: documents.length,
                           itemBuilder: (BuildContext context, int index) {
+                            documents.sort(
+                                (b, a) => a["status"].compareTo(b["status"]));
                             final DocumentSnapshot document = documents[index];
                             final data =
                                 document.data() as Map<String, dynamic>?;
@@ -76,7 +78,7 @@ class _BugReportListState extends State<BugReportList> {
                                   : const Color.fromARGB(38, 158, 158, 158),
                               issue: data?["issue"] ?? '',
                               isActive:
-                                  data?['status'] == "Active" ? true : false,
+                                  data?['status'] == "Complete" ? true : false,
                               onTapEdit: () {
                                 changePageIndex(1, document.id);
                               },

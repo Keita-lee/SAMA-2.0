@@ -206,7 +206,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       professionalDevelopmentMainCon(
         userType: userType,
       ),
-
       MemberManagementMainCon(),
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
@@ -218,11 +217,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       /*MemberEventDetails()*/
 
       ProfessionalDevAdmin(),
-<<<<<<< HEAD
       BugReportList(),
-=======
-
->>>>>>> ef4bd9eef1a5dc605e54c33e8fff7d3394559890
     ];
 
     //Dialog for logout
