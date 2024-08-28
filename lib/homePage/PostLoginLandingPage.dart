@@ -32,6 +32,7 @@ import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
 
 import '../BugReport/bugReport.dart';
+import '../BugReport/reportList/bugReportList.dart';
 import '../admin/profesionalDevelopment/profesionalDevAdmin.dart';
 import '../member/communities/memberCommunities.dart';
 
@@ -205,6 +206,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
         userType: userType,
       ),
       ProfessionalDevAdmin(),
+      BugReportList(),
     ];
 
     //Dialog for logout

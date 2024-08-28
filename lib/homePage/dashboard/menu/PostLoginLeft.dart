@@ -336,6 +336,16 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         widget.changePage(13);
                       },
                     ),
+                    HoverItem(
+                      isActive: activeIndex == 21,
+                      menuSize: widget.menuSize,
+                      description: 'Bug Report',
+                      iconPath: "",
+                      onPressed: () {
+                        _handleItemClick(21, 21);
+                        widget.changePage(21);
+                      },
+                    ),
                   ],
                 )),
             Visibility(
