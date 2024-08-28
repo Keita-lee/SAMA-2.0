@@ -8,7 +8,7 @@ Future sendSamaNumber({
   required String samaNumber,
   required String email,
 }) async {
-  final serviceId = 'service_e806g0h';
+  final serviceId = 'service_t6d1ynn';
   final templateId = 'template_v14zgxi';
   final userId = '282VyjdH5FOLIffwK';
   // createOtpVerification(email, otp);

@@ -10,7 +10,7 @@ Future sendPaymentConfirmation({
   required String totalPrice,
   required String refNo,
 }) async {
-  final serviceId = 'service_e806g0h';
+  final serviceId = 'service_t6d1ynn';
 
   final templateId = 'template_z17ehqk';
   final userId = 'Jmk16IabzDvgmXBeJ';
