@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../admin/products/UI/myProductTextField.dart';
+import '../../components/email/sendBugReport.dart';
 import '../../components/myutility.dart';
 import '../../components/styleButton.dart';
 
@@ -109,6 +110,15 @@ class _ReportEditState extends State<ReportEdit> {
                       width: 125,
                       onTap: () {
                         saveReport("Complete");
+                        sendReportIssueEmail(
+                            email: 'info@barefootbytes.com',
+                            reportType: 'Bug Fixed - ${page.text}',
+                            description: issue.text);
+
+                        sendReportIssueEmail(
+                            email: 'kevin@vertopia.net',
+                            reportType: 'Bug Fixed - ${page.text}',
+                            description: issue.text);
                         //  saveQuestionnaire("Active");
                       },
                     )

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/styleButton.dart';
 
+import '../components/email/sendBugReport.dart';
 import '../components/myutility.dart';
 import '../components/profileTextField.dart';
 
@@ -35,6 +36,16 @@ class _BugReportState extends State<BugReport> {
 
     var myNewDoc =
         await FirebaseFirestore.instance.collection("bugs").add(reportData);
+
+    await sendReportIssueEmail(
+        email: 'info@barefootbytes.com',
+        reportType: 'Bug in system - ${page.text}',
+        description: issue.text);
+
+    await sendReportIssueEmail(
+        email: 'kevin@vertopia.net',
+        reportType: 'Bug in system - ${page.text}',
+        description: issue.text);
 
     FirebaseFirestore.instance.collection("bugs").doc(myNewDoc.id).update({
       "id": myNewDoc.id,
