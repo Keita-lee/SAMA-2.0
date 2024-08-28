@@ -81,6 +81,7 @@ class _ViewTopicState extends State<ViewTopic> {
               subject: widget.title,
             ),
           ),
+          const SizedBox(height: 20.0),
           /*Text(
             widget.title,
             style: TextStyle(

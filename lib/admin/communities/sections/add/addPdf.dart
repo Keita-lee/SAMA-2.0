@@ -70,8 +70,24 @@ class _AddPdfState extends State<AddPdf> {
                 closeDialog: () => Navigator.pop(context!)));
       });
 
+  bool validate(String status) {
+    if (communities.isEmpty && status == 'Active') {
+      descriptionPopup("Please select at least one community");
+      return false;
+    } else if (title.text == '') {
+      descriptionPopup("Please enter a title");
+      return false;
+    } else if (pdfLink.text == '') {
+      descriptionPopup("Please enter a pdf link");
+      return false;
+    }
+    return true;
+  }
+
 //save data to firebase
   saveCommunityDetails(status) async {
+    if (!validate(status)) return;
+
     var communityData = {
       'id': widget.pdfId,
       'title': title.text,
@@ -184,7 +200,7 @@ class _AddPdfState extends State<AddPdf> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(
-                width: MyUtility(context).width * 0.50,
+                width: MyUtility(context).width * 0.48,
               ),
               StyleButton(
                   buttonColor: Colors.grey,
@@ -199,7 +215,7 @@ class _AddPdfState extends State<AddPdf> {
               ),
               StyleButton(
                   buttonColor: Colors.grey,
-                  description: "Safe as Draft",
+                  description: "Save as Draft",
                   height: 55,
                   width: 175,
                   onTap: () {

@@ -337,6 +337,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       },
                     ),
                     HoverItem(
+<<<<<<< HEAD
                       isActive: activeIndex == 21,
                       menuSize: widget.menuSize,
                       description: 'Bug Report',
@@ -344,6 +345,15 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       onPressed: () {
                         _handleItemClick(21, 21);
                         widget.changePage(21);
+=======
+                      isActive: activeIndex == 6,
+                      menuSize: widget.menuSize,
+                      description: "Member Management",
+                      iconPath: "images/icon_voting.svg",
+                      onPressed: () {
+                        _handleItemClick(6, 20);
+                        widget.changePage(20);
+>>>>>>> ef4bd9eef1a5dc605e54c33e8fff7d3394559890
                       },
                     ),
                   ],
@@ -496,6 +506,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       widget.changePage(12);
                     },
                   ),
+
                   // HoverItem(
                   //   isActive: activeIndex == 11,
                   //   menuSize: widget.menuSize,

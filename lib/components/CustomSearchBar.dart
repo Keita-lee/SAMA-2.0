@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 class CustomSearchBar extends StatefulWidget {
   final Function(String) onSearch;
   final double width;
-  const CustomSearchBar({Key? key, required this.onSearch, required this.width})
+  final Color? backgroundColor;
+  final Color? borderColor;
+  const CustomSearchBar(
+      {Key? key,
+      required this.onSearch,
+      required this.width,
+      this.backgroundColor,
+      this.borderColor})
       : super(key: key);
 
   @override
@@ -16,7 +23,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
       child: SizedBox(
         width: widget.width,
         child: TextField(
@@ -27,12 +34,18 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 TextStyle(color: Colors.grey[500]), // Custom hint text color
             prefixIcon:
                 Icon(Icons.search, color: Colors.grey), // Custom icon color
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none, // Remove border
-            ),
+            border: widget.borderColor == null
+                ? OutlineInputBorder(
+                    borderSide: BorderSide.none, // Remove border
+                  )
+                : OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: widget.borderColor!, width: 1.0),
+                  ),
             filled: true,
-            fillColor: const Color.fromRGBO(
-                203, 203, 203, 1), // Custom background color
+            fillColor: widget.backgroundColor ??
+                const Color.fromRGBO(
+                    203, 203, 203, 1), // Custom background color
             contentPadding: EdgeInsets.all(15.0),
           ),
           onChanged: (value) {

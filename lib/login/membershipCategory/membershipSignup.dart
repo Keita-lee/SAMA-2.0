@@ -24,6 +24,7 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
   var applicationCategory = "";
   var applicationOptions = [];
   var applicationPrice = "";
+  bool accepted = false;
   //update page index
   changePageIndex(value) {
     setState(() {
@@ -333,7 +334,8 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
                   options: applicationOptions,
                   nextSection: nextSection,
                   priceSelected: priceSelected,
-                  applicationPrice: applicationPrice),
+                  applicationPrice: applicationPrice,
+                  accepted: accepted),
             ),
             Visibility(
               visible: sectionIndex == 2,
