@@ -22,7 +22,7 @@ import 'package:sama/member/centerOfExcellence/CenterofExcellenceArticle.dart';
 import 'package:sama/member/election/memberElection.dart';
 import 'package:sama/member/media/memberMedia.dart';
 import 'package:sama/member/memberBenifits/MemberBenifits.dart';
-import 'package:sama/homePage/dashboard/PostLoginCenter.dart';
+import 'package:sama/homePage/dashboard/dashboardMain.dart';
 import 'package:sama/homePage/dashboard/menu/PostLoginLeft.dart';
 
 import 'package:sama/components/myutility.dart';
@@ -164,7 +164,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     }
 
     var pages = [
-      PostLoginCenter(
+      DashboardMain(
         userNotification: userNotification,
         userType: userType,
       ),
