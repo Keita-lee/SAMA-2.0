@@ -12,6 +12,7 @@ import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardMidSection.da
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/welcomeToPortal.dart';
 import 'package:sama/homePage/dashboard/ui/samaNotificationsBox.dart';
 
+import '../../member/helpBot/helpBot.dart';
 import 'nonMemberDashboard.dart';
 
 class DashboardMain extends StatefulWidget {
@@ -25,6 +26,17 @@ class DashboardMain extends StatefulWidget {
 }
 
 class _DashboardMainState extends State<DashboardMain> {
+  //Dialog for benifits
+  Future openHelpBotPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          alignment: Alignment.topRight,
+          child: HelpBot(
+            closeDialog: () => Navigator.pop(context!),
+          ),
+        );
+      });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +50,12 @@ class _DashboardMainState extends State<DashboardMain> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 //Spacer(),
-                SvgPicture.asset('images/helpbot.svg'),
+                InkWell(
+                    onTap: () {
+                      openHelpBotPopup();
+                    },
+                    child: SvgPicture.asset(
+                        width: 40, height: 40, 'images/helpbot.svg')),
               ],
             ),
           ),
