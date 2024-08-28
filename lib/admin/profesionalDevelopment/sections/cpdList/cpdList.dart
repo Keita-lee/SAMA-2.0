@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../components/myutility.dart';
+import '../../../../components/yesNoDialog.dart';
 import 'ui/cpdHeader.dart';
 import 'ui/cpdListItem.dart';
 
@@ -18,6 +19,24 @@ class CpdList extends StatefulWidget {
 }
 
 class _CpdListState extends State<CpdList> {
+  //Remove cpd from db
+  removeArticle(cpdId) {
+    FirebaseFirestore.instance.collection('cpd').doc(cpdId).delete();
+  }
+
+  //Dialog for cpd delete
+  Future removeCpdpopup(cpdId) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you sure you want to remove this item",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: () {
+            removeArticle(cpdId);
+          },
+        ));
+      });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +55,7 @@ class _CpdListState extends State<CpdList> {
 
             final List<DocumentSnapshot> documents = snapshot.data!.docs;
             if (documents.isEmpty) {
-              return Center(child: Text('No class yet'));
+              return Center(child: Text('No CPD yet'));
             }
 
             return Container(
@@ -55,9 +74,9 @@ class _CpdListState extends State<CpdList> {
                         ? Colors.white
                         : const Color.fromARGB(38, 158, 158, 158),
                     title: data?["title"] ?? '',
-                    isActive: data?['isActive'] == "Active" ? true : false,
+                    isActive: data?['status'] == "Active" ? true : false,
                     onTapDelete: () {
-                      //deleteProduct(document.id);
+                      removeCpdpopup(document.id);
                     },
                     onTapEdit: () {
                       widget.changePageIndex(1, document.id);

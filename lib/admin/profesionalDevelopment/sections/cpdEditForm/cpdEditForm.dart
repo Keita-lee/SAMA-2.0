@@ -9,6 +9,8 @@ import 'package:sama/components/styleButton.dart';
 
 import '../../../../Login/popups/validateDialog.dart';
 import '../../../../components/myutility.dart';
+import '../../../../components/yesNoDialog.dart';
+import '../../../media/ui/addMediaImage.dart';
 import '../../../products/UI/myProductTextField.dart';
 import 'ui/cpdQuestionStyle.dart';
 
@@ -27,7 +29,10 @@ class _CpdEditFormState extends State<CpdEditForm> {
   final introduction = TextEditingController();
   final journalLink = TextEditingController();
 
+  final nonMemberPrice = TextEditingController();
+  final subDescription = TextEditingController();
   //var
+  var cpdImage = "";
   var pageIndex = 0;
   var myJSON;
   var questionIndex = -1;
@@ -55,6 +60,14 @@ class _CpdEditFormState extends State<CpdEditForm> {
                 description: description,
                 closeDialog: () => Navigator.pop(context!)));
       });
+
+  // set image URL when selected
+  getImageUrl(value) {
+    setState(() {
+      cpdImage = value;
+    });
+  }
+
 //Save to DB
   saveQuestionnaire(status) async {
     var cpdDetails = {
@@ -62,7 +75,10 @@ class _CpdEditFormState extends State<CpdEditForm> {
       'title': title.text,
       'introduction': jsonEncode(quillController.document.toDelta().toJson()),
       'questions': questions,
-      "status": status
+      "status": status,
+      "nonMemberPrice": nonMemberPrice.text,
+      "subDescription": subDescription.text,
+      "cpdImage": cpdImage
     };
 
     if (widget.cpdId == "") {
@@ -89,20 +105,23 @@ class _CpdEditFormState extends State<CpdEditForm> {
 
   //get details for cpd item
   getCpdDetails() async {
-    DocumentSnapshot productData = await FirebaseFirestore.instance
+    DocumentSnapshot cpdData = await FirebaseFirestore.instance
         .collection('cpd')
         .doc(widget.cpdId)
         .get();
 
-    if (productData.exists) {
+    if (cpdData.exists) {
       setState(() {
-        title.text = productData.get("title");
+        nonMemberPrice.text = cpdData.get("nonMemberPrice");
+        cpdImage = cpdData.get("cpdImage");
+        subDescription.text = cpdData.get("subDescription");
+        title.text = cpdData.get("title");
 
-        myJSON = jsonDecode(productData.get('introduction'));
+        myJSON = jsonDecode(cpdData.get('introduction'));
         quillController = QuillController(
             document: Document.fromJson(myJSON),
             selection: TextSelection.collapsed(offset: 0));
-        questions = productData.get("questions");
+        questions = cpdData.get("questions");
       });
     }
   }
@@ -211,12 +230,51 @@ class _CpdEditFormState extends State<CpdEditForm> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyProductTextField(
-                            hintText: 'Title',
-                            textfieldController: title,
-                            textFieldWidth: MyUtility(context).width * 0.60,
-                            topPadding: 0,
-                            header: 'Title',
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              AddMediaImage(
+                                networkImageUrl: cpdImage,
+                                updateUrl: getImageUrl,
+                              ),
+                              Column(
+                                children: [
+                                  MyProductTextField(
+                                    hintText: 'Title',
+                                    textfieldController: title,
+                                    textFieldWidth:
+                                        MyUtility(context).width * 0.28,
+                                    topPadding: 0,
+                                    header: 'Title',
+                                  ),
+                                  MyProductTextField(
+                                    hintText: 'Sub Description',
+                                    textfieldController: subDescription,
+                                    textFieldWidth:
+                                        MyUtility(context).width * 0.28,
+                                    topPadding: 0,
+                                    header: 'Sub description',
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  MyProductTextField(
+                                    hintText: 'Non Member Price',
+                                    textfieldController: nonMemberPrice,
+                                    textFieldWidth:
+                                        MyUtility(context).width * 0.28,
+                                    topPadding: 0,
+                                    header: 'Non Member Price',
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [],
                           ),
                           SizedBox(
                             height: 15,
