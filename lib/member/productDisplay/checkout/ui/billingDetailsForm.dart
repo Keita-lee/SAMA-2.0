@@ -22,7 +22,6 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final companyName = TextEditingController();
-  final regionName = TextEditingController();
   final street = TextEditingController();
   final addres = TextEditingController();
   final town = TextEditingController();
@@ -122,15 +121,6 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                       customSize: MyUtility(context).width * 0.20,
                       textFieldType: 'stringType',
                       textfieldController: email),*/
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ProfileDropDownField(
-                      isBold: false,
-                      description: 'Country / Region',
-                      customSize: MyUtility(context).width * 0.42,
-                      items: [],
-                      textfieldController: regionName),
                   const SizedBox(
                     height: 20,
                   ),
