@@ -70,8 +70,21 @@ class _AddTextState extends State<AddText> {
                 closeDialog: () => Navigator.pop(context!)));
       });
 
+  bool validate(String status) {
+    if (communities.isEmpty && status == 'Active') {
+      descriptionPopup("Please select at least one community");
+      return false;
+    } else if (title.text == '') {
+      descriptionPopup("Please enter a title");
+      return false;
+    }
+    return true;
+  }
+
 //save data to firebase
   saveCommunityDetails(status) async {
+    if (!validate(status)) return;
+
     var communityData = {
       'id': widget.textId,
       'title': title.text,
@@ -152,7 +165,7 @@ class _AddTextState extends State<AddText> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(
-                width: MyUtility(context).width * 0.50,
+                width: MyUtility(context).width * 0.48,
               ),
               StyleButton(
                   buttonColor: Colors.grey,

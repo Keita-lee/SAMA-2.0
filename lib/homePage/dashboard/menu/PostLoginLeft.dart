@@ -336,6 +336,16 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         widget.changePage(13);
                       },
                     ),
+                    HoverItem(
+                      isActive: activeIndex == 6,
+                      menuSize: widget.menuSize,
+                      description: "Member Management",
+                      iconPath: "images/icon_voting.svg",
+                      onPressed: () {
+                        _handleItemClick(6, 20);
+                        widget.changePage(20);
+                      },
+                    ),
                   ],
                 )),
             Visibility(
@@ -486,6 +496,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       widget.changePage(12);
                     },
                   ),
+
                   // HoverItem(
                   //   isActive: activeIndex == 11,
                   //   menuSize: widget.menuSize,

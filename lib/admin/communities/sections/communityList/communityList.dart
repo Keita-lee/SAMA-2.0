@@ -12,7 +12,17 @@ class CommunityList extends StatefulWidget {
     int,
     String,
   ) changePageIndex;
-  CommunityList({super.key, required this.changePageIndex});
+  final List communitiesList;
+  String searchText;
+  String communityFilter;
+  bool waiting;
+  CommunityList(
+      {super.key,
+      required this.changePageIndex,
+      required this.communitiesList,
+      required this.searchText,
+      required this.communityFilter,
+      required this.waiting});
 
   @override
   State<CommunityList> createState() => _CommunityListState();
@@ -29,56 +39,65 @@ class _CommunityListState extends State<CommunityList> {
     );
   }
 
+  // void filterList(List<DocumentSnapshot docs) {
+
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('communities').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: snapshot error');
-        }
-        if (!snapshot.hasData) {
-          return const Text('Loading...');
-        }
+    // only show communities where the title contains 'searchTerm'
+    List filteredDocuments = widget.communitiesList.where((doc) {
+      final title = doc?['title'] as String?;
+      return title?.toLowerCase().contains(widget.searchText.toLowerCase()) ??
+          false;
+    }).toList();
 
-        final List<DocumentSnapshot> documents = snapshot.data!.docs;
-        if (documents.isEmpty) {
-          return Center(child: Text('No communities yet'));
-        }
+    // Apply type filter if a specific type is selected
+    if (widget.communityFilter != 'Show All') {
+      filteredDocuments = filteredDocuments
+          .where((community) =>
+              community['communities'].contains(widget.communityFilter))
+          .toList();
+    }
 
-        return Container(
-          color: Colors.white,
-          width: MyUtility(context).width - (MyUtility(context).width * 0.15),
-          height: MyUtility(context).height / 2.2,
-          child: ListView.builder(
-            itemCount: documents.length,
-            itemBuilder: (BuildContext context, int index) {
-              final DocumentSnapshot document = documents[index];
-              final data = document.data() as Map<String, dynamic>?;
+    return Container(
+      color: Colors.white,
+      width: MyUtility(context).width - (MyUtility(context).width * 0.15),
+      height: MyUtility(context).height / 2.2,
+      child: widget.waiting
+          ? const Center(
+              child: Text(
+              'Loading...',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ))
+          : filteredDocuments.isEmpty
+              ? const Center(child: Text('No communities yet'))
+              : ListView.builder(
+                  itemCount: filteredDocuments.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final Map<String, dynamic> data = filteredDocuments[index];
 
-              return CommunityListItemStyle(
-                itemColor: (index % 2 == 0)
-                    ? Colors.white
-                    : const Color.fromARGB(38, 158, 158, 158),
-                title: data?["title"] ?? '',
-                type: data?["type"] ?? '',
-                isActive: data?['isActive'] == "Active" ? true : false,
-                onTapDelete: () {
-                  deleteProduct(document.id);
-                },
-                onTapEdit: () {
-                  if (data?["type"] == "PDF") {
-                    widget.changePageIndex(1, document.id);
-                  } else if (data?["type"] == "TEXT") {
-                    widget.changePageIndex(2, document.id);
-                  }
-                },
-                communities: data?["communities"],
-              );
-            },
-          ),
-        );
-      },
+                    return CommunityListItemStyle(
+                      itemColor: (index % 2 == 0)
+                          ? Colors.white
+                          : const Color.fromARGB(38, 158, 158, 158),
+                      title: data["title"] ?? '',
+                      type: data["type"] ?? '',
+                      isActive: data?['isActive'] == "Active" ? true : false,
+                      onTapDelete: () {
+                        deleteProduct(data['id']);
+                      },
+                      onTapEdit: () {
+                        if (data["type"] == "PDF") {
+                          widget.changePageIndex(1, data['id']);
+                        } else if (data["type"] == "TEXT") {
+                          widget.changePageIndex(2, data['id']);
+                        }
+                      },
+                      communities: data["communities"],
+                    );
+                  },
+                ),
     );
   }
 }

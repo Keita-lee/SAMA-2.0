@@ -9,6 +9,7 @@ import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
+import 'package:sama/admin/memberManagement/memberManagementMainCon.dart';
 import 'package:sama/admin/products/products.dart';
 import 'package:sama/admin/transactions/transactionsAdmin.dart';
 import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
@@ -204,7 +205,19 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       professionalDevelopmentMainCon(
         userType: userType,
       ),
+
+      MemberManagementMainCon(),
+      /*NominationAcceptance()*/
+      /*ElectionsManageEvent(),*/
+
+      /*BranchMembers(),*/
+      /*AdminEventDetails(),*/
+      /*AdminEvents(),*/
+      /*MemberEvents()*/
+      /*MemberEventDetails()*/
+
       ProfessionalDevAdmin(),
+
     ];
 
     //Dialog for logout
