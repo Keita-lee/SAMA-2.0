@@ -33,6 +33,7 @@ import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profile.dart';
 
 import '../BugReport/bugReport.dart';
+import '../admin/profesionalDevelopment/profesionalDevAdmin.dart';
 import '../member/communities/memberCommunities.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
@@ -204,6 +205,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       professionalDevelopmentMainCon(
         userType: userType,
       ),
+
       MemberManagementMainCon(),
       /*NominationAcceptance()*/
       /*ElectionsManageEvent(),*/
@@ -213,6 +215,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       /*AdminEvents(),*/
       /*MemberEvents()*/
       /*MemberEventDetails()*/
+
+      ProfessionalDevAdmin(),
+
     ];
 
     //Dialog for logout

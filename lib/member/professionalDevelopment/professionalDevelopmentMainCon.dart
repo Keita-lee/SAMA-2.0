@@ -5,6 +5,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/member/professionalDevelopment/CourseInfo.dart';
+import 'package:sama/member/professionalDevelopment/professionalDevQuiz.dart';
 import 'package:sama/member/professionalDevelopment/ui/professionalDevelopmentDisplayItem.dart';
 
 class professionalDevelopmentMainCon extends StatefulWidget {
@@ -196,9 +197,15 @@ class _professionalDevelopmentMainConState
                     ),
                   ),
                   Visibility(
-                    visible: pageIndex == 1,
-                    child: CourseInfo(course: selectedCourse),
-                  ),
+                      visible: pageIndex == 1,
+                      child: ProfessionalDevQuiz(
+                        hasPassed: false,
+                        isResultsScreen: true,
+                        course: selectedCourse,
+                        isQuizInProgress: false,
+                      )
+                      //CourseInfo(course: selectedCourse),
+                      ),
                 ],
               ),
             ),

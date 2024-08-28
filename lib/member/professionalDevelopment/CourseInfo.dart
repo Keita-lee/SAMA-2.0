@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/member/professionalDevelopment/professionalDevelopmentMainCon.dart';
+import 'package:sama/member/professionalDevelopment/ui/courseInfoContainer.dart';
 
 class CourseInfo extends StatefulWidget {
   final CourseModel course;
@@ -24,7 +25,31 @@ class _CourseInfoState extends State<CourseInfo> {
             title,
             style: TextStyle(
                 color: Color(0xFF3D3D3D),
-                fontSize: 25,
+                fontSize: 23,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          CourseInfoContainer(
+            isAccessed: false,
+            accreditationOrg: 'Health Professions Council of South Africa',
+            accreditationId: 'MDB015/MPDP/038/206',
+            accreditationPoints: '3 Clinical',
+            courseImage: 'images/sama_logo.png',
+            allowedAttempts: '2',
+            passRate: '70',
+            userType: '',
+            nonMemberPrice: 'R1500 inc VAT',
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Text(
+            'Introduction',
+            style: TextStyle(
+                color: Color(0xFF3D3D3D),
+                fontSize: 23,
                 fontWeight: FontWeight.bold),
           ),
         ],
