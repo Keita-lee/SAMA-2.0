@@ -38,17 +38,6 @@ class MediaContainerStyle extends StatefulWidget {
 }
 
 class _MediaContainerStyleState extends State<MediaContainerStyle> {
-  //get date in string
-  String _formatDateTime(Timestamp timestamp) {
-    DateTime dateTime = timestamp.toDate();
-    String dayNumber = DateFormat('dd').format(dateTime);
-
-    String month = DateFormat('MMMM').format(dateTime);
-    String year = DateFormat('yyyy').format(dateTime);
-
-    return '$dayNumber $month $year ';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -94,9 +83,9 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             const SizedBox(
               height: 10,
             ),
-            //TO DO IMPLEMENT DATE OF VIDEO POSTED//////
+
             Text(
-              '21 July 2024',
+              "${widget.releaseDate}",
               style: TextStyle(
                   fontSize: 12,
                   letterSpacing: 1.2,

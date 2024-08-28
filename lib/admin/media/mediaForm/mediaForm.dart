@@ -12,6 +12,8 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleButtonYellow.dart';
 import 'package:sama/components/yesNoDialog.dart';
 
+import '../../../components/dateSelecter.dart';
+
 class MediaForm extends StatefulWidget {
   Function closeDialog;
   String id;
@@ -34,6 +36,7 @@ class _MediaFormState extends State<MediaForm> {
   final category = TextEditingController();
   final description = TextEditingController();
   final urlLink = TextEditingController();
+  final date = TextEditingController();
   var myJSON;
   QuillController quillController = QuillController.basic();
 
@@ -84,7 +87,7 @@ class _MediaFormState extends State<MediaForm> {
       "description": jsonEncode(quillController.document.toDelta().toJson()),
       "urlLink": urlLink.text,
       "mediaImageUrl": mediaImageUrl,
-      "releaseDate": releaseDate,
+      "releaseDate": date.text,
       "id": widget.id,
     };
 
@@ -94,7 +97,6 @@ class _MediaFormState extends State<MediaForm> {
 
       FirebaseFirestore.instance.collection("media").doc(myNewDoc.id).update({
         "id": myNewDoc.id,
-        "releaseDate": DateTime.now()
       }).whenComplete(() => widget.closeDialog());
     } else {
       FirebaseFirestore.instance
@@ -117,12 +119,13 @@ class _MediaFormState extends State<MediaForm> {
         duration.text = data.get('duration');
         author.text = data.get('author');
         category.text = data.get('category');
+
         //quillController = data.get('description');
 
         description.text = data.get('description');
         urlLink.text = data.get('urlLink');
         mediaImageUrl = data.get('mediaImageUrl');
-        releaseDate = data.get('releaseDate');
+        date.text = data.get('releaseDate');
       });
     }
   }
@@ -356,6 +359,19 @@ class _MediaFormState extends State<MediaForm> {
                     ],
                   ),
                   SizedBox(height: 20),*/
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DateSelecter(
+                        customSize: MyUtility(context).width / 4,
+                        description: 'Change Date',
+                        controller: date,
+                        refresh: () {
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
