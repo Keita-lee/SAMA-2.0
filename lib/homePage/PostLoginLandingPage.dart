@@ -35,6 +35,7 @@ import 'package:sama/profile/profile.dart';
 import '../BugReport/bugReport.dart';
 import '../BugReport/reportList/bugReportList.dart';
 import '../admin/profesionalDevelopment/profesionalDevAdmin.dart';
+import '../member/chats/chat.dart';
 import '../member/communities/memberCommunities.dart';
 
 class PostLoginLandingPage extends StatefulWidget {
@@ -164,10 +165,11 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     }
 
     var pages = [
-      DashboardMain(
+      Chat(),
+      /* DashboardMain(
         userNotification: userNotification,
         userType: userType,
-      ),
+      ),*/
       CenterOfExcellence(
         getArticleId: getArticleId,
         changePage: changePage,
