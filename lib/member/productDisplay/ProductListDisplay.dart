@@ -235,28 +235,34 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                           ),
                           itemCount: allProduct.length,
                           itemBuilder: (context, index) {
-                            return ProductDisplayItem(
-                              productName: allProduct[index]['name'],
-                              price: allProduct[index]['price'],
-                              priceInfo: 'Member Price. Includes VAT',
-                              productDescription: allProduct[index]
-                                  ['description'],
-                              productImage: allProduct[index]['imageUrl'],
-                              readMore: () {
-                                changePageIndex(1, allProduct[index]['type']);
-                                setState(() {
-                                  title = allProduct[index]['name'];
-                                  price = allProduct[index]['price'];
-                                  priceInfo = 'Member Price. Includes VAT';
-                                  description =
-                                      allProduct[index]['description'];
-                                  productImage = allProduct[index]['imageUrl'];
-                                });
-                              },
-                              buyProduct: () {
-                                addProductToList(allProduct[index], "");
-                                changePageIndex(2, allProduct[index]['type']);
-                              },
+                            return Visibility(
+                              visible:
+                                  allProduct[index]['isActive'] == "Active",
+                              child: ProductDisplayItem(
+                                downloadLink: allProduct[index]['downloadLink'],
+                                productName: allProduct[index]['name'],
+                                price: allProduct[index]['price'],
+                                priceInfo: 'Member Price. Includes VAT',
+                                productDescription: allProduct[index]
+                                    ['description'],
+                                productImage: allProduct[index]['imageUrl'],
+                                readMore: () {
+                                  changePageIndex(1, allProduct[index]['type']);
+                                  setState(() {
+                                    title = allProduct[index]['name'];
+                                    price = allProduct[index]['price'];
+                                    priceInfo = 'Member Price. Includes VAT';
+                                    description =
+                                        allProduct[index]['description'];
+                                    productImage =
+                                        allProduct[index]['imageUrl'];
+                                  });
+                                },
+                                buyProduct: () {
+                                  addProductToList(allProduct[index], "");
+                                  changePageIndex(2, allProduct[index]['type']);
+                                },
+                              ),
                             );
                           },
                         ),

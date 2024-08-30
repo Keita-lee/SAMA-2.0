@@ -50,7 +50,7 @@ class _MediaFormState extends State<MediaForm> {
     'Corona Virus - COVID-19',
     'Courses',
   ];
-  String? selectedCategory;
+  String selectedCategory = "";
 
   // set image URL when selected
   getMediaImageUrl(value) {
@@ -83,7 +83,7 @@ class _MediaFormState extends State<MediaForm> {
       "title": title.text,
       "duration": duration.text,
       "author": author.text,
-      "category": selectedCategory ?? 'No Category',
+      "category": selectedCategory,
       "description": jsonEncode(quillController.document.toDelta().toJson()),
       "urlLink": urlLink.text,
       "mediaImageUrl": mediaImageUrl,
@@ -119,7 +119,7 @@ class _MediaFormState extends State<MediaForm> {
         duration.text = data.get('duration');
         author.text = data.get('author');
         category.text = data.get('category');
-
+        selectedCategory = data.get('category');
         //quillController = data.get('description');
 
         description.text = data.get('description');

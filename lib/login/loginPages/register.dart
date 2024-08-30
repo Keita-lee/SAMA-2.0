@@ -215,7 +215,10 @@ class _RegisterState extends State<Register> {
 
     await createClient(_auth.currentUser!.uid);
 
-    sendOTPToUser();
+    widget.changePage(10);
+//TODO re add
+    //  sendOTPToUser();
+    //widget.changePage(14);
 
     setState(() {
       _isLoading = false;
