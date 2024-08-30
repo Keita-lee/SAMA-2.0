@@ -6,6 +6,7 @@ import 'package:image_network/image_network.dart';
 import 'package:sama/member/chats/friendRequest/friendRequest.dart';
 
 import '../../components/myutility.dart';
+import '../../components/service/commonService.dart';
 import '../../components/styleButton.dart';
 import 'chatList/chatList.dart';
 import 'memberSearch/memberSearch.dart';
@@ -85,6 +86,7 @@ class _ChatState extends State<Chat> {
 
   getMemberChat(profilePic, member, id, chat) {
     setState(() {
+      currentChat.clear();
       memberTalkingToProfile = profilePic;
       memberTalkingToName = member;
       memberTalkingToId = id;
@@ -257,7 +259,7 @@ class _ChatState extends State<Chat> {
               Column(
                 children: [
                   Container(
-                    width: MyUtility(context).width / 1.8,
+                    width: MyUtility(context).width / 1.9,
                     height: 60,
                     decoration: BoxDecoration(
                       color: Colors.teal,
@@ -312,7 +314,7 @@ class _ChatState extends State<Chat> {
                     ),
                   ),
                   Container(
-                    width: MyUtility(context).width / 1.8,
+                    width: MyUtility(context).width / 1.9,
                     height: MyUtility(context).height / 1.5,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 221, 221, 221),
@@ -324,77 +326,194 @@ class _ChatState extends State<Chat> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          for (int i = 0; i < currentChat.length; i++)
-                            Column(
-                              crossAxisAlignment: currentChat[i]["sender"] ==
-                                      FirebaseAuth.instance.currentUser!.uid
-                                  ? CrossAxisAlignment.start
-                                  : CrossAxisAlignment.end,
-                              mainAxisAlignment: currentChat[i]["sender"] ==
-                                      FirebaseAuth.instance.currentUser!.uid
-                                  ? MainAxisAlignment.start
-                                  : MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      ImageNetwork(
-                                        image: currentChat[i]['profile'],
-                                        fitWeb: BoxFitWeb.contain,
-                                        width: 50,
-                                        height: 50,
-                                      ),
-                                      Container(
-                                        width: MyUtility(context).width * 0.35,
-                                        height: 55,
-                                        decoration: BoxDecoration(
-                                            color: currentChat[i]["sender"] ==
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid
-                                                ? Colors.white
-                                                : Colors.teal,
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            border: Border.all(
-                                              color: Color(0xFFD1D1D1),
-                                            )),
-                                        child: Text(
-                                          currentChat[i]['message'],
-                                          style: TextStyle(
-                                              color: currentChat[i]["sender"] ==
+                          SizedBox(
+                            height: MyUtility(context).height / 2.2,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  for (int i = 0; i < currentChat.length; i++)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment: currentChat[i]
+                                                    ["sender"] ==
+                                                FirebaseAuth
+                                                    .instance.currentUser!.uid
+                                            ? CrossAxisAlignment.start
+                                            : CrossAxisAlignment.end,
+                                        mainAxisAlignment: currentChat[i]
+                                                    ["sender"] ==
+                                                FirebaseAuth
+                                                    .instance.currentUser!.uid
+                                            ? MainAxisAlignment.start
+                                            : MainAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment: currentChat[i]
+                                                          ["sender"] ==
                                                       FirebaseAuth.instance
                                                           .currentUser!.uid
-                                                  ? Colors.black
-                                                  : Colors.white,
-                                              fontSize: 16),
-                                        ),
+                                                  ? MainAxisAlignment.start
+                                                  : MainAxisAlignment.end,
+                                              children: [
+                                                Visibility(
+                                                  visible: currentChat[i]
+                                                          ["sender"] ==
+                                                      FirebaseAuth.instance
+                                                          .currentUser!.uid,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                    child: Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                      child: ImageNetwork(
+                                                        image: currentChat[i]
+                                                            ['profile'],
+                                                        fitWeb:
+                                                            BoxFitWeb.contain,
+                                                        width: 50,
+                                                        height: 50,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width:
+                                                      MyUtility(context).width *
+                                                          0.35,
+                                                  //  height: 55,
+                                                  decoration: BoxDecoration(
+                                                      color: currentChat[i]
+                                                                  ["sender"] ==
+                                                              FirebaseAuth
+                                                                  .instance
+                                                                  .currentUser!
+                                                                  .uid
+                                                          ? Colors.white
+                                                          : Colors.teal,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      border: Border.all(
+                                                        color:
+                                                            Color(0xFFD1D1D1),
+                                                      )),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15.0),
+                                                    child: Text(
+                                                      currentChat[i]['message'],
+                                                      style: TextStyle(
+                                                          color: currentChat[i][
+                                                                      "sender"] ==
+                                                                  FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser!
+                                                                      .uid
+                                                              ? Colors.black
+                                                              : Colors.white,
+                                                          fontSize: 16),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible: currentChat[i]
+                                                          ["sender"] !=
+                                                      FirebaseAuth.instance
+                                                          .currentUser!.uid,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                    child: Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                      child: ImageNetwork(
+                                                        image: currentChat[i]
+                                                            ['profile'],
+                                                        fitWeb:
+                                                            BoxFitWeb.contain,
+                                                        width: 50,
+                                                        height: 50,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: currentChat[i]
+                                                        ["sender"] ==
+                                                    FirebaseAuth.instance
+                                                        .currentUser!.uid
+                                                ? MainAxisAlignment.start
+                                                : MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                currentChat[i]['date'] != "" ||
+                                                        currentChat[i]
+                                                                ['date'] !=
+                                                            null
+                                                    ? CommonService().getTime(
+                                                        currentChat[i]['date'])
+                                                    : "",
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                    ),
+                                ],
+                              ),
                             ),
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: MyUtility(context).width / 2.2,
-                                  child: ChatTextField(
-                                    hintText: 'Type your message here',
-                                    textfieldController: message,
+                          ),
+                          Visibility(
+                            visible: chatType == "My Chats",
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: MyUtility(context).width / 2.3,
+                                    child: ChatTextField(
+                                      hintText: 'Type your message here',
+                                      textfieldController: message,
+                                    ),
                                   ),
-                                ),
-                                StyleButton(
-                                    buttonColor: Colors.teal,
-                                    description: "SEND",
-                                    height: 50,
-                                    width: 80,
-                                    onTap: () {
-                                      sendMessage();
-                                    }),
-                              ],
+                                  StyleButton(
+                                      buttonColor: Colors.teal,
+                                      description: "SEND",
+                                      height: 50,
+                                      width: 80,
+                                      onTap: () {
+                                        sendMessage();
+                                      }),
+                                ],
+                              ),
                             ),
                           ),
                         ],

@@ -22,7 +22,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   bool showNonMemberBorder = false;
   bool showForgotPasswordBorder = false;
   // Text controllers
-  final password = TextEditingController(text: 'Cp123456'); //REMOVE AFTER TEST
+  final password = TextEditingController(text: ''); //REMOVE AFTER TEST
 
   BuildContext? dialogContext;
 
@@ -147,6 +147,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
               SizedBox(
                 width: MyUtility(context).width * 0.3,
                 child: TextFieldStyling(
+                  obscure: true,
                   hintText: 'Password',
                   textfieldController: password,
                 ),

@@ -10,7 +10,8 @@ import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardItems/dashPri
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardItems/dashProfessionalDev.dart';
 
 class DashboardMidSection extends StatefulWidget {
-  const DashboardMidSection({super.key});
+  Function(int) changePageIndex;
+  DashboardMidSection({super.key, required this.changePageIndex});
 
   @override
   State<DashboardMidSection> createState() => _DashboardMidSectionState();
@@ -33,7 +34,7 @@ class _DashboardMidSectionState extends State<DashboardMidSection> {
             const SizedBox(
               width: 25,
             ),
-            DashPrivateMessages()
+            DashPrivateMessages(changePageIndex: widget.changePageIndex)
           ],
         ),
         const SizedBox(

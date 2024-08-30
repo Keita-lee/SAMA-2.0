@@ -6,7 +6,8 @@ import '../dasboardInfoContainers.dart';
 import '../dashboardTextButton.dart';
 
 class DashPrivateMessages extends StatefulWidget {
-  const DashPrivateMessages({super.key});
+  Function(int) changePageIndex;
+  DashPrivateMessages({super.key, required this.changePageIndex});
 
   @override
   State<DashPrivateMessages> createState() => _DashPrivateMessagesState();
@@ -26,11 +27,19 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
-            DashboardTextButton(text: 'You have 10 new messages', onTap: () {}),
+            InkWell(
+                onTap: () {
+                  widget.changePageIndex(1);
+                },
+                child: DashboardTextButton(
+                    text: 'You have 10 new messages',
+                    onTap: () {
+                      widget.changePageIndex(1);
+                    })),
           ],
         ),
       ),
-    );;
+    );
+    ;
   }
 }

@@ -196,8 +196,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   SizedBox(
                     width: MyUtility(context).width * 0.3,
                     child: TextFieldStyling(
-                      hintText:
-                          'chrispotjnr@gmail.com (A) / chrispotgieter145@gmail.com (M)',
+                      hintText: 'Please add SAMA number or email Address',
                       textfieldController: email,
                     ),
                   ),

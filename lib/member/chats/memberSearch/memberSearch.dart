@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../components/myutility.dart';
 import '../../../components/profileTextField.dart';
@@ -29,16 +30,24 @@ class _MemberSearchState extends State<MemberSearch> {
     }
   }
 
-  checkIfInFriendRequestList(email) {
+  checkIfInFriendRequestList(email, firstname, lastname) {
     var friendIndex =
         (widget.friendRequestList).indexWhere((item) => item["email"] == email);
 
     if (friendIndex == -1) {
       return true;
     } else {
-      return false;
+      if (search.text.contains(email) ||
+          search.text.contains(firstname) ||
+          search.text.contains(lastname)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
+
+  searchFunction() {}
 
   @override
   void initState() {
@@ -56,17 +65,47 @@ class _MemberSearchState extends State<MemberSearch> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                ProfileTextField(
-                  customSize: 300,
-                  textFieldType: '',
-                  //Controller here
-                  textfieldController: search,
-                  ////
-                  hintText: 'Search Member',
+                Container(
+                  width: 250,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: TextFormField(
+                      maxLines: 1,
+                      controller: search,
+                      style: GoogleFonts.openSans(
+                        color: Color(0xFF6A6A6A),
+                        fontSize: 16,
+                        //fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: new EdgeInsets.only(left: 12.0),
+                        border: InputBorder.none,
+                        hintText: "Search for members",
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 199, 199, 199),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 for (int i = 0; i < members.length; i++)
                   Visibility(
-                    visible: checkIfInFriendRequestList(members[i]['email']),
+                    visible: checkIfInFriendRequestList(members[i]['email'],
+                        members[i]['firstName'], members[i]['lastName']),
                     child: MemberSearchItemStyle(
                       friendRequestList: widget.friendRequestList,
                       userDetails: widget.userDetails,

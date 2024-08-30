@@ -64,12 +64,19 @@ class CommonService {
     return DateFormat('dd-MMM-yyy').format(date);
   }
 
+  //Gethour minfrom date
+  String getTime(Timestamp timestamp) {
+    DateTime date = DateTime.parse(timestamp.toDate().toString());
+    var hourFormat = DateFormat('hh:mm a');
+    return "${hourFormat.format(date)}";
+  }
+
   String getTodaysDateText() {
     DateTime now = DateTime.now();
     String day = DateFormat('dd').format(now);
     String month = DateFormat('MM').format(now);
     String year = DateFormat('yyyy').format(now);
-    print("$year-$month-$day");
+
     return "$year-$month-$day";
   }
 

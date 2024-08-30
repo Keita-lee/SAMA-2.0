@@ -12,6 +12,7 @@ import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardMidSection.da
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/welcomeToPortal.dart';
 import 'package:sama/homePage/dashboard/ui/samaNotificationsBox.dart';
 
+import '../../member/chats/chat.dart';
 import '../../member/helpBot/helpBot.dart';
 import 'nonMemberDashboard.dart';
 
@@ -26,6 +27,7 @@ class DashboardMain extends StatefulWidget {
 }
 
 class _DashboardMainState extends State<DashboardMain> {
+  var pageIndex = 0;
   //Dialog for benifits
   Future openHelpBotPopup() => showDialog(
       context: context,
@@ -37,6 +39,13 @@ class _DashboardMainState extends State<DashboardMain> {
           ),
         );
       });
+
+  changePageIndex(value) {
+    setState(() {
+      pageIndex = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -63,7 +72,11 @@ class _DashboardMainState extends State<DashboardMain> {
             height: 10,
           ),
           Visibility(
-            visible: widget.userType != "NonMember",
+            visible: pageIndex == 1,
+            child: Chat(),
+          ),
+          Visibility(
+            visible: widget.userType != "NonMember" && pageIndex == 0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -96,7 +109,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 const SizedBox(
                   height: 30,
                 ),
-                DashboardMidSection(),
+                DashboardMidSection(changePageIndex: changePageIndex),
                 const SizedBox(
                   height: 30,
                 ),

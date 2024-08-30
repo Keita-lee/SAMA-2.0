@@ -19,6 +19,7 @@ import 'package:sama/login/loginPages.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEvents.dart';
 import 'package:sama/member/centerOfExcellence/CenterOfExcellence.dart';
 import 'package:sama/member/centerOfExcellence/CenterofExcellenceArticle.dart';
+import 'package:sama/member/codingAcademy/codingAcademy.dart';
 import 'package:sama/member/election/memberElection.dart';
 import 'package:sama/member/media/memberMedia.dart';
 import 'package:sama/member/memberBenifits/MemberBenifits.dart';
@@ -165,11 +166,11 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     }
 
     var pages = [
-      Chat(),
-      /* DashboardMain(
+      //  Chat(),
+      /**/ DashboardMain(
         userNotification: userNotification,
         userType: userType,
-      ),*/
+      ),
       CenterOfExcellence(
         getArticleId: getArticleId,
         changePage: changePage,
@@ -220,6 +221,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
 
       ProfessionalDevAdmin(),
       BugReportList(),
+      CodingAcademy(),
     ];
 
     //Dialog for logout

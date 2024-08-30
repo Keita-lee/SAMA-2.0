@@ -49,6 +49,7 @@ class _ChatListState extends State<ChatList> {
                         },
                         child: ChatUiStyle(
                           name: widget.friends[i]['name'],
+                          chat: widget.friends[i]['chat'],
                           id: widget.friends[i]['id'],
                           profilePic: widget.friends[i]['profilePic'],
                           customColor: friendSelected != widget.friends[i]['id']

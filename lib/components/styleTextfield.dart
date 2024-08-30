@@ -3,10 +3,14 @@ import 'package:sama/components/utility.dart';
 
 class TextFieldStyling extends StatefulWidget {
   String hintText;
+  bool? obscure;
   final TextEditingController textfieldController;
 
   TextFieldStyling(
-      {super.key, required this.hintText, required this.textfieldController});
+      {super.key,
+      required this.hintText,
+      this.obscure,
+      required this.textfieldController});
 
   @override
   State<TextFieldStyling> createState() => _TextFieldStylingState();
@@ -29,6 +33,7 @@ class _TextFieldStylingState extends State<TextFieldStyling> {
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: TextFormField(
+              obscureText: widget.obscure != null ? true : false,
               controller: widget.textfieldController,
               style: TextStyle(
                 color: Color.fromARGB(255, 153, 147, 147),
