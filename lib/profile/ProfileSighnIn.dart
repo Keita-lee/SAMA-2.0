@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/profile/MyPreferences.dart';
 import 'package:sama/profile/Notifications.dart';
@@ -15,6 +16,7 @@ import 'package:sama/profile/Security.dart';
 import 'package:sama/components/myutility.dart';
 
 import 'package:sama/profile/logoutPopup.dart';
+import 'package:sama/profile/profileHome.dart';
 import 'package:uuid/uuid.dart';
 
 import 'bio.dart';
@@ -85,10 +87,11 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
     }
 
     var pages = [
+      ProfileHome(),
       EditProfile(),
       Bio(),
       Notifications(),
-      MyPreferences(profilePicView: profilePicView, profileView: profileView),
+      // MyPreferences(profilePicView: profilePicView, profileView: profileView),
       Security(changePage: changePage)
     ];
 
@@ -138,16 +141,26 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
       //Navigator.pop(context);
     }
 
-    return Column(
-      children: [
-        SizedBox(
-          height: MyUtility(context).height * 0.2,
-          child: SizedBox(
-            width: MyUtility(context).width / 1.3,
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, top: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 35,
+          ),
+          Container(
+            width: MyUtility(context).width / 1.5,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                border: Border.all(
+                    color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
@@ -170,347 +183,451 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                         ),
                       ),
                     ),
-
-                    /*      Center(
-                      child: ImageNetwork(
-                        image: widget.profileImage!,
-                        height: 150,
-                        width: 150,
-                        duration: 1500,
-                        curve: Curves.easeIn,
-                        onPointer: true,
-                        debugPrint: false,
-                        fullScreen: false,
-                        fitAndroidIos: BoxFit.cover,
-                        fitWeb: BoxFitWeb.cover,
-                        borderRadius: BorderRadius.circular(70),
-                        onLoading: const CircularProgressIndicator(
-                          color: Colors.indigoAccent,
-                        ),
-                        onError: const Icon(
-                          Icons.error,
-                          color: Colors.red,
-                        ),
-                        onTap: () {},
-                      ),
-                    )
-               */
-                  ],
-                ),
-                SizedBox(
-                  width: MyUtility(context).width * 0.01,
-                ),
-                Column(
-                  children: [
                     SizedBox(
-                      height: MyUtility(context).height * 0.15,
-                      child: Column(
-                        //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${title}. ${fullName}',
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Color(0xFF174486),
-                                fontWeight: FontWeight.normal),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Email: ${email}',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFF6A6A6A),
-                                fontWeight: FontWeight.normal),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Contact no: ${mobileNo}',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFF6A6A6A),
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
+                      height: 15,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _pickImageGallery();
+                      },
+                      child: Text(
+                        ' Edit',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 163, 163, 163),
+                            fontWeight: FontWeight.normal),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  width: MyUtility(context).width * 0.3,
-                ),
                 Column(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'Your profile is Public',
+                      ' ${title}. ${fullName}',
                       style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFF6A6A6A),
+                          fontSize: 20,
+                          color: const Color.fromARGB(255, 116, 116, 116),
                           fontWeight: FontWeight.normal),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Text(
-                      'Member since 2018 (good standing)',
+                      'Membership :',
                       style: TextStyle(
                           fontSize: 18,
-                          color: Color(0xFF6A6A6A),
+                          color: const Color.fromARGB(255, 116, 116, 116),
                           fontWeight: FontWeight.normal),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Text(
-                      'Private Practice Medical Practitioners',
+                      'Status :',
                       style: TextStyle(
                           fontSize: 18,
-                          color: Color(0xFF6A6A6A),
-                          fontWeight: FontWeight.bold),
+                          color: const Color.fromARGB(255, 116, 116, 116),
+                          fontWeight: FontWeight.normal),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-        ),
-        SizedBox(
-          width: MyUtility(context).width / 1.3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              StyleButton(
+                  description: "PROFILE HOME",
+                  height: 35,
+                  width: 85,
+                  onTap: () {
+                    changePage(0);
+                  }),
+              SizedBox(
+                width: 15,
+              ),
+              StyleButton(
+                  description: "MY DETAILS",
+                  height: 35,
+                  width: 85,
+                  onTap: () {
+                    changePage(1);
+                  }),
+              SizedBox(
+                width: 15,
+              ),
+              StyleButton(
+                  description: "MY BIOGRAPHY",
+                  height: 35,
+                  width: 85,
+                  onTap: () {
+                    changePage(2);
+                  }),
+              SizedBox(
+                width: 15,
+              ),
+              StyleButton(
+                  description: "SECURITY",
+                  height: 35,
+                  width: 85,
+                  onTap: () {
+                    changePage(3);
+                  })
+            ],
+          ),
+          /*     SizedBox(
+            height: MyUtility(context).height * 0.2,
+            child: SizedBox(
+              width: MyUtility(context).width / 1.3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
+                  Column(
                     children: [
-                      Text(
-                        'Your image is visible to the public',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFF6A6A6A),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _pickImageGallery();
-                        },
-                        child: Text(
-                          ' Change',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xFF174486),
-                              fontWeight: FontWeight.normal),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Container(
+                          width: 110,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(0.0),
+                            child: imageUrl != ""
+                                ? ImageNetwork(
+                                    image: imageUrl!,
+                                    height: 110,
+                                    width: 110,
+                                  )
+                                : Container(),
+                          ),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: MyUtility(context).height * 0.02,
+                    width: MyUtility(context).width * 0.01,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                              color: Color(0xFFEFEFEF),
-                              width: MyUtility(context).width * 0.1,
-                              height: MyUtility(context).height * 0.05,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      changePage(0);
-                                    },
-                                    child: Text(
-                                      'Edit Profile',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Visibility(
-                                    visible: pageIndex == 0 ? true : false,
-                                    child: Container(
-                                      width: 4,
-                                      height: MyUtility(context).height * 0.05,
-                                      color: Colors.amber,
-                                    ),
-                                  )
-                                ],
-                              ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.15,
+                        child: Column(
+                          //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${title}. ${fullName}',
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Color(0xFF174486),
+                                  fontWeight: FontWeight.normal),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                              color: Color(0xFFEFEFEF),
-                              width: MyUtility(context).width * 0.1,
-                              height: MyUtility(context).height * 0.05,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      changePage(1);
-                                    },
-                                    child: Text(
-                                      'Build Bio',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Visibility(
-                                    visible: pageIndex == 1 ? true : false,
-                                    child: Container(
-                                      width: 4,
-                                      height: MyUtility(context).height * 0.05,
-                                      color: Colors.amber,
-                                    ),
-                                  )
-                                ],
-                              ),
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                              color: Color(0xFFEFEFEF),
-                              width: MyUtility(context).width * 0.1,
-                              height: MyUtility(context).height * 0.05,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      changePage(2);
-                                    },
-                                    child: Text(
-                                      'Notifications',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Visibility(
-                                    visible: pageIndex == 2 ? true : false,
-                                    child: Container(
-                                      width: 4,
-                                      height: MyUtility(context).height * 0.05,
-                                      color: Colors.amber,
-                                    ),
-                                  )
-                                ],
-                              ),
+                            Text(
+                              'Email: ${email}',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFF6A6A6A),
+                                  fontWeight: FontWeight.normal),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                              color: Color(0xFFEFEFEF),
-                              width: MyUtility(context).width * 0.1,
-                              height: MyUtility(context).height * 0.05,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      changePage(3);
-                                    },
-                                    child: Text(
-                                      'My Preferences',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Visibility(
-                                    visible: pageIndex == 3 ? true : false,
-                                    child: Container(
-                                      width: 4,
-                                      height: MyUtility(context).height * 0.05,
-                                      color: Colors.amber,
-                                    ),
-                                  )
-                                ],
-                              ),
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                              color: Color(0xFFEFEFEF),
-                              width: MyUtility(context).width * 0.1,
-                              height: MyUtility(context).height * 0.05,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      changePage(4);
-                                    },
-                                    child: Text(
-                                      'Security',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Visibility(
-                                    visible: pageIndex == 4 ? true : false,
-                                    child: Container(
-                                      width: 4,
-                                      height: MyUtility(context).height * 0.05,
-                                      color: Colors.amber,
-                                    ),
-                                  )
-                                ],
-                              ),
+                            Text(
+                              'Contact no: ${mobileNo}',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFF6A6A6A),
+                                  fontWeight: FontWeight.normal),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: Container(
-                              color: Color(0xFFEFEFEF),
-                              width: MyUtility(context).width * 0.1,
-                              height: MyUtility(context).height * 0.05,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      openLogoutDialog();
-                                    },
-                                    child: Text(
-                                      'Logout',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width * 0.3,
+                  ),
+                  Column(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Your profile is Public',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF6A6A6A),
+                            fontWeight: FontWeight.normal),
                       ),
                       SizedBox(
-                        width: MyUtility(context).width * 0.015,
+                        height: 10,
                       ),
-                      Container(
-                        child: pages[pageIndex],
-                      )
-                      //*Notifications()*/
-                      /*MyPreferences()*/
-                      /*Security()*/
+                      Text(
+                        'Member since 2018 (good standing)',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF6A6A6A),
+                            fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Private Practice Medical Practitioners',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF6A6A6A),
+                            fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ],
+       */
+          SizedBox(
+            width: MyUtility(context).width / 1.3,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /*     Row(
+                      children: [
+                        Text(
+                          'Your image is visible to the public',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xFF6A6A6A),
+                              fontWeight: FontWeight.normal),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _pickImageGallery();
+                          },
+                          child: Text(
+                            ' Change',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color(0xFF174486),
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      ],
+                    ),*/
+                    SizedBox(
+                      height: MyUtility(context).height * 0.02,
+                    ),
+                    Container(
+                      child: pages[pageIndex],
+                    )
+
+                    /*   Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Container(
+                                color: Color(0xFFEFEFEF),
+                                width: MyUtility(context).width * 0.1,
+                                height: MyUtility(context).height * 0.05,
+                                child: Row(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        changePage(0);
+                                      },
+                                      child: Text(
+                                        'Edit Profile',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Visibility(
+                                      visible: pageIndex == 0 ? true : false,
+                                      child: Container(
+                                        width: 4,
+                                        height:
+                                            MyUtility(context).height * 0.05,
+                                        color: Colors.amber,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Container(
+                                color: Color(0xFFEFEFEF),
+                                width: MyUtility(context).width * 0.1,
+                                height: MyUtility(context).height * 0.05,
+                                child: Row(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        changePage(1);
+                                      },
+                                      child: Text(
+                                        'Build Bio',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Visibility(
+                                      visible: pageIndex == 1 ? true : false,
+                                      child: Container(
+                                        width: 4,
+                                        height:
+                                            MyUtility(context).height * 0.05,
+                                        color: Colors.amber,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Container(
+                                color: Color(0xFFEFEFEF),
+                                width: MyUtility(context).width * 0.1,
+                                height: MyUtility(context).height * 0.05,
+                                child: Row(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        changePage(2);
+                                      },
+                                      child: Text(
+                                        'Notifications',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Visibility(
+                                      visible: pageIndex == 2 ? true : false,
+                                      child: Container(
+                                        width: 4,
+                                        height:
+                                            MyUtility(context).height * 0.05,
+                                        color: Colors.amber,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Container(
+                                color: Color(0xFFEFEFEF),
+                                width: MyUtility(context).width * 0.1,
+                                height: MyUtility(context).height * 0.05,
+                                child: Row(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        changePage(3);
+                                      },
+                                      child: Text(
+                                        'My Preferences',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Visibility(
+                                      visible: pageIndex == 3 ? true : false,
+                                      child: Container(
+                                        width: 4,
+                                        height:
+                                            MyUtility(context).height * 0.05,
+                                        color: Colors.amber,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Container(
+                                color: Color(0xFFEFEFEF),
+                                width: MyUtility(context).width * 0.1,
+                                height: MyUtility(context).height * 0.05,
+                                child: Row(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        changePage(4);
+                                      },
+                                      child: Text(
+                                        'Security',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Visibility(
+                                      visible: pageIndex == 4 ? true : false,
+                                      child: Container(
+                                        width: 4,
+                                        height:
+                                            MyUtility(context).height * 0.05,
+                                        color: Colors.amber,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Container(
+                                color: Color(0xFFEFEFEF),
+                                width: MyUtility(context).width * 0.1,
+                                height: MyUtility(context).height * 0.05,
+                                child: Row(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        openLogoutDialog();
+                                      },
+                                      child: Text(
+                                        'Logout',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: MyUtility(context).width * 0.015,
+                        ),
+                       
+                        //*Notifications()*/
+                        /*MyPreferences()*/
+                        /*Security()*/
+                      ],
+                    ),*/
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -166,8 +166,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     }
 
     var pages = [
-      //  Chat(),
-      /**/ DashboardMain(
+      DashboardMain(
         userNotification: userNotification,
         userType: userType,
       ),
@@ -513,7 +512,24 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                     key: _menuKey,
                                     onSelected: (value) {
                                       if (value == "viewProfile") {
-                                        changePage(3);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Material(
+                                                      child: PostLoginLandingPage(
+                                                          pageIndex: 3,
+                                                          userId: FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser !=
+                                                                  null
+                                                              ? FirebaseAuth
+                                                                  .instance
+                                                                  .currentUser!
+                                                                  .uid
+                                                              : "",
+                                                          activeIndex: 3),
+                                                    )));
+                                        //changePage(3);
                                       } else if (value == "logout") {
                                         openLogoutDialog();
                                       }

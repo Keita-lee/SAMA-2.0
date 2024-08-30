@@ -172,10 +172,6 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         activeIndex: index),
                   ))).whenComplete(() {
         setState(() {
-          print(index);
-          print(index);
-          print(index);
-          print(index);
           activeIndex = index;
         });
       });
@@ -273,7 +269,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Member Benefits',
                       iconPath: "images/icon_benefits.svg",
                       onPressed: () {
-                        _handleItemClick(11, 11);
+                        _handleItemClick(11, 2);
                         widget.changePage(2);
                       },
                     ),
@@ -322,7 +318,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       description: 'Branch Voting',
                       iconPath: "images/icon_voting.svg",
                       onPressed: () {
-                        _handleItemClick(4, 4);
+                        _handleItemClick(4, 11);
                         widget.changePage(11);
                       },
                     ),
@@ -411,7 +407,8 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     description: "Coding Academy",
                     iconPath: "images/icons_coding.svg",
                     onPressed: () {
-                      _handleItemClick(4, -1);
+                      widget.changePage(23);
+                      _handleItemClick(4, 23);
                     },
                   ),
                   HoverItem(
