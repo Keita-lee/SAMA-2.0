@@ -49,7 +49,7 @@ class _WelcomeToPortalState extends State<WelcomeToPortal> {
                 SizedBox(
                   width: 250,
                   child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                    'Here, you can access valuable resources, connect with fellow professionals, and explore opportunities to contribute to our shared mission of advancing healthcare in South Africa. Enjoy all the benefits of your membership and connect with our community!',
                     style: GoogleFonts.openSans(fontSize: 12),
                   ),
                 ),

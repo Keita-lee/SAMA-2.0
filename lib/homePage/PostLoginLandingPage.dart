@@ -290,8 +290,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                 userType == "Admin"
                                     ? 'Admin Portal'
                                     : userType == "NonMember"
-                                        ? "SAMA Portal"
-                                        : 'Member Portal',
+                                        ? "SAMA Portal BETA"
+                                        : 'Member Portal BETA',
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Color(0xFF174486),
@@ -432,7 +432,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                         baseColor: Color(0xFF174486),
                                         hoverColor:
                                             Color.fromRGBO(19, 43, 81, 1),
-                                        description: 'REGISTER')
+                                        description: 'BECOME A MEMBER')
                                   ],
                                 )),
                             SizedBox(width: 20),

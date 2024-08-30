@@ -29,7 +29,7 @@ class _DashProfessionalDevState extends State<DashProfessionalDev> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
+            /*   Align(
               alignment: Alignment.center,
               child: Text.rich(
                 TextSpan(
@@ -44,11 +44,11 @@ class _DashProfessionalDevState extends State<DashProfessionalDev> {
                   ],
                 ),
               ),
-            ),
+            ),*/
             const SizedBox(
               height: 20,
             ),
-            DashboardTextButton(text: 'View CPD Quizes', onTap: () {}),
+            //DashboardTextButton(text: 'View CPD Quizes', onTap: () {}),
             DashboardTextButton(text: 'List and find CPD Quizes', onTap: () {})
           ],
         ),

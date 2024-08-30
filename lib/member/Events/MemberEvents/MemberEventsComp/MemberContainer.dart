@@ -193,7 +193,7 @@ class _MemberContainerState extends State<MemberContainer> {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: SizedBox(
                       child: Text(
-                        '${CommonService().getDateInText(widget.dateFrom)}',
+                        '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
                         style: TextStyle(
                           fontSize: 13,
                           color: Color(0xFF3D3D3D),

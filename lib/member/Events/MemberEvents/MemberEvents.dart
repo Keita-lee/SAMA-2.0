@@ -110,6 +110,8 @@ class _MemberEventsState extends State<MemberEvents> {
                       child: ListView.builder(
                         itemCount: documents.length,
                         itemBuilder: (BuildContext context, int index) {
+                          documents
+                              .sort((b, a) => a["date"].compareTo(b["date"]));
                           final DocumentSnapshot document = documents[index];
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -126,7 +128,7 @@ class _MemberEventsState extends State<MemberEvents> {
                                 eventName: document['title']!,
                                 location: document['_location']!,
                                 dateFrom: document['date']!,
-                                dateTill: document['date']!,
+                                dateTill: document['endDate']!,
                                 onPressed: () {
                                   openEventDetails(document['id']);
                                   //  openMemberEventsDialog(document['id']);

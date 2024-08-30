@@ -37,19 +37,6 @@ class _CodingAcademyState extends State<CodingAcademy> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'To be a contributor, please contact ',
-                        style: GoogleFonts.openSans(fontSize: 16),
-                      ),
-                      Text(
-                        'online@samedical.org',
-                        style: GoogleFonts.openSans(
-                            fontSize: 16, color: Colors.teal),
-                      ),
-                    ],
-                  )
                 ],
               ))
         ],

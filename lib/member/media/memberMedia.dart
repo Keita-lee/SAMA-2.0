@@ -47,7 +47,7 @@ class _MemberMediaState extends State<MemberMedia> {
         SizedBox(
           height: 30,
         ),
-        Padding(
+        /*  Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: SizedBox(
             width: MyUtility(context).width / 1.5,
@@ -56,7 +56,7 @@ class _MemberMediaState extends State<MemberMedia> {
               style: GoogleFonts.openSans(fontSize: 16),
             ),
           ),
-        ),
+        ),*/
         Container(
             padding: EdgeInsets.only(left: 50),
             child:

@@ -129,7 +129,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    isHoverd ? 'REGISTER' : 'BECOME A MEMBER',
+                                    'BECOME A MEMBER',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,

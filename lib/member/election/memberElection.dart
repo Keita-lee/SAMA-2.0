@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
@@ -306,7 +307,54 @@ class _MemberElectionState extends State<MemberElection> {
           SizedBox(
             height: 30,
           ),
-          Visibility(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'No branch voting in progress',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 1.5,
+                  child: Text(
+                    'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
+                    style: GoogleFonts.openSans(fontSize: 16),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 1.5,
+                  child: Text(
+                    'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
+                    style: GoogleFonts.openSans(fontSize: 16),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 1.5,
+                  child: Text(
+                    'Once branch voting opens, you will be notified.',
+                    style: GoogleFonts.openSans(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          /*    Visibility(
               visible: widget.userType == "NonMember",
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -446,6 +494,7 @@ class _MemberElectionState extends State<MemberElection> {
                   ]),
             ),
           ),
+        */
         ],
       ),
     );

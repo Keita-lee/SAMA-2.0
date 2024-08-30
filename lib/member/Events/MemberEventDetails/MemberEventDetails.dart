@@ -405,7 +405,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                           SizedBox(
                             height: 35,
                           ),
-                          SizedBox(
+                          /*         SizedBox(
                             width: MyUtility(context).width * 0.50 - 310,
                             child: Row(
                               children: [
@@ -515,39 +515,12 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                               ],
                             ),
                           ),
+                  */
                         ],
                       ),
                     ),
                   ],
                 ),
-
-                /*     Container(
-                  width: MyUtility(context).width * 0.75,
-                  height: MyUtility(context).height * 0.13,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromARGB(42, 81, 125, 162)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              //width: MyUtility(context).width * 0.15,
-                              child: EventText(
-                                  title: _title.text,
-                                  date: _date.text,
-                                  endDate: endDate.text,
-                                  timeFrom: _times.text,
-                                  timeTill: '')),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            */
                 Column(
                   //mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

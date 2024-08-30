@@ -102,6 +102,9 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       children: [
                         Text(
