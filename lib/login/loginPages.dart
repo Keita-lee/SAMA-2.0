@@ -73,7 +73,6 @@ class _LoginPagesState extends State<LoginPages> {
     bool showRegisterBorder = false;
     // pages to go to
     var pages = [
-      MembershipSignUp(),
       LoginWithEmail(changePage: changePage, getEmail: getEmail),
       LoginWithPassword(
         changePage: changePage,
@@ -109,6 +108,7 @@ class _LoginPagesState extends State<LoginPages> {
           changePage: changePage,
           email: email,
           emailChangeType: emailChangeType),
+      MembershipSignUp(),
     ];
 
     return Container(
