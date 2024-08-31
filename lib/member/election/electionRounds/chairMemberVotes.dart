@@ -56,7 +56,7 @@ class _ChairMemberVotesState extends State<ChairMemberVotes> {
       "id": "${doc.docs[0].get("id")}",
       "SamaNr": "15658",
       "name": "${doc.docs[0].get("firstName")} ${doc.docs[0].get("lastName")}",
-      "hpca": doc.docs[0].get("hpcsa"),
+      "hpca": doc.docs[0].get("hpcsaNumber"),
       "email": "${doc.docs[0].get("email")}",
       "hdi":
           '${doc.docs[0]["race"] == "White/Caucasian" || doc.docs[0]["race"] == "Other" ? "" : "HDI"}',

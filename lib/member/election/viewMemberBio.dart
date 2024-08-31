@@ -97,18 +97,6 @@ class _ViewMemberBioState extends State<ViewMemberBio> {
     }
   }
 
-  downloadCv() {
-    final Uri urlMonth = Uri(
-      scheme: 'https',
-      host: "",
-      path: 'paystack.com/pay/ebakeMonth',
-    );
-
-    final Uri a = Uri.parse(cv);
-
-    launchUrl(a);
-  }
-
   @override
   void initState() {
     getBioData();

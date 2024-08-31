@@ -158,7 +158,7 @@ class _MemberElectionState extends State<MemberElection> {
       "id": "${doc.get("id")}",
       "SamaNr": "15658",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "email": "${doc.get("email")}",
       "votes": getVotes(doc.get("email"))
     };

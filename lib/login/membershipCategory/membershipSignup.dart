@@ -82,15 +82,15 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
 
   getDebitOrder(value) {
     setState(() {
-      debitOrder["bankAccHolder"] = value[["bankAccHolder"]];
-      debitOrder["bankAccNo"] = value[["bankAccNo"]];
-      debitOrder["bankAccType"] = value[["bankAccType"]];
-      debitOrder["bankBranchCde"] = value[["bankBranchCde"]];
-      debitOrder["bankBranchName"] = value[["bankBranchName"]];
-      debitOrder["bankDisclaimer"] = value[["bankDisclaimer"]];
-      debitOrder["bankName"] = value[["bankName"]];
-      debitOrder["bankPaymAnnual"] = value[["bankPaymAnnual"]];
-      debitOrder["bankPaymMonthly"] = value[["bankPaymMonthly"]];
+      debitOrder["bankAccHolder"] = value["bankAccHolder"];
+      debitOrder["bankAccNo"] = value["bankAccNo"];
+      debitOrder["bankAccType"] = value["bankAccType"];
+      debitOrder["bankBranchCde"] = value["bankBranchCde"];
+      debitOrder["bankBranchName"] = value["bankBranchName"];
+      debitOrder["bankDisclaimer"] = value["bankDisclaimer"];
+      debitOrder["bankName"] = value["bankName"];
+      debitOrder["bankPaymAnnual"] = value["bankPaymAnnual"];
+      debitOrder["bankPaymMonthly"] = value["bankPaymMonthly"];
     });
   }
 

@@ -73,7 +73,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
         idNumber.text = data.get('idNumber');
         passportNumber.text = data.get('passportNumber');
 
-        hpcsa.text = data.get('hpcsa');
+        hpcsa.text = data.get('hpcsaNumber');
         practiceNumber.text = data.get('practiceNumber');
 
         univercityQualification.text = data.get('univercityQualification');
@@ -102,7 +102,7 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
       "dob": dob.text,
       "idNumber": idNumber.text,
       "passportNumber": passportNumber.text,
-      "hpcsa": hpcsa.text,
+      "hpcsaNumber": hpcsa.text,
       "practiceNumber": practiceNumber.text,
       "univercityQualification": univercityQualification.text,
       "univercityName": univercityName.text,

@@ -150,7 +150,7 @@ class _RegisterState extends State<Register> {
       "dob": dob.text,
       "idNumber": idNumber.text,
       "passportNumber": passportNumber.text,
-      "hpcsa": hpcsa.text,
+      "hpcsaNumber": hpcsa.text,
       "practiceNumber": practiceNumber.text,
       "univercityQualification": univercityQualification.text,
       "univercityName": univercityName.text,

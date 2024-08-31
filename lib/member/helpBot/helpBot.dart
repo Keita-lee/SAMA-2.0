@@ -24,7 +24,7 @@ class _HelpBotState extends State<HelpBot> {
   Widget build(BuildContext context) {
     sendEmailFromChatBot() async {
       await sendHelpbotEmail(
-          email: 'chrispotjnr@gmail.com',
+          email: 'online@samedical.org',
           emailAddress: emailAddress.text,
           message: message.text,
           bugType: bugType,

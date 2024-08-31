@@ -11,7 +11,7 @@ Future sendHelpbotEmail({
   required String message,
   required String bugType,
 }) async {
-  final serviceId = 'service_t6d1ynn';
+  final serviceId = 'service_igwbojp';
 
   final templateId = 'template_06tskqk';
   final userId = 'Jmk16IabzDvgmXBeJ';

@@ -404,7 +404,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                             document["firstName"],
                                             document["lastName"],
                                             document["email"],
-                                            document["hpcsa"],
+                                            document["hpcsaNumber"],
                                             document["firstName"]),
                                         child: Container(
                                             width: MyUtility(context).width -
@@ -450,7 +450,7 @@ class _MemberElectionRound1State extends State<MemberElectionRound1> {
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Text(
-                                                    '${document!["hpcsa"]} ',
+                                                    '${document!["hpcsaNumber"]} ',
                                                     style:
                                                         TextStyle(fontSize: 18),
                                                   ),

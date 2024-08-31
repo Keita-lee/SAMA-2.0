@@ -44,7 +44,7 @@ class _EditProfileState extends State<EditProfile> {
   final password = TextEditingController();
   var profilePicView = "";
   var profileView = "";
-
+  var status = "";
   //var
   var allUniversities = constants.availableUniversities;
   var universityQualifications = constants.qualifications;
@@ -87,7 +87,7 @@ class _EditProfileState extends State<EditProfile> {
         idNumber.text = data.get('idNumber');
         passportNumber.text = data.get('passportNumber');
 
-        hpcsa.text = data.get('hpcsa');
+        hpcsa.text = data.get('hpcsaNumber');
         practiceNumber.text = data.get('practiceNumber');
 
         univercityName.text = data.get('univercityName');
@@ -100,6 +100,7 @@ class _EditProfileState extends State<EditProfile> {
         profilePicView = data.get('profilePicView');
         profileView = data.get('profileView');
         profilePicIrl = data.get('profilePic');
+        status = data.get('status');
       });
     }
   }
@@ -119,7 +120,7 @@ class _EditProfileState extends State<EditProfile> {
       "dob": dob.text,
       "idNumber": idNumber.text,
       "passportNumber": passportNumber.text,
-      "hpcsa": hpcsa.text,
+      "hpcsaNumber": hpcsa.text,
       "practiceNumber": practiceNumber.text,
       "univercityQualification": univercityQualification.text,
       "univercityName": univercityName.text,
@@ -130,6 +131,7 @@ class _EditProfileState extends State<EditProfile> {
       "id": FirebaseAuth.instance.currentUser!.uid,
       'profilePicView': profilePicView,
       'profileView': profileView,
+      'status': status
     };
 
     FirebaseFirestore.instance

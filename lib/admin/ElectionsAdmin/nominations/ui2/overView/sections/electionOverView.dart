@@ -57,7 +57,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "hdiStatus": "HDI",
       "email": "${doc.get("email")}",
       "nominations": '${getNominationsForUser(doc.get("email"))}',
@@ -115,7 +115,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "hdiStatus": "HDI",
       "email": "${doc.get("email")}",
       "state": "Elected",
@@ -137,7 +137,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "hdiStatus":
           '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"} ',
       "email": "${doc.get("email")}",
@@ -168,7 +168,7 @@ class _ElectionOverViewState extends State<ElectionOverView> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "hdiStatus":
           '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"} ',
       "email": "${doc.get("email")}",

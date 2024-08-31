@@ -33,7 +33,7 @@ class _NominationAcceptanceRoundState extends State<NominationAcceptanceRound> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "hdiStatus": "HDI",
       "email": "${doc.get("email")}",
       "state": "Elected",

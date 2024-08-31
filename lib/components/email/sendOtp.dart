@@ -37,8 +37,8 @@ Future sendOtp({
   required String otp,
   required String email,
 }) async {
-  final serviceId = 'service_t6d1ynn';
-  final templateId = 'template_v14zgxi';
+  final serviceId = 'service_igwbojp';
+  final templateId = 'template_resestpword';
   final userId = '282VyjdH5FOLIffwK';
   createOtpVerification(email, otp);
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');

@@ -86,7 +86,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
         idNumber.text = data.get('idNumber');
         passportNumber.text = data.get('passportNumber');
 
-        hpcsa.text = data.get('hpcsa');
+        /*   hpcsa.text = data.get('hpcsaNumber');
         practiceNumber.text = data.get('practiceNumber');
 
         univercityQualification.text = data.get('univercityQualification');
@@ -94,7 +94,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
         qualificationMonth.text = data.get('qualificationMonth');
 
         password.text = data.get('password');
-        userType = data.get('userType');
+        userType = data.get('userType');*/
       });
     }
   }
@@ -126,7 +126,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
       "dob": dob.text,
       "idNumber": idNumber.text,
       "passportNumber": passportNumber.text,
-      "hpcsa": hpcsa.text, //
+      "hpcsaNumber": hpcsa.text, //
       "practiceNumber": practiceNumber.text,
 
       "univercityQualification": univercityQualification.text,
@@ -138,7 +138,8 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
       "profilePicView": "",
       "profileView": "",
       "id": FirebaseAuth.instance.currentUser!.uid,
-      "status": "pending"
+      "status": "Pending",
+      "regionCde": ""
     };
 
     await FirebaseFirestore.instance
@@ -166,7 +167,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
 
   @override
   void initState() {
-    getUserData();
+//    getUserData();
     super.initState();
   }
 
@@ -190,27 +191,6 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    /* Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ProfileTextField(
-                              customSize: MyUtility(context).width * 0.27,
-                              description: "Title",
-                              textfieldController: title,
-                              textFieldType: "stringType"),
-                          SizedBox(
-                            width: MyUtility(context).width * 0.015,
-                          ),
-                          ProfileTextField(
-                              customSize: MyUtility(context).width * 0.27,
-                              description: "Initials",
-                              textfieldController: initials,
-                              textFieldType: "stringType")
-                        ],
-                      ),
-                    ),*/
                     SizedBox(
                       height: MyUtility(context).height * 0.015,
                     ),

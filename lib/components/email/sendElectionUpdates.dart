@@ -12,7 +12,7 @@ Future sendElectionUpdate({
   required String chairDates,
   required String email,
 }) async {
-  final serviceId = 'service_t6d1ynn';
+  final serviceId = 'service_igwbojp';
   final templateId = 'template_2tv3c3b';
   final userId = 'Jmk16IabzDvgmXBeJ';
   // createOtpVerification(email, otp);
@@ -32,6 +32,4 @@ Future sendElectionUpdate({
           'user_email': email,
         }
       }));
-
-  print(response.body);
 }

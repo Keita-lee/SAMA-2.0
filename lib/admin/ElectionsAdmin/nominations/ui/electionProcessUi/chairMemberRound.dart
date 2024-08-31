@@ -53,7 +53,7 @@ class _ChairMemberRoundState extends State<ChairMemberRound> {
     var userData = {
       "SamaNr": "9088466",
       "name": "${doc.get("firstName")} ${doc.get("lastName")}",
-      "hpca": doc.get("hpcsa"),
+      "hpca": doc.get("hpcsaNumber"),
       "hdiStatus":
           '${doc!["race"] == "White/Caucasian" || doc!["race"] == "Other" ? "" : "HDI"} ',
       "email": "${doc.get("email")}",

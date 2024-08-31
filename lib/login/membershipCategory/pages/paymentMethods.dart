@@ -47,13 +47,12 @@ class _PaymentMethodState extends State<PaymentMethod> {
   String paymentStatus = "";
   String reference = "";
   bool loadingState = false;
-
-  final accHolderName = TextEditingController(text: '');
-  final nameOfBank = TextEditingController(text: '');
-  final branchName = TextEditingController(text: '');
-  final branchCode = TextEditingController(text: '');
-  final accNumber = TextEditingController(text: '');
-  final accType = TextEditingController(text: '');
+  TextEditingController accHolderName = TextEditingController();
+  TextEditingController nameOfBank = TextEditingController();
+  TextEditingController branchName = TextEditingController();
+  TextEditingController branchCode = TextEditingController();
+  TextEditingController accNumber = TextEditingController();
+  TextEditingController accType = TextEditingController();
 
 //Calculate months left for december
   getTimeFrame() {
@@ -90,7 +89,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   checkCustomerExist() {
     return http.get(
-      Uri.parse('https://api.paystack.co/customer/chrispotjnr@gmail.com'),
+      Uri.parse('https://api.paystack.co/customer/${email}'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization':
@@ -150,7 +149,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
         },
         body: jsonEncode(<String, dynamic>{
           'amount': amountToPay * 100,
-          'email': "chrispotjnr@gmail.com",
+          'email': email,
           "currency": "ZAR",
           // Add any other data you want to send in the body
         }),
@@ -205,17 +204,6 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   @override
   Widget build(BuildContext context) {
-    var bankData = {
-      "bankAccHolder": accHolderName.text,
-      "bankAccNo": accNumber.text,
-      "bankAccType": accType.text,
-      "bankBranchCde": branchCode.text,
-      "bankBranchName": branchName.text,
-      "bankDisclaimer": "Y",
-      "bankName": nameOfBank.text,
-      "bankPaymAnnual": "",
-      "bankPaymMonthly": ""
-    };
     return Column(
       children: [
         Container(
@@ -689,11 +677,21 @@ class _PaymentMethodState extends State<PaymentMethod> {
             Visibility(
               visible: paymnetType != "PAY ONLINE",
               child: StyleButton(
-                  description: "CONTINUE",
+                  description: "CONTINUE1",
                   height: 55,
                   width: 125,
                   onTap: () {
-                    widget.getDebitOrder(bankData);
+                    widget.getDebitOrder({
+                      "bankAccHolder": accHolderName.text,
+                      "bankAccNo": accNumber.text,
+                      "bankAccType": accType.text,
+                      "bankBranchCde": branchCode.text,
+                      "bankBranchName": branchName.text,
+                      "bankDisclaimer": "Y",
+                      "bankName": nameOfBank.text,
+                      "bankPaymAnnual": "",
+                      "bankPaymMonthly": ""
+                    });
                     widget.nextSection(3);
                   }),
             )
