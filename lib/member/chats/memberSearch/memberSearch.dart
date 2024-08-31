@@ -22,7 +22,7 @@ class _MemberSearchState extends State<MemberSearch> {
   var members = [];
 
   getAllMembers() async {
-    final doc = await FirebaseFirestore.instance.collection('users').get();
+    final doc = await FirebaseFirestore.instance.collection('chat').get();
     if (doc.docs.isNotEmpty) {
       setState(() {
         members.addAll(doc.docs);
@@ -30,16 +30,14 @@ class _MemberSearchState extends State<MemberSearch> {
     }
   }
 
-  checkIfInFriendRequestList(email, firstname, lastname) {
+  checkIfInFriendRequestList(email, firstname) {
     var friendIndex =
         (widget.friendRequestList).indexWhere((item) => item["email"] == email);
 
     if (friendIndex == -1) {
       return true;
     } else {
-      if (search.text.contains(email) ||
-          search.text.contains(firstname) ||
-          search.text.contains(lastname)) {
+      if (search.text.contains(email) || search.text.contains(firstname)) {
         return true;
       } else {
         return false;
@@ -104,13 +102,12 @@ class _MemberSearchState extends State<MemberSearch> {
                 ),
                 for (int i = 0; i < members.length; i++)
                   Visibility(
-                    visible: checkIfInFriendRequestList(members[i]['email'],
-                        members[i]['firstName'], members[i]['lastName']),
+                    visible: checkIfInFriendRequestList(
+                        members[i]['email'], members[i]['name']),
                     child: MemberSearchItemStyle(
                       friendRequestList: widget.friendRequestList,
                       userDetails: widget.userDetails,
-                      name:
-                          '${members[i]['firstName']} ${members[i]['lastName']}',
+                      name: '${members[i]['name']}',
                       friendAdded: false,
                       id: members[i]['id'],
                     ),

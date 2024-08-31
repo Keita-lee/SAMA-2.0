@@ -18,8 +18,10 @@ import 'package:sama/member/media/mediaPopup/mediaPopup.dart';
 class MemberEventDetails extends StatefulWidget {
   String id;
   VoidCallback closeDialog;
+  bool? popup;
 
-  MemberEventDetails({Key? key, required this.closeDialog, required this.id})
+  MemberEventDetails(
+      {Key? key, required this.closeDialog, required this.id, this.popup})
       : super(key: key);
 
   @override
@@ -225,7 +227,9 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 50, top: 25),
+      padding: widget.popup != null
+          ? EdgeInsets.only(left: 0, top: 0)
+          : const EdgeInsets.only(left: 50, top: 25),
       child: Container(
         decoration: BoxDecoration(
             color: Color.fromARGB(255, 255, 255, 255),
@@ -241,6 +245,33 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Visibility(
+                  visible: widget.popup != null,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            widget.closeDialog!();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "X",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -405,117 +436,6 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                           SizedBox(
                             height: 35,
                           ),
-                          /*         SizedBox(
-                            width: MyUtility(context).width * 0.50 - 310,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 300,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Number of Attendees:',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF3D3D3D),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Container(
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: const Color.fromARGB(
-                                                        176, 158, 158, 158))),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4.0),
-                                              child:
-                                                  DropdownButtonHideUnderline(
-                                                child: DropdownButton<int>(
-                                                  value: _selectedNumber,
-                                                  elevation: 0,
-                                                  items: List.generate(10,
-                                                      (index) {
-                                                    return DropdownMenuItem<
-                                                        int>(
-                                                      value: index + 1,
-                                                      child: Text((index + 1)
-                                                          .toString()),
-                                                    );
-                                                  }),
-                                                  onChanged: (int? newValue) {
-                                                    setState(() {
-                                                      _selectedNumber =
-                                                          newValue!;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Visibility(
-                                        visible:
-                                            checkIfMadeBooking ? true : false,
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 5),
-                                            child: Text(
-                                              'Booking amount made  -  ${attendeesAlreadyAdded}',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(0xFF3D3D3D),
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Spacer(),
-                                Visibility(
-                                  visible: checkIfMadeBooking ? true : false,
-                                  child: StyleButton(
-                                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                                    description: 'Update Booking',
-                                    fontSize: 13,
-                                    height: 40,
-                                    width: 110,
-                                    onTap: () {
-                                      updateBooking();
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Visibility(
-                                  visible: checkIfMadeBooking ? false : true,
-                                  child: StyleButton(
-                                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                                    description: 'Book Now',
-                                    height: 40,
-                                    fontSize: 13,
-                                    width: 110,
-                                    onTap: () {
-                                      confirmBooking();
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                  */
                         ],
                       ),
                     ),

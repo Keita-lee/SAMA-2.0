@@ -334,55 +334,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Visibility(
-                              visible: userType != 'Admin' &&
-                                  userType != "NonMember",
-                              child: Transform.scale(
-                                scale: 0.8,
-                                child: Container(
-                                  width: 220,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    border: Border.all(
-                                        color:
-                                            Color.fromRGBO(170, 170, 170, 1.0)),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 8,
-                                      right: 8,
-                                    ),
-                                    child: Center(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(width: 8),
-                                          Expanded(
-                                            child: TextField(
-                                              cursorColor: Colors.black,
-                                              decoration: InputDecoration(
-                                                contentPadding:
-                                                    EdgeInsets.only(bottom: 10),
-                                                hintText: 'Search',
-                                                border: InputBorder.none,
-                                                hintStyle: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        170, 170, 170, 1.0)),
-                                              ),
-                                            ),
-                                          ),
-                                          Icon(Icons.search,
-                                              color: Colors.grey),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                             SizedBox(
                               width: widthDevice / 10,
                             ),

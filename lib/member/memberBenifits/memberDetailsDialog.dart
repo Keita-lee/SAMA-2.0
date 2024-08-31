@@ -5,6 +5,7 @@ import 'package:image_network/image_network.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsDialog.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MemberDetailsDialog extends StatefulWidget {
   String? id;
@@ -37,6 +38,11 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
   String linkedIn = "";
   //var
   String benefitsImageUrl = "";
+  openUrl(url) {
+    final Uri urlParse = Uri.parse(url);
+
+    launchUrl(urlParse);
+  }
 
   getCompanyData() async {
     final data = await FirebaseFirestore.instance
@@ -302,13 +308,18 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                                   visible: facebook == "" ? false : true,
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(
-                                        'images/facebook.svg',
-                                        width: 25,
-                                        height: 25,
-                                        colorFilter: ColorFilter.mode(
-                                            Color.fromRGBO(0, 159, 158, 1),
-                                            BlendMode.srcIn),
+                                      InkWell(
+                                        onTap: () {
+                                          openUrl(facebook);
+                                        },
+                                        child: SvgPicture.asset(
+                                          'images/facebook.svg',
+                                          width: 25,
+                                          height: 25,
+                                          colorFilter: ColorFilter.mode(
+                                              Color.fromRGBO(0, 159, 158, 1),
+                                              BlendMode.srcIn),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 8,
@@ -332,13 +343,18 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                                   visible: twitter == "" ? false : true,
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(
-                                        'images/twitter3.svg',
-                                        width: 25,
-                                        height: 25,
-                                        colorFilter: ColorFilter.mode(
-                                            Color.fromRGBO(0, 159, 158, 1),
-                                            BlendMode.srcIn),
+                                      InkWell(
+                                        onTap: () {
+                                          openUrl(twitter);
+                                        },
+                                        child: SvgPicture.asset(
+                                          'images/twitter3.svg',
+                                          width: 25,
+                                          height: 25,
+                                          colorFilter: ColorFilter.mode(
+                                              Color.fromRGBO(0, 159, 158, 1),
+                                              BlendMode.srcIn),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 8,
@@ -362,13 +378,18 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                                   visible: linkedIn == "" ? false : true,
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(
-                                        'images/linkedin_icon_135436.svg',
-                                        width: 25,
-                                        height: 25,
-                                        colorFilter: ColorFilter.mode(
-                                            Color.fromRGBO(0, 159, 158, 1),
-                                            BlendMode.srcIn),
+                                      InkWell(
+                                        onTap: () {
+                                          openUrl(linkedIn);
+                                        },
+                                        child: SvgPicture.asset(
+                                          'images/linkedin_icon_135436.svg',
+                                          width: 25,
+                                          height: 25,
+                                          colorFilter: ColorFilter.mode(
+                                              Color.fromRGBO(0, 159, 158, 1),
+                                              BlendMode.srcIn),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 8,

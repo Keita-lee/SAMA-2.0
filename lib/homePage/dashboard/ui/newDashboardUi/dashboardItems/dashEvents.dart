@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
+import '../../../../../member/Events/MemberEventDetails/MemberEventDetails.dart';
 import '../dasboardInfoContainers.dart';
 import '../dashboardTextButton.dart';
 
@@ -13,6 +15,41 @@ class DashEvents extends StatefulWidget {
 }
 
 class _DashEventsState extends State<DashEvents> {
+  var latestEvent = "";
+  var secondEvent = "";
+  var latestEventId = "";
+  var secondEventId = "";
+  getEvents() async {
+    final data = await FirebaseFirestore.instance.collection('events').get();
+
+    if (data.docs.isNotEmpty) {
+      setState(() {
+        latestEvent = data.docs[0]['title'];
+        latestEventId = data.docs[0]['id'];
+        secondEvent = data.docs[1]['title'];
+        secondEventId = data.docs[1]['id'];
+      });
+    }
+  }
+
+  //Open dialog for media
+  Future openEventDetails(id) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: MemberEventDetails(
+          popup: true,
+          id: id,
+          closeDialog: () => Navigator.pop(context!),
+        ));
+      });
+
+  @override
+  void initState() {
+    getEvents();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DashboardInfoContainers(
@@ -33,8 +70,16 @@ class _DashEventsState extends State<DashEvents> {
             const SizedBox(
               height: 8,
             ),
-            DashboardTextButton(text: 'CPD | Golding Institute = Cognitive', onTap: () {}),
-            DashboardTextButton(text: 'Decline | 30 Clinical Points', onTap: () {}),
+            DashboardTextButton(
+                text: latestEvent,
+                onTap: () {
+                  openEventDetails(latestEventId);
+                }),
+            DashboardTextButton(
+                text: secondEvent,
+                onTap: () {
+                  openEventDetails(secondEventId);
+                }),
           ],
         ),
       ),

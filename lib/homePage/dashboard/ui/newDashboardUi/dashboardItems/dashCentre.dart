@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
+import '../../../../PostLoginLandingPage.dart';
 import '../dasboardInfoContainers.dart';
 import '../dashboardTextButton.dart';
 
@@ -33,7 +35,7 @@ class _DashCentreState extends State<DashCentre> {
             const SizedBox(
               height: 15,
             ),
-             Text(
+            Text(
               'Become a contributor',
               style: GoogleFonts.openSans(
                   fontSize: 12, fontWeight: FontWeight.w600),
@@ -41,7 +43,22 @@ class _DashCentreState extends State<DashCentre> {
             const SizedBox(
               height: 8,
             ),
-            DashboardTextButton(text: 'Learn more', onTap: () {}),
+            DashboardTextButton(
+                text: 'Learn more',
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(
+                                child: PostLoginLandingPage(
+                                    pageIndex: 1,
+                                    userId: FirebaseAuth.instance.currentUser !=
+                                            null
+                                        ? FirebaseAuth.instance.currentUser!.uid
+                                        : "",
+                                    activeIndex: 1),
+                              )));
+                }),
           ],
         ),
       ),

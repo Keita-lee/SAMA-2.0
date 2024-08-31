@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
+import '../../../../../member/media/mediaPopup/mediaPopup.dart';
 import '../dasboardInfoContainers.dart';
 import '../dashboardTextButton.dart';
 
@@ -13,6 +15,37 @@ class DashMediaWeb extends StatefulWidget {
 }
 
 class _DashMediaWebState extends State<DashMediaWeb> {
+  var title = "";
+  var id = "";
+
+  //Open dialog for media
+  Future openMediaDialog(id) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: MediaPopup(
+          id: id,
+          closeDialog: () => Navigator.pop(context!),
+        ));
+      });
+
+  getMedia() async {
+    final data = await FirebaseFirestore.instance.collection('media').get();
+
+    if (data.docs.isNotEmpty) {
+      setState(() {
+        title = data.docs[0]['title'];
+        id = data.docs[0]['id'];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getMedia();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DashboardInfoContainers(
@@ -33,8 +66,11 @@ class _DashMediaWebState extends State<DashMediaWeb> {
             const SizedBox(
               height: 8,
             ),
-            DashboardTextButton(text: 'Transition to Private Practice - the', onTap: () {}),
-            DashboardTextButton(text: 'mindset for success', onTap: () {}),
+            DashboardTextButton(
+                text: title,
+                onTap: () {
+                  openMediaDialog(id);
+                }),
           ],
         ),
       ),

@@ -29,7 +29,7 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: MyUtility(context).width / 1.3,
-        height: 230,
+        height: 245,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),

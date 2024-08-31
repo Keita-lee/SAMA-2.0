@@ -182,12 +182,16 @@ class _LoginPagesState extends State<LoginPages> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: StyleButton(
-                      description: "REGISTER",
+                      description: pageIndex == 9 ? "LOGIN" : "BECOME A MEMBER",
                       height: 50,
                       buttonColor: Color.fromRGBO(0, 159, 158, 1),
                       width: 130,
                       onTap: () {
-                        changePage(9);
+                        if (pageIndex == 9) {
+                          changePage(0);
+                        } else {
+                          changePage(9);
+                        }
                       },
                     ),
                   ),
