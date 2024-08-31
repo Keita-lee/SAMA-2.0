@@ -9,8 +9,9 @@ class CategoryContainer extends StatefulWidget {
   String hoverDescription;
   String monthly;
   String annually;
-  Function(String, String) priceSelected;
+  Function(String, String, String, String) priceSelected;
   String applicationPrice;
+  String code;
   CategoryContainer(
       {super.key,
       required this.index,
@@ -19,7 +20,8 @@ class CategoryContainer extends StatefulWidget {
       required this.monthly,
       required this.annually,
       required this.priceSelected,
-      required this.applicationPrice});
+      required this.applicationPrice,
+      required this.code});
 
   @override
   State<CategoryContainer> createState() => _CategoryContainerState();
@@ -82,10 +84,8 @@ class _CategoryContainerState extends State<CategoryContainer> {
             Spacer(),
             InkWell(
               onTap: () {
-                widget.priceSelected(
-                  widget.monthly,
-                  widget.description!,
-                );
+                widget.priceSelected(widget.monthly, widget.description!,
+                    "Monthly", widget.code);
               },
               child: Container(
                 width: 15,
@@ -113,10 +113,8 @@ class _CategoryContainerState extends State<CategoryContainer> {
             ),
             InkWell(
               onTap: () {
-                widget.priceSelected(
-                  widget.annually,
-                  widget.description!,
-                );
+                widget.priceSelected(widget.annually, widget.description!,
+                    "Annually", widget.code);
               },
               child: Container(
                 padding: EdgeInsets.all(

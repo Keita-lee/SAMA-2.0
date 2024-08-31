@@ -14,6 +14,16 @@ class CommonService {
     return "";
   }
 
+  getMonthDiff() {
+    final date1 = DateTime.now();
+    final date2 = DateTime.parse('${getYearTodayDate()}-12-01T00:30:00Z');
+
+    final difference = date2.difference(date1);
+    final monthDiff = (difference.inDays / 30).floor();
+
+    return monthDiff;
+  }
+
 //Get Month and year from date
   String getDateInText(date) {
     DateTime dateTime = DateTime.parse(date);
@@ -51,6 +61,21 @@ class CommonService {
     DateTime dateTime = timestamp.toDate();
     String month = DateFormat('MMMM').format(dateTime);
     return '$month';
+  }
+
+  //Get month of date
+  String getMonthTodayDate() {
+    DateTime dateTime = DateTime.now();
+    String month = DateFormat('MMMM').format(dateTime);
+    return '$month';
+  }
+
+  //Get month of date
+  String getYearTodayDate() {
+    DateTime dateTime = DateTime.now();
+
+    String year = DateFormat('yyyy').format(dateTime);
+    return '$year';
   }
 
 //Get Month and year from date

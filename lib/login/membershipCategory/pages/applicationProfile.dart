@@ -16,7 +16,15 @@ import '../../loginPages/membershipSignUp.dart';
 
 class ApplicationProfile extends StatefulWidget {
   Function(int) nextSection;
-  ApplicationProfile({super.key, required this.nextSection});
+  Map debitOrder;
+  String paymentType;
+  String prodCatCde;
+  ApplicationProfile(
+      {super.key,
+      required this.nextSection,
+      required this.debitOrder,
+      required this.paymentType,
+      required this.prodCatCde});
 
   @override
   State<ApplicationProfile> createState() => _ApplicationProfileState();
@@ -93,13 +101,24 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
 
   updateProfile() async {
     var userData = {
+      "bankAccHolder": widget.debitOrder['bankAccHolder'],
+      "bankAccNo": widget.debitOrder['bankAccNo'],
+      "bankAccType": widget.debitOrder['bankAccType'],
+      "bankBranchCde": widget.debitOrder['bankBranchCde'],
+      "bankBranchName": widget.debitOrder['bankBranchName'],
+      "bankDisclaimer": "Y",
+      "bankName": widget.debitOrder['bankName'],
+      "bankPaymAnnual": "",
+      "bankPaymMonthly": "",
+      "prodCatCde": widget.prodCatCde,
+
       "title": title.text,
       "initials": initials.text,
       "firstName": firstName.text,
       "lastName": lastName.text,
       "email": (email.text).toLowerCase(),
       "mobileNo": mobileNo.text,
-      "landline": landline.text,
+      "landline": landline.text, //
       "profilePic":
           "https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Fistockphoto-1495088043-612x612.jpg?alt=media&token=6355d1a2-7572-4221-99a3-a2823af52372",
       "gender": gender.text,
@@ -107,8 +126,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
       "dob": dob.text,
       "idNumber": idNumber.text,
       "passportNumber": passportNumber.text,
-      "hpcsa": hpcsa.text,
+      "hpcsa": hpcsa.text, //
       "practiceNumber": practiceNumber.text,
+
       "univercityQualification": univercityQualification.text,
       "univercityName": univercityName.text,
       "qualificationYear": qualificationYear.text,
@@ -117,7 +137,8 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
       "userType": userType,
       "profilePicView": "",
       "profileView": "",
-      "id": FirebaseAuth.instance.currentUser!.uid
+      "id": FirebaseAuth.instance.currentUser!.uid,
+      "status": "pending"
     };
 
     await FirebaseFirestore.instance

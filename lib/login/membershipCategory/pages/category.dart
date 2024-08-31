@@ -10,18 +10,19 @@ class MemberCategoryReg extends StatefulWidget {
   String title;
   List options;
   Function(int) nextSection;
-  Function(String, String) priceSelected;
+  Function(String, String, String, String) priceSelected;
   String applicationPrice;
   bool accepted;
 
-  MemberCategoryReg(
-      {super.key,
-      required this.title,
-      required this.options,
-      required this.nextSection,
-      required this.priceSelected,
-      required this.applicationPrice,
-      required this.accepted});
+  MemberCategoryReg({
+    super.key,
+    required this.title,
+    required this.options,
+    required this.nextSection,
+    required this.priceSelected,
+    required this.applicationPrice,
+    required this.accepted,
+  });
 
   @override
   State<MemberCategoryReg> createState() => _MemberCategoryRegState();
@@ -104,6 +105,7 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
                       annually: widget.options[i]['annual'],
                       priceSelected: widget.priceSelected,
                       applicationPrice: widget.applicationPrice,
+                      code: widget.options[i]['code'],
                     ),
                   ),
                 SizedBox(

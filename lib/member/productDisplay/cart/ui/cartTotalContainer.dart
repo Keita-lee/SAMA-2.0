@@ -94,6 +94,23 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
     );
   }
 
+  afterPaymentMade() {
+    var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      final response = await checkPaymentMade();
+
+      final decode =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+      if (decode['data']['status'] == "success" && loadingState == true) {
+        setState(() {
+          savePaymentsToHistory();
+          loadingState = false;
+          successPopup();
+        });
+      }
+    });
+  }
+
   savePaymentsToHistory() {
     List products = [];
     /*
@@ -122,23 +139,6 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
     };
 
     FirebaseFirestore.instance.collection('storeHistory').add(productHistory);
-  }
-
-  afterPaymentMade() {
-    var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
-      final response = await checkPaymentMade();
-
-      final decode =
-          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
-
-      if (decode['data']['status'] == "success" && loadingState == true) {
-        setState(() {
-          savePaymentsToHistory();
-          loadingState = false;
-          successPopup();
-        });
-      }
-    });
   }
 
   @override
