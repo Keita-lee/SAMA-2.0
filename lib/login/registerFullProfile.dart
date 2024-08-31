@@ -112,7 +112,8 @@ class _RegisterFullProfileState extends State<RegisterFullProfile> {
       "userType": userType,
       "profilePicView": "",
       "profileView": "",
-      "id": FirebaseAuth.instance.currentUser!.uid
+      "id": FirebaseAuth.instance.currentUser!.uid,
+      "status": "Pending",
     };
 
     await FirebaseFirestore.instance

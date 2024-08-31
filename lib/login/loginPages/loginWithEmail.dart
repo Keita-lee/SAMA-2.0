@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ import 'package:sama/components/utility.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/loginPages.dart';
+import 'package:sama/utils/tokenManager.dart';
+import 'package:http/http.dart' as http;
 
 enum SingingCharacter { memberNumber, email }
 
@@ -58,17 +62,116 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
+  Future<bool> checkOracleDb(String email) async {
+    final TokenManager tokenManager = TokenManager();
+    final TokenStorage storage = TokenStorage();
+    // Ensure the token is valid or refresh it if needed
+    await tokenManager.refreshTokenIfNeeded();
+    // Get the valid token
+    String? token = await storage.getToken();
+
+    if (token == null || token == '') {
+      print('error getting token');
+      return false;
+    }
+
+    http.Response response = await http.get(
+        Uri.parse(
+            'http://41.217.246.121:8080/ords/ordssama/web-clients/clients/?q={"email_sama":$email}&limit=1'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      List items = data['items'];
+      if (items.isNotEmpty) {
+        print(items[0]);
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  Future<Map<String, dynamic>> checkSamaNo(String samaNo) async {
+    final TokenManager tokenManager = TokenManager();
+    final TokenStorage storage = TokenStorage();
+    // Ensure the token is valid or refresh it if needed
+    await tokenManager.refreshTokenIfNeeded();
+    // Get the valid token
+    String? token = await storage.getToken();
+
+    if (token == null || token == '') {
+      print('error getting token');
+    }
+
+    print("token: $token");
+    http.Response response = await http.get(
+        Uri.parse(
+            'http://41.217.246.121:8080/ords/ordssama/web-clients/clients/$samaNo'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    }
+
+    return {};
+  }
+
 //Check if email exists and continue
   checkEmail() async {
+    final firestore = FirebaseFirestore.instance;
     widget.getEmail((email.text).toLowerCase());
-    final users = await FirebaseFirestore.instance
+    final users = await firestore
         .collection('users')
         .where('email', isEqualTo: (email.text).toLowerCase())
         .get();
     updateStateText("");
-    if (users.docs.length >= 1 && email.text != "") {
-      for (int i = 0; i < users.docs.length; i++) {}
-      widget.changePage(1);
+
+    bool foundOnOracleDb = await checkOracleDb((email.text).toLowerCase());
+    bool foundInFirebase = users.docs.isNotEmpty;
+
+    // user is in firebase and is sama member
+    if (foundInFirebase && email.text != "" && foundOnOracleDb) {
+      // update member type
+      firestore
+          .collection('users')
+          .doc(users.docs.first.id)
+          .set({'memberType': 'SAMA Member'});
+
+      if (users.docs.first.data()['status'] == 'Active') {
+        widget.changePage(1);
+      } else {
+        updateStateText(
+            "Your account is pending approval. You will receive an email once approved");
+      }
+    }
+    //user is in firebase and is not sama member - treated as non-member
+    else if (foundInFirebase && !foundOnOracleDb) {
+      // update member type
+      firestore
+          .collection('users')
+          .doc(users.docs.first.id)
+          .set({'memberType': 'SAMA Non Member'});
+
+      if (users.docs.first.data()['status'] == 'Active') {
+        widget.changePage(1);
+      } else {
+        updateStateText(
+            "Your account is pending approval. You will receive an email once approved");
+      }
+    }
+    // user is in not firebase but is a sama member - needs to create an account
+    else if (!foundInFirebase && foundOnOracleDb ||
+        // user is in not firebase and is not sama member - needs to create an account
+        !foundInFirebase && !foundOnOracleDb) {
+      updateStateText("You don't have an account yet. Please register.");
     } else {
       updateStateText(
           "Error: Unknown email address. Check again or try using your SAMA member number.");
@@ -78,15 +181,13 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   //Check if member exists and continue
   checkMemberNumber() async {
-    final users = await FirebaseFirestore.instance
-        .collection('users')
-        .where('practiceNumber', isEqualTo: email.text.toLowerCase())
-        .get();
+    Map<String, dynamic> member = await checkSamaNo(email.text);
+    print(member);
+    List data = member['items'];
     updateStateText("");
-    if (users.docs.length >= 1 && email.text.toLowerCase() != "") {
-      for (int i = 0; i < users.docs.length; i++) {}
-      widget.getEmail(users.docs[0].get("email"));
-      widget.changePage(1);
+    if (data.isNotEmpty && data[0]['membership_paid'] == 'Y') {
+      List data = member['items'];
+      if (data.isNotEmpty) widget.changePage(1);
     } else {
       updateStateText(
           "Error: The SAMA member number ${email.text}  is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
