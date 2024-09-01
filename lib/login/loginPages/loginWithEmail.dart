@@ -134,6 +134,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .get();
     updateStateText("");
 
+//If admin by pass all validators
+    if (users.docs[0]['userType'] == "Admin") {
+      return await widget.changePage(1);
+    }
     bool foundOnOracleDb = await checkOracleDb((email.text).toLowerCase());
     bool foundInFirebase = users.docs.isNotEmpty;
 
@@ -143,7 +147,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       firestore
           .collection('users')
           .doc(users.docs.first.id)
-          .set({'memberType': 'SAMA Member'});
+          .set({'userType': 'SAMA Member'});
 
       if (users.docs.first.data()['status'] == 'Active') {
         widget.changePage(1);
@@ -158,7 +162,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       firestore
           .collection('users')
           .doc(users.docs.first.id)
-          .set({'memberType': 'SAMA Non Member'});
+          .set({'userType': 'SAMA Non Member'});
 
       if (users.docs.first.data()['status'] == 'Active') {
         widget.changePage(1);
@@ -202,7 +206,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .get();
 
     if (doc.exists) {
-      if (doc.get('hpcsaNumber') != null) {
+      if (doc.get('hpcsaNumber') != null && doc.get('status') == "Active") {
         setState(() {
           Navigator.push(
               context,
@@ -230,8 +234,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 //Check firebase if user valid
   checkUserState() async {
     getUserDetails();
-
-    /**/ // var userId = FirebaseAuth.instance.currentUser!.uid;
   }
 
   @override
