@@ -107,7 +107,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                       children: [
                         SizedBox(
                           width: MyUtility(context).width -
-                              MyUtility(context).width / 3.7,
+                              MyUtility(context).width / 3,
                         ),
                         StyleButton(
                             description: "Add Benefit",

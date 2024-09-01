@@ -90,7 +90,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
       ProfileHome(),
       EditProfile(),
       Bio(),
-      Notifications(),
+      // Notifications(),
       // MyPreferences(profilePicView: profilePicView, profileView: profileView),
       Security(changePage: changePage)
     ];

@@ -98,7 +98,7 @@ class _DashboardMainState extends State<DashboardMain> {
                         child: Column(
                           children: [
                             Text(
-                              'Important notices will appear here.',
+                              'Our Member Portal is currently in beta. While we’re excited for you to explore, please note that some features are still being developed. We appreciate your patience and feedback as we work to enhance your experience.',
                               style: GoogleFonts.openSans(
                                   fontSize: 12, fontWeight: FontWeight.w600),
                             ),

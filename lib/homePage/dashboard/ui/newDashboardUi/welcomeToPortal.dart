@@ -28,7 +28,8 @@ class _WelcomeToPortalState extends State<WelcomeToPortal> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
               image: DecorationImage(
-                  image: AssetImage('images/laptop.jpg'), fit: BoxFit.fill),
+                  image: AssetImage('images/dashboarImg.png'),
+                  fit: BoxFit.fill),
             ),
           ),
           Padding(

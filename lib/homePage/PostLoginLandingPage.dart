@@ -337,10 +337,10 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                             SizedBox(
                               width: widthDevice / 10,
                             ),
-                            Visibility(
+                            /*   Visibility(
                                 visible: userType != 'Admin' &&
                                     userType != "NonMember",
-                                child: SamaTopTabBar()),
+                                child: SamaTopTabBar()),*/
                             Spacer(),
                             Visibility(
                                 visible: userType == 'NonMember',
