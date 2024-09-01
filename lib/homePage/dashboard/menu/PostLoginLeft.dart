@@ -401,15 +401,18 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       _handleItemClick(3);
                     },
                   ),*/
-                  HoverItem(
-                    isActive: activeIndex == 4,
-                    menuSize: widget.menuSize,
-                    description: "Coding Academy",
-                    iconPath: "images/icons_coding.svg",
-                    onPressed: () {
-                      widget.changePage(23);
-                      _handleItemClick(4, 23);
-                    },
+                  Visibility(
+                    visible: userType != "NonMember",
+                    child: HoverItem(
+                      isActive: activeIndex == 4,
+                      menuSize: widget.menuSize,
+                      description: "Coding Academy",
+                      iconPath: "images/icons_coding.svg",
+                      onPressed: () {
+                        widget.changePage(23);
+                        _handleItemClick(4, 23);
+                      },
+                    ),
                   ),
                   HoverItem(
                     isActive: activeIndex == 19,

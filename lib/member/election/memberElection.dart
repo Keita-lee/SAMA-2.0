@@ -307,7 +307,9 @@ class _MemberElectionState extends State<MemberElection> {
           SizedBox(
             height: 30,
           ),
-          Padding(
+        Visibility(
+              visible: widget.userType != "NonMember",
+              child:    Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,9 +354,9 @@ class _MemberElectionState extends State<MemberElection> {
                 ),
               ],
             ),
-          ),
+          ),),
 
-          /*    Visibility(
+              Visibility(
               visible: widget.userType == "NonMember",
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -369,7 +371,7 @@ class _MemberElectionState extends State<MemberElection> {
                         ),
                       ),
                     ],
-                  ))),
+                  ))),/*
           Visibility(
             visible: widget.userType != "NonMember",
             child: Padding(

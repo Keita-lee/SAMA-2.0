@@ -59,12 +59,14 @@ class _DashboardMainState extends State<DashboardMain> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 //Spacer(),
-                InkWell(
-                    onTap: () {
-                      openHelpBotPopup();
-                    },
-                    child: SvgPicture.asset(
-                        width: 40, height: 40, 'images/helpbot.svg')),
+                Visibility(
+                    visible: widget.userType != "NonMember",
+                    child: InkWell(
+                        onTap: () {
+                          openHelpBotPopup();
+                        },
+                        child: SvgPicture.asset(
+                            width: 40, height: 40, 'images/helpbot.svg'))),
               ],
             ),
           ),
