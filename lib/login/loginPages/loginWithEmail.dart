@@ -195,20 +195,42 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     }
   }
 
+  getUserDetails() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (doc.exists) {
+      if (doc.get('hpcsaNumber') != null) {
+        setState(() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Material(
+                        child: Material(
+                            child: PostLoginLandingPage(
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          activeIndex: 0,
+                        )),
+                      )));
+        });
+      } else {
+        FirebaseAuth.instance.signOut();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Material(
+                      child: Material(child: LoginPages()),
+                    )));
+      }
+    }
+  }
+
+//Check firebase if user valid
   checkUserState() async {
-    var uid = await FirebaseAuth.instance.currentUser!.uid;
-    setState(() {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Material(
-                    child: Material(
-                        child: PostLoginLandingPage(
-                      userId: uid,
-                      activeIndex: 0,
-                    )),
-                  )));
-    });
+    getUserDetails();
+
     /**/ // var userId = FirebaseAuth.instance.currentUser!.uid;
   }
 
