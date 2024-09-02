@@ -223,16 +223,24 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                                       height: 1,
                                     ),
                                   ),
-                                  SelectableText(
-                                    email,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          Color.fromRGBO(0, 159, 158, 1),
-                                      color: Color.fromRGBO(0, 159, 158, 1),
-                                      fontWeight: FontWeight.w200,
-                                      height: 1,
+                                  InkWell(
+                                    onTap: () {
+                                      final Uri a =
+                                          Uri.parse('mailto:${email}');
+
+                                      launchUrl(a);
+                                    },
+                                    child: SelectableText(
+                                      email,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor:
+                                            Color.fromRGBO(0, 159, 158, 1),
+                                        color: Color.fromRGBO(0, 159, 158, 1),
+                                        fontWeight: FontWeight.w200,
+                                        height: 1,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -254,16 +262,23 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                                       height: 1,
                                     ),
                                   ),
-                                  Text(
-                                    web,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          Color.fromRGBO(0, 159, 158, 1),
-                                      color: Color.fromRGBO(0, 159, 158, 1),
-                                      fontWeight: FontWeight.w200,
-                                      height: 1,
+                                  InkWell(
+                                    onTap: () {
+                                      final Uri a = Uri.parse(web);
+
+                                      launchUrl(a);
+                                    },
+                                    child: Text(
+                                      web,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor:
+                                            Color.fromRGBO(0, 159, 158, 1),
+                                        color: Color.fromRGBO(0, 159, 158, 1),
+                                        fontWeight: FontWeight.w200,
+                                        height: 1,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -275,7 +290,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                             Visibility(
                               visible: address == "" ? false : true,
                               child: SizedBox(
-                                width: MyUtility(context).width * 0.60 - 225,
+                                width: MyUtility(context).width * 0.60,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [

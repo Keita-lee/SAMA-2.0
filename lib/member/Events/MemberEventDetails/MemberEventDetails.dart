@@ -376,7 +376,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                             ),
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 35,
                           ),
                           SizedBox(
                             width: MyUtility(context).width * 0.50 - 310,

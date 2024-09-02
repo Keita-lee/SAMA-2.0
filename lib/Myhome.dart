@@ -5,6 +5,8 @@ import 'package:sama/components/pageUnderContruction.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/login/membershipCategory/membershipSignup.dart';
 
+import 'homePage/PostLoginLandingPage.dart';
+
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
 
@@ -16,9 +18,14 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     var width = MyUtility(context).width;
-    return Scaffold(
-        body: Stack(children: <Widget>[
-      Center(child: width < 800 ? PageUnderConstruction() : LoginPages()),
-    ]));
+    return Stack(children: <Widget>[
+      Center(
+          child: width < 800
+              ? PageUnderConstruction()
+              : PostLoginLandingPage(
+                  userId: "",
+                  activeIndex: 0,
+                )),
+    ]);
   }
 }

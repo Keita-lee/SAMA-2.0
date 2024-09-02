@@ -160,7 +160,7 @@ class _MemberMediaState extends State<MemberMedia> {
                                             : false,
                                     child: MediaContainerStyle(
                                       view: () {
-                                        openMediaDialog(document["id"]);
+                                        openMediaDialog(document['title']);
                                       },
                                       onpress: () {
                                         showDialog(
@@ -177,11 +177,11 @@ class _MemberMediaState extends State<MemberMedia> {
                                       },
                                       adminType: "false",
                                       image: document['mediaImageUrl'],
-                                      duration: document['duration'],
-                                      releaseDate: document['releaseDate'],
+                                      duration: "",
+                                      releaseDate: "",
                                       category: document['category'],
                                       title: document['title'],
-                                      id: document['id'],
+                                      id: document['title'],
                                     ),
                                   )
                                 ],

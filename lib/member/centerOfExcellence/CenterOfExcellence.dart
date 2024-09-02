@@ -98,7 +98,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                     SizedBox(
                       width: MyUtility(context).width / 1.5,
                       child: Text(
-                        'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.To be a contributor, please contact online@samedical.org',
+                        'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.',
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
                     ),

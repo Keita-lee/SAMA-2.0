@@ -250,16 +250,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Login",
-            style: GoogleFonts.openSans(
-              textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              color: Color.fromRGBO(0, 159, 158, 1),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
           Text.rich(
             TextSpan(
               text: "Login using your ",
@@ -298,7 +288,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               ],
             ),
           ),
-
           SizedBox(
             height: 5,
           ),
@@ -387,7 +376,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               ),
             ),
           ),
-
           InkWell(
             onTap: () {
               widget.changePage(2);
@@ -415,31 +403,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           SizedBox(
             height: 15,
           ),
-
-          /*InkWell(
-            onTap: () {
-              widget.changePage(9);
-            },
-            onHover: (hovered) {
-              setState(() {
-                showRegisterBorder = hovered;
-              });
-            },
-            child: Text(
-              "Not a member? Register Here.",
-              style: TextStyle(
-                  decoration: showRegisterBorder == true
-                      ? TextDecoration.underline
-                      : TextDecoration.none,
-                  decorationColor: Color.fromARGB(255, 8, 55, 145),
-                  decorationThickness: 2,
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 8, 55, 145)),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ), */
           Row(
             children: [
               Text(
@@ -489,28 +452,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           SizedBox(
             height: 15,
           ),
-          /*StyleButton(
-            description: "Continue",
-            height: 55,
-            width: 100,
-            onTap: () {
-              if (email.text.contains("@")) {
-                checkEmail();
-              } else {
-                checkMemberNumber();s
-              }
-            },
-          ),*/
-          // SizedBox(
-          //   height: 150,
-          // ),
-          /*Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "SAMA Beta Version 1.1.0",
-              style: TextStyle(fontSize: 13, color: Colors.black),
-            ),
-          ),*/
         ],
       ),
     );

@@ -42,7 +42,7 @@ class _DashMediaWebState extends State<DashMediaWeb> {
 
   @override
   void initState() {
-    getMedia();
+    // getMedia();
     super.initState();
   }
 

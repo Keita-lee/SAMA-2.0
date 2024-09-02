@@ -118,7 +118,7 @@ class _professionalDevelopmentMainConState
               height: MyUtility(context).height,
               child: Column(
                 children: [
-                  Row(
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -147,7 +147,7 @@ class _professionalDevelopmentMainConState
                         },
                       ),
                     ],
-                  ),
+                  ),*/
                   const SizedBox(height: 30),
                   Visibility(
                     visible: pageIndex == 0,
@@ -172,8 +172,68 @@ class _professionalDevelopmentMainConState
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   Visibility(
+                    visible: pageIndex == 0,
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('cpd')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: snapshot error');
+                          }
+                          if (!snapshot.hasData) {
+                            return const Text('Loading...');
+                          }
+
+                          final List<DocumentSnapshot> documents =
+                              snapshot.data!.docs;
+                          if (documents.isEmpty) {
+                            return Center(child: Text('No cpd yet'));
+                          }
+
+                          return Container(
+                              //color: const Color.fromARGB(137, 255, 193, 7),
+                              width: MyUtility(context).width / 1.6,
+                              //width: MyUtility(context).width / 1.6,
+                              /* width: MyUtility(context).width -
+                        (MyUtility(context).width * 0.25),*/
+                              height: MyUtility(context).height / 1.5,
+                              child: GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    childAspectRatio: 0.88,
+                                  ),
+                                  itemCount: documents.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final DocumentSnapshot document =
+                                        documents[index];
+                                    return Wrap(
+                                        direction: Axis.horizontal,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child:
+                                                professionalDevelopmentDisplayItem(
+                                              onPressed: showCourseInfo,
+                                              imageUrl: document['cpdImage'],
+                                              title: document['title'],
+                                              cpdPoints: "3.0 Clinical Point",
+                                              level: "Level 2",
+                                              subDescription:
+                                                  document['subDescription'],
+                                            ),
+                                          )
+                                        ]);
+                                  }));
+                        }),
+                  ),
+
+                  /*   Visibility(
                     visible: pageIndex == 0,
                     child: Expanded(
                       child: GridView.builder(
@@ -195,7 +255,7 @@ class _professionalDevelopmentMainConState
                         },
                       ),
                     ),
-                  ),
+                  ),*/
                   Visibility(
                       visible: pageIndex == 1,
                       child: ProfessionalDevQuiz(

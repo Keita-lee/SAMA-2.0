@@ -72,7 +72,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                         height: 15,
                       ),
                       Text(
-                        'Designed to cater to the diverse needs of healthcare professionals at every stage of their careers. Whether youre a student, intern, community service doctor, or an experienced practitioner, our platform offers a wealth of resources and support tailored just for you.',
+                        'Designed to cater to the diverse needs of healthcare professionals at every stage of their careers. Whether you’re a student, intern, community service doctor, or an experienced practitioner, our platform offers a wealth of resources and support tailored just for you.',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 116, 116, 116),
@@ -82,7 +82,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                         height: 15,
                       ),
                       Text(
-                        'By signing up, youll gain exclusive access to a comprehensive library of educational materials, expert articles, and best practices to enhance your knowledge and skills. Our portal also provides a unique opportunity to connect with a vibrant community of peers and mentors, offering invaluable networking and collaboration opportunities.',
+                        'By signing up, you’ll gain exclusive access to a comprehensive library of educational materials, expert articles, and best practices to enhance your knowledge and skills. Our portal also provides a unique opportunity to connect with a vibrant community of peers and mentors, offering invaluable networking and collaboration opportunities.',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 116, 116, 116),
@@ -92,7 +92,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                         height: 15,
                       ),
                       Text(
-                        'For those who are just exploring, we invite you to browse our selection of free resources, including insightful articles and introductory guides that provide a glimpse into the rich content available to our members. Dont miss out on the full range of benefits our platform has to offer. Join us today and elevate your career in the medical field with the support and expertise you need to succeed.',
+                        'For those who are just exploring, we invite you to browse our selection of free resources, including insightful articles and introductory guides that provide a glimpse into the rich content available to our members. Don’t miss out on the full range of benefits our platform has to offer. Join us today and elevate your career in the medical field with the support and expertise you need to succeed.',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 116, 116, 116),

@@ -14,6 +14,7 @@ import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/loginPages/choosePassword.dart';
 import 'package:sama/login/loginPages/displayUsername.dart';
 import 'package:sama/login/loginPages/getUserName.dart';
+import 'package:sama/login/loginPages/tempView.dart';
 import 'package:sama/login/loginPages/validateByEmailOtp.dart';
 import 'package:sama/login/loginPages/validateByMobile.dart';
 import 'package:sama/login/loginPages/validateByMobileGetUsername.dart';
@@ -109,6 +110,8 @@ class _LoginPagesState extends State<LoginPages> {
           email: email,
           emailChangeType: emailChangeType),
       MembershipSignUp(),
+      TempView(type: "Registration"),
+      TempView(type: "Login")
     ];
 
     return Container(
@@ -182,7 +185,7 @@ class _LoginPagesState extends State<LoginPages> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: StyleButton(
-                      description: pageIndex == 9 ? "LOGIN" : "BECOME A MEMBER",
+                      description: pageIndex == 9 ? "LOGIN" : "REGISTER",
                       height: 50,
                       buttonColor: Color.fromRGBO(0, 159, 158, 1),
                       width: 130,

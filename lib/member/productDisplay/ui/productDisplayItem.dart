@@ -71,8 +71,8 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                width: MyUtility(context).width * 0.2,
-                height: MyUtility(context).width * 0.18,
+                width: MyUtility(context).width / 4,
+                height: MyUtility(context).height / 3,
               ),
             ),
             Visibility(
@@ -80,8 +80,8 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               child: ImageNetwork(
                 fitWeb: BoxFitWeb.contain,
                 image: widget.productImage,
-                width: MyUtility(context).width * 0.2,
-                height: MyUtility(context).width * 0.18,
+                width: MyUtility(context).width / 4,
+                height: MyUtility(context).height / 4,
               ),
             ),
             const SizedBox(

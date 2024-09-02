@@ -41,8 +41,8 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 315,
-      height: 335,
+      width: 360,
+      height: 340,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
         child: Column(
@@ -65,7 +65,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Visibility(
               visible: widget.image != "" ? true : false,
               child: Container(
-                width: 300,
+                width: 350,
                 height: 200,
                 decoration: BoxDecoration(
                   color: Color(0xFFD1D1D1),
@@ -73,15 +73,12 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                 child: ClipRRect(
                   child: ImageNetwork(
                     image: widget.image,
-                    fitWeb: BoxFitWeb.fill,
-                    width: 300,
+                    fitWeb: BoxFitWeb.contain,
+                    width: 350,
                     height: 200,
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
             ),
 
             Text(

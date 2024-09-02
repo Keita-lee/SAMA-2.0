@@ -39,17 +39,14 @@ class _MediaPopupState extends State<MediaPopup> {
     try {
       final doc = await FirebaseFirestore.instance
           .collection('media')
-          .doc(widget.id)
+          .where("title", isEqualTo: widget.id)
           .get();
-      if (doc.exists) {
+      if (doc.docs.isNotEmpty) {
         setState(() {
-          videoUrl = doc['urlLink'];
-          title = doc['title'];
-          description = doc['description'];
-          //  myJSON = jsonDecode(doc['description']);
-          /* quillController = QuillController(
-              document: Document.fromJson(myJSON),
-              selection: TextSelection.collapsed(offset: 0));*/
+          videoUrl = doc.docs[0]['urlLink'];
+          title = doc.docs[0]['title'];
+          //  description = doc.docs[0]['description'];
+
           if (videoUrl != null) {
             _youtubePlayerController = YoutubePlayerController.fromVideoId(
               videoId: YoutubePlayerController.convertUrlToId(videoUrl!)!,

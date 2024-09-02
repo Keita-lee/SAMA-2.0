@@ -262,86 +262,71 @@ class _RegisterState extends State<Register> {
           width: MyUtility(context).width / 6,
           height: MyUtility(context).height / 3.5,
           image: AssetImage('images/sama_logo.png')),*/
-          SizedBox(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Register",
-                    style: GoogleFonts.openSans(
-                      textStyle:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                      color: Color.fromRGBO(0, 159, 158, 1),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Already have a profile?",
-                        style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                            fontSize: 16,
-                          ),
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          widget.changePage(0);
-                        },
-                        child: Text(
-                          "Click to login",
-                          style: GoogleFonts.openSans(
-                            decorationThickness: 2,
-                            height: 1.1,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                            textStyle: TextStyle(
-                              fontSize: 16,
-                            ),
-                            color: Color.fromRGBO(0, 159, 158, 1),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          ProfileTextField(
-                            isBold: false,
-                            description: 'First name',
-                            textfieldController: firstName,
-                            customSize: MyUtility(context).width / 5,
-                            textFieldType: '',
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          ProfileTextField(
-                            isBold: false,
-                            description: 'Surname',
-                            textfieldController: lastName,
-                            customSize: MyUtility(context).width / 5,
-                            textFieldType: '',
-                          ),
-                        ],
-                      ),
 
-                      /* RegisterTextfieldStyle(
+          Row(
+            children: [
+              Text(
+                "Already have a profile?",
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                    fontSize: 16,
+                  ),
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              InkWell(
+                onTap: () {
+                  widget.changePage(0);
+                },
+                child: Text(
+                  "Click to login",
+                  style: GoogleFonts.openSans(
+                    decorationThickness: 2,
+                    height: 1.1,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                    textStyle: TextStyle(
+                      fontSize: 16,
+                    ),
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  ProfileTextField(
+                    isBold: false,
+                    description: 'First name',
+                    textfieldController: firstName,
+                    customSize: MyUtility(context).width / 5,
+                    textFieldType: '',
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  ProfileTextField(
+                    isBold: false,
+                    description: 'Surname',
+                    textfieldController: lastName,
+                    customSize: MyUtility(context).width / 5,
+                    textFieldType: '',
+                  ),
+                ],
+              ),
+
+              /* RegisterTextfieldStyle(
                         description: "First Name:",
                         hintText: "First Name",
                         textfieldController: firstName,
@@ -354,51 +339,51 @@ class _RegisterState extends State<Register> {
                         hintText: "Last Name",
                         textfieldController: lastName,
                       ),*/
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ProfileTextField(
-                        isBold: false,
-                        description: 'Email address',
-                        textfieldController: email,
-                        customSize: MyUtility(context).width / 2.45,
-                        textFieldType: '',
-                      ),
-                      /*  RegisterTextfieldStyle(
+              SizedBox(
+                height: 15,
+              ),
+              ProfileTextField(
+                isBold: false,
+                description: 'Email address',
+                textfieldController: email,
+                customSize: MyUtility(context).width / 2.45,
+                textFieldType: '',
+              ),
+              /*  RegisterTextfieldStyle(
                         description: "Email",
                         hintText: "Email",
                         textfieldController: email,
                       ),*/
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: Row(
-                      children: [
-                        KeyboardListener(
-                          focusNode: _focusNode,
-                          autofocus: true,
-                          onKeyEvent: (KeyEvent event) {
-                            if (HardwareKeyboard.instance.isLogicalKeyPressed(
-                                LogicalKeyboardKey.enter)) {
-                              sendEmailVerificationLink();
-                            }
-                          },
-                          child: StyleButton(
-                              buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                              waiting: _isLoading,
-                              description: "Next",
-                              height: 55,
-                              width: 125,
-                              onTap: () {
-                                sendEmailVerificationLink();
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Row(
+              children: [
+                KeyboardListener(
+                  focusNode: _focusNode,
+                  autofocus: true,
+                  onKeyEvent: (KeyEvent event) {
+                    if (HardwareKeyboard.instance
+                        .isLogicalKeyPressed(LogicalKeyboardKey.enter)) {
+                      sendEmailVerificationLink();
+                    }
+                  },
+                  child: StyleButton(
+                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                      waiting: _isLoading,
+                      description: "Next",
+                      height: 55,
+                      width: 125,
+                      onTap: () {
+                        sendEmailVerificationLink();
+                      }),
+                ),
+              ],
+            ),
+          ),
 
-                  /*InkWell(
+          /*InkWell(
                     onTap: () {
                       widget.changePage(0);
                     },
@@ -419,8 +404,6 @@ class _RegisterState extends State<Register> {
                           color: const Color.fromARGB(255, 8, 55, 145)),
                     ),
                   ),*/
-                ]),
-          ),
         ],
       ),
     );
