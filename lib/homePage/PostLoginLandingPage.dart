@@ -352,7 +352,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) => Material(
-                                                      child: LoginPages(),
+                                                      child: LoginPages(
+                                                        pageIndex: 17,
+                                                      ),
                                                     )),
                                           );
                                         },
@@ -373,7 +375,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                             MaterialPageRoute(
                                                 builder: (context) => Material(
                                                       child: LoginPages(
-                                                        pageIndex: 9,
+                                                        pageIndex: 16,
                                                       ),
                                                     )),
                                           );
@@ -394,7 +396,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        changePage(18);
+                                        changePage(17);
                                       },
                                       icon: SvgPicture.string(
                                         '''

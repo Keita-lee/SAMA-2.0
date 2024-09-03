@@ -251,161 +251,132 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //color: Colors.amber,
-      //width: MyUtility(context).width ,
-      //height: MyUtility(context).height / 2,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /*  Image(
-          width: MyUtility(context).width / 6,
-          height: MyUtility(context).height / 3.5,
-          image: AssetImage('images/sama_logo.png')),*/
-
-          Row(
-            children: [
-              Text(
-                "Already have a profile?",
-                style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                    fontSize: 16,
-                  ),
-                  color: Colors.grey[600],
-                ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              InkWell(
-                onTap: () {
-                  widget.changePage(0);
-                },
-                child: Text(
-                  "Click to login",
-                  style: GoogleFonts.openSans(
-                    decorationThickness: 2,
-                    height: 1.1,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                    textStyle: TextStyle(
-                      fontSize: 16,
-                    ),
-                    color: Color.fromRGBO(0, 159, 158, 1),
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Column(
+        width: MyUtility(context).width / 1.5,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
-                  ProfileTextField(
-                    isBold: false,
-                    description: 'First name',
-                    textfieldController: firstName,
-                    customSize: MyUtility(context).width / 5,
-                    textFieldType: '',
+                  Text(
+                    "Already have a profile?",
+                    style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                        fontSize: 16,
+                      ),
+                      color: Colors.grey[600],
+                    ),
                   ),
                   SizedBox(
                     width: 15,
                   ),
-                  ProfileTextField(
-                    isBold: false,
-                    description: 'Surname',
-                    textfieldController: lastName,
-                    customSize: MyUtility(context).width / 5,
-                    textFieldType: '',
-                  ),
-                ],
-              ),
-
-              /* RegisterTextfieldStyle(
-                        description: "First Name:",
-                        hintText: "First Name",
-                        textfieldController: firstName,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      RegisterTextfieldStyle(
-                        description: "Last Name:",
-                        hintText: "Last Name",
-                        textfieldController: lastName,
-                      ),*/
-              SizedBox(
-                height: 15,
-              ),
-              ProfileTextField(
-                isBold: false,
-                description: 'Email address',
-                textfieldController: email,
-                customSize: MyUtility(context).width / 2.45,
-                textFieldType: '',
-              ),
-              /*  RegisterTextfieldStyle(
-                        description: "Email",
-                        hintText: "Email",
-                        textfieldController: email,
-                      ),*/
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 25),
-            child: Row(
-              children: [
-                KeyboardListener(
-                  focusNode: _focusNode,
-                  autofocus: true,
-                  onKeyEvent: (KeyEvent event) {
-                    if (HardwareKeyboard.instance
-                        .isLogicalKeyPressed(LogicalKeyboardKey.enter)) {
-                      sendEmailVerificationLink();
-                    }
-                  },
-                  child: StyleButton(
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      waiting: _isLoading,
-                      description: "Next",
-                      height: 55,
-                      width: 125,
-                      onTap: () {
-                        sendEmailVerificationLink();
-                      }),
-                ),
-              ],
-            ),
-          ),
-
-          /*InkWell(
+                  InkWell(
                     onTap: () {
                       widget.changePage(0);
                     },
-                    onHover: (hovered) {
-                      setState(() {
-                        showAlreadyAMemberBorder = hovered;
-                      });
-                    },
                     child: Text(
-                      "Already a member? Login here.",
-                      style: TextStyle(
-                          decoration: showAlreadyAMemberBorder == true
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                          decorationColor: Color.fromARGB(255, 8, 55, 145),
-                          decorationThickness: 2,
+                      "Click to login",
+                      style: GoogleFonts.openSans(
+                        decorationThickness: 2,
+                        height: 1.1,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        textStyle: TextStyle(
                           fontSize: 16,
-                          color: const Color.fromARGB(255, 8, 55, 145)),
+                        ),
+                        color: Color.fromRGBO(0, 159, 158, 1),
+                      ),
                     ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ProfileTextField(
+                        isBold: false,
+                        description: 'First name',
+                        textfieldController: firstName,
+                        customSize: MyUtility(context).width / 5,
+                        textFieldType: '',
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ProfileTextField(
+                        isBold: false,
+                        description: 'Surname',
+                        textfieldController: lastName,
+                        customSize: MyUtility(context).width / 5,
+                        textFieldType: '',
+                      ),
+                    ],
+                  ),
+
+                  /* RegisterTextfieldStyle(
+                    description: "First Name:",
+                    hintText: "First Name",
+                    textfieldController: firstName,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  RegisterTextfieldStyle(
+                    description: "Last Name:",
+                    hintText: "Last Name",
+                    textfieldController: lastName,
                   ),*/
-        ],
-      ),
-    );
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ProfileTextField(
+                    isBold: false,
+                    description: 'Email address',
+                    textfieldController: email,
+                    customSize: MyUtility(context).width / 2.45,
+                    textFieldType: '',
+                  ),
+                  /*  RegisterTextfieldStyle(
+                    description: "Email",
+                    hintText: "Email",
+                    textfieldController: email,
+                  ),*/
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: Row(
+                  children: [
+                    KeyboardListener(
+                      focusNode: _focusNode,
+                      autofocus: true,
+                      onKeyEvent: (KeyEvent event) {
+                        if (HardwareKeyboard.instance
+                            .isLogicalKeyPressed(LogicalKeyboardKey.enter)) {
+                          sendEmailVerificationLink();
+                        }
+                      },
+                      child: StyleButton(
+                          buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                          waiting: _isLoading,
+                          description: "Next",
+                          height: 55,
+                          width: 125,
+                          onTap: () {
+                            sendEmailVerificationLink();
+                          }),
+                    ),
+                  ],
+                ),
+              ),
+            ]));
   }
 }

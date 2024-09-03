@@ -47,6 +47,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
   String paymentStatus = "";
   String reference = "";
   bool loadingState = false;
+  TextEditingController bankDisclaimer = TextEditingController();
   TextEditingController accHolderName = TextEditingController();
   TextEditingController nameOfBank = TextEditingController();
   TextEditingController branchName = TextEditingController();
@@ -589,7 +590,11 @@ class _PaymentMethodState extends State<PaymentMethod> {
                                 JournalCheckBox(
                                   title:
                                       'I, herby request , The South African Mediacl Association to draw againts my account with the\n above metioned bank ( or any other bank or branch to which I may transfer my account), the\n amount necessary for payment of the instalment due for my membership until further notice',
-                                  onChanged: (bool value) {},
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      bankDisclaimer.text = "Y";
+                                    });
+                                  },
                                 )
                               ],
                             ),
@@ -687,10 +692,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       "bankAccType": accType.text,
                       "bankBranchCde": branchCode.text,
                       "bankBranchName": branchName.text,
-                      "bankDisclaimer": "Y",
+                      "bankDisclaimer": bankDisclaimer.text,
                       "bankName": nameOfBank.text,
                       "bankPaymAnnual": "",
-                      "bankPaymMonthly": ""
+                      "bankPaymMonthly": "",
                     });
                     widget.nextSection(3);
                   }),

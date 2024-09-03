@@ -31,6 +31,23 @@ class _AdminMediaState extends State<AdminMedia> {
     });
   }
 
+  addId() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('media')
+
+        // .where("data.accept", isEqualTo: true)
+        .get();
+
+    if (doc.docs.isNotEmpty) {
+      for (int i = 0; i < (doc.docs).length; i++) {
+        FirebaseFirestore.instance
+            .collection('media')
+            .doc(doc.docs[i].id)
+            .update({"releaseDate": ""});
+      }
+    }
+  }
+
   //Open dialog for media
   Future openMediaDialog(id) => showDialog(
       context: context,
@@ -63,6 +80,12 @@ class _AdminMediaState extends State<AdminMedia> {
     setState(() {
       selectCategory.text = value;
     });
+  }
+
+  @override
+  void initState() {
+    // addId();
+    super.initState();
   }
 
   @override
@@ -173,7 +196,7 @@ class _AdminMediaState extends State<AdminMedia> {
                                       },
                                       adminType: "true",
                                       image: document['mediaImageUrl'] ?? '',
-                                      duration: document['duration'],
+                                      duration: '',
                                       releaseDate: '',
                                       category: document['category'],
                                       title: document['title'],

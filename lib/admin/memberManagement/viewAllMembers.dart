@@ -80,6 +80,7 @@ class _ViewAllMembersState extends State<ViewAllMembers> {
           height: 20,
         ),
         AdminTable(
+          searchResult: _searchText,
           emptyMessage: 'No members to display',
           columnHeaders: const [
             'ID',

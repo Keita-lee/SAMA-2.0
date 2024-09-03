@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/customCheckbox.dart';
 import 'package:sama/login/membershipCategory/pages/ui/categoryContainer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../components/styleButton.dart';
 
@@ -166,12 +167,20 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
             SizedBox(
               width: 5,
             ),
-            Text(
-              "terms and conditions",
-              style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.teal,
-                  fontWeight: FontWeight.bold),
+            InkWell(
+              onTap: () {
+                final Uri a = Uri.parse(
+                    "https://southafricanmedical.org/wp-content/uploads/2024/08/SAMA-Membership-terms-and-conditions_28-Oct.pdf");
+
+                launchUrl(a);
+              },
+              child: Text(
+                "terms and conditions",
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.teal,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ]),
           SizedBox(

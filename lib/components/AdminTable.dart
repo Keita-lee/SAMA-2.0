@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 
 class AdminTable extends StatefulWidget {
+  final String searchResult;
   final List<String> columnHeaders;
   final List<Map<String, dynamic>> dataList;
   final List<Widget Function(Map<String, dynamic> data)> actions;
@@ -13,6 +14,7 @@ class AdminTable extends StatefulWidget {
 
   AdminTable(
       {Key? key,
+      required this.searchResult,
       required this.columnHeaders,
       required this.dataList,
       required this.waiting,
@@ -42,122 +44,125 @@ class _AdminTableState extends State<AdminTable> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.745,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header Row
-          Container(
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(209, 209, 209, 1),
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (var header in widget.columnHeaders)
-                    Expanded(
-                      child: Text(
-                        header,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+    return Visibility(
+      //  visible: widget.searchResult!= "" && widget.searchResult.contains(other),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.745,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header Row
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(209, 209, 209, 1),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (var header in widget.columnHeaders)
+                      Expanded(
+                        child: Text(
+                          header,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  const Text(
-                    'Actions',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ), // Actions column header
-                ],
+                    const Text(
+                      'Actions',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ), // Actions column header
+                  ],
+                ),
               ),
             ),
-          ),
-          // Data Rows
-          widget.waiting
-              ? const Center(
-                  child: Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text('Loading...'),
-                ))
-              : widget.dataList.isEmpty
-                  ? Center(
-                      child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(widget.emptyMessage ?? 'No data found'),
-                    ))
-                  : Container(
-                      height: 400,
-                      width: MyUtility(context).width * 0.745,
-                      child: ListView.builder(
-                          itemCount: widget.dataList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final data = widget.dataList[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0, horizontal: 12.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  for (var header in widget.columnHeaders)
-                                    Expanded(
-                                      child: header == 'Status'
-                                          ? Center(
-                                              child: statusWidget(
-                                                  data[header.toLowerCase()]))
-                                          : Text(
-                                              data[header.toLowerCase()] ?? ''),
+            // Data Rows
+            widget.waiting
+                ? const Center(
+                    child: Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text('Loading...'),
+                  ))
+                : widget.dataList.isEmpty
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(widget.emptyMessage ?? 'No data found'),
+                      ))
+                    : Container(
+                        height: 400,
+                        width: MyUtility(context).width * 0.745,
+                        child: ListView.builder(
+                            itemCount: widget.dataList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final data = widget.dataList[index];
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4.0, horizontal: 12.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    for (var header in widget.columnHeaders)
+                                      Expanded(
+                                        child: header == 'Status'
+                                            ? Center(
+                                                child: statusWidget(
+                                                    data[header.toLowerCase()]))
+                                            : Text(data[header.toLowerCase()] ??
+                                                ''),
+                                      ),
+                                    // Actions column
+                                    Row(
+                                      children: [
+                                        ...widget.actions
+                                            .map((builder) => builder(data))
+                                            .toList()
+                                      ],
                                     ),
-                                  // Actions column
-                                  Row(
-                                    children: [
-                                      ...widget.actions
-                                          .map((builder) => builder(data))
-                                          .toList()
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                    )
-          // Column(
-          //     children: [
-          //       ...widget.dataList
-          //           .map(
-          //             (data) => Padding(
-          //               padding: const EdgeInsets.symmetric(
-          //                   vertical: 4.0, horizontal: 12.0),
-          //               child: Row(
-          //                 mainAxisAlignment:
-          //                     MainAxisAlignment.spaceBetween,
-          //                 children: [
-          //                   for (var header in widget.columnHeaders)
-          //                     Expanded(
-          //                       child: header == 'Status'
-          //                           ? Center(
-          //                               child: statusWidget(
-          //                                   data[header.toLowerCase()]))
-          //                           : Text(data[header.toLowerCase()] ??
-          //                               ''),
-          //                     ),
-          //                   // Actions column
-          //                   Row(
-          //                     children: [
-          //                       ...widget.actions
-          //                           .map((builder) => builder(data))
-          //                           .toList()
-          //                     ],
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           )
-          //           .toList(),
-          //     ],
-          //   ),
-        ],
+                                  ],
+                                ),
+                              );
+                            }),
+                      )
+            // Column(
+            //     children: [
+            //       ...widget.dataList
+            //           .map(
+            //             (data) => Padding(
+            //               padding: const EdgeInsets.symmetric(
+            //                   vertical: 4.0, horizontal: 12.0),
+            //               child: Row(
+            //                 mainAxisAlignment:
+            //                     MainAxisAlignment.spaceBetween,
+            //                 children: [
+            //                   for (var header in widget.columnHeaders)
+            //                     Expanded(
+            //                       child: header == 'Status'
+            //                           ? Center(
+            //                               child: statusWidget(
+            //                                   data[header.toLowerCase()]))
+            //                           : Text(data[header.toLowerCase()] ??
+            //                               ''),
+            //                     ),
+            //                   // Actions column
+            //                   Row(
+            //                     children: [
+            //                       ...widget.actions
+            //                           .map((builder) => builder(data))
+            //                           .toList()
+            //                     ],
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           )
+            //           .toList(),
+            //     ],
+            //   ),
+          ],
+        ),
       ),
     );
   }

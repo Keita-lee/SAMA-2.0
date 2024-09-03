@@ -11,7 +11,7 @@ Future sendRegistrationUpdate({
 }) async {
   final serviceId = 'service_igwbojp';
 
-  final templateId = 'template_562138w';
+  final templateId = 'template_d575pz9';
   final userId = 'Jmk16IabzDvgmXBeJ';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');

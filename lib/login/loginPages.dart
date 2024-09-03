@@ -191,9 +191,9 @@ class _LoginPagesState extends State<LoginPages> {
                       width: 130,
                       onTap: () {
                         if (pageIndex == 9) {
-                          changePage(0);
+                          changePage(16);
                         } else {
-                          changePage(9);
+                          changePage(17);
                         }
                       },
                     ),

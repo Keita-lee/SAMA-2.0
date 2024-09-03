@@ -39,12 +39,23 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         home: const MyHome(),
         routes: {
-          '/login': (context) => Material(child: LoginPages()),
+          '/loginTest': (context) => MyUtility(context).width < 600
+              ? Material(child: PageUnderConstruction())
+              : Material(
+                  child: LoginPages(
+                  pageIndex: 0,
+                )),
+          '/login': (context) => MyUtility(context).width < 600
+              ? Material(child: PageUnderConstruction())
+              : Material(
+                  child: LoginPages(
+                  pageIndex: 17,
+                )),
           '/register': (context) => MyUtility(context).width < 600
               ? Material(child: PageUnderConstruction())
               : Material(
                   child: LoginPages(
-                  pageIndex: 9,
+                  pageIndex: 16,
                 )),
           '/cpd': (context) => MyUtility(context).width < 600
               ? Material(child: PageUnderConstruction())

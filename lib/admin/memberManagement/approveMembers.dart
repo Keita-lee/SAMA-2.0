@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sama/admin/memberManagement/filterMembersRow.dart';
 import 'package:sama/components/AdminTable.dart';
 
+import 'memberProfile.dart';
+
 class ApproveMembers extends StatefulWidget {
   const ApproveMembers({super.key});
 
@@ -153,6 +155,18 @@ class _ApproveMembersState extends State<ApproveMembers> {
     }
   }
 
+  //view member profile
+  //Dialog for benifits
+  Future openMemberProfile(id) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: MemberProfile(
+          id: id,
+          closeDialog: () => Navigator.pop(context!),
+        ));
+      });
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -224,11 +238,17 @@ class _ApproveMembersState extends State<ApproveMembers> {
                           },
                         );
                         break;
+                      case 'profile':
+                        openMemberProfile(data['firebaseId']);
+                        break;
                     }
                   },
                   itemBuilder: (BuildContext context) {
                     List<PopupMenuEntry<String>> menuItems = [];
-
+                    menuItems.add(const PopupMenuItem<String>(
+                      value: 'profile',
+                      child: Text('View Profile'),
+                    ));
                     // Dynamically add menu items based on the user's status
                     if (data['status'] == 'Pending') {
                       menuItems.add(const PopupMenuItem<String>(
@@ -256,6 +276,7 @@ class _ApproveMembersState extends State<ApproveMembers> {
                   },
                 )
           ],
+          searchResult: '',
         ),
       ],
     );

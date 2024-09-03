@@ -35,6 +35,19 @@ class BoiFormText extends StatelessWidget {
   }
 }
 
+class BoiFormText2 extends StatelessWidget {
+  var mainFormText;
+  BoiFormText2({super.key, required this.mainFormText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      mainFormText,
+      style: GoogleFonts.openSans(fontSize: 18, height: 1),
+    );
+  }
+}
+
 class Bio extends StatefulWidget {
   const Bio({super.key});
 
