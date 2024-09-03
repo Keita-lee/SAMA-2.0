@@ -64,24 +64,27 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   Future<bool> checkOracleDb(String email) async {
     final TokenManager tokenManager = TokenManager();
-    final TokenStorage storage = TokenStorage();
-    // Ensure the token is valid or refresh it if needed
-    await tokenManager.refreshTokenIfNeeded();
-    // Get the valid token
-    String? token = await storage.getToken();
+    // final TokenStorage storage = TokenStorage();
+    // // Ensure the token is valid or refresh it if needed
+    // await tokenManager.refreshTokenIfNeeded();
+    // // Get the valid token
+    // String? token = await storage.getToken();
 
-    if (token == null || token == '') {
-      print('error getting token');
-      return false;
-    }
+    // if (token == null || token == '') {
+    //   print('error getting token');
+    //   return false;
+    // }
+
+    String basicAuth = tokenManager.basicAuth();
 
     http.Response response = await http.get(
         Uri.parse(
-            'http://41.217.246.121:8080/ords/ordssama/web-clients/clients/?q={"email_sama":$email}&limit=1'),
+            'https://sama-api.onrender.com/get-clients?email_sama=$email'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
+          'Authorization': basicAuth,
         });
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       List items = data['items'];
@@ -98,23 +101,24 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   Future<Map<String, dynamic>> checkSamaNo(String samaNo) async {
     final TokenManager tokenManager = TokenManager();
-    final TokenStorage storage = TokenStorage();
-    // Ensure the token is valid or refresh it if needed
-    await tokenManager.refreshTokenIfNeeded();
-    // Get the valid token
-    String? token = await storage.getToken();
+    // final TokenStorage storage = TokenStorage();
+    // // Ensure the token is valid or refresh it if needed
+    // await tokenManager.refreshTokenIfNeeded();
+    // // Get the valid token
+    // String? token = await storage.getToken();
 
-    if (token == null || token == '') {
-      print('error getting token');
-    }
+    // if (token == null || token == '') {
+    //   print('error getting token');
+    // }
 
-    print("token: $token");
+    // print("token: $token");
+    String basicAuth = tokenManager.basicAuth();
+
     http.Response response = await http.get(
-        Uri.parse(
-            'http://41.217.246.121:8080/ords/ordssama/web-clients/clients/$samaNo'),
+        Uri.parse('https://sama-api.onrender.com/get-client/$samaNo'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
+          'Authorization': basicAuth,
         });
 
     if (response.statusCode == 200) {
@@ -132,15 +136,16 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .collection('users')
         .where('email', isEqualTo: (email.text).toLowerCase())
         .get();
+
     updateStateText("");
 
-//If admin by pass all validators
-    if (users.docs[0]['userType'] == "Admin") {
-      return await widget.changePage(1);
-    }
+    //If admin by pass all validators
+    // if (users.docs[0]['userType'] == "Admin") {
+    //   return await widget.changePage(1);
+    // }
     bool foundOnOracleDb = await checkOracleDb((email.text).toLowerCase());
     bool foundInFirebase = users.docs.isNotEmpty;
-
+    print(users.docs.first.id);
     // user is in firebase and is sama member
     if (foundInFirebase && email.text != "" && foundOnOracleDb) {
       // update member type
@@ -159,17 +164,19 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     //user is in firebase and is not sama member - treated as non-member
     else if (foundInFirebase && !foundOnOracleDb) {
       // update member type
-      firestore
-          .collection('users')
-          .doc(users.docs.first.id)
-          .set({'userType': 'SAMA Non Member'});
+      // firestore
+      //     .collection('users')
+      //     .doc(users.docs.first.id)
+      //     .set({'userType': 'SAMA Non Member'});
 
-      if (users.docs.first.data()['status'] == 'Active') {
-        widget.changePage(1);
-      } else {
-        updateStateText(
-            "Your account is pending approval. You will receive an email once approved");
-      }
+      // if (users.docs.first.data()['status'] == 'Active') {
+      //   widget.changePage(1);
+      // } else {
+      //   updateStateText(
+      //       "Your account is pending approval. You will receive an email once approved");
+      // }
+      updateStateText(
+          'You are not a SAMA member yet. Please use non member portal.');
     }
     // user is in not firebase but is a sama member - needs to create an account
     else if (!foundInFirebase && foundOnOracleDb ||
@@ -186,15 +193,19 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   //Check if member exists and continue
   checkMemberNumber() async {
     Map<String, dynamic> member = await checkSamaNo(email.text);
-    print(member);
     List data = member['items'];
+    final users = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: (data[0]['email_sama']).toLowerCase())
+        .get();
     updateStateText("");
-    if (data.isNotEmpty && data[0]['membership_paid'] == 'Y') {
-      List data = member['items'];
-      if (data.isNotEmpty) widget.changePage(1);
+    if (data.isNotEmpty &&
+        users.docs.isNotEmpty &&
+        users.docs.first['status'] == 'Active') {
+      widget.changePage(1);
     } else {
       updateStateText(
-          "Error: The SAMA member number ${email.text}  is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
+          "Error: The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
       //openValidateDialog();
     }
   }

@@ -104,4 +104,13 @@ class TokenManager {
       return {};
     }
   }
+
+  String basicAuth() {
+    final username = 'v2rCd_QjCe6eSp6LaSoWpA..';
+    final password = '9T2_yxuf7cT3a5YpvABC0Q..';
+
+    final credentials = '$username:$password';
+
+    return 'Basic ${base64.encode(utf8.encode(credentials))}';
+  }
 }
