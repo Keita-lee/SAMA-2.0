@@ -219,9 +219,9 @@ class _ApproveMembersState extends State<ApproveMembers> {
                           },
                         );
                         break;
-                      case 'send_email':
+                      /*  case 'send_email':
                         _sendEmail(data['firebaseId'], data['status']);
-                        break;
+                        break;*/
                       case 'set_pending':
                         showDynamicDialog(
                           context: context,

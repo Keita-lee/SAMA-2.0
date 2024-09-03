@@ -19,12 +19,14 @@ class ApplicationProfile extends StatefulWidget {
   Map debitOrder;
   String paymentType;
   String prodCatCde;
+  Map paymentDetails;
   ApplicationProfile(
       {super.key,
       required this.nextSection,
       required this.debitOrder,
       required this.paymentType,
-      required this.prodCatCde});
+      required this.prodCatCde,
+      required this.paymentDetails});
 
   @override
   State<ApplicationProfile> createState() => _ApplicationProfileState();
@@ -101,12 +103,13 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
 
   updateProfile() async {
     var userData = {
+      "paymentDetails": widget.paymentDetails,
       "bankAccHolder": widget.debitOrder['bankAccHolder'],
       "bankAccNo": widget.debitOrder['bankAccNo'],
       "bankAccType": widget.debitOrder['bankAccType'],
       "bankBranchCde": widget.debitOrder['bankBranchCde'],
       "bankBranchName": widget.debitOrder['bankBranchName'],
-      "bankDisclaimer": "Y",
+      "bankDisclaimer": widget.debitOrder['bankDisclaimer'],
       "bankName": widget.debitOrder['bankName'],
       "bankPaymAnnual": "",
       "bankPaymMonthly": "",
@@ -167,7 +170,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
 
   @override
   void initState() {
-//    getUserData();
+    getUserData();
     super.initState();
   }
 

@@ -24,6 +24,7 @@ class PaymentMethod extends StatefulWidget {
   String paymentType;
   Function(String) getPaymentRef;
   Function(Map) getDebitOrder;
+  Function(String) getPaymentDetails;
 
   PaymentMethod(
       {super.key,
@@ -33,7 +34,8 @@ class PaymentMethod extends StatefulWidget {
       required this.applicationCategory,
       required this.paymentType,
       required this.getPaymentRef,
-      required this.getDebitOrder});
+      required this.getDebitOrder,
+      required this.getPaymentDetails});
 
   @override
   State<PaymentMethod> createState() => _PaymentMethodState();
@@ -263,6 +265,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     Visibility(
                       visible: widget.paymentType != "Monthly",
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           PaymentTextPr(
                               boldText: 'Pro-rata Amount',
@@ -676,16 +679,18 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   height: 55,
                   width: 125,
                   onTap: () {
+                    widget.getPaymentDetails(paymnetType);
                     widget.nextSection(3);
                   }),
             ),
             Visibility(
               visible: paymnetType != "PAY ONLINE",
               child: StyleButton(
-                  description: "CONTINUE1",
+                  description: "CONTINUE",
                   height: 55,
                   width: 125,
                   onTap: () {
+                    widget.getPaymentDetails(paymnetType);
                     widget.getDebitOrder({
                       "bankAccHolder": accHolderName.text,
                       "bankAccNo": accNumber.text,

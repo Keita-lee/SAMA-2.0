@@ -27,6 +27,7 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
   var paymentType = "";
   var paymentRef = "";
   var prodCatCde = "";
+  var paymentDetails = {};
   var debitOrder = {
     "bankAccHolder": "",
     "bankAccNo": "",
@@ -71,6 +72,12 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
       applicationPrice = value;
       paymentType = paymentType1;
       prodCatCde = valueprodCatCde;
+    });
+  }
+
+  getPaymentDetails(type) {
+    setState(() {
+      paymentDetails = {"type": type, "ref": paymentRef};
     });
   }
 
@@ -413,7 +420,8 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
                   applicationCategory: applicationCategory,
                   paymentType: paymentType,
                   getPaymentRef: getPaymentRef,
-                  getDebitOrder: getDebitOrder),
+                  getDebitOrder: getDebitOrder,
+                  getPaymentDetails: getPaymentDetails),
             ),
             Visibility(
               visible: sectionIndex == 3,
@@ -421,7 +429,8 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
                   nextSection: nextSection,
                   debitOrder: debitOrder,
                   paymentType: paymentType,
-                  prodCatCde: prodCatCde),
+                  prodCatCde: prodCatCde,
+                  paymentDetails: paymentDetails),
             ),
           ],
         ),

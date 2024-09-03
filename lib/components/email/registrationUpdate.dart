@@ -6,12 +6,13 @@ import 'package:http/http.dart' as http;
 
 Future sendRegistrationUpdate({
   required String email,
-  required String reportType,
-  required String description,
+  required String memberTitle,
+  required String memberName,
+  required String memberSurname,
 }) async {
   final serviceId = 'service_igwbojp';
 
-  final templateId = 'template_d575pz9';
+  final templateId = 'template_welcome_new';
   final userId = 'Jmk16IabzDvgmXBeJ';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
@@ -23,8 +24,9 @@ Future sendRegistrationUpdate({
         'user_id': userId,
         'template_params': {
           'user_email': email,
-          'report_type': reportType,
-          'description': description
+          'member_title': memberTitle,
+          'member_name': memberName,
+          'member_surname': memberSurname
         }
       }));
 

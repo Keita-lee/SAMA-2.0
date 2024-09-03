@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/styleButton.dart';
 import 'package:sama/profile/bio.dart';
 
 import '../../components/MyDivider.dart';
+import '../../components/email/registrationUpdate.dart';
 import '../../components/myutility.dart';
 import '../../components/profileTextField.dart';
+import '../../components/yesNoDialog.dart';
 
 class MemberProfile extends StatefulWidget {
   String id;
@@ -35,6 +38,9 @@ class _MemberProfileState extends State<MemberProfile> {
   final idNumber = TextEditingController();
   final passportNumber = TextEditingController();
 
+  final paymentType = TextEditingController();
+  final paymentTypeRef = TextEditingController();
+
   final hpcsa = TextEditingController();
   final practiceNumber = TextEditingController();
 
@@ -42,6 +48,14 @@ class _MemberProfileState extends State<MemberProfile> {
   final univercityQualification = TextEditingController();
   final qualificationYear = TextEditingController();
   final qualificationMonth = TextEditingController();
+
+  final bankAccHolder = TextEditingController();
+  final bankAccNo = TextEditingController();
+  final bankAccType = TextEditingController();
+  final bankBranchCde = TextEditingController();
+  final bankBranchName = TextEditingController();
+  final bankDisclaimer = TextEditingController();
+  final bankName = TextEditingController();
 
   final samaNumber = TextEditingController();
 
@@ -75,16 +89,44 @@ class _MemberProfileState extends State<MemberProfile> {
         univercityQualification.text = data.get('univercityQualification');
         qualificationYear.text = data.get('qualificationYear');
         qualificationMonth.text = data.get('qualificationMonth');
+        paymentType.text = data.get('paymentDetails.type');
+        paymentTypeRef.text = data.get('paymentDetails.ref');
+
+        bankAccHolder.text = data.get('bankAccHolder');
+        bankAccNo.text = data.get('bankAccNo');
+        bankAccType.text = data.get('bankAccType');
+        bankBranchCde.text = data.get('bankBranchCde');
+        bankBranchName.text = data.get('bankBranchName');
+        bankDisclaimer.text = data.get('bankDisclaimer');
+        bankName.text = data.get('bankName');
       });
     }
   }
 
-  updateSamaNumber() async {
+  sendRegistrationEmail() async {
+    await sendRegistrationUpdate(
+        email: email.text,
+        memberTitle: title.text,
+        memberName: firstName.text,
+        memberSurname: lastName.text);
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({"samaNumber": samaNumber.text});
+        .doc(widget.id)
+        .update({"status": "Active"});
   }
+
+  //Dialog for password Validate
+  Future activateAccount() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description:
+              "This will send a automatic email to user for activation details",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: sendRegistrationEmail,
+        ));
+      });
 
   @override
   void initState() {
@@ -358,6 +400,18 @@ class _MemberProfileState extends State<MemberProfile> {
                 SizedBox(
                   height: 10,
                 ),
+                MyDidiver(),
+                Text(
+                  'Payment Details',
+                  style: GoogleFonts.openSans(
+                      fontSize: 24,
+                      color: Color(0xFF174486),
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                MyDidiver(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -366,21 +420,172 @@ class _MemberProfileState extends State<MemberProfile> {
                       children: [
                         Row(
                           children: [
-                            BoiFormText(mainFormText: 'SAMA Number:'),
+                            BoiFormText(mainFormText: 'Payment Type'),
+                            BoiFormText2(mainFormText: paymentType.text),
                             SizedBox(
-                              width: 8,
-                            ),
-                            ProfileTextField(
-                                customSize: MyUtility(context).width * 0.3,
-                                description: "",
-                                textfieldController: landline,
-                                textFieldType: "")
+                              width: 25,
+                            )
                           ],
                         ),
                       ],
                     ),
+                    Visibility(
+                      visible: paymentType.text == "PAY ONLINE",
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              BoiFormText(mainFormText: 'Reference:'),
+                              BoiFormText2(mainFormText: paymentTypeRef.text),
+                              SizedBox(
+                                width: 25,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
+                Visibility(
+                    visible: paymentType.text == "DEBIT ORDER",
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(
+                                    mainFormText: 'Bank Account Holder'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankAccHolder.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(mainFormText: 'Bank Name'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankName.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(mainFormText: 'Bank Branch Name'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankBranchName.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(mainFormText: 'Bank Branch Code'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankBranchCde.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(mainFormText: 'Banck Account Type'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankAccType.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(
+                                    mainFormText: 'Bank Account Number'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankAccNo.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                BoiFormText(mainFormText: 'Bank Disclaimer'),
+                                Spacer(),
+                                BoiFormText2(mainFormText: bankDisclaimer.text),
+                                SizedBox(
+                                  width: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    )),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    StyleButton(
+                        description: " Activate Account",
+                        height: 55,
+                        width: 125,
+                        onTap: () {
+                          activateAccount();
+                        })
+                  ],
+                )
               ]),
         )));
   }
