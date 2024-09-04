@@ -111,7 +111,10 @@ class _LoginPagesState extends State<LoginPages> {
           emailChangeType: emailChangeType),
       MembershipSignUp(),
       TempView(type: "Registration"),
-      TempView(type: "Login")
+      TempView(type: "Login"),
+      MembershipSignUp(
+        pageIndex: 3,
+      ),
     ];
 
     return Container(
