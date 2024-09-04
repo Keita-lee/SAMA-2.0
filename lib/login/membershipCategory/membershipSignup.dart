@@ -11,7 +11,8 @@ import 'pages/applicationType.dart';
 import 'ui/memberCategoryTabStyle.dart';
 
 class MembershipSignUp extends StatefulWidget {
-  const MembershipSignUp({super.key});
+  int? pageIndex;
+  MembershipSignUp({super.key, this.pageIndex});
 
   @override
   State<MembershipSignUp> createState() => _MembershipSignUpState();
@@ -40,6 +41,15 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
     "bankPaymMonthly": ""
   };
   bool accepted = false;
+
+  @override
+  void initState() {
+    setState(() {
+      sectionIndex = widget.pageIndex ?? 0;
+    });
+    super.initState();
+  }
+
   //update page index
   changePageIndex(value) {
     setState(() {
@@ -353,43 +363,45 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 0,
-                  description: 'APPLICATION TYPE',
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 1,
-                  description: 'CATEGORY',
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 2,
-                  description: 'PAYMENT METHODS',
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 3,
-                  description: 'YOUR PROFILE',
-                ),
-              ],
-            ),
+            widget.pageIndex == null
+                ? Row(
+                    children: [
+                      MemberCategoryTabStyle(
+                        onpress: changePageIndex,
+                        index: pageIndex,
+                        value: 0,
+                        description: 'APPLICATION TYPE',
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      MemberCategoryTabStyle(
+                        onpress: changePageIndex,
+                        index: pageIndex,
+                        value: 1,
+                        description: 'CATEGORY',
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      MemberCategoryTabStyle(
+                        onpress: changePageIndex,
+                        index: pageIndex,
+                        value: 2,
+                        description: 'PAYMENT METHODS',
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      MemberCategoryTabStyle(
+                        onpress: changePageIndex,
+                        index: pageIndex,
+                        value: 3,
+                        description: 'YOUR PROFILE',
+                      ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
             SizedBox(
               height: 10,
             ),
@@ -426,11 +438,13 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
             Visibility(
               visible: sectionIndex == 3,
               child: ApplicationProfile(
-                  nextSection: nextSection,
-                  debitOrder: debitOrder,
-                  paymentType: paymentType,
-                  prodCatCde: prodCatCde,
-                  paymentDetails: paymentDetails),
+                nextSection: nextSection,
+                debitOrder: debitOrder,
+                paymentType: paymentType,
+                prodCatCde: prodCatCde,
+                paymentDetails: paymentDetails,
+                shouldShowPrevBtn: widget.pageIndex == null,
+              ),
             ),
           ],
         ),

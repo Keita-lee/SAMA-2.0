@@ -17,6 +17,7 @@ import 'package:sama/components/utility.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/loginPages.dart';
+import 'package:sama/login/registerFullProfile.dart';
 import 'package:sama/utils/tokenManager.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,6 +35,7 @@ class LoginWithEmail extends StatefulWidget {
 class _LoginWithEmailState extends State<LoginWithEmail> {
   // Text controllers
   final email = TextEditingController(text: '');
+  bool isLoading = false;
 
   String validateText = "";
 
@@ -41,6 +43,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   bool showForgotPasswordBorder = false;
   bool showForgotSamaBorder = false;
   bool showNonMemberBorder = false;
+  bool showSamaAccountCreate = false;
 
   BuildContext? dialogContext;
 
@@ -87,10 +90,14 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      List items = data['items'];
-      if (items.isNotEmpty) {
-        print(items[0]);
-        return true;
+      if (data.isNotEmpty) {
+        List items = data['items'];
+        if (items.isNotEmpty) {
+          print(items[0]);
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
@@ -130,30 +137,34 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
 //Check if email exists and continue
   checkEmail() async {
+    if (isLoading) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
     final firestore = FirebaseFirestore.instance;
     widget.getEmail((email.text).toLowerCase());
+    updateStateText("");
     final users = await firestore
         .collection('users')
         .where('email', isEqualTo: (email.text).toLowerCase())
         .get();
 
-    updateStateText("");
-
     //If admin by pass all validators
-    // if (users.docs[0]['userType'] == "Admin") {
-    //   return await widget.changePage(1);
-    // }
+    if (users.docs[0]['userType'] == "Admin") {
+      return await widget.changePage(1);
+    }
+
+    //Check if user exists in Oracle Db and Firestore
     bool foundOnOracleDb = await checkOracleDb((email.text).toLowerCase());
     bool foundInFirebase = users.docs.isNotEmpty;
-    print(users.docs.first.id);
+
+    print(
+        'foundOnOracleDb: $foundOnOracleDb, foundInFirebase: $foundInFirebase');
+
     // user is in firebase and is sama member
     if (foundInFirebase && email.text != "" && foundOnOracleDb) {
-      // update member type
-      firestore
-          .collection('users')
-          .doc(users.docs.first.id)
-          .set({'userType': 'SAMA Member'});
-
       if (users.docs.first.data()['status'] == 'Active') {
         widget.changePage(1);
       } else {
@@ -163,51 +174,73 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     }
     //user is in firebase and is not sama member - treated as non-member
     else if (foundInFirebase && !foundOnOracleDb) {
-      // update member type
-      // firestore
-      //     .collection('users')
-      //     .doc(users.docs.first.id)
-      //     .set({'userType': 'SAMA Non Member'});
-
-      // if (users.docs.first.data()['status'] == 'Active') {
-      //   widget.changePage(1);
-      // } else {
-      //   updateStateText(
-      //       "Your account is pending approval. You will receive an email once approved");
-      // }
       updateStateText(
-          'You are not a SAMA member yet. Please use non member portal.');
+          'You are not a SAMA member yet. Please use non member portal or create an account.');
     }
     // user is in not firebase but is a sama member - needs to create an account
-    else if (!foundInFirebase && foundOnOracleDb ||
-        // user is in not firebase and is not sama member - needs to create an account
-        !foundInFirebase && !foundOnOracleDb) {
-      updateStateText("You don't have an account yet. Please register.");
+    else if (!foundInFirebase && foundOnOracleDb) {
+      updateStateText(
+          "You are not registered on this site yet. Please register and try again.");
+      setState(() {
+        showSamaAccountCreate = true;
+      });
+    }
+    // user is in not firebase and is not sama member - needs to create an account
+    else if (!foundInFirebase && !foundOnOracleDb) {
+      updateStateText(
+          "You are not registered on this site yet. Please register and try again.");
     } else {
       updateStateText(
           "Error: Unknown email address. Check again or try using your SAMA member number.");
       // openValidateDialog();
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   //Check if member exists and continue
   checkMemberNumber() async {
+    if (isLoading) return;
+
+    updateStateText("");
+    setState(() {
+      isLoading = true;
+    });
+
     Map<String, dynamic> member = await checkSamaNo(email.text);
     List data = member['items'];
+    if (member['items'].isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      updateStateText(
+          "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
+      return;
+    }
+
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: (data[0]['email_sama']).toLowerCase())
         .get();
     updateStateText("");
+
     if (data.isNotEmpty &&
         users.docs.isNotEmpty &&
         users.docs.first['status'] == 'Active') {
       widget.changePage(1);
     } else {
       updateStateText(
-          "Error: The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
+          "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
       //openValidateDialog();
+      setState(() {
+        showSamaAccountCreate = true;
+      });
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   getUserDetails() async {
@@ -328,6 +361,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   Padding(
                     padding: const EdgeInsets.only(left: 25),
                     child: StyleButton(
+                      waiting: isLoading,
                       description: "PROCEED",
                       height: 55,
                       width: 100,
@@ -351,6 +385,54 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               color: Colors.red,
             ),
           ),
+          showSamaAccountCreate
+              ? Container(
+                  margin: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                  child: Row(
+                    children: [
+                      Text('Click',
+                          style: GoogleFonts.openSans(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: -0.5,
+                          )),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                          child: LoginPages(
+                                        pageIndex: 18,
+                                      ))));
+                        },
+                        child: Text(
+                          " here ",
+                          style: GoogleFonts.openSans(
+                            decoration: showNonMemberBorder == true
+                                ? TextDecoration.underline
+                                : TextDecoration.none,
+                            decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                            decorationThickness: 2,
+                            letterSpacing: -0.5,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: const Color.fromRGBO(0, 159, 158, 1),
+                          ),
+                        ),
+                      ),
+                      Text('to continue your registration process',
+                          style: GoogleFonts.openSans(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: -0.5,
+                          )),
+                    ],
+                  ),
+                )
+              : SizedBox.shrink(),
           Text(
             "Need help?",
             style: GoogleFonts.openSans(

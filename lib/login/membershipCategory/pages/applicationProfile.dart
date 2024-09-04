@@ -20,13 +20,15 @@ class ApplicationProfile extends StatefulWidget {
   String paymentType;
   String prodCatCde;
   Map paymentDetails;
+  bool shouldShowPrevBtn;
   ApplicationProfile(
       {super.key,
       required this.nextSection,
       required this.debitOrder,
       required this.paymentType,
       required this.prodCatCde,
-      required this.paymentDetails});
+      required this.paymentDetails,
+      required this.shouldShowPrevBtn});
 
   @override
   State<ApplicationProfile> createState() => _ApplicationProfileState();
@@ -651,15 +653,17 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          StyleButton(
-                              buttonColor:
-                                  const Color.fromARGB(255, 219, 219, 219),
-                              description: "PREVIOUS",
-                              height: 55,
-                              width: 125,
-                              onTap: () {
-                                widget.nextSection(2);
-                              }),
+                          widget.shouldShowPrevBtn
+                              ? StyleButton(
+                                  buttonColor:
+                                      const Color.fromARGB(255, 219, 219, 219),
+                                  description: "PREVIOUS",
+                                  height: 55,
+                                  width: 125,
+                                  onTap: () {
+                                    widget.nextSection(2);
+                                  })
+                              : const SizedBox.shrink(),
                           Spacer(),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
