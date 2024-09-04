@@ -28,7 +28,7 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
   void initState() {
     print(widget.userData);
     setState(() {
-      nameController.text = widget.userData['first_name'] ?? '';
+      nameController.text = widget.userData['firstName'] ?? '';
       lastNameController.text = widget.userData['lastName'] ?? '';
       cellController.text = widget.userData['cell'] ?? '';
       emailController.text = widget.userData['email'] ?? '';
@@ -134,7 +134,6 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           SizedBox(
             width: MyUtility(context).width * 0.3,
             child: TextFieldStyling(
-              obscure: true,
               hintText: 'Surname',
               textfieldController: lastNameController,
             ),
@@ -145,7 +144,6 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           SizedBox(
             width: MyUtility(context).width * 0.3,
             child: TextFieldStyling(
-              obscure: true,
               hintText: 'CellNo',
               textfieldController: nameController,
             ),
@@ -156,9 +154,8 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           SizedBox(
             width: MyUtility(context).width * 0.3,
             child: TextFieldStyling(
-              obscure: true,
               hintText: 'Email Address',
-              textfieldController: nameController,
+              textfieldController: emailController,
             ),
           ),
           const SizedBox(
@@ -167,9 +164,8 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           SizedBox(
             width: MyUtility(context).width * 0.3,
             child: TextFieldStyling(
-              obscure: true,
               hintText: 'SAMA Number',
-              textfieldController: nameController,
+              textfieldController: samaNoController,
             ),
           ),
           const SizedBox(
@@ -178,9 +174,8 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           SizedBox(
             width: MyUtility(context).width * 0.3,
             child: TextFieldStyling(
-              obscure: true,
               hintText: 'ID Number',
-              textfieldController: nameController,
+              textfieldController: idNoController,
             ),
           ),
           const SizedBox(
@@ -189,9 +184,8 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           SizedBox(
             width: MyUtility(context).width * 0.3,
             child: TextFieldStyling(
-              obscure: true,
               hintText: 'HPCSA Number',
-              textfieldController: nameController,
+              textfieldController: hpcsaController,
             ),
           ),
           const SizedBox(
