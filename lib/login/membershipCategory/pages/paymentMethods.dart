@@ -24,7 +24,7 @@ class PaymentMethod extends StatefulWidget {
   String paymentType;
   Function(String) getPaymentRef;
   Function(Map) getDebitOrder;
-  Function(String) getPaymentDetails;
+  Function(String, String) getPaymentDetails;
 
   PaymentMethod(
       {super.key,
@@ -71,7 +71,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
     setState(() {
       amountToPay = payAmount;
     });
-    return '${(payAmount)}';
+    return 'R ${(payAmount)}';
   }
 
   afterPaymentMade() {
@@ -268,21 +268,27 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           PaymentTextPr(
-                              boldText: 'Pro-rata Amount',
-                              secondText: widget.applicationPrice),
+                            boldText: 'Pro-rata Amount',
+                            secondText: widget.paymentType != "Monthly"
+                                ? getTotalToPay()
+                                : widget.applicationPrice,
+                          ),
                           PaymentTextPr(
                               boldText: 'For Period',
                               secondText: getTimeFrame()),
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      widget.applicationPrice,
+                      "R0",
                       style: GoogleFonts.openSans(
                           fontWeight: FontWeight.w500,
                           color: Colors.grey[600],
                           fontSize: 16,
-                          letterSpacing: -0.5),
+                          height: 2),
                     ),
                     Column(
                       children: [
@@ -299,10 +305,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                               ? getTotalToPay()
                               : widget.applicationPrice,
                           style: GoogleFonts.openSans(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
-                              fontSize: 16,
-                              letterSpacing: -0.5),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[800],
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),
@@ -679,7 +685,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   height: 55,
                   width: 125,
                   onTap: () {
-                    widget.getPaymentDetails(paymnetType);
+                    widget.getPaymentDetails(paymnetType, widget.title);
                     widget.nextSection(3);
                   }),
             ),
@@ -690,7 +696,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   height: 55,
                   width: 125,
                   onTap: () {
-                    widget.getPaymentDetails(paymnetType);
+                    widget.getPaymentDetails(paymnetType, widget.title);
                     widget.getDebitOrder({
                       "bankAccHolder": accHolderName.text,
                       "bankAccNo": accNumber.text,
