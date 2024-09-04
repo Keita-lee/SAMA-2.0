@@ -12,6 +12,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/loginPages/choosePassword.dart';
+import 'package:sama/login/loginPages/createSamaAccount.dart';
 import 'package:sama/login/loginPages/displayUsername.dart';
 import 'package:sama/login/loginPages/getUserName.dart';
 import 'package:sama/login/loginPages/tempView.dart';
@@ -35,7 +36,7 @@ class _LoginPagesState extends State<LoginPages> {
   String? mobileNumber;
   String? emailChangeType;
   int pageIndex = 0;
-
+  Map<String, dynamic> userData = {};
 //set email state
   getEmail(value) {
     setState(() {
@@ -64,6 +65,12 @@ class _LoginPagesState extends State<LoginPages> {
     });
   }
 
+  updateUserData(Map<String, dynamic> data) {
+    setState(() {
+      userData = data;
+    });
+  }
+
   @override
   void initState() {
     pageIndex = widget.pageIndex ?? 0;
@@ -74,7 +81,10 @@ class _LoginPagesState extends State<LoginPages> {
     bool showRegisterBorder = false;
     // pages to go to
     var pages = [
-      LoginWithEmail(changePage: changePage, getEmail: getEmail),
+      LoginWithEmail(
+          changePage: changePage,
+          getEmail: getEmail,
+          updateMemberData: updateUserData),
       LoginWithPassword(
         changePage: changePage,
         email: email,
@@ -115,6 +125,7 @@ class _LoginPagesState extends State<LoginPages> {
       MembershipSignUp(
         pageIndex: 3,
       ),
+      CreateSamaAccount(userData: userData)
     ];
 
     return Container(

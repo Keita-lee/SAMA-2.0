@@ -9,6 +9,7 @@ import 'package:sama/Login/loginPages/register.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 
 import 'package:sama/components/email/sendOtp.dart';
+import 'package:sama/components/email/sendPasswordResetLink.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -24,9 +25,14 @@ import 'package:http/http.dart' as http;
 enum SingingCharacter { memberNumber, email }
 
 class LoginWithEmail extends StatefulWidget {
-  Function(int) changePage;
-  Function(String) getEmail;
-  LoginWithEmail({super.key, required this.changePage, required this.getEmail});
+  final Function(Map<String, dynamic>) updateMemberData;
+  final Function(int) changePage;
+  final Function(String) getEmail;
+  const LoginWithEmail(
+      {super.key,
+      required this.changePage,
+      required this.getEmail,
+      required this.updateMemberData});
 
   @override
   State<LoginWithEmail> createState() => _LoginWithEmailState();
@@ -65,7 +71,19 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
-  Future<bool> checkOracleDb(String email) async {
+  //Dialog for validate  form
+  Future openPasswordResetDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: ValidateDialog(
+                description:
+                    "We see you have not logged in yet. We have sent a reset password link to your email.",
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
+
+  Future<Map<String, dynamic>> checkOracleDb(String email) async {
     final TokenManager tokenManager = TokenManager();
     // final TokenStorage storage = TokenStorage();
     // // Ensure the token is valid or refresh it if needed
@@ -94,16 +112,16 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         List items = data['items'];
         if (items.isNotEmpty) {
           print(items[0]);
-          return true;
+          return items[0];
         } else {
-          return false;
+          return {};
         }
       } else {
-        return false;
+        return {};
       }
     }
 
-    return false;
+    return {};
   }
 
   Future<Map<String, dynamic>> checkSamaNo(String samaNo) async {
@@ -135,6 +153,28 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     return {};
   }
 
+  sendResetEmail(String email, String name) async {
+    TokenManager tokenManager = TokenManager();
+    String basicAuth = tokenManager.basicAuth();
+    String resetLink = '';
+    // Get reset password email
+    http.Response response = await http.get(
+        Uri.parse(
+            'https://sama-api.onrender.com/get-reset-link?email=${email}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': basicAuth,
+        });
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      resetLink = data['resetLink'];
+
+      sendPasswordResetLink(email: email, name: name, resetLink: resetLink);
+      print(resetLink);
+    }
+  }
+
 //Check if email exists and continue
   checkEmail() async {
     if (isLoading) return;
@@ -152,12 +192,13 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .get();
 
     //If admin by pass all validators
-    if (users.docs[0]['userType'] == "Admin") {
-      return await widget.changePage(1);
-    }
+    // if (users.docs[0]['userType'] == "Admin") {
+    //   return await widget.changePage(1);
+    // }
 
     //Check if user exists in Oracle Db and Firestore
-    bool foundOnOracleDb = await checkOracleDb((email.text).toLowerCase());
+    Map oracleUser = await checkOracleDb((email.text).toLowerCase());
+    bool foundOnOracleDb = oracleUser.isNotEmpty;
     bool foundInFirebase = users.docs.isNotEmpty;
 
     print(
@@ -166,7 +207,17 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     // user is in firebase and is sama member
     if (foundInFirebase && email.text != "" && foundOnOracleDb) {
       if (users.docs.first.data()['status'] == 'Active') {
-        widget.changePage(1);
+        if (users.docs.first.data()['loggedIn'] == true) {
+          widget.changePage(1);
+        } else {
+          // Send reset password email
+          sendResetEmail(email.text,
+              '${users.docs.first.data()['firstName']} ${users.docs.first.data()['lastName']}');
+          setState(() {
+            isLoading = false;
+          });
+          openPasswordResetDialog();
+        }
       } else {
         updateStateText(
             "Your account is pending approval. You will receive an email once approved");
@@ -175,12 +226,22 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     //user is in firebase and is not sama member - treated as non-member
     else if (foundInFirebase && !foundOnOracleDb) {
       updateStateText(
-          'You are not a SAMA member yet. Please use non member portal or create an account.');
+          'You are not a SAMA member yet. Please use non member portal or create an account. If you are a SAMA member, please contact SAMA to enquire about your membership');
     }
     // user is in not firebase but is a sama member - needs to create an account
     else if (!foundInFirebase && foundOnOracleDb) {
       updateStateText(
           "You are not registered on this site yet. Please register and try again.");
+
+      widget.updateMemberData({
+        "email": email.text,
+        "name": oracleUser['name'],
+        "lastName": oracleUser['surname'],
+        "cell": "",
+        "samaNo": "",
+        "idNo": "",
+        "hpcsa": "",
+      });
       setState(() {
         showSamaAccountCreate = true;
       });
@@ -211,7 +272,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
     Map<String, dynamic> member = await checkSamaNo(email.text);
     List data = member['items'];
-    if (member['items'].isEmpty) {
+    if (data.isEmpty) {
       setState(() {
         isLoading = false;
       });
@@ -229,11 +290,30 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     if (data.isNotEmpty &&
         users.docs.isNotEmpty &&
         users.docs.first['status'] == 'Active') {
-      widget.changePage(1);
+      if (users.docs.first.data()['loggedIn'] == true) {
+        widget.changePage(1);
+      } else {
+        // Send email with reset link
+        sendResetEmail(users.docs.first['email'],
+            '${data.first['firstName']} ${data.first['surname']}');
+        setState(() {
+          isLoading = false;
+        });
+        openPasswordResetDialog();
+      }
     } else {
       updateStateText(
           "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
       //openValidateDialog();
+      widget.updateMemberData({
+        "email": "",
+        "name": data.first['name'],
+        "lastName": data.first['surname'],
+        "cell": "",
+        "samaNo": email.text,
+        "idNo": "",
+        "hpcsa": "",
+      });
       setState(() {
         showSamaAccountCreate = true;
       });
@@ -404,7 +484,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                               MaterialPageRoute(
                                   builder: (context) => Material(
                                           child: LoginPages(
-                                        pageIndex: 18,
+                                        pageIndex: 19,
                                       ))));
                         },
                         child: Text(
