@@ -235,7 +235,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
       widget.updateMemberData({
         "email": email.text,
-        "name": oracleUser['name'],
+        "name": oracleUser['first_name'],
         "lastName": oracleUser['surname'],
         "cell": "",
         "samaNo": "",

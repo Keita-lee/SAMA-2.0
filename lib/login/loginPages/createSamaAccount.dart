@@ -6,7 +6,7 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 
 class CreateSamaAccount extends StatefulWidget {
-  final Map<String, dynamic> userData;
+  final Map userData;
   const CreateSamaAccount({super.key, required this.userData});
 
   @override
@@ -26,8 +26,9 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
 
   @override
   void initState() {
+    print(widget.userData);
     setState(() {
-      nameController.text = widget.userData['name'] ?? '';
+      nameController.text = widget.userData['first_name'] ?? '';
       lastNameController.text = widget.userData['lastName'] ?? '';
       cellController.text = widget.userData['cell'] ?? '';
       emailController.text = widget.userData['email'] ?? '';
@@ -135,7 +136,7 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
             child: TextFieldStyling(
               obscure: true,
               hintText: 'Surname',
-              textfieldController: nameController,
+              textfieldController: lastNameController,
             ),
           ),
           const SizedBox(

@@ -23,6 +23,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'membershipCategory/membershipSignup.dart';
 
+Map<String, dynamic> userData = {};
+
 class LoginPages extends StatefulWidget {
   final int? pageIndex;
   LoginPages({super.key, this.pageIndex});
@@ -36,7 +38,7 @@ class _LoginPagesState extends State<LoginPages> {
   String? mobileNumber;
   String? emailChangeType;
   int pageIndex = 0;
-  Map<String, dynamic> userData = {};
+
 //set email state
   getEmail(value) {
     setState(() {
@@ -67,6 +69,8 @@ class _LoginPagesState extends State<LoginPages> {
 
   updateUserData(Map<String, dynamic> data) {
     setState(() {
+      print("DATA SET");
+      print(data);
       userData = data;
     });
   }
