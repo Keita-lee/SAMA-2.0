@@ -5,6 +5,7 @@ import 'package:sama/login/loginPages.dart';
 
 import '../../components/myutility.dart';
 import '../../components/styleButton.dart';
+import '../../homePage/PostLoginLandingPage.dart';
 
 class MeshipRegFinished extends StatefulWidget {
   MeshipRegFinished({
@@ -120,7 +121,11 @@ class _MeshipRegFinishedState extends State<MeshipRegFinished> {
                                                             builder: (context) =>
                                                                 Material(
                                                                     child:
-                                                                        LoginPages())));
+                                                                        PostLoginLandingPage(
+                                                                  userId: "",
+                                                                  activeIndex:
+                                                                      0,
+                                                                ))));
                                                   },
                                                 ),
                                               ],

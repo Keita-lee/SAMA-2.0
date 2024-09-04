@@ -140,9 +140,9 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     updateStateText("");
 
     //If admin by pass all validators
-    // if (users.docs[0]['userType'] == "Admin") {
-    //   return await widget.changePage(1);
-    // }
+    if (users.docs[0]['userType'] == "Admin") {
+      return await widget.changePage(1);
+    }
     bool foundOnOracleDb = await checkOracleDb((email.text).toLowerCase());
     bool foundInFirebase = users.docs.isNotEmpty;
     print(users.docs.first.id);

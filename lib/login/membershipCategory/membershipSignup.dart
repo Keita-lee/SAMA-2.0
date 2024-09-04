@@ -75,9 +75,14 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
     });
   }
 
-  getPaymentDetails(type) {
+  getPaymentDetails(type, categoryType) {
     setState(() {
-      paymentDetails = {"type": type, "ref": paymentRef};
+      paymentDetails = {
+        "type": type,
+        "ref": paymentRef,
+        "categoryType": categoryType,
+        "bankPayType": paymentType
+      };
     });
   }
 
