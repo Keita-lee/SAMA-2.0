@@ -88,17 +88,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   Future<Map<String, dynamic>> checkOracleDb(String email) async {
     final TokenManager tokenManager = TokenManager();
-    // final TokenStorage storage = TokenStorage();
-    // // Ensure the token is valid or refresh it if needed
-    // await tokenManager.refreshTokenIfNeeded();
-    // // Get the valid token
-    // String? token = await storage.getToken();
-
-    // if (token == null || token == '') {
-    //   print('error getting token');
-    //   return false;
-    // }
-
     String basicAuth = tokenManager.basicAuth();
 
     http.Response response = await http.get(
@@ -129,17 +118,6 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   Future<Map<String, dynamic>> checkSamaNo(String samaNo) async {
     final TokenManager tokenManager = TokenManager();
-    // final TokenStorage storage = TokenStorage();
-    // // Ensure the token is valid or refresh it if needed
-    // await tokenManager.refreshTokenIfNeeded();
-    // // Get the valid token
-    // String? token = await storage.getToken();
-
-    // if (token == null || token == '') {
-    //   print('error getting token');
-    // }
-
-    // print("token: $token");
     String basicAuth = tokenManager.basicAuth();
 
     http.Response response = await http.get(
@@ -181,87 +159,95 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 //Check if email exists and continue
   checkEmail() async {
     if (isLoading) return;
+    try {
+      setState(() {
+        isLoading = true;
+      });
 
-    setState(() {
-      isLoading = true;
-    });
+      final firestore = FirebaseFirestore.instance;
+      widget.getEmail((email.text).toLowerCase());
+      updateStateText("");
+      final users = await firestore
+          .collection('users')
+          .where('email', isEqualTo: (email.text).toLowerCase())
+          .get();
 
-    final firestore = FirebaseFirestore.instance;
-    widget.getEmail((email.text).toLowerCase());
-    updateStateText("");
-    final users = await firestore
-        .collection('users')
-        .where('email', isEqualTo: (email.text).toLowerCase())
-        .get();
-
-    //If admin by pass all validators
-    if (users.docs[0]['userType'] == "Admin") {
-      return await widget.changePage(1);
-    }
-
-    //Check if user exists in Oracle Db and Firestore
-    Map oracleUser = await checkOracleDb((email.text).toLowerCase());
-    bool foundOnOracleDb = oracleUser.isNotEmpty;
-    bool foundInFirebase = users.docs.isNotEmpty;
-
-    print(
-        'foundOnOracleDb: $foundOnOracleDb, foundInFirebase: $foundInFirebase');
-
-    // user is in firebase and is sama member
-    if (foundInFirebase && email.text != "" && foundOnOracleDb) {
-      if (users.docs.first.data()['status'] == 'Active') {
-        if (users.docs.first.data()['loggedIn'] == true) {
-          widget.changePage(1);
-        } else {
-          // Send reset password email
-          sendResetEmail(email.text,
-              '${users.docs.first.data()['firstName']} ${users.docs.first.data()['lastName']}');
-          setState(() {
-            isLoading = false;
-          });
-          openPasswordResetDialog();
+      //If admin by pass all validators
+      if (users.docs[0].data().containsKey('userType')) {
+        if (users.docs[0]['userType'] == "Admin") {
+          return await widget.changePage(1);
         }
+      }
+
+      //Check if user exists in Oracle Db and Firestore
+      Map oracleUser = await checkOracleDb((email.text).toLowerCase());
+      bool foundOnOracleDb = oracleUser.isNotEmpty;
+      bool foundInFirebase = users.docs.isNotEmpty;
+
+      print(
+          'foundOnOracleDb: $foundOnOracleDb, foundInFirebase: $foundInFirebase');
+
+      // user is in firebase and is sama member
+      if (foundInFirebase && email.text != "" && foundOnOracleDb) {
+        if (users.docs.first.data()['status'] == 'Active') {
+          if (users.docs.first.data()['loggedIn'] == true) {
+            widget.changePage(1);
+          } else {
+            // Send reset password email
+            sendResetEmail(email.text,
+                '${users.docs.first.data()['firstName']} ${users.docs.first.data()['lastName']}');
+            setState(() {
+              isLoading = false;
+            });
+            openPasswordResetDialog();
+          }
+        } else {
+          updateStateText(
+              "Your account is pending approval. You will receive an email once approved");
+        }
+      }
+      //user is in firebase and is not sama member - treated as non-member
+      else if (foundInFirebase && !foundOnOracleDb) {
+        updateStateText(
+            'You are not a SAMA member yet. Please use non member portal or create an account. If you are a SAMA member, please contact SAMA to enquire about your membership');
+      }
+      // user is in not firebase but is a sama member - needs to create an account
+      else if (!foundInFirebase && foundOnOracleDb) {
+        updateStateText(
+            "You are not registered on this site yet. Please register and try again.");
+
+        widget.updateMemberData({
+          "email": email.text,
+          "firstName": oracleUser['first_name'],
+          "lastName": oracleUser['surname'],
+          "cell": "",
+          "samaNo": "",
+          "idNo": "",
+          "hpcsa": "",
+        });
+        setState(() {
+          showSamaAccountCreate = true;
+        });
+      }
+      // user is in not firebase and is not sama member - needs to create an account
+      else if (!foundInFirebase && !foundOnOracleDb) {
+        updateStateText(
+            "You are not registered on this site yet. Please register and try again.");
       } else {
         updateStateText(
-            "Your account is pending approval. You will receive an email once approved");
+            "Error: Unknown email address. Check again or try using your SAMA member number.");
+        // openValidateDialog();
       }
-    }
-    //user is in firebase and is not sama member - treated as non-member
-    else if (foundInFirebase && !foundOnOracleDb) {
-      updateStateText(
-          'You are not a SAMA member yet. Please use non member portal or create an account. If you are a SAMA member, please contact SAMA to enquire about your membership');
-    }
-    // user is in not firebase but is a sama member - needs to create an account
-    else if (!foundInFirebase && foundOnOracleDb) {
-      updateStateText(
-          "You are not registered on this site yet. Please register and try again.");
 
-      widget.updateMemberData({
-        "email": email.text,
-        "firstName": oracleUser['first_name'],
-        "lastName": oracleUser['surname'],
-        "cell": "",
-        "samaNo": "",
-        "idNo": "",
-        "hpcsa": "",
-      });
       setState(() {
-        showSamaAccountCreate = true;
+        isLoading = false;
       });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('error login: $e');
     }
-    // user is in not firebase and is not sama member - needs to create an account
-    else if (!foundInFirebase && !foundOnOracleDb) {
-      updateStateText(
-          "You are not registered on this site yet. Please register and try again.");
-    } else {
-      updateStateText(
-          "Error: Unknown email address. Check again or try using your SAMA member number.");
-      // openValidateDialog();
-    }
-
-    setState(() {
-      isLoading = false;
-    });
   }
 
   //Check if member exists and continue
