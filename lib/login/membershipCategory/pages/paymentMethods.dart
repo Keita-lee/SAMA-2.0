@@ -236,71 +236,82 @@ class _PaymentMethodState extends State<PaymentMethod> {
               borderRadius: BorderRadius.circular(5),
               border: Border.all(color: Colors.grey, width: 1.5)),
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            padding: EdgeInsets.all(10.0),
+            child: Column(
               children: [
-                SizedBox(
-                  width: MyUtility(context).width * 0.32,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PaymentTextreu(
-                          boldText: 'Application Type',
-                          secondText: widget.title),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          child: PaymentTextreu(
-                              boldText: 'Category',
-                              secondText: widget.applicationCategory),
-                        ),
-                      ),
-                      PaymentTextreu(
-                          boldText: widget.paymentType,
-                          secondText: widget.applicationPrice),
-                      Text(
-                        'Calculated on a pro-rata basis when paying annually',
-                        style: GoogleFonts.openSans(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: Colors.grey[800],
-                            letterSpacing: -0.5),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      JournalCheckBox(
-                        title: 'Include SA Medical Journal (SAMJ)',
-                        onChanged: (bool value) {},
-                      )
-                    ],
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Visibility(
-                      visible: widget.paymentType != "Monthly",
+                    SizedBox(
+                      width: MyUtility(context).width * 0.32,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PaymentTextPr(
-                            boldText: 'Pro-rata Amount',
-                            secondText: widget.paymentType != "Monthly"
-                                ? getTotalToPay()
-                                : widget.applicationPrice,
+                          PaymentTextreu(
+                              boldText: 'Application Type',
+                              secondText: widget.title),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: PaymentTextreu(
+                                  boldText: 'Category',
+                                  secondText: widget.applicationCategory),
+                            ),
                           ),
-                          PaymentTextPr(
-                              boldText: 'For Period',
-                              secondText: getTimeFrame()),
+                          PaymentTextreu(
+                              boldText: widget.paymentType,
+                              secondText: widget.applicationPrice),
+                          Text(
+                            'Calculated on a pro-rata basis when paying annually',
+                            style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: Colors.grey[800],
+                                letterSpacing: -0.5),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
                     ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Visibility(
+                          visible: widget.paymentType != "Monthly",
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              PaymentTextPr(
+                                boldText: 'Pro-rata Amount',
+                                secondText: widget.paymentType != "Monthly"
+                                    ? getTotalToPay()
+                                    : widget.applicationPrice,
+                              ),
+                              PaymentTextPr(
+                                  boldText: 'For Period',
+                                  secondText: getTimeFrame()),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
                     SizedBox(
-                      height: 10,
+                      width: MyUtility(context).width * 0.32,
+                      child: JournalCheckBox(
+                        title: 'Include SA Medical Journal (SAMJ)',
+                        onChanged: (bool value) {},
+                      ),
                     ),
                     Text(
                       "R0",
@@ -309,6 +320,13 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           color: Colors.grey[600],
                           fontSize: 16,
                           height: 2),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MyUtility(context).width * 0.32,
                     ),
                     Column(
                       children: [
