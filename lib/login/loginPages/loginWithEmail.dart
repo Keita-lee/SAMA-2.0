@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/loginPages/register.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
+import 'package:sama/components/email/sendBugReport.dart';
 
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/email/sendPasswordResetLink.dart';
@@ -21,6 +22,8 @@ import 'package:sama/login/loginPages.dart';
 import 'package:sama/login/registerFullProfile.dart';
 import 'package:sama/utils/tokenManager.dart';
 import 'package:http/http.dart' as http;
+
+import '../../components/email/payments/onlinePayment.dart';
 
 enum SingingCharacter { memberNumber, email }
 

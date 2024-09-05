@@ -197,7 +197,7 @@ class _AdminMediaState extends State<AdminMedia> {
                                       adminType: "true",
                                       image: document['mediaImageUrl'] ?? '',
                                       duration: '',
-                                      releaseDate: '',
+                                      releaseDate: document['releaseDate'],
                                       category: document['category'],
                                       title: document['title'],
                                       id: document['id'],

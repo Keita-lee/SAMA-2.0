@@ -12,6 +12,9 @@ import 'package:sama/login/registerFinished.dart';
 import 'package:sama/profile/EditProfile.dart';
 import 'package:sama/components/constants.dart' as constants;
 
+import '../../../components/email/payments/debitOrder.dart';
+import '../../../components/email/payments/eftPayment.dart';
+import '../../../components/email/payments/onlinePayment.dart';
 import '../../loginPages/membershipSignUp.dart';
 
 class ApplicationProfile extends StatefulWidget {
@@ -103,6 +106,19 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
     }
   }
 
+  sendUpdatedEmail() {
+    if (widget.paymentDetails['type'] == "PAY ONLINE") {
+      sendOnlineUpdate(
+          name: '${firstName.text} ${lastName.text}', email: email.text);
+    } else if (widget.paymentDetails['type'] == "MANUAL EFT") {
+      sendEftUpdate(
+          name: '${firstName.text} ${lastName.text}', email: email.text);
+    } else {
+      sendDebitUpdate(
+          name: '${firstName.text} ${lastName.text}', email: email.text);
+    }
+  }
+
   updateProfile() async {
     var userData = {
       "paymentDetails": widget.paymentDetails,
@@ -151,6 +167,8 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update(userData);
+
+    await sendUpdatedEmail();
 
     Navigator.push(
         context,
