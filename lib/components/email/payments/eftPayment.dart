@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 Future sendEftUpdate({
   required String name,
   required String email,
+  required String invno,
 }) async {
   final serviceId = 'service_igwbojp';
   final templateId = 'template_7zcyne4';
@@ -23,6 +24,7 @@ Future sendEftUpdate({
         'template_params': {
           'member_name': name,
           'user_email': email,
+          'invno': invno
         }
       }));
 }

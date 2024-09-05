@@ -103,15 +103,18 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
     }
   }
 
-  sendUpdatedEmail() {
+  sendUpdatedEmail() async {
+    print("Email sent");
     if (widget.paymentDetails['type'] == "PAY ONLINE") {
-      sendOnlineUpdate(
+      await sendOnlineUpdate(
           name: '${firstName.text} ${lastName.text}', email: email.text);
     } else if (widget.paymentDetails['type'] == "MANUAL EFT") {
-      sendEftUpdate(
-          name: '${firstName.text} ${lastName.text}', email: email.text);
+      await sendEftUpdate(
+          name: '${firstName.text} ${lastName.text}',
+          email: email.text,
+          invno: widget.paymentDetails['ref']);
     } else {
-      sendDebitUpdate(
+      await sendDebitUpdate(
           name: '${firstName.text} ${lastName.text}', email: email.text);
     }
   }

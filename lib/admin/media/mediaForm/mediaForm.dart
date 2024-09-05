@@ -82,10 +82,10 @@ class _MediaFormState extends State<MediaForm> {
 
     var mediaData = {
       "title": title.text,
-      "duration": duration.text,
+      // "duration": duration.text,
       "author": author.text,
-      "category": selectedCategory,
-      "description": jsonEncode(quillController.document.toDelta().toJson()),
+      "category": selectedCategory.text,
+      // "description": jsonEncode(quillController.document.toDelta().toJson()),
       "urlLink": urlLink.text,
       "mediaImageUrl": mediaImageUrl,
       "releaseDate": date.text,
@@ -117,13 +117,12 @@ class _MediaFormState extends State<MediaForm> {
     if (data.exists) {
       setState(() {
         title.text = data.get('title');
-        duration.text = data.get('duration');
+        // duration.text = data.get('duration');
         author.text = data.get('author');
         category.text = data.get('category');
         selectedCategory.text = data.get('category');
         //quillController = data.get('description');
 
-        description.text = data.get('description');
         urlLink.text = data.get('urlLink');
         mediaImageUrl = data.get('mediaImageUrl');
         date.text = data.get('releaseDate');
@@ -225,10 +224,10 @@ class _MediaFormState extends State<MediaForm> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  AddMediaImage(
+                  /*  AddMediaImage(
                     networkImageUrl: mediaImageUrl,
                     updateUrl: getUrlForMediaImage,
-                  ),
+                  ),*/
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

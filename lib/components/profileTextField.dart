@@ -12,7 +12,7 @@ class ProfileTextField extends StatefulWidget {
   bool? isBold;
   bool? isRounded;
   double? fontSize;
-
+  bool? isPassword;
   ProfileTextField(
       {super.key,
       this.lines,
@@ -24,7 +24,8 @@ class ProfileTextField extends StatefulWidget {
       this.description,
       this.isBold,
       this.isRounded,
-      this.hintText});
+      this.hintText,
+      this.isPassword});
 
   @override
   State<ProfileTextField> createState() => _ProfileTextFieldState();
@@ -70,6 +71,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                 ? EdgeInsets.only(top: 10.0)
                 : EdgeInsets.zero,
             child: TextFormField(
+              obscureText: widget.isPassword == null ? false : true,
               maxLines: widget.lines == null ? 1 : widget.lines,
               validator: (value) {
                 if (widget.textFieldType == "") {

@@ -27,7 +27,7 @@ class _DateSelecterState extends State<DateSelecter> {
       initialDate: DateTime.now(),
     );
     if (pickedDate == null) return;
-    widget.controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+    widget.controller.text = DateFormat('dd/MM/yyyy').format(pickedDate);
     widget.refresh();
   }
 

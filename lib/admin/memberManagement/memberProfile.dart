@@ -401,8 +401,7 @@ class _MemberProfileState extends State<MemberProfile> {
       builder: (context) {
         return Dialog(
             child: YesNoDialog(
-          description:
-              "This will send a automatic email to user for activation details",
+          description: "Active account and sent welcome email",
           closeDialog: () => Navigator.pop(context!),
           callFunction: sendRegistrationEmail,
         ));

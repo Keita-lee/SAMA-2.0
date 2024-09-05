@@ -158,7 +158,7 @@ class _AdminMediaState extends State<AdminMedia> {
                         snapshot.data!.docs;
 
                     documents.sort(
-                        (b, a) => a["releaseDate"].compareTo(b["releaseDate"]));
+                        (a, b) => b["releaseDate"].compareTo(a["releaseDate"]));
                     if (documents.isEmpty) {
                       return Center(child: Text('No Media & Webinars yet'));
                     }

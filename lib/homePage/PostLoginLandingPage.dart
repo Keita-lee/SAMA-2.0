@@ -450,7 +450,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                       color: Color.fromRGBO(73, 91, 155, 1),
                                     ),
                                   ),
-                                  IconButton(
+                                  /*     IconButton(
                                     onPressed: () {
                                       openReportPopup();
                                     },
@@ -461,6 +461,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                       color: Color.fromRGBO(73, 91, 155, 1),
                                     ),
                                   ),
+                           */
                                   PopupMenuButton(
                                     key: _menuKey,
                                     onSelected: (value) {

@@ -140,6 +140,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: TextFormField(
+              obscureText: true,
               controller: password,
               style: TextStyle(
                 color: Color.fromARGB(255, 153, 147, 147),
@@ -174,6 +175,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
           ),
           SizedBox(height: 20),
           ProfileTextField(
+              isPassword: true,
               isBold: false,
               description: 'Confirm Password',
               customSize: MyUtility(context).width,
