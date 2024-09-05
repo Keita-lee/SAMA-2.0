@@ -172,17 +172,19 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           .where('email', isEqualTo: (email.text).toLowerCase())
           .get();
 
-      //If admin by pass all validators
-      if (users.docs[0].data().containsKey('userType')) {
-        if (users.docs[0]['userType'] == "Admin") {
-          return await widget.changePage(1);
-        }
-      }
-
       //Check if user exists in Oracle Db and Firestore
       Map oracleUser = await checkOracleDb((email.text).toLowerCase());
       bool foundOnOracleDb = oracleUser.isNotEmpty;
       bool foundInFirebase = users.docs.isNotEmpty;
+
+      //If admin by pass all validators
+      if (foundInFirebase) {
+        if (users.docs[0].data().containsKey('userType')) {
+          if (users.docs[0]['userType'] == "Admin") {
+            return await widget.changePage(1);
+          }
+        }
+      }
 
       print(
           'foundOnOracleDb: $foundOnOracleDb, foundInFirebase: $foundInFirebase');
@@ -614,6 +616,11 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           SizedBox(
             height: 15,
           ),
+          const Text(
+            'v1.0.0b',
+            style: TextStyle(
+                fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
+          )
         ],
       ),
     );

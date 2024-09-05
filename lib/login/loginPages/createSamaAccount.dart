@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 
@@ -15,6 +17,8 @@ class CreateSamaAccount extends StatefulWidget {
 
 class _CreateSamaAccountState extends State<CreateSamaAccount> {
   final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController cellController = TextEditingController();
@@ -40,11 +44,15 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
   }
 
   submitUserData() async {
+    if (!_formKey.currentState!.validate()) return;
     try {
       setState(() {
         isLoading = true;
       });
+      var result = await _auth.createUserWithEmailAndPassword(
+          email: emailController.text, password: 'Cp123456');
       await _firestore.collection('users').add({
+        "id": result.user!.uid,
         'firstName': nameController.text,
         'lastName': lastNameController.text,
         'mobileNo': cellController.text,
@@ -52,11 +60,14 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
         'samaNo': int.parse(samaNoController.text),
         'idNumber': idNoController.text,
         'hpcsaNumber': hpcsaController.text,
+        'status': 'Pending',
+        'loggedIn': false
       });
       setState(() {
         isLoading = false;
       });
     } catch (e) {
+      print('error adding user: $e');
       setState(() {
         isLoading = false;
       });
@@ -131,73 +142,96 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
           const SizedBox(
             height: 10.0,
           ),
-          SizedBox(
-            width: MyUtility(context).width * 0.3,
-            child: TextFieldStyling(
-              hintText: 'Surname',
-              textfieldController: lastNameController,
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.3,
-            child: TextFieldStyling(
-              hintText: 'CellNo',
-              textfieldController: nameController,
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.3,
-            child: TextFieldStyling(
-              hintText: 'Email Address',
-              textfieldController: emailController,
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.3,
-            child: TextFieldStyling(
-              hintText: 'SAMA Number',
-              textfieldController: samaNoController,
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.3,
-            child: TextFieldStyling(
-              hintText: 'ID Number',
-              textfieldController: idNoController,
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            width: MyUtility(context).width * 0.3,
-            child: TextFieldStyling(
-              hintText: 'HPCSA Number',
-              textfieldController: hpcsaController,
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          StyleButton(
-            waiting: isLoading,
-            description: "SUBMIT",
-            height: 55,
-            width: 100,
-            onTap: submitUserData,
-          ),
+          Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'First Name',
+                      description: 'First Name',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'stringType',
+                      textfieldController: nameController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'Last Name',
+                      description: 'Last Name',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'stringType',
+                      textfieldController: lastNameController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'Cell Number',
+                      description: 'Cell Number',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'stringType',
+                      textfieldController: cellController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'Email Address',
+                      description: 'Email Address',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'emailType',
+                      textfieldController: emailController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'SAMA Number',
+                      description: 'SAMA Number',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'stringType',
+                      textfieldController: samaNoController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'ID Number',
+                      description: 'ID Number',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'stringType',
+                      textfieldController: idNoController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileTextField(
+                      isRounded: false,
+                      isBold: false,
+                      hintText: 'HSPCSA Number',
+                      description: 'HSPCSA Number',
+                      customSize: MyUtility(context).width * 0.42,
+                      textFieldType: 'stringType',
+                      textfieldController: hpcsaController),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  StyleButton(
+                    waiting: isLoading,
+                    description: "SUBMIT",
+                    height: 55,
+                    width: 100,
+                    onTap: submitUserData,
+                  ),
+                ],
+              ))
         ],
       ),
     );
