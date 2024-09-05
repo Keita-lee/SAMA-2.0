@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
+import 'package:sama/login/loginPages/CreateSamaAccountFinished.dart';
 import 'package:sama/login/loginPages/membershipSignUp.dart';
 
 class CreateSamaAccount extends StatefulWidget {
@@ -27,6 +28,7 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
   TextEditingController samaNoController = TextEditingController();
   TextEditingController idNoController = TextEditingController();
   TextEditingController hpcsaController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
   bool isLoading = false;
   bool showErrorMessage = false;
 
@@ -34,6 +36,7 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
   void initState() {
     print(widget.userData);
     setState(() {
+      titleController.text = widget.userData['title'] ?? '';
       nameController.text = widget.userData['firstName'] ?? '';
       lastNameController.text = widget.userData['lastName'] ?? '';
       cellController.text = widget.userData['cell'] ?? '';
@@ -50,12 +53,13 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
     try {
       setState(() {
         isLoading = true;
+        showErrorMessage = false;
       });
       UserCredential userDocRef = await _auth.createUserWithEmailAndPassword(
           email: emailController.text, password: 'Cp123456');
       await _firestore.collection('users').add({
         "id": userDocRef.user!.uid,
-        "title": '',
+        "title": titleController.text,
         "initials": '',
         "landline": '',
         "profilePic": '',
@@ -81,17 +85,18 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
         'idNumber': idNoController.text,
         'hpcsaNumber': hpcsaController.text,
         'status': 'Pending',
+        'registrationType': 'Existing SAMA Member',
         'loggedIn': false
       });
       setState(() {
         isLoading = false;
-        showErrorMessage = false;
       });
 
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Material(child: MeshipRegFinished())));
+              builder: (context) =>
+                  const Material(child: CreateSamaAccountFinished())));
     } catch (e) {
       print('error adding user: $e');
       setState(() {
@@ -169,6 +174,17 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
             key: _formKey,
             child: Column(
               children: [
+                ProfileTextField(
+                    isRounded: false,
+                    isBold: false,
+                    hintText: 'Title',
+                    description: 'Title',
+                    customSize: MyUtility(context).width * 0.42,
+                    textFieldType: 'stringType',
+                    textfieldController: nameController),
+                const SizedBox(
+                  height: 10.0,
+                ),
                 ProfileTextField(
                     isRounded: false,
                     isBold: false,

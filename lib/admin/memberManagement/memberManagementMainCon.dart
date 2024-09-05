@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/memberManagement/approveMembers.dart';
-import 'package:sama/admin/memberManagement/filterMembersRow.dart';
+import 'package:sama/admin/memberManagement/ui/filterMembersRow.dart';
 import 'package:sama/admin/memberManagement/legendIndicators.dart';
 import 'package:sama/admin/memberManagement/memberStanding.dart';
 import 'package:sama/admin/memberManagement/memberTable.dart';

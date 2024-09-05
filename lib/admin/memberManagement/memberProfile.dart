@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/admin/memberManagement/memberInvoice2.dart';
+import 'package:sama/components/email/sendExistingMemberApproval.dart';
+import 'package:sama/components/email/sendNewMemberApproval.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/profile/bio.dart';
 
@@ -284,6 +286,9 @@ class _MemberProfileState extends State<MemberProfile> {
   final subCategoryTime = TextEditingController();
   final categoryPrice = TextEditingController();
 
+  String memberType = '';
+  bool isLoading = true;
+
   getUserDetails() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -291,59 +296,76 @@ class _MemberProfileState extends State<MemberProfile> {
         .get();
 
     if (data.exists) {
-      var catIndex = (paymentTypes).indexWhere((item) =>
-          item['applicationType'] == data.get('paymentDetails.categoryType'));
-      setState(() {
-        title.text = data.get('title');
-        initials.text = data.get('initials');
+      if (!data.data()!.containsKey('paymentDetails')) {
+        setState(() {
+          firstName.text = data.get('firstName');
+          lastName.text = data.get('lastName');
+          email.text = data.get('email');
+          mobileNo.text = data.get('mobileNo');
+          idNumber.text = data.get('idNumber');
+          hpcsa.text = data.get('hpcsaNumber');
+          samaNumber.text = data.get('samaNo');
+          memberType = 'Online Profile';
+          isLoading = false;
+        });
+      } else {
+        var catIndex = (paymentTypes).indexWhere((item) =>
+            item['applicationType'] == data.get('paymentDetails.categoryType'));
+        setState(() {
+          memberType = 'New Membership';
 
-        firstName.text = data.get('firstName');
-        lastName.text = data.get('lastName');
-        email.text = data.get('email');
-        mobileNo.text = data.get('mobileNo');
-        landline.text = data.get('landline');
+          title.text = data.get('title');
+          initials.text = data.get('initials');
 
-        gender.text = data.get('gender');
-        race.text = data.get('race');
-        dob.text = data.get('dob');
+          firstName.text = data.get('firstName');
+          lastName.text = data.get('lastName');
+          email.text = data.get('email');
+          mobileNo.text = data.get('mobileNo');
+          landline.text = data.get('landline');
 
-        idNumber.text = data.get('idNumber');
-        passportNumber.text = data.get('passportNumber');
+          gender.text = data.get('gender');
+          race.text = data.get('race');
+          dob.text = data.get('dob');
 
-        hpcsa.text = data.get('hpcsaNumber');
-        practiceNumber.text = data.get('practiceNumber');
+          idNumber.text = data.get('idNumber');
+          passportNumber.text = data.get('passportNumber');
 
-        univercityQualification.text = data.get('univercityQualification');
-        qualificationYear.text = data.get('qualificationYear');
-        qualificationMonth.text = data.get('qualificationMonth');
-        paymentType.text = data.get('paymentDetails.type');
-        paymentTypeRef.text = data.get('paymentDetails.ref');
+          hpcsa.text = data.get('hpcsaNumber');
+          practiceNumber.text = data.get('practiceNumber');
 
-        bankAccHolder.text = data.get('bankAccHolder');
-        bankAccNo.text = data.get('bankAccNo');
-        bankAccType.text = data.get('bankAccType');
-        bankBranchCde.text = data.get('bankBranchCde');
-        bankBranchName.text = data.get('bankBranchName');
-        bankDisclaimer.text = data.get('bankDisclaimer');
-        bankName.text = data.get('bankName');
+          univercityQualification.text = data.get('univercityQualification');
+          qualificationYear.text = data.get('qualificationYear');
+          qualificationMonth.text = data.get('qualificationMonth');
+          paymentType.text = data.get('paymentDetails.type');
+          paymentTypeRef.text = data.get('paymentDetails.ref');
 
-        categoryType.text = paymentTypes[catIndex]['applicationType'];
+          bankAccHolder.text = data.get('bankAccHolder');
+          bankAccNo.text = data.get('bankAccNo');
+          bankAccType.text = data.get('bankAccType');
+          bankBranchCde.text = data.get('bankBranchCde');
+          bankBranchName.text = data.get('bankBranchName');
+          bankDisclaimer.text = data.get('bankDisclaimer');
+          bankName.text = data.get('bankName');
 
-        var catTypeIndex = (paymentTypes[catIndex]['paymentOptions'])
-            .indexWhere((item) => item['code'] == data.get('prodCatCde'));
+          categoryType.text = paymentTypes[catIndex]['applicationType'];
 
-        if (data.get('paymentDetails.bankPayType') == "Annually") {
-          categoryPrice.text =
-              paymentTypes[catIndex]['paymentOptions'][catTypeIndex]['annual'];
-        } else {
-          categoryPrice.text =
-              paymentTypes[catIndex]['paymentOptions'][catTypeIndex]['month'];
-        }
+          var catTypeIndex = (paymentTypes[catIndex]['paymentOptions'])
+              .indexWhere((item) => item['code'] == data.get('prodCatCde'));
 
-        subCategory.text =
-            paymentTypes[catIndex]['paymentOptions'][catTypeIndex]['title'];
-        subCategoryTime.text = data.get('paymentDetails.bankPayType');
-      });
+          if (data.get('paymentDetails.bankPayType') == "Annually") {
+            categoryPrice.text = paymentTypes[catIndex]['paymentOptions']
+                [catTypeIndex]['annual'];
+          } else {
+            categoryPrice.text =
+                paymentTypes[catIndex]['paymentOptions'][catTypeIndex]['month'];
+          }
+
+          subCategory.text =
+              paymentTypes[catIndex]['paymentOptions'][catTypeIndex]['title'];
+          subCategoryTime.text = data.get('paymentDetails.bankPayType');
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -357,6 +379,20 @@ class _MemberProfileState extends State<MemberProfile> {
         .collection('users')
         .doc(widget.id)
         .update({"status": "Active"});
+
+    if (memberType == 'New Membership') {
+      sendNewMemberApproval(
+          email: email.text,
+          firstName: firstName.text,
+          lastName: lastName.text,
+          title: title.text);
+    } else {
+      sendExistingMemberApproval(
+          email: email.text,
+          firstName: firstName.text,
+          lastName: lastName.text,
+          title: title.text);
+    }
   }
 
   //Dialog for password Validate
@@ -381,359 +417,494 @@ class _MemberProfileState extends State<MemberProfile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MyUtility(context).width / 2,
-        height: 680,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.white),
-        child: SingleChildScrollView(
-            child: Padding(
+      width: MyUtility(context).width / 2,
+      height: 680,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15), color: Colors.white),
+      child: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () {
-                            widget.closeDialog!();
-                          },
-                          child: Icon(Icons.cancel),
+          child: memberType == 'New Membership'
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  widget.closeDialog!();
+                                },
+                                child: Icon(Icons.cancel),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Text(
-                  'Member Details',
-                  style: GoogleFonts.openSans(
-                      fontSize: 24,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                MyDidiver(),
-                Row(
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Title:",
-                        textfieldController: title,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Initials:",
-                        textfieldController: initials,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "First Name:",
-                        textfieldController: firstName,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Last Name:",
-                        textfieldController: lastName,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                MyDidiver(),
-                Row(
+                      Text(
+                        'Member Details',
+                        style: GoogleFonts.openSans(
+                            fontSize: 24,
+                            color: Color(0xFF174486),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      MyDidiver(),
+                      Row(
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Title:",
+                              textfieldController: title,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Initials:",
+                              textfieldController: initials,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "First Name:",
+                              textfieldController: firstName,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Last Name:",
+                              textfieldController: lastName,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      MyDidiver(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Email",
+                              textfieldController: email,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Mobile No",
+                              textfieldController: mobileNo,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Landline",
+                              textfieldController: landline,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      MyDidiver(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Gender:",
+                              textfieldController: gender,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Race:",
+                              textfieldController: race,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(children: [
+                        ProfileTextField(
+                            customSize: MyUtility(context).width / 6,
+                            description: "Date of Birth:",
+                            textfieldController: dob,
+                            textFieldType: "stringType"),
+                        Spacer(),
+                      ]),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "ID Number:",
+                              textfieldController: idNumber,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "PassportNumber:",
+                              textfieldController: passportNumber,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyDidiver(),
+                      Text(
+                        'Member Category',
+                        style: GoogleFonts.openSans(
+                            fontSize: 24,
+                            color: Color(0xFF174486),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 3,
+                              description: "Category Selected:",
+                              textfieldController: categoryType,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Title:",
+                              textfieldController: subCategory,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Title:",
+                              textfieldController: subCategoryTime,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Payment:",
+                              textfieldController: categoryPrice,
+                              textFieldType: "stringType"),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      MyDidiver(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Payment Details',
+                        style: GoogleFonts.openSans(
+                            fontSize: 24,
+                            color: Color(0xFF174486),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      MyDidiver(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                              customSize: MyUtility(context).width / 6,
+                              description: "Payment Type:",
+                              textfieldController: paymentType,
+                              textFieldType: "stringType"),
+                          Spacer(),
+                          Visibility(
+                            visible: paymentType.text == "PAY ONLINE",
+                            child: ProfileTextField(
+                                customSize: MyUtility(context).width / 6,
+                                description: "Reference:",
+                                textfieldController: paymentTypeRef,
+                                textFieldType: "stringType"),
+                          ),
+                        ],
+                      ),
+                      Visibility(
+                          visible: paymentType.text == "DEBIT ORDER",
+                          child: Column(
+                            children: [
+                              ProfileTextField(
+                                  customSize: MyUtility(context).width / 6,
+                                  description: "Bank Account Holder:",
+                                  textfieldController: bankAccHolder,
+                                  textFieldType: "stringType"),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              ProfileTextField(
+                                  customSize: MyUtility(context).width / 6,
+                                  description: "Bank Name:",
+                                  textfieldController: bankName,
+                                  textFieldType: "stringType"),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              ProfileTextField(
+                                  customSize: MyUtility(context).width / 6,
+                                  description: "Bank Branch Name:",
+                                  textfieldController: bankBranchName,
+                                  textFieldType: "stringType"),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  ProfileTextField(
+                                      customSize: MyUtility(context).width / 6,
+                                      description: "Bank Branch Code:",
+                                      textfieldController: bankBranchCde,
+                                      textFieldType: "stringType"),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  ProfileTextField(
+                                      customSize: MyUtility(context).width / 6,
+                                      description: "Bank Account Type:",
+                                      textfieldController: bankAccType,
+                                      textFieldType: "stringType"),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  ProfileTextField(
+                                      customSize: MyUtility(context).width / 6,
+                                      description: "Bank Account Number:",
+                                      textfieldController: bankAccNo,
+                                      textFieldType: "stringType"),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  ProfileTextField(
+                                      customSize: MyUtility(context).width / 6,
+                                      description: "Bank Disclaimer:",
+                                      textfieldController: bankDisclaimer,
+                                      textFieldType: "stringType"),
+                                ],
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GetInvoice2(
+                            ref: '',
+                            documentDate: '',
+                            dueDate: '',
+                            title: '',
+                            name: '',
+                            memberId: '',
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          StyleButton(
+                              description: " Activate Account",
+                              height: 55,
+                              width: 125,
+                              onTap: () {
+                                activateAccount();
+                              })
+                        ],
+                      )
+                    ])
+              : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Email",
-                        textfieldController: email,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Mobile No",
-                        textfieldController: mobileNo,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Landline",
-                        textfieldController: landline,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                MyDidiver(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Gender:",
-                        textfieldController: gender,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Race:",
-                        textfieldController: race,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(children: [
-                  ProfileTextField(
-                      customSize: MyUtility(context).width / 6,
-                      description: "Date of Birth:",
-                      textfieldController: dob,
-                      textFieldType: "stringType"),
-                  Spacer(),
-                ]),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "ID Number:",
-                        textfieldController: idNumber,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "PassportNumber:",
-                        textfieldController: passportNumber,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                MyDidiver(),
-                Text(
-                  'Member Category',
-                  style: GoogleFonts.openSans(
-                      fontSize: 24,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 3,
-                        description: "Category Selected:",
-                        textfieldController: categoryType,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Title:",
-                        textfieldController: subCategory,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Title:",
-                        textfieldController: subCategoryTime,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Payment:",
-                        textfieldController: categoryPrice,
-                        textFieldType: "stringType"),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                MyDidiver(),
-                const SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'Payment Details',
-                  style: GoogleFonts.openSans(
-                      fontSize: 24,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                MyDidiver(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileTextField(
-                        customSize: MyUtility(context).width / 6,
-                        description: "Payment Type:",
-                        textfieldController: paymentType,
-                        textFieldType: "stringType"),
-                    Spacer(),
-                    Visibility(
-                      visible: paymentType.text == "PAY ONLINE",
-                      child: ProfileTextField(
-                          customSize: MyUtility(context).width / 6,
-                          description: "Reference:",
-                          textfieldController: paymentTypeRef,
-                          textFieldType: "stringType"),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                widget.closeDialog!();
+                              },
+                              child: Icon(Icons.cancel),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-                Visibility(
-                    visible: paymentType.text == "DEBIT ORDER",
-                    child: Column(
-                      children: [
-                        ProfileTextField(
-                            customSize: MyUtility(context).width / 6,
-                            description: "Bank Account Holder:",
-                            textfieldController: bankAccHolder,
-                            textFieldType: "stringType"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ProfileTextField(
-                            customSize: MyUtility(context).width / 6,
-                            description: "Bank Name:",
-                            textfieldController: bankName,
-                            textFieldType: "stringType"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ProfileTextField(
-                            customSize: MyUtility(context).width / 6,
-                            description: "Bank Branch Name:",
-                            textfieldController: bankBranchName,
-                            textFieldType: "stringType"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            ProfileTextField(
-                                customSize: MyUtility(context).width / 6,
-                                description: "Bank Branch Code:",
-                                textfieldController: bankBranchCde,
-                                textFieldType: "stringType"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            ProfileTextField(
-                                customSize: MyUtility(context).width / 6,
-                                description: "Bank Account Type:",
-                                textfieldController: bankAccType,
-                                textFieldType: "stringType"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            ProfileTextField(
-                                customSize: MyUtility(context).width / 6,
-                                description: "Bank Account Number:",
-                                textfieldController: bankAccNo,
-                                textFieldType: "stringType"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            ProfileTextField(
-                                customSize: MyUtility(context).width / 6,
-                                description: "Bank Disclaimer:",
-                                textfieldController: bankDisclaimer,
-                                textFieldType: "stringType"),
-                          ],
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GetInvoice2(
-                      ref: '',
-                      documentDate: '',
-                      dueDate: '',
-                      title: '',
-                      name: '',
-                      memberId: '',
+                    Text(
+                      'Member Details',
+                      style: GoogleFonts.openSans(
+                          fontSize: 24,
+                          color: Color(0xFF174486),
+                          fontWeight: FontWeight.bold),
                     ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    MyDidiver(),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'Title',
+                        description: 'Title',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: title),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'First Name',
+                        description: 'First Name',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: firstName),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'Last Name',
+                        description: 'Last Name',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: lastName),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'Cell Number',
+                        description: 'Cell Number',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: mobileNo),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'Email Address',
+                        description: 'Email Address',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'emailType',
+                        textfieldController: email),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'SAMA Number',
+                        description: 'SAMA Number',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: samaNumber),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'ID Number',
+                        description: 'ID Number',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: idNumber),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ProfileTextField(
+                        isRounded: false,
+                        isBold: false,
+                        hintText: 'HSPCSA Number',
+                        description: 'HSPCSA Number',
+                        customSize: MyUtility(context).width * 0.5,
+                        textFieldType: 'stringType',
+                        textfieldController: hpcsa),
                     SizedBox(
-                      width: 8,
+                      height: 15,
                     ),
-                    StyleButton(
-                        description: " Activate Account",
-                        height: 55,
-                        width: 125,
-                        onTap: () {
-                          activateAccount();
-                        })
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        StyleButton(
+                            description: " Activate Account",
+                            height: 55,
+                            width: 125,
+                            onTap: () {
+                              activateAccount();
+                            })
+                      ],
+                    )
                   ],
-                )
-              ]),
-        )));
+                ),
+        ),
+      ),
+    );
   }
 }

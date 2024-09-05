@@ -219,6 +219,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         //     "You are not registered on this site yet. Please register and try again.");
 
         widget.updateMemberData({
+          "title": oracleUser['title'] ?? '',
           "email": email.text,
           "firstName": '',
           "lastName": '',
@@ -307,6 +308,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       //     "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
       // //openValidateDialog();
       widget.updateMemberData({
+        "title": data.first['title'] ?? '',
         "email": "",
         "name": '',
         "lastName": '',

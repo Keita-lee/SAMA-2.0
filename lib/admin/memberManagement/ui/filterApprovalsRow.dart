@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sama/components/CustomSearchBar.dart';
-import 'package:sama/components/checkBox.dart';
-import 'package:sama/components/customCheckbox.dart';
 import 'package:sama/components/myutility.dart';
-import 'package:sama/components/styleButton.dart';
 
-class FilterMemberRowWidget extends StatelessWidget {
+class FilterApprovalsRow extends StatefulWidget {
   final Function(String) onSearch;
-  const FilterMemberRowWidget({Key? key, required this.onSearch})
-      : super(key: key);
+  const FilterApprovalsRow({super.key, required this.onSearch});
 
+  @override
+  State<FilterApprovalsRow> createState() => _FilterApprovalsRowState();
+}
+
+class _FilterApprovalsRowState extends State<FilterApprovalsRow> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -18,7 +19,7 @@ class FilterMemberRowWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Search Field
@@ -29,7 +30,7 @@ class FilterMemberRowWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomSearchBar(
-                      onSearch: onSearch,
+                      onSearch: widget.onSearch,
                       width: 400,
                       borderColor: Colors.black,
                       backgroundColor: Colors.white,
@@ -40,44 +41,13 @@ class FilterMemberRowWidget extends StatelessWidget {
               SizedBox(
                 width: 20,
               ),
-              Flexible(flex: 4, child: SizedBox()),
-              // Payment Type Dropdown
-              // Flexible(
-              //   flex: 1,
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       const Text("Payment Type"),
-              //       const SizedBox(height: 2),
-              //       DropdownButtonFormField<String>(
-              //         decoration: InputDecoration(
-              //           border: OutlineInputBorder(),
-              //           contentPadding: const EdgeInsets.symmetric(
-              //               vertical: 2, horizontal: 12),
-              //         ),
-              //         value: 'All',
-              //         onChanged: (String? newValue) {},
-              //         items: <String>['All', 'Credit Card', 'Cash', 'Other']
-              //             .map<DropdownMenuItem<String>>((String value) {
-              //           return DropdownMenuItem<String>(
-              //             value: value,
-              //             child: Text(value),
-              //           );
-              //         }).toList(),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              SizedBox(
-                width: 20,
-              ),
               // Product Dropdown
               Flexible(
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Status"),
+                    const Text("Types"),
                     const SizedBox(height: 4),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
@@ -87,8 +57,11 @@ class FilterMemberRowWidget extends StatelessWidget {
                       ),
                       value: 'All',
                       onChanged: (String? newValue) {},
-                      items: <String>['All', 'Active', 'Inactive', 'Pending']
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: <String>[
+                        'All',
+                        'New Memberships',
+                        'Online Profiles'
+                      ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -130,8 +103,6 @@ class FilterMemberRowWidget extends StatelessWidget {
               ),
             ],
           ),
-
-          const SizedBox(height: 20),
 
           // Buttons
         ],
