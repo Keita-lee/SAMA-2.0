@@ -18,6 +18,7 @@ import 'ui/paymentTextField.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentMethod extends StatefulWidget {
+  String email;
   String title;
   String applicationPrice;
   Function(int) nextSection;
@@ -29,6 +30,7 @@ class PaymentMethod extends StatefulWidget {
 
   PaymentMethod(
       {super.key,
+      required this.email,
       required this.title,
       required this.applicationPrice,
       required this.nextSection,
@@ -49,7 +51,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
   var email = "";
   String paymentStatus = "";
   String reference = "";
-  String debitRef = "";
+  String debitRef = "Loading...";
   bool loadingState = false;
   TextEditingController bankDisclaimer = TextEditingController();
   TextEditingController accHolderName = TextEditingController();
@@ -58,6 +60,16 @@ class _PaymentMethodState extends State<PaymentMethod> {
   TextEditingController branchCode = TextEditingController();
   TextEditingController accNumber = TextEditingController();
   TextEditingController accType = TextEditingController();
+
+  getAmountOfMembers() async {
+    final doc = await FirebaseFirestore.instance.collection('users').get();
+    setState(() {
+      final data = FirebaseFirestore.instance.collection('users').get();
+      widget.getPaymentRef("MP0000${doc.docs.length}");
+      debitRef = "MP0000${doc.docs.length}";
+    });
+    FirebaseFirestore.instance.collection('users').get();
+  }
 
 //Calculate months left for december
   getTimeFrame() {
@@ -189,15 +201,21 @@ class _PaymentMethodState extends State<PaymentMethod> {
   }
 
   getUserData() async {
-    final data = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-
-    if (data.exists) {
+    if (widget.email != "") {
       setState(() {
-        email = data.get('email');
+        email = widget.email;
       });
+    } else {
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      if (data.exists) {
+        setState(() {
+          email = data.get('email');
+        });
+      }
     }
   }
 
@@ -401,9 +419,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         InkWell(
                           onTap: () {
                             setState(() {
-                              var uuid = Uuid();
-                              debitRef = uuid.v1();
-                              widget.getPaymentRef(debitRef);
+                              getAmountOfMembers();
+
                               paymnetType = "MANUAL EFT";
                             });
                           },

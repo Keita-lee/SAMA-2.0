@@ -432,6 +432,7 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
             Visibility(
               visible: sectionIndex == 2,
               child: PaymentMethod(
+                  email: widget.email,
                   title: applicationSelected,
                   nextSection: nextSection,
                   applicationPrice: applicationPrice,

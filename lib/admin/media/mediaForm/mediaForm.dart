@@ -37,6 +37,7 @@ class _MediaFormState extends State<MediaForm> {
   final description = TextEditingController();
   final urlLink = TextEditingController();
   final date = TextEditingController();
+  final selectedCategory = TextEditingController();
   var myJSON;
   QuillController quillController = QuillController.basic();
 
@@ -50,7 +51,7 @@ class _MediaFormState extends State<MediaForm> {
     'Corona Virus - COVID-19',
     'Courses',
   ];
-  String selectedCategory = "";
+  // String selectedCategory = "";
 
   // set image URL when selected
   getMediaImageUrl(value) {
@@ -119,7 +120,7 @@ class _MediaFormState extends State<MediaForm> {
         duration.text = data.get('duration');
         author.text = data.get('author');
         category.text = data.get('category');
-        selectedCategory = data.get('category');
+        selectedCategory.text = data.get('category');
         //quillController = data.get('description');
 
         description.text = data.get('description');
@@ -234,15 +235,14 @@ class _MediaFormState extends State<MediaForm> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Categories",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Color(0xFF6A6A6A),
-                            ),
+                          ProfileDropDownField(
+                            customSize: MyUtility(context).width -
+                                (MyUtility(context).width * 0.75),
+                            description: 'Categories',
+                            items: categories,
+                            textfieldController: selectedCategory,
                           ),
-                          Container(
+                          /*     Container(
                             width: MyUtility(context).width / 4,
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -271,7 +271,7 @@ class _MediaFormState extends State<MediaForm> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                       SizedBox(
