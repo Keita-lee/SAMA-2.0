@@ -713,7 +713,14 @@ class _MemberProfileState extends State<MemberProfile> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GetInvoice2(),
+                    GetInvoice2(
+                      ref: '',
+                      documentDate: '',
+                      dueDate: '',
+                      title: '',
+                      name: '',
+                      memberId: '',
+                    ),
                     SizedBox(
                       width: 8,
                     ),
