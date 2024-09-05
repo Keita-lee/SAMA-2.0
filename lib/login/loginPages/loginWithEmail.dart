@@ -215,21 +215,31 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       }
       // user is in not firebase but is a sama member - needs to create an account
       else if (!foundInFirebase && foundOnOracleDb) {
-        updateStateText(
-            "You are not registered on this site yet. Please register and try again.");
+        // updateStateText(
+        //     "You are not registered on this site yet. Please register and try again.");
 
         widget.updateMemberData({
           "email": email.text,
-          "firstName": oracleUser['first_name'],
-          "lastName": oracleUser['surname'],
+          "firstName": '',
+          "lastName": '',
           "cell": "",
           "samaNo": "",
           "idNo": "",
           "hpcsa": "",
         });
-        setState(() {
-          showSamaAccountCreate = true;
-        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Material(
+              child: LoginPages(
+                pageIndex: 19,
+              ),
+            ),
+          ),
+        );
+        // setState(() {
+        //   showSamaAccountCreate = true;
+        // });
       }
       // user is in not firebase and is not sama member - needs to create an account
       else if (!foundInFirebase && !foundOnOracleDb) {
@@ -293,21 +303,31 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         openPasswordResetDialog();
       }
     } else {
-      updateStateText(
-          "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
-      //openValidateDialog();
+      // updateStateText(
+      //     "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
+      // //openValidateDialog();
       widget.updateMemberData({
         "email": "",
-        "name": data.first['name'],
-        "lastName": data.first['surname'],
+        "name": '',
+        "lastName": '',
         "cell": "",
         "samaNo": email.text,
         "idNo": "",
         "hpcsa": "",
       });
-      setState(() {
-        showSamaAccountCreate = true;
-      });
+      // setState(() {
+      //   showSamaAccountCreate = true;
+      // });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Material(
+            child: LoginPages(
+              pageIndex: 19,
+            ),
+          ),
+        ),
+      );
     }
     setState(() {
       isLoading = false;
@@ -459,47 +479,53 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           showSamaAccountCreate
               ? Container(
                   margin: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                  child: Row(
+                  child: Column(
                     children: [
-                      Text('Click',
-                          style: GoogleFonts.openSans(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: -0.5,
-                          )),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Material(
-                                          child: LoginPages(
-                                        pageIndex: 19,
-                                      ))));
-                        },
-                        child: Text(
-                          " here ",
-                          style: GoogleFonts.openSans(
-                            decoration: showNonMemberBorder == true
-                                ? TextDecoration.underline
-                                : TextDecoration.none,
-                            decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                            decorationThickness: 2,
-                            letterSpacing: -0.5,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: const Color.fromRGBO(0, 159, 158, 1),
+                      const Text('You are not registered on this site yet.'),
+                      const SizedBox(height: 15.0),
+                      Row(
+                        children: [
+                          Text('Click',
+                              style: GoogleFonts.openSans(
+                                fontSize: 16,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.5,
+                              )),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Material(
+                                              child: LoginPages(
+                                            pageIndex: 19,
+                                          ))));
+                            },
+                            child: Text(
+                              " here ",
+                              style: GoogleFonts.openSans(
+                                decoration: showNonMemberBorder == true
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                                decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                                decorationThickness: 2,
+                                letterSpacing: -0.5,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: const Color.fromRGBO(0, 159, 158, 1),
+                              ),
+                            ),
                           ),
-                        ),
+                          Text('to continue your registration process',
+                              style: GoogleFonts.openSans(
+                                fontSize: 16,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.5,
+                              )),
+                        ],
                       ),
-                      Text('to continue your registration process',
-                          style: GoogleFonts.openSans(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: -0.5,
-                          )),
                     ],
                   ),
                 )
@@ -617,7 +643,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 15,
           ),
           const Text(
-            'v1.0.0c',
+            'v1.0.01b',
             style: TextStyle(
                 fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
           )
