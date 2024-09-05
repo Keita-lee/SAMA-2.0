@@ -712,6 +712,9 @@ class _MemberProfileState extends State<MemberProfile> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    SizedBox(
+                      width: 8,
+                    ),
                     StyleButton(
                         description: " Activate Account",
                         height: 55,

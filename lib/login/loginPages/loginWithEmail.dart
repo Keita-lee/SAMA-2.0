@@ -195,9 +195,9 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .get();
 
     //If admin by pass all validators
-    // if (users.docs[0]['userType'] == "Admin") {
-    //   return await widget.changePage(1);
-    // }
+    if (users.docs[0]['userType'] == "Admin") {
+      return await widget.changePage(1);
+    }
 
     //Check if user exists in Oracle Db and Firestore
     Map oracleUser = await checkOracleDb((email.text).toLowerCase());
