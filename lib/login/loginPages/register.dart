@@ -162,7 +162,7 @@ class _RegisterState extends State<Register> {
       "id": "",
       "profilePicView": "",
       "profileView": ""
-    }; /*   */
+    };
 
     final doc = FirebaseFirestore.instance.collection('users').doc(id);
     clientData["id"] = id;
@@ -192,14 +192,18 @@ class _RegisterState extends State<Register> {
     // Check if any document exists with the given email
     if (querySnapshot.docs.isNotEmpty) {
       // Email already exists
-      if (!mounted) return;
-      openValidateDialog('This email has already been used');
-      setState(() {
-        _isLoading = false;
-      });
-      return;
+      if (querySnapshot.docs[0]['idNumber'] == "") {
+        await widget.getEmail(email.text);
+        widget.changePage(15);
+      } else {
+        if (!mounted) return;
+        openValidateDialog('This email has already been used');
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
     }
-
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
       await _auth.createUserWithEmailAndPassword(
