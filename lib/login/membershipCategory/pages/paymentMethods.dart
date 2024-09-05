@@ -10,6 +10,7 @@ import 'package:sama/components/myutility.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/login/membershipCategory/pages/ui/PaymentTextReu.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../components/styleButton.dart';
 import '../../../member/productDisplay/cart/ui/payStackCon.dart';
@@ -48,6 +49,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
   var email = "";
   String paymentStatus = "";
   String reference = "";
+  String debitRef = "";
   bool loadingState = false;
   TextEditingController bankDisclaimer = TextEditingController();
   TextEditingController accHolderName = TextEditingController();
@@ -399,6 +401,9 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         InkWell(
                           onTap: () {
                             setState(() {
+                              var uuid = Uuid();
+                              debitRef = uuid.v1();
+                              widget.getPaymentRef(debitRef);
                               paymnetType = "MANUAL EFT";
                             });
                           },
@@ -652,7 +657,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                               ),
                             ),
                             Text(
-                              "N.B. Email proof of paymnets to emailaddres@tobeconfirmed",
+                              "Reference: ${debitRef}",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey[800],
