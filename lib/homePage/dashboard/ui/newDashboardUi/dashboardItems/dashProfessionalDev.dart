@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardTextButton.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
@@ -49,7 +51,22 @@ class _DashProfessionalDevState extends State<DashProfessionalDev> {
               height: 20,
             ),
             //DashboardTextButton(text: 'View CPD Quizes', onTap: () {}),
-            DashboardTextButton(text: 'List and find CPD Quizes', onTap: () {})
+            DashboardTextButton(
+                text: 'List and find CPD Quizes',
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(
+                                child: PostLoginLandingPage(
+                                    pageIndex: 19,
+                                    userId: FirebaseAuth.instance.currentUser !=
+                                            null
+                                        ? FirebaseAuth.instance.currentUser!.uid
+                                        : "",
+                                    activeIndex: 19),
+                              )));
+                })
           ],
         ),
       ),
