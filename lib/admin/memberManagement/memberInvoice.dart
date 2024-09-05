@@ -12,23 +12,17 @@ class GetInvoice extends StatefulWidget {
 }
 
 class _GetInvoiceState extends State<GetInvoice> {
-
   void createBreadRoleBaking() async {
     List<p.Widget> widgets = [];
-  /*  final ByteData image = await rootBundle.load('images/breadRoll.png');
+    /*  final ByteData image = await rootBundle.load('images/breadRoll.png');
     Uint8List imageData = (image).buffer.asUint8List();*/
     //pdf document
     final pdf = p.Document();
-
+  }
 
   @override
   Widget build(BuildContext context) {
     return StyleButton(
-        description: "Get Invoice",
-        height: 55,
-        width: 125,
-        onTap: () {
-          
-        });
+        description: "Get Invoice", height: 55, width: 125, onTap: () {});
   }
 }
