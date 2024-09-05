@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/admin/memberManagement/memberInvoice2.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/profile/bio.dart';
 
@@ -712,6 +713,7 @@ class _MemberProfileState extends State<MemberProfile> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    GetInvoice2(),
                     SizedBox(
                       width: 8,
                     ),
