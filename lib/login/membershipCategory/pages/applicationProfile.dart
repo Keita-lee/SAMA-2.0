@@ -18,6 +18,7 @@ import '../../../components/email/payments/onlinePayment.dart';
 import '../../loginPages/membershipSignUp.dart';
 
 class ApplicationProfile extends StatefulWidget {
+  String email;
   Function(int) nextSection;
   Map debitOrder;
   String paymentType;
@@ -26,6 +27,7 @@ class ApplicationProfile extends StatefulWidget {
   bool shouldShowPrevBtn;
   ApplicationProfile(
       {super.key,
+      required this.email,
       required this.nextSection,
       required this.debitOrder,
       required this.paymentType,
@@ -69,40 +71,35 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
   var allUniversities = constants.availableUniversities;
   var universityQualifications = constants.qualifications;
   String userType = "";
+  String userId = "";
   getUserData() async {
-    final data = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-
-    if (data.exists) {
-      setState(() {
-        title.text = data.get('title');
-        initials.text = data.get('initials');
-
+    print("Get userData");
+    print(widget.email);
+    if (widget.email != "") {
+      final dataEmail = await FirebaseFirestore.instance
+          .collection('users')
+          .where("email", isEqualTo: widget.email)
+          .get();
+      print("No Email");
+      if (dataEmail.docs.isNotEmpty) {
+        setState(() {
+          print("Get EMAIL");
+          firstName.text = dataEmail.docs[0].get('firstName');
+          lastName.text = dataEmail.docs[0].get('lastName');
+          email.text = dataEmail.docs[0].get('email');
+          userId = dataEmail.docs[0].get('id');
+        });
+      }
+    } else {
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      if (data.exists) {
         firstName.text = data.get('firstName');
         lastName.text = data.get('lastName');
         email.text = data.get('email');
-        mobileNo.text = data.get('mobileNo');
-        landline.text = data.get('landline');
-
-        gender.text = data.get('gender');
-        race.text = data.get('race');
-        dob.text = data.get('dob');
-
-        idNumber.text = data.get('idNumber');
-        passportNumber.text = data.get('passportNumber');
-
-        /*   hpcsa.text = data.get('hpcsaNumber');
-        practiceNumber.text = data.get('practiceNumber');
-
-        univercityQualification.text = data.get('univercityQualification');
-        qualificationYear.text = data.get('qualificationYear');
-        qualificationMonth.text = data.get('qualificationMonth');
-
-        password.text = data.get('password');
-        userType = data.get('userType');*/
-      });
+      }
     }
   }
 
@@ -158,14 +155,17 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
       "userType": userType,
       "profilePicView": "",
       "profileView": "",
-      "id": FirebaseAuth.instance.currentUser!.uid,
+      "id":
+          widget.email != "" ? userId : FirebaseAuth.instance.currentUser!.uid,
       "status": "Pending",
       "regionCde": ""
     };
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(widget.email != ""
+            ? userId
+            : FirebaseAuth.instance.currentUser!.uid)
         .update(userData);
 
     await sendUpdatedEmail();

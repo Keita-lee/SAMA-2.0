@@ -34,7 +34,7 @@ class LoginPages extends StatefulWidget {
 }
 
 class _LoginPagesState extends State<LoginPages> {
-  String? email;
+  String email = "";
   String? mobileNumber;
   String? emailChangeType;
   int pageIndex = 0;
@@ -123,10 +123,13 @@ class _LoginPagesState extends State<LoginPages> {
           changePage: changePage,
           email: email,
           emailChangeType: emailChangeType),
-      MembershipSignUp(),
+      MembershipSignUp(
+        email: email,
+      ),
       TempView(type: "Registration"),
       TempView(type: "Login"),
       MembershipSignUp(
+        email: email,
         pageIndex: 3,
       ),
       CreateSamaAccount(userData: userData)
