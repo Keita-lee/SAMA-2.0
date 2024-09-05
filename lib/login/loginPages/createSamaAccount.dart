@@ -181,7 +181,7 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
                     description: 'Title',
                     customSize: MyUtility(context).width * 0.42,
                     textFieldType: 'stringType',
-                    textfieldController: nameController),
+                    textfieldController: titleController),
                 const SizedBox(
                   height: 10.0,
                 ),
