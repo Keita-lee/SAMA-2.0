@@ -39,7 +39,7 @@ class _MediaPopupState extends State<MediaPopup> {
     try {
       final doc = await FirebaseFirestore.instance
           .collection('media')
-          .where("title", isEqualTo: widget.id)
+          .where("id", isEqualTo: widget.id)
           .get();
       if (doc.docs.isNotEmpty) {
         setState(() {

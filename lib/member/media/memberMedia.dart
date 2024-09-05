@@ -127,6 +127,8 @@ class _MemberMediaState extends State<MemberMedia> {
 
                     final List<DocumentSnapshot> documents =
                         snapshot.data!.docs;
+                    documents.sort(
+                        (b, a) => a["releaseDate"].compareTo(b["releaseDate"]));
                     if (documents.isEmpty) {
                       return Center(child: Text('No Media & Webinars yet'));
                     }

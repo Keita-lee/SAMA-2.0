@@ -52,6 +52,12 @@ class _DashCommunityState extends State<DashCommunity> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
+              'Coming soon!',
+              style: GoogleFonts.openSans(
+                  fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+
+            /*   Text(
               'New Topics :',
               style: GoogleFonts.openSans(
                   fontSize: 12, fontWeight: FontWeight.w600),
@@ -75,6 +81,7 @@ class _DashCommunityState extends State<DashCommunity> {
                                     activeIndex: 8),
                               )));
                 }),
+       */
           ],
         ),
       ),

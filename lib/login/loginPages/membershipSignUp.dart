@@ -28,7 +28,7 @@ class _MeshipRegFinishedState extends State<MeshipRegFinished> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                  width: MyUtility(context).width / 1.5,
+                  // width: MyUtility(context).width / 1.2,
                   //height: MyUtility(context).height / 1.8,
 
                   child: Padding(
@@ -43,7 +43,7 @@ class _MeshipRegFinishedState extends State<MeshipRegFinished> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                      width: MyUtility(context).width / 1.5 -
+                                      width: MyUtility(context).width / 1.8 -
                                           MyUtility(context).width / 15,
                                       height: MyUtility(context).height / 2,
                                       child: Center(
@@ -69,7 +69,7 @@ class _MeshipRegFinishedState extends State<MeshipRegFinished> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Membership Sign Up",
+                                                  "Thank you for completing your profile!",
                                                   style: GoogleFonts.openSans(
                                                     fontSize: 35,
                                                     fontWeight: FontWeight.bold,
@@ -82,11 +82,11 @@ class _MeshipRegFinishedState extends State<MeshipRegFinished> {
                                                   height: 15,
                                                 ),
                                                 Text(
-                                                  "Thank you for signing up for membership!",
+                                                  "Your details have been submitted and are now under review by our Member Department.\nWe will verify your information and activate your account as soon as possible.\n You will receive a confirmation email once your account is fully activated.",
                                                   style: GoogleFonts.openSans(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    color: Colors.grey[600],
+                                                    fontWeight: FontWeight.w500,
                                                     letterSpacing: -0.5,
                                                   ),
                                                 ),
@@ -94,7 +94,7 @@ class _MeshipRegFinishedState extends State<MeshipRegFinished> {
                                                   height: 15,
                                                 ),
                                                 Text(
-                                                  "Your application is currently pending approval, and you\'ll be notified by email once it\'s confirmed. In the meantime, feel free to continue browsing the portal with limited access. We\'re exited to have you on board and look forward to supporting you in your professional journey!",
+                                                  "We appreciate your patience and are excited to have you fully onboard!",
                                                   style: GoogleFonts.openSans(
                                                     fontSize: 18,
                                                     color: Colors.grey[600],

@@ -88,7 +88,7 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
-                  Visibility(
+                  /* Visibility(
                     visible: widget.headerTextButton == true,
                     child: DashboardTextButton(
                       decorationColor: Colors.black,
@@ -96,7 +96,7 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
                       text: 'Turn off',
                       onTap: () {},
                     ),
-                  )
+                  )*/
                 ],
               ),
             ),

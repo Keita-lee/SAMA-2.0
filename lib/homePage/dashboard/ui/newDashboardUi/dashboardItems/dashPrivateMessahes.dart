@@ -27,7 +27,12 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
+            Text(
+              'Coming soon!',
+              style: GoogleFonts.openSans(
+                  fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+            /*  InkWell(
                 onTap: () {
                   widget.changePageIndex(1);
                 },
@@ -35,7 +40,7 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
                     text: 'You have 10 new messages',
                     onTap: () {
                       widget.changePageIndex(1);
-                    })),
+                    })),*/
           ],
         ),
       ),
