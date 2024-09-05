@@ -10,7 +10,7 @@ Future sendExistingMemberApproval(
     required String lastName,
     required String title}) async {
   final serviceId = 'service_igwbojp';
-  final templateId = 'template_welcome_new';
+  final templateId = 'template_8rdeh2e';
   final userId = 'Jmk16IabzDvgmXBeJ';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
