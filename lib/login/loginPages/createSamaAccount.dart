@@ -57,7 +57,7 @@ class _CreateSamaAccountState extends State<CreateSamaAccount> {
       });
       UserCredential userDocRef = await _auth.createUserWithEmailAndPassword(
           email: emailController.text, password: 'Cp123456');
-      await _firestore.collection('users').add({
+      await _firestore.collection('users').doc(userDocRef.user!.uid).set({
         "id": userDocRef.user!.uid,
         "title": titleController.text,
         "initials": '',

@@ -66,20 +66,32 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
   double menuSize = 6.5;
   //get data of signed in user
   getUserData() async {
-    final data = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
+    try {
+      DocumentSnapshot data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
-    if (data.exists && widget.userId != "") {
-      setState(() {
-        userType = data.get('userType');
-        profileUrl = data.get('profilePic');
-      });
-    } else {
-      setState(() {
-        userType = "NonMember";
-      });
+      // added this fix if auth id is not the same as document id
+      QuerySnapshot data2 = await FirebaseFirestore.instance
+          .collection('users')
+          .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      DocumentSnapshot dataDoc = data2.docs[0];
+
+      if (data.exists && widget.userId != "" ||
+          dataDoc.exists && widget.userId != "") {
+        setState(() {
+          userType = data.get('userType');
+          profileUrl = data.get('profilePic');
+        });
+      } else {
+        setState(() {
+          userType = "NonMember";
+        });
+      }
+    } catch (e) {
+      print('error: $e');
     }
   }
 
@@ -134,6 +146,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
 
   @override
   void initState() {
+    print(widget.userId);
     if (widget.userId == "") {
       setState(() {
         userType = "NonMember";

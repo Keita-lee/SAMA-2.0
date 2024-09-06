@@ -214,8 +214,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       }
       //user is in firebase and is not sama member - treated as non-member
       else if (foundInFirebase && !foundOnOracleDb) {
-        updateStateText(
-            'You are not a SAMA member yet. Please use non member portal or create an account. If you are a SAMA member, please contact SAMA to enquire about your membership');
+        updateStateText('Record not found, please try again.');
       }
       // user is in not firebase but is a sama member - needs to create an account
       else if (!foundInFirebase && foundOnOracleDb) {
@@ -248,8 +247,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       }
       // user is in not firebase and is not sama member - needs to create an account
       else if (!foundInFirebase && !foundOnOracleDb) {
-        updateStateText(
-            "You are not registered on this site yet. Please register and try again.");
+        updateStateText("Record not found, please try again.");
       } else {
         updateStateText(
             "Error: Unknown email address. Check again or try using your SAMA member number.");
@@ -654,7 +652,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 15,
           ),
           const Text(
-            'v1.0.01e',
+            'v1.0.02e',
             style: TextStyle(
                 fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
           )

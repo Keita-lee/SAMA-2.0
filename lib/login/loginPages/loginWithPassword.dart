@@ -41,16 +41,13 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
 //Sign in witp password and email
   login() async {
     try {
+      print('Email is ${widget.email} and password is ${password.text}');
       final userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: widget.email!.toString(),
         password: password.text.trim(),
       );
       if (userCredential.user != null) {
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .update({"loggedIn": true});
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -73,6 +70,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       } else {
         openValidateDialog('No user found');
       }
+    } catch (e) {
+      print(e);
     }
 
 /*

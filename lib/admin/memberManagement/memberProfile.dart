@@ -287,6 +287,7 @@ class _MemberProfileState extends State<MemberProfile> {
   final categoryPrice = TextEditingController();
 
   String memberType = '';
+  String status = '';
   bool isLoading = true;
 
   getUserDetails() async {
@@ -305,6 +306,7 @@ class _MemberProfileState extends State<MemberProfile> {
           idNumber.text = data.get('idNumber');
           hpcsa.text = data.get('hpcsaNumber');
           samaNumber.text = data.get('samaNo');
+          status = data.get('status');
           memberType = 'Online Profile';
           isLoading = false;
         });
@@ -347,6 +349,8 @@ class _MemberProfileState extends State<MemberProfile> {
           bankDisclaimer.text = data.get('bankDisclaimer');
           bankName.text = data.get('bankName');
 
+          status = data.get('status');
+
           categoryType.text = paymentTypes[catIndex]['applicationType'];
 
           var catTypeIndex = (paymentTypes[catIndex]['paymentOptions'])
@@ -370,15 +374,14 @@ class _MemberProfileState extends State<MemberProfile> {
   }
 
   sendRegistrationEmail() async {
-    await sendRegistrationUpdate(
-        email: email.text,
-        memberTitle: title.text,
-        memberName: firstName.text,
-        memberSurname: lastName.text);
     await FirebaseFirestore.instance
         .collection('users')
         .doc(widget.id)
         .update({"status": "Active"});
+
+    setState(() {
+      status = 'Active';
+    });
 
     if (memberType == 'New Membership') {
       sendNewMemberApproval(
@@ -760,13 +763,16 @@ class _MemberProfileState extends State<MemberProfile> {
                           SizedBox(
                             width: 8,
                           ),
-                          StyleButton(
-                              description: " Activate Account",
-                              height: 55,
-                              width: 125,
-                              onTap: () {
-                                activateAccount();
-                              })
+                          status != 'Active'
+                              ? StyleButton(
+                                  description: " Activate Account",
+                                  height: 55,
+                                  width: 125,
+                                  onTap: () {
+                                    activateAccount();
+                                  },
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       )
                     ])
@@ -891,13 +897,16 @@ class _MemberProfileState extends State<MemberProfile> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        StyleButton(
-                            description: " Activate Account",
-                            height: 55,
-                            width: 125,
-                            onTap: () {
-                              activateAccount();
-                            })
+                        status != 'Active'
+                            ? StyleButton(
+                                description: " Activate Account",
+                                height: 55,
+                                width: 125,
+                                onTap: () {
+                                  activateAccount();
+                                },
+                              )
+                            : const SizedBox.shrink(),
                       ],
                     )
                   ],
