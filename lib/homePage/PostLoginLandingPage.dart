@@ -370,7 +370,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                             MaterialPageRoute(
                                                 builder: (context) => Material(
                                                       child: LoginPages(
-                                                        pageIndex: 17,
+                                                        pageIndex: 0,
                                                       ),
                                                     )),
                                           );
@@ -392,7 +392,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                             MaterialPageRoute(
                                                 builder: (context) => Material(
                                                       child: LoginPages(
-                                                        pageIndex: 16,
+                                                        pageIndex: 9,
                                                       ),
                                                     )),
                                           );

@@ -27,6 +27,7 @@ class PaymentMethod extends StatefulWidget {
   Function(String) getPaymentRef;
   Function(Map) getDebitOrder;
   Function(String, String) getPaymentDetails;
+  String prodCatCde;
 
   PaymentMethod(
       {super.key,
@@ -38,7 +39,8 @@ class PaymentMethod extends StatefulWidget {
       required this.paymentType,
       required this.getPaymentRef,
       required this.getDebitOrder,
-      required this.getPaymentDetails});
+      required this.getPaymentDetails,
+      required this.prodCatCde});
 
   @override
   State<PaymentMethod> createState() => _PaymentMethodState();
@@ -152,7 +154,35 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   makePayment() async {
     if (widget.paymentType == "Monthly") {
-      final Uri a = Uri.parse("https://paystack.com/pay/iwyh4-6wpx");
+      Uri a = Uri.parse("");
+
+      if (widget.prodCatCde == "Y") {
+        a = Uri.parse("https://paystack.com/pay/wjiwsw3nbg");
+      } else if (widget.prodCatCde == "X") {
+        a = Uri.parse("https://paystack.com/pay/fmu2aepv55");
+      } else if (widget.prodCatCde == "W") {
+        a = Uri.parse("https://paystack.com/pay/ujl2tn1rqc");
+      } else if (widget.prodCatCde == "S") {
+        a = Uri.parse("https://paystack.com/pay/i3l1ekztgh");
+      } else if (widget.prodCatCde == "R") {
+        a = Uri.parse("https://paystack.com/pay/fh71um8jkm");
+      } else if (widget.prodCatCde == "P") {
+        a = Uri.parse("https://paystack.com/pay/u84akou4xu");
+      } else if (widget.prodCatCde == "O") {
+        a = Uri.parse("https://paystack.com/pay/xoplw51al5");
+      } else if (widget.prodCatCde == "G") {
+        a = Uri.parse("https://paystack.com/pay/w4m9khqjvh");
+      } else if (widget.prodCatCde == "F") {
+        a = Uri.parse("https://paystack.com/pay/8b5tyculj4");
+      } else if (widget.prodCatCde == "E") {
+        a = Uri.parse("https://paystack.com/pay/-9vh-ubwa6");
+      } else if (widget.prodCatCde == "D") {
+        a = Uri.parse("https://paystack.com/pay/f3g0a0jm4s");
+      } else if (widget.prodCatCde == "C") {
+        a = Uri.parse("https://paystack.com/pay/mjay-7okrl");
+      } else if (widget.prodCatCde == "B") {
+        a = Uri.parse("https://paystack.com/pay/sc3gyygrre");
+      }
 
       launchUrl(a);
       checkSubscription();

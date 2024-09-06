@@ -440,7 +440,8 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
                   paymentType: paymentType,
                   getPaymentRef: getPaymentRef,
                   getDebitOrder: getDebitOrder,
-                  getPaymentDetails: getPaymentDetails),
+                  getPaymentDetails: getPaymentDetails,
+                  prodCatCde: prodCatCde),
             ),
             Visibility(
               visible: sectionIndex == 3,

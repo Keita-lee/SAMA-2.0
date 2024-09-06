@@ -553,7 +553,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           InkWell(
             onTap: () {
-              widget.changePage(11);
+              //  widget.changePage(11);
             },
             onHover: (hovered) {
               setState(() {
@@ -561,7 +561,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               });
             },
             child: Text(
-              "Help me retrieve my SAMA Number",
+              "Help me retrieve my SAMA Number (Coming Soon)",
               style: GoogleFonts.openSans(
                 decoration: showForgotSamaBorder == true
                     ? TextDecoration.underline
@@ -577,7 +577,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           InkWell(
             onTap: () {
-              widget.changePage(2);
+              //  widget.changePage(2);
             },
             onHover: (hovered) {
               setState(() {
@@ -585,7 +585,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               });
             },
             child: Text(
-              "Reset my password",
+              "Reset my password (Coming Soon)",
               style: GoogleFonts.openSans(
                 decoration: showForgotPasswordBorder == true
                     ? TextDecoration.underline
@@ -652,7 +652,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 15,
           ),
           const Text(
-            'v1.0.03e',
+            'v1.0.03f',
             style: TextStyle(
                 fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
           )

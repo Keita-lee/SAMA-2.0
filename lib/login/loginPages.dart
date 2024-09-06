@@ -211,10 +211,12 @@ class _LoginPagesState extends State<LoginPages> {
                       buttonColor: Color.fromRGBO(0, 159, 158, 1),
                       width: 130,
                       onTap: () {
+                        print(pageIndex);
                         if (pageIndex == 9) {
-                          changePage(16);
+                          //   changePage(16);
+                          changePage(0);
                         } else {
-                          changePage(17);
+                          changePage(9);
                         }
                       },
                     ),
