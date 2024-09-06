@@ -79,11 +79,15 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
           .get();
       DocumentSnapshot dataDoc = data2.docs[0];
 
-      if (data.exists && widget.userId != "" ||
-          dataDoc.exists && widget.userId != "") {
+      if (data.exists && widget.userId != "") {
         setState(() {
           userType = data.get('userType');
           profileUrl = data.get('profilePic');
+        });
+      } else if (dataDoc.exists && widget.userId != "") {
+        setState(() {
+          userType = dataDoc.get('userType');
+          profileUrl = dataDoc.get('profilePic');
         });
       } else {
         setState(() {
