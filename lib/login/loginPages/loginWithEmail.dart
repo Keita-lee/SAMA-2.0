@@ -201,6 +201,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             setState(() {
               isLoading = false;
             });
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(users.docs.first.id)
+                .update({'loggedIn': true});
             openPasswordResetDialog();
           }
         } else {
@@ -287,6 +291,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         .collection('users')
         .where('email', isEqualTo: (data[0]['email_sama']).toLowerCase())
         .get();
+
     updateStateText("");
 
     if (data.isNotEmpty &&
@@ -301,6 +306,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         setState(() {
           isLoading = false;
         });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(users.docs.first.id)
+            .update({'loggedIn': true});
         openPasswordResetDialog();
       }
     } else {

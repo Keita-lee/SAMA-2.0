@@ -71,12 +71,13 @@ class _GetUsernameState extends State<GetUsername> {
   //Check if email exists and continue
   checkEmail() async {
     widget.getEmailChangeType("usernamePage");
+    print('Email: ${email.text}');
     final users = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: email.text)
         .get();
 
-//If user exist send link
+    //If user exist send link
     if (users.docs.length >= 1) {
       //Update email variable
       widget.getEmail(email.text);
@@ -88,15 +89,33 @@ class _GetUsernameState extends State<GetUsername> {
     }
   }
 
+  String formatMobileNumber() {
+    String formattedString = email.text;
+    // Check if the number starts with +27
+    if (formattedString.startsWith('+27')) {
+      // Remove +27
+      formattedString = formattedString.substring(4);
+    }
+    print(formattedString);
+    // Check if the number starts with 0
+    if (!formattedString.startsWith('0')) {
+      // Add 0 to the start of the number
+      formattedString = '0' + formattedString;
+    }
+
+    return formattedString;
+  }
+
   checkMobileNumber() async {
-    widget.getMobileNumber(email.text);
+    widget.getMobileNumber(formatMobileNumber());
+    print('Mobile Number: ${formatMobileNumber()}');
 
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('mobileNo', isEqualTo: email.text)
+        .where('mobileNo', isEqualTo: formatMobileNumber())
         .get();
 
-//If user change page
+    //If user change page
     if (users.docs.length >= 1) {
       widget.changePage(12);
     } else {
