@@ -49,13 +49,13 @@ class MyApp extends StatelessWidget {
               ? Material(child: PageUnderConstruction())
               : Material(
                   child: LoginPages(
-                  pageIndex: 17,
+                  pageIndex: 0,
                 )),
           '/register': (context) => MyUtility(context).width < 600
               ? Material(child: PageUnderConstruction())
               : Material(
                   child: LoginPages(
-                  pageIndex: 16,
+                  pageIndex: 9,
                 )),
           '/cpd': (context) => MyUtility(context).width < 600
               ? Material(child: PageUnderConstruction())
