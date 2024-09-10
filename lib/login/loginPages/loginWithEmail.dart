@@ -11,6 +11,9 @@ import 'package:sama/components/email/sendBugReport.dart';
 
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/email/sendPasswordResetLink.dart';
+import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/Navbar/footer.dart';
+import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -417,78 +420,36 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width / 1.5,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text.rich(
-            TextSpan(
-              text: "Login using your ",
-              style: GoogleFonts.openSans(
-                fontSize: 16,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-                letterSpacing: -0.5,
+    if (MyUtility(context).width < 600) {
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Navbar(
+                onButton1Pressed: (value) {},
+                onButton2Pressed: (value) {},
+                onDropdownChanged: (value) {},
+                visible: false,
               ),
-              children: [
-                TextSpan(
-                  text: "SAMA number",
-                  style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                TextSpan(
-                  text: " or ",
-                  style: GoogleFonts.openSans(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                TextSpan(
-                  text: "Email address",
-                  style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Focus(
-              onKeyEvent: (node, event) {
-                if (event.logicalKey == LogicalKeyboardKey.enter) {
-                  if (email.text.contains("@")) {
-                    return checkEmail();
-                  } else {
-                    return checkMemberNumber();
-                  }
-                } else {
-                  return KeyEventResult.ignored;
-                }
-              },
-              child: Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Login',
+                    style: FontText(context).mediumBlue,
+                  ),
+                  const SizedBox(height: 20),
                   SizedBox(
-                    width: MyUtility(context).width * 0.3,
+                    width: MyUtility(context).width - 25,
                     child: TextFieldStyling(
                       hintText: 'Please add SAMA number or email Address',
                       textfieldController: email,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
+                  const SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.centerRight,
                     child: StyleButton(
                       waiting: isLoading,
                       description: "PROCEED",
@@ -503,190 +464,320 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                       },
                     ),
                   ),
+                  const SizedBox(height: 30),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Need help?\n\n',
+                          style: FontText(context).bodyMediumBlack,
+                        ),
+                        TextSpan(
+                          text: 'Help me retrieve my SAMA number\n\n',
+                          style: FontText(context).linksBlue.copyWith(
+                                fontSize: MyUtility(context).width / 25,
+                              ),
+                        ),
+                        TextSpan(
+                          text: 'Reset my password\n\n\n',
+                          style: FontText(context).linksBlue.copyWith(
+                                fontSize: MyUtility(context).width / 25,
+                              ),
+                        ),
+                        TextSpan(
+                          text:
+                              'Are you a member and don\'t have a profile?\n\n',
+                          style: FontText(context).bodyMediumBlack,
+                        ),
+                        TextSpan(
+                          text: 'Create one here\n\n',
+                          style: FontText(context).linksBlue.copyWith(
+                                fontSize: MyUtility(context).width / 25,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Footer(),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        width: MyUtility(context).width / 1.5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text.rich(
+              TextSpan(
+                text: "Login using your ",
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
+                children: [
+                  TextSpan(
+                    text: "SAMA number",
+                    style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " or ",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "Email address",
+                    style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          Text(
-            validateText,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.red,
+            SizedBox(
+              height: 5,
             ),
-          ),
-          showSamaAccountCreate
-              ? Container(
-                  margin: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                  child: Column(
-                    children: [
-                      const Text('You are not registered on this site yet.'),
-                      const SizedBox(height: 15.0),
-                      Row(
-                        children: [
-                          Text('Click',
-                              style: GoogleFonts.openSans(
-                                fontSize: 16,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: -0.5,
-                              )),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Material(
-                                              child: LoginPages(
-                                            pageIndex: 19,
-                                          ))));
-                            },
-                            child: Text(
-                              " here ",
-                              style: GoogleFonts.openSans(
-                                decoration: showNonMemberBorder == true
-                                    ? TextDecoration.underline
-                                    : TextDecoration.none,
-                                decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                                decorationThickness: 2,
-                                letterSpacing: -0.5,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: const Color.fromRGBO(0, 159, 158, 1),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Focus(
+                onKeyEvent: (node, event) {
+                  if (event.logicalKey == LogicalKeyboardKey.enter) {
+                    if (email.text.contains("@")) {
+                      return checkEmail();
+                    } else {
+                      return checkMemberNumber();
+                    }
+                  } else {
+                    return KeyEventResult.ignored;
+                  }
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MyUtility(context).width * 0.3,
+                      child: TextFieldStyling(
+                        hintText: 'Please add SAMA number or email Address',
+                        textfieldController: email,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25),
+                      child: StyleButton(
+                        waiting: isLoading,
+                        description: "PROCEED",
+                        height: 55,
+                        width: 100,
+                        onTap: () {
+                          if (email.text.contains("@")) {
+                            checkEmail();
+                          } else {
+                            checkMemberNumber();
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Text(
+              validateText,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.red,
+              ),
+            ),
+            showSamaAccountCreate
+                ? Container(
+                    margin: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                    child: Column(
+                      children: [
+                        const Text('You are not registered on this site yet.'),
+                        const SizedBox(height: 15.0),
+                        Row(
+                          children: [
+                            Text('Click',
+                                style: GoogleFonts.openSans(
+                                  fontSize: 16,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: -0.5,
+                                )),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Material(
+                                                child: LoginPages(
+                                              pageIndex: 19,
+                                            ))));
+                              },
+                              child: Text(
+                                " here ",
+                                style: GoogleFonts.openSans(
+                                  decoration: showNonMemberBorder == true
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                  decorationColor:
+                                      Color.fromRGBO(0, 159, 158, 1),
+                                  decorationThickness: 2,
+                                  letterSpacing: -0.5,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: const Color.fromRGBO(0, 159, 158, 1),
+                                ),
                               ),
                             ),
-                          ),
-                          Text('to continue your registration process',
-                              style: GoogleFonts.openSans(
-                                fontSize: 16,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: -0.5,
-                              )),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              : SizedBox.shrink(),
-          Text(
-            "Need help?",
-            style: GoogleFonts.openSans(
-              fontSize: 16,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              letterSpacing: -0.5,
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          InkWell(
-            onTap: () {
-              widget.changePage(11);
-            },
-            onHover: (hovered) {
-              setState(() {
-                showForgotSamaBorder = hovered;
-              });
-            },
-            child: Text(
-              "Help me retrieve my SAMA Number (Coming Soon)",
+                            Text('to continue your registration process',
+                                style: GoogleFonts.openSans(
+                                  fontSize: 16,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: -0.5,
+                                )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox.shrink(),
+            Text(
+              "Need help?",
               style: GoogleFonts.openSans(
-                decoration: showForgotSamaBorder == true
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-                decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                decorationThickness: 2,
-                fontWeight: FontWeight.w500,
-                letterSpacing: -0.5,
                 fontSize: 16,
-                color: const Color.fromRGBO(0, 159, 158, 1),
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.5,
               ),
             ),
-          ),
-          InkWell(
-            onTap: () {
-              //  widget.changePage(2);
-            },
-            onHover: (hovered) {
-              setState(() {
-                showForgotPasswordBorder = hovered;
-              });
-            },
-            child: Text(
-              "Reset my password (Coming Soon)",
-              style: GoogleFonts.openSans(
-                decoration: showForgotPasswordBorder == true
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-                decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                decorationThickness: 2,
-                fontWeight: FontWeight.w500,
-                letterSpacing: -0.5,
-                fontSize: 16,
-                color: const Color.fromRGBO(0, 159, 158, 1),
-              ),
+            SizedBox(
+              height: 5,
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              Text(
-                'Dont have a profile? ',
+            InkWell(
+              onTap: () {
+                widget.changePage(11);
+              },
+              onHover: (hovered) {
+                setState(() {
+                  showForgotSamaBorder = hovered;
+                });
+              },
+              child: Text(
+                "Help me retrieve my SAMA Number (Coming Soon)",
                 style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  color: Colors.grey[600],
+                  decoration: showForgotSamaBorder == true
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                  decorationThickness: 2,
                   fontWeight: FontWeight.w500,
                   letterSpacing: -0.5,
+                  fontSize: 16,
+                  color: const Color.fromRGBO(0, 159, 158, 1),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  widget.changePage(9);
-                },
-                onHover: (hovered) {
-                  setState(() {
-                    showNonMemberBorder = hovered;
-                  });
-                },
-                child: Text(
-                  "Register here",
+            ),
+            InkWell(
+              onTap: () {
+                //  widget.changePage(2);
+              },
+              onHover: (hovered) {
+                setState(() {
+                  showForgotPasswordBorder = hovered;
+                });
+              },
+              child: Text(
+                "Reset my password (Coming Soon)",
+                style: GoogleFonts.openSans(
+                  decoration: showForgotPasswordBorder == true
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                  decorationThickness: 2,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                  fontSize: 16,
+                  color: const Color.fromRGBO(0, 159, 158, 1),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Dont have a profile? ',
                   style: GoogleFonts.openSans(
-                    decoration: showNonMemberBorder == true
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
-                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                    decorationThickness: 2,
-                    letterSpacing: -0.5,
-                    fontWeight: FontWeight.w500,
                     fontSize: 16,
-                    color: const Color.fromRGBO(0, 159, 158, 1),
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
                   ),
                 ),
-              ),
-              Text(
-                ' as a member or create a free account',
-                style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.5,
+                InkWell(
+                  onTap: () {
+                    widget.changePage(9);
+                  },
+                  onHover: (hovered) {
+                    setState(() {
+                      showNonMemberBorder = hovered;
+                    });
+                  },
+                  child: Text(
+                    "Register here",
+                    style: GoogleFonts.openSans(
+                      decoration: showNonMemberBorder == true
+                          ? TextDecoration.underline
+                          : TextDecoration.none,
+                      decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                      decorationThickness: 2,
+                      letterSpacing: -0.5,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: const Color.fromRGBO(0, 159, 158, 1),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          const Text(
-            'v1.0.06f',
-            style: TextStyle(
-                fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
-          )
-        ],
-      ),
-    );
+                Text(
+                  ' as a member or create a free account',
+                  style: GoogleFonts.openSans(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'v1.0.06f',
+              style: TextStyle(
+                  fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
+            )
+          ],
+        ),
+      );
+    }
   }
 }

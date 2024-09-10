@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/Navbar/footer.dart';
+import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -57,78 +60,91 @@ class _DisplayUsernameState extends State<DisplayUsername> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MyUtility(context).width / 1.5,
+    if (MyUtility(context).width < 600) {
+      return SingleChildScrollView(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Retrieved my SAMA Number ",
-                style: GoogleFonts.openSans(
-                  fontSize: 22,
-                  color: Color.fromRGBO(0, 159, 158, 1),
-                  letterSpacing: -0.5,
-                ),
+          children: [
+            Navbar(
+              onButton1Pressed: (value) {},
+              onButton2Pressed: (value) {},
+              onDropdownChanged: (value) {},
+              visible: false,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Retrieve my SAMA number',
+                    style: FontText(context).mediumBlue,
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Thank you. Your SAMA number has been sent to your email address registered with us.\n\n',
+                    style: FontText(context).bodySmallBlack,
+                  ),
+                  Text(
+                    'Return to login\n\n',
+                    style: FontText(context).linksBlue.copyWith(
+                          fontSize: MyUtility(context).width / 25,
+                        ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Thank you, Your SAMA number has been sent to your email address.",
-                style: GoogleFonts.openSans(
-                  fontSize: 17,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              /*Text(
-                username.text,
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),*/
-
-              /*  TextFieldStyling(
-                hintText: 'SAMA Number',
-                textfieldController: username,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Please save your SAMA number for future use",
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              StyleButton(
-                  description: "Back to Login",
-                  height: 55,
-                  width: 175,
-                  onTap: () {
-                    widget.changePage(0);
-                  }),*/
-              InkWell(
-                onTap: () {
-                  widget.changePage(0);
-                },
-                child: Text(
-                  "Return to Login",
+            ),
+            const Footer(),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+          width: MyUtility(context).width / 1.5,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Retrieved my SAMA Number ",
                   style: GoogleFonts.openSans(
-                    fontSize: 16,
-                    color: const Color.fromRGBO(0, 159, 158, 1),
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                    decorationThickness: 2.0,
+                    fontSize: 22,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Thank you, Your SAMA number has been sent to your email address.",
+                  style: GoogleFonts.openSans(
+                    fontSize: 17,
+                    color: Colors.grey[600],
                     fontWeight: FontWeight.w500,
                     letterSpacing: -0.5,
                   ),
                 ),
-              ),
-            ]));
+                SizedBox(
+                  height: 15,
+                ),
+                InkWell(
+                  onTap: () {
+                    widget.changePage(0);
+                  },
+                  child: Text(
+                    "Return to Login",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: const Color.fromRGBO(0, 159, 158, 1),
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                      decorationThickness: 2.0,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                ),
+              ]));
+    }
   }
 }

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return Transform.scale(
       scale: 1,
       child: MaterialApp(
-        home: const MyHome(),
+        home: MyHome(),
         routes: {
           '/loginTest': (context) => MyUtility(context).width < 600
               ? Material(child: PageUnderConstruction())

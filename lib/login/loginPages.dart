@@ -78,6 +78,7 @@ class _LoginPagesState extends State<LoginPages> {
   @override
   void initState() {
     pageIndex = widget.pageIndex ?? 0;
+
     super.initState();
   }
 
@@ -146,115 +147,133 @@ class _LoginPagesState extends State<LoginPages> {
             SizedBox(
               height: MyUtility(context).height * 0.02,
             ),
-            SizedBox(
-              width: MyUtility(context).width / 1.5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Image(
-                          width: MyUtility(context).width / 10,
-                          height: MyUtility(context).height / 8.0,
-                          image: AssetImage('images/sama_logo.png')),
-                      Text(
-                        "SAMA Member Portal",
-                        style: GoogleFonts.openSans(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Material(
-                                    child: Material(
-                                        child: PostLoginLandingPage(
-                                      userId: "",
-                                      activeIndex: 0,
-                                    )),
-                                  )));
-                    },
-                    onHover: (hovered) {
-                      setState(() {
-                        showRegisterBorder = hovered;
-                      });
-                    },
-                    child: Text(
-                      "Visit the website",
-                      style: TextStyle(
-                          decoration: showRegisterBorder == true
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                          decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                          decorationThickness: 2,
-                          fontSize: 16,
-                          color: const Color.fromRGBO(0, 159, 158, 1)),
+            Visibility(
+              visible: MyUtility(context).width > 600,
+              child: SizedBox(
+                width: MyUtility(context).width / 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Image(
+                            width: MyUtility(context).width / 10,
+                            height: MyUtility(context).height / 8.0,
+                            image: AssetImage('images/sama_logo.png')),
+                        Text(
+                          "SAMA Member Portal",
+                          style: GoogleFonts.openSans(
+                              fontSize: 22,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
                     ),
-                  )
-                ],
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Material(
+                                          child: PostLoginLandingPage(
+                                        userId: "",
+                                        activeIndex: 0,
+                                      )),
+                                    )));
+                      },
+                      onHover: (hovered) {
+                        setState(() {
+                          showRegisterBorder = hovered;
+                        });
+                      },
+                      child: Text(
+                        "Visit the website",
+                        style: TextStyle(
+                            decoration: showRegisterBorder == true
+                                ? TextDecoration.underline
+                                : TextDecoration.none,
+                            decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                            decorationThickness: 2,
+                            fontSize: 16,
+                            color: const Color.fromRGBO(0, 159, 158, 1)),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              width: MyUtility(context).width / 1.5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: StyleButton(
-                      description: pageIndex == 9 ? "LOGIN" : "REGISTER",
-                      height: 50,
-                      buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                      width: 130,
-                      onTap: () {
-                        print(pageIndex);
-                        if (pageIndex == 9) {
-                          //   changePage(16);
-                          changePage(0);
-                        } else {
-                          changePage(9);
-                        }
-                      },
+            Visibility(
+              visible: MyUtility(context).width > 600,
+              child: SizedBox(
+                width: MyUtility(context).width / 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: StyleButton(
+                        description: pageIndex == 9 ? "LOGIN" : "REGISTER",
+                        height: 50,
+                        buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                        width: 130,
+                        onTap: () {
+                          print(pageIndex);
+                          if (pageIndex == 9) {
+                            //   changePage(16);
+                            changePage(0);
+                          } else {
+                            changePage(9);
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Column(
               children: [
                 Container(
-                  width: MyUtility(context).width / 1.5,
+                  width: MyUtility(context).width < 600
+                      ? MyUtility(context).width
+                      : MyUtility(context).width / 1.5,
                   //height: MyUtility(context).height / 1.8,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: MyUtility(context).width < 600
+                          ? const Color.fromARGB(0, 32, 25, 25)
+                          : Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5),
                       ), // Straighten the bottom corners
                       border: Border.all(
-                        color: Colors.grey[300]!,
+                        color: MyUtility(context).width < 600
+                            ? const Color.fromARGB(0, 32, 25, 25)
+                            : Colors.grey[300]!,
                         width: 1.0,
                       )),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 35, bottom: 45),
+                    padding: MyUtility(context).width < 600
+                        ? EdgeInsets.all(0)
+                        : EdgeInsets.only(top: 35, bottom: 45),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: MyUtility(context).width * 0.04,
+                        Visibility(
+                          visible: MyUtility(context).width > 600,
+                          child: SizedBox(
+                            width: MyUtility(context).width * 0.04,
+                          ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: MyUtility(context).width / 1.5 -
-                                  MyUtility(context).width / 15,
-                              // height: MyUtility(context).height / 1.8,
+                              width: MyUtility(context).width < 600
+                                  ? MyUtility(context).width - 10
+                                  : MyUtility(context).width / 1.5 -
+                                      MyUtility(context).width / 15,
                               child: Center(
                                 child: pages[pageIndex],
                               ),
@@ -268,16 +287,19 @@ class _LoginPagesState extends State<LoginPages> {
                     ),
                   ),
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                  ),
-                  child: Image.asset(
-                    'images/bannerBackground.jpg',
-                    width: MyUtility(context).width / 1.5,
-                    height: MyUtility(context).height * 0.04,
-                    fit: BoxFit.cover,
+                Visibility(
+                  visible: MyUtility(context).width > 600,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                    ),
+                    child: Image.asset(
+                      'images/bannerBackground.jpg',
+                      width: MyUtility(context).width / 1.5,
+                      height: MyUtility(context).height * 0.04,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ],

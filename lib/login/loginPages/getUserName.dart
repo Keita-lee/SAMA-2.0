@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/email/sendOtp.dart';
+import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/Navbar/footer.dart';
+import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
@@ -132,156 +135,275 @@ class _GetUsernameState extends State<GetUsername> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width / 1.5,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Retrieve my SAMA Number",
-            style: GoogleFonts.openSans(
-              fontSize: 20,
-              color: Color.fromRGBO(0, 159, 158, 1),
-              fontWeight: FontWeight.bold,
-              letterSpacing: -0.5,
+    if (MyUtility(context).width < 600) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Navbar(
+              onButton1Pressed: (value) {},
+              onButton2Pressed: (value) {},
+              onDropdownChanged: (value) {},
+              visible: false,
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          /*Text(
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Retrieve my SAMA number',
+                    style: FontText(context).mediumBlue,
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: MyUtility(context).width - 10,
+                    child: TextFieldStyling(
+                      hintText:
+                          'Enter your email address to receive a one time pin',
+                      textfieldController: email,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Send one time pin to:',
+                        style: FontText(context).bodyMediumGrey.copyWith(
+                              color: Colors.black,
+                            ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Radio<SingingCharacter>(
+                            activeColor: Color.fromRGBO(0, 159, 158, 1),
+                            value: SingingCharacter.email,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter? value) {
+                              setState(() {
+                                retrieveType = "email";
+                                _character = value;
+                                email.text = "";
+                              });
+                            },
+                          ),
+                          Text(
+                            "My email address",
+                            style: GoogleFonts.openSans(
+                              fontSize: 16,
+                              color: Color.fromRGBO(0, 159, 158, 1),
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<SingingCharacter>(
+                            activeColor: Color.fromRGBO(0, 159, 158, 1),
+                            value: SingingCharacter.mobile,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter? value) {
+                              setState(() {
+                                retrieveType = "mobile number";
+                                _character = value;
+                                email.text = "+27 ";
+                              });
+                            },
+                          ),
+                          Text(
+                            "My cell phone number",
+                            style: GoogleFonts.openSans(
+                              fontSize: 16,
+                              color: Color.fromRGBO(0, 159, 158, 1),
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  StyleButton(
+                    description: "SEND OTP",
+                    height: 55,
+                    width: 130,
+                    onTap: () {
+                      if (_character == SingingCharacter.email) {
+                        checkEmail();
+                      } else {
+                        checkMobileNumber();
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Return to login\n\n',
+                    style: FontText(context).linksBlue.copyWith(
+                          fontSize: MyUtility(context).width / 25,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            const Footer(),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        width: MyUtility(context).width / 1.5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Retrieve my SAMA Number",
+              style: GoogleFonts.openSans(
+                fontSize: 20,
+                color: Color.fromRGBO(0, 159, 158, 1),
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.5,
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            /*Text(
             "Enter your ${retrieveType}",
             style: TextStyle(fontSize: 16, color: Colors.black),
           ),*/
-          Text.rich(
-            TextSpan(
-              text: "Enter your ",
-              style: GoogleFonts.openSans(
-                fontSize: 16,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-                letterSpacing: -0.5,
+            Text.rich(
+              TextSpan(
+                text: "Enter your ",
+                style: GoogleFonts.openSans(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.5,
+                ),
+                children: [
+                  TextSpan(
+                    text: "email address",
+                    style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " to receive a one time pin ",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                ],
               ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
               children: [
-                TextSpan(
-                  text: "email address",
-                  style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    letterSpacing: -0.5,
+                SizedBox(
+                  width: MyUtility(context).width * 0.3,
+                  child: TextFieldStyling(
+                    hintText: 'Enter here',
+                    textfieldController: email,
                   ),
                 ),
-                TextSpan(
-                  text: " to receive a one time pin ",
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: StyleButton(
+                    description: "SEND OTP",
+                    height: 55,
+                    width: 130,
+                    onTap: () {
+                      if (_character == SingingCharacter.email) {
+                        checkEmail();
+                      } else {
+                        checkMobileNumber();
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              "Send One Time Pin to:",
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.5,
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                Radio<SingingCharacter>(
+                  activeColor: Color.fromRGBO(0, 159, 158, 1),
+                  value: SingingCharacter.email,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter? value) {
+                    setState(() {
+                      retrieveType = "email";
+                      _character = value;
+                      email.text = "";
+                    });
+                  },
+                ),
+                Text(
+                  "My email address",
                   style: GoogleFonts.openSans(
                     fontSize: 16,
-                    color: Colors.grey[600],
+                    color: Color.fromRGBO(0, 159, 158, 1),
                     fontWeight: FontWeight.w500,
                     letterSpacing: -0.5,
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: MyUtility(context).width * 0.3,
-                child: TextFieldStyling(
-                  hintText: 'Enter here',
-                  textfieldController: email,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 25),
-                child: StyleButton(
-                  description: "SEND OTP",
-                  height: 55,
-                  width: 130,
-                  onTap: () {
-                    if (_character == SingingCharacter.email) {
-                      checkEmail();
-                    } else {
-                      checkMobileNumber();
-                    }
+            Row(
+              children: [
+                Radio<SingingCharacter>(
+                  activeColor: Color.fromRGBO(0, 159, 158, 1),
+                  value: SingingCharacter.mobile,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter? value) {
+                    setState(() {
+                      retrieveType = "mobile number";
+                      _character = value;
+                      email.text = "+27 ";
+                    });
                   },
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            "Send One Time Pin to:",
-            style: GoogleFonts.openSans(
-              fontSize: 16,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              letterSpacing: -0.5,
+                Text(
+                  "My cell phone number",
+                  style: GoogleFonts.openSans(
+                    fontSize: 16,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: [
-              Radio<SingingCharacter>(
-                activeColor: Color.fromRGBO(0, 159, 158, 1),
-                value: SingingCharacter.email,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    retrieveType = "email";
-                    _character = value;
-                    email.text = "";
-                  });
-                },
-              ),
-              Text(
-                "My email address",
-                style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  color: Color.fromRGBO(0, 159, 158, 1),
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.5,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Radio<SingingCharacter>(
-                activeColor: Color.fromRGBO(0, 159, 158, 1),
-                value: SingingCharacter.mobile,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  setState(() {
-                    retrieveType = "mobile number";
-                    _character = value;
-                    email.text = "+27 ";
-                  });
-                },
-              ),
-              Text(
-                "My cell phone number",
-                style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  color: Color.fromRGBO(0, 159, 158, 1),
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.5,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          /*StyleButton(
+            SizedBox(
+              height: 15,
+            ),
+            /*StyleButton(
             description: "Send Verification",
             height: 55,
             width: 145,
@@ -293,7 +415,7 @@ class _GetUsernameState extends State<GetUsername> {
               }
             },
           ),*/
-          /*SizedBox(
+            /*SizedBox(
             height: 15,
           ),
           InkWell(
@@ -309,24 +431,25 @@ class _GetUsernameState extends State<GetUsername> {
           SizedBox(
             height: 15,
           ),*/
-          InkWell(
-            onTap: () {
-              widget.changePage(0);
-            },
-            child: Text(
-              "Return to Login",
-              style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  color: const Color.fromRGBO(0, 159, 158, 1),
-                  decoration: TextDecoration.underline,
-                  decorationThickness: 2.0,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.5,
-                  decorationColor: Color.fromRGBO(0, 159, 158, 1)),
+            InkWell(
+              onTap: () {
+                widget.changePage(0);
+              },
+              child: Text(
+                "Return to Login",
+                style: GoogleFonts.openSans(
+                    fontSize: 16,
+                    color: const Color.fromRGBO(0, 159, 158, 1),
+                    decoration: TextDecoration.underline,
+                    decorationThickness: 2.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
+                    decorationColor: Color.fromRGBO(0, 159, 158, 1)),
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
   }
 }
