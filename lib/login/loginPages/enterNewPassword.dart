@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,9 @@ import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:http/http.dart' as http;
+import 'package:sama/login/loginPages.dart';
+import 'package:sama/utils/tokenManager.dart';
 
 class EnterNewPassword extends StatefulWidget {
   String? email;
@@ -37,15 +42,38 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
                 closeDialog: () => Navigator.pop(dialogContext!)));
       });
 
+  Future openErrorDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        dialogContext = context;
+        return Dialog(
+            child: ValidateDialog(
+                description: "Error reseting password. Please try again.",
+                closeDialog: () => Navigator.pop(dialogContext!)));
+      });
+
   //Dialog for password change
   Future openConfirmPasswordChangeDialog() => showDialog(
       context: context,
       builder: (context) {
         dialogContext = context;
         return Dialog(
-            child: ValidateDialog(
-                description: "Passwords Updated",
-                closeDialog: () => Navigator.pop(dialogContext!)));
+          child: ValidateDialog(
+            description: "Passwords Updated",
+            closeDialog: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Material(
+                    child: LoginPages(
+                      pageIndex: 0,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
       });
 
   //Dialog for password match check
@@ -76,27 +104,54 @@ class _EnterNewPasswordState extends State<EnterNewPassword> {
           .where('email', isEqualTo: widget.email)
           .get();
 
-//If user exist send link
-      if (users.docs.length >= 1) {
-        final userCredential = await _auth.signInWithEmailAndPassword(
-            email: widget.email!, password: users.docs[0].get('password'));
+      //If user exist send link
+      if (users.docs.isNotEmpty) {
+        final TokenManager tokenManager = TokenManager();
+        String basicAuth = tokenManager.basicAuth();
+        // Define the URL of your API
+        final url = Uri.parse('https://sama-api.onrender.com/reset-password');
+        // Prepare the body fields
+        final body = jsonEncode({
+          "uid": users.docs.first.data()['id'],
+          "newPassword": password.text
+        });
 
-        if (userCredential.user != null) {
-          userCredential.user!
-              .updatePassword(password.text)
-              .whenComplete(() => setState(() {
-                    changeEffect = "true";
-                  }))
-              .catchError((e) {
-            print(e);
-          });
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(userCredential.user!.uid)
-              .update({
-            'password': password.text,
-          }).then((value) => openConfirmPasswordChangeDialog());
+        var response = await http.post(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': basicAuth,
+          },
+          body: body,
+        );
+
+        if (response.statusCode == 200) {
+          openConfirmPasswordChangeDialog();
+        } else {
+          openErrorDialog();
         }
+        // final userCredential = await _auth.signInWithEmailAndPassword(
+        //     email: widget.email!, password: users.docs[0].get('password'));
+
+        // if (userCredential.user != null) {
+        //   userCredential.user!
+        //       .updatePassword(password.text)
+        //       .whenComplete(() => setState(() {
+        //             changeEffect = "true";
+        //           }))
+        //       .catchError((e) {
+        //     print(e);
+        //   });
+        //   FirebaseFirestore.instance
+        //       .collection('users')
+        //       .doc(userCredential.user!.uid)
+        //       .update({
+        //     'password': password.text,
+        //   }).then((value) => openConfirmPasswordChangeDialog());
+        // }
+      } else {
+        openErrorDialog();
       }
     }
   }

@@ -9,6 +9,8 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 
 import 'package:sama/components/utility.dart';
+import 'package:sama/utils/oracleDbManager.dart';
+import 'package:sama/utils/tokenManager.dart';
 
 class ValidateByEmailOtp extends StatefulWidget {
   String? email;
@@ -31,7 +33,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
   String correctOtp = "";
   String samaNumber = "";
   String messageText = "";
-
+  bool isLoading = false;
   BuildContext? dialogContext;
 
   //Dialog for contruction popup
@@ -72,18 +74,31 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
 
 //retrive sama number from db
   getSamaNumber() async {
+    setState(() {
+      isLoading = true;
+    });
+    final OracleDbManager oracleDbManager = OracleDbManager();
     //Check if email exists and continue
-    final userList = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: ((widget.email!).toLowerCase()))
-        .get();
+    // final userList = await FirebaseFirestore.instance
+    //     .collection('users')
+    //     .where('email', isEqualTo: ((widget.email!).toLowerCase()))
+    //     .get();
+
+    Map<String, dynamic> user =
+        await oracleDbManager.checkOracleDb((widget.email!).toLowerCase());
 
     //If user exist get data
-    if (userList.docs.length >= 1) {
+    if (user.isNotEmpty) {
       setState(() {
         print("sama");
-        print(userList.docs[0]['practiceNumber']);
-        samaNumber = userList.docs[0]['practiceNumber'];
+        print(user['sama_no']);
+        samaNumber = user['sama_no'].toString();
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+        messageText = "Sama Number not found, please try again.";
       });
     }
   }
@@ -96,7 +111,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
         widget.changePage(5); // reset password
       } else if (widget.emailChangeType == "usernamePage") {
         sendSamaNumber(
-            samaNumber: samaNumber, email: ((widget.email!).toLowerCase()));
+            samaNumber: samaNumber, email: (widget.email!).toLowerCase());
         setState(() {
           messageText = "Please check your email for SAMA number";
         });
@@ -254,7 +269,7 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
               SizedBox(
                 height: 15,
               ),
-             /* GestureDetector(
+              /* GestureDetector(
                 onTap: () {
                   widget.changePage(0);
                 },

@@ -12,7 +12,6 @@ class ValidateByMobileOtp extends StatefulWidget {
   String? email;
   String? validationType;
   Function(int) changePage;
-
   ValidateByMobileOtp({
     super.key,
     required this.email,
@@ -54,9 +53,13 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
 
 //Send sms for otp
   sendSmsForOtp(number) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
 
-    confirmationResult = await auth.signInWithPhoneNumber(number);
+      confirmationResult = await auth.signInWithPhoneNumber(number);
+    } catch (e) {
+      print('error sending sms $e');
+    }
   }
 
 //Check if otp valid
@@ -77,9 +80,11 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
         .where('email', isEqualTo: ((widget.email!).toLowerCase()))
         .get();
 
-//If user exist send link
+    //If user exist send link
     if (users.docs.length >= 1) {
-      sendSmsForOtp(users.docs[0]['mobileNo']);
+      final phoneNumber = users.docs[0]['mobileNo'];
+      print('sending OTP... ${phoneNumber}');
+      sendSmsForOtp(phoneNumber);
     }
   }
 

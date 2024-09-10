@@ -88,7 +88,8 @@ class _LoginPagesState extends State<LoginPages> {
       LoginWithEmail(
           changePage: changePage,
           getEmail: getEmail,
-          updateMemberData: updateUserData),
+          updateMemberData: updateUserData,
+          getEmailChangeType: getEmailChangeType),
       LoginWithPassword(
         changePage: changePage,
         email: email,

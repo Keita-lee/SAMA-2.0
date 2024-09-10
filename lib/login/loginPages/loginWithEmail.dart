@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +31,13 @@ class LoginWithEmail extends StatefulWidget {
   final Function(Map<String, dynamic>) updateMemberData;
   final Function(int) changePage;
   final Function(String) getEmail;
+  final Function(String) getEmailChangeType;
   const LoginWithEmail(
       {super.key,
       required this.changePage,
       required this.getEmail,
-      required this.updateMemberData});
+      required this.updateMemberData,
+      required this.getEmailChangeType});
 
   @override
   State<LoginWithEmail> createState() => _LoginWithEmailState();
@@ -76,15 +78,21 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
   //Dialog for validate  form
   Future openPasswordResetDialog() => showDialog(
-      context: context,
-      builder: (context) {
-        dialogContext = context;
-        return Dialog(
+        context: context,
+        builder: (context) {
+          dialogContext = context;
+          return Dialog(
             child: ValidateDialog(
-                description:
-                    "We see you have not logged in yet. We have sent a reset password link to your email.",
-                closeDialog: () => Navigator.pop(dialogContext!)));
-      });
+              description:
+                  "We see you have not logged in on our platform yet. Please click 'OK' to reset your password.",
+              closeDialog: () {
+                Navigator.pop(dialogContext!);
+                widget.changePage(14);
+              },
+            ),
+          );
+        },
+      );
 
   Future<Map<String, dynamic>> checkOracleDb(String email) async {
     final TokenManager tokenManager = TokenManager();
@@ -196,15 +204,24 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             widget.changePage(1);
           } else {
             // Send reset password email
-            sendResetEmail(email.text,
-                '${users.docs.first.data()['firstName']} ${users.docs.first.data()['lastName']}');
-            setState(() {
-              isLoading = false;
-            });
+            // sendResetEmail(email.text,
+            //     '${users.docs.first.data()['firstName']} ${users.docs.first.data()['lastName']}');
+            widget.getEmail((email.text).toLowerCase());
+            widget.getEmailChangeType('passwordResetPage');
+            String randomOtp =
+                Random().nextInt(999999).toString().padLeft(6, '0');
+            await sendOtp(otp: randomOtp, email: (email.text).toLowerCase());
+
             await FirebaseFirestore.instance
                 .collection('users')
                 .doc(users.docs.first.id)
                 .update({'loggedIn': true});
+
+            setState(() {
+              isLoading = false;
+            });
+            // redirect user to reset password
+            // widget.changePage(14);
             openPasswordResetDialog();
           }
         } else {
@@ -276,6 +293,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
     Map<String, dynamic> member = await checkSamaNo(email.text);
     List data = member['items'];
+    print(data.first);
     if (data.isEmpty) {
       setState(() {
         isLoading = false;
@@ -292,6 +310,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
     updateStateText("");
 
+    widget.getEmail(data.first['email_sama'].toLowerCase());
+
     if (data.isNotEmpty &&
         users.docs.isNotEmpty &&
         users.docs.first['status'] == 'Active') {
@@ -299,15 +319,24 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         widget.changePage(1);
       } else {
         // Send email with reset link
-        sendResetEmail(users.docs.first['email'],
-            '${data.first['firstName']} ${data.first['surname']}');
-        setState(() {
-          isLoading = false;
-        });
+        // sendResetEmail(users.docs.first['email'],
+        //     '${data.first['firstName']} ${data.first['surname']}');
+
+        widget.getEmailChangeType('passwordResetPage');
+        String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+        await sendOtp(
+            otp: randomOtp, email: (data.first['email_sama']).toLowerCase());
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(users.docs.first.id)
             .update({'loggedIn': true});
+
+        setState(() {
+          isLoading = false;
+        });
+        // redirect user to reset password
+        // widget.changePage(14);
         openPasswordResetDialog();
       }
     } else {
@@ -553,7 +582,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           ),
           InkWell(
             onTap: () {
-              //  widget.changePage(11);
+              widget.changePage(11);
             },
             onHover: (hovered) {
               setState(() {
@@ -652,7 +681,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             height: 15,
           ),
           const Text(
-            'v1.0.03f',
+            'v1.0.06f',
             style: TextStyle(
                 fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
           )

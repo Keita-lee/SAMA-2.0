@@ -54,9 +54,12 @@ class _ValidateByMobileGetUsernameState
 
 //Send sms for otp
   sendSmsForOtp(number) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    confirmationResult = await auth.signInWithPhoneNumber(number);
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      confirmationResult = await auth.signInWithPhoneNumber(number);
+    } catch (e) {
+      print('error sending otp $e');
+    }
   }
 
 //Check if otp valid

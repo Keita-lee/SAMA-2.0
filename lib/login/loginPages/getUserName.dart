@@ -9,6 +9,7 @@ import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/utils/oracleDbManager.dart';
 
 enum SingingCharacter { email, mobile }
 
@@ -70,19 +71,22 @@ class _GetUsernameState extends State<GetUsername> {
 
   //Check if email exists and continue
   checkEmail() async {
+    final OracleDbManager oracleDbManager = OracleDbManager();
     widget.getEmailChangeType("usernamePage");
     print('Email: ${email.text}');
-    final users = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: email.text)
-        .get();
+    // final users = await FirebaseFirestore.instance
+    //     .collection('users')
+    //     .where('email', isEqualTo: email.text)
+    //     .get();
+
+    Map<String, dynamic> user = await oracleDbManager.checkOracleDb(email.text);
 
     //If user exist send link
-    if (users.docs.length >= 1) {
+    if (user.isNotEmpty) {
       //Update email variable
       widget.getEmail(email.text);
       String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
-      await sendOtp(otp: randomOtp, email: users.docs[0].get("email"));
+      await sendOtp(otp: randomOtp, email: user['email_sama']);
       widget.changePage(14);
     } else {
       openValidateDialog();
@@ -112,8 +116,11 @@ class _GetUsernameState extends State<GetUsername> {
 
     final users = await FirebaseFirestore.instance
         .collection('users')
-        .where('mobileNo', isEqualTo: formatMobileNumber())
-        .get();
+        .where('mobileNo', whereIn: [
+      formatMobileNumber(),
+      '+27${formatMobileNumber().substring(1)}',
+      '+27 ${formatMobileNumber().substring(1)}'
+    ]).get();
 
     //If user change page
     if (users.docs.length >= 1) {

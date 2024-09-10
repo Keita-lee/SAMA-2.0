@@ -9,6 +9,8 @@ import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
 import 'package:sama/components/utility.dart';
+import 'package:sama/login/loginPages.dart';
+import 'package:sama/utils/oracleDbManager.dart';
 
 enum SingingCharacter { email, mobile }
 
@@ -16,11 +18,13 @@ class ResetPassword extends StatefulWidget {
   Function(int) changePage;
   Function(String) getEmail;
   Function(String) getEmailChangeType;
-  ResetPassword(
-      {super.key,
-      required this.getEmail,
-      required this.changePage,
-      required this.getEmailChangeType});
+
+  ResetPassword({
+    super.key,
+    required this.getEmail,
+    required this.changePage,
+    required this.getEmailChangeType,
+  });
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -29,8 +33,8 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   // Text controllers
   final email = TextEditingController();
-
-//var
+  bool isLoading = false;
+  //var
 
   SingingCharacter? _character = SingingCharacter.email;
 
@@ -57,26 +61,81 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   //Check if email exists and continue
   checkEmail() async {
-    widget.getEmailChangeType("passwordResetPage");
-    final users = await FirebaseFirestore.instance
-        .collection('users')
-        .where('practiceNumber', isEqualTo: email.text.toLowerCase())
-        .get();
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final OracleDbManager oracleDbManager = OracleDbManager();
+      final memberData = await oracleDbManager.checkSamaNo(email.text);
+      final _auth = FirebaseAuth.instance;
+      if (memberData['items'].isNotEmpty) {
+        widget.getEmailChangeType("passwordResetPage");
+        final oracelEmail = memberData['items'][0]['email_sama'];
 
-//If user exist send link
-    if (users.docs.length >= 1) {
-      //Update email variable
-      widget.getEmail(users.docs[0].get("email"));
-      //Mobile OTP send
-      if (_character == SingingCharacter.mobile) {
-        widget.changePage(3);
+        widget.getEmail(oracelEmail);
+        final user = await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: oracelEmail)
+            .get();
+
+        if (user.docs.isNotEmpty) {
+          if (_character == SingingCharacter.mobile) {
+            //Mobile OTP send
+            widget.changePage(3);
+          } else {
+            String randomOtp =
+                Random().nextInt(999999).toString().padLeft(6, '0');
+            await sendOtp(
+                otp: randomOtp, email: memberData['items'][0]['email_sama']);
+            widget.changePage(14);
+          }
+          setState(() {
+            isLoading = false;
+          });
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Material(
+                child: LoginPages(
+                  pageIndex: 19,
+                ),
+              ),
+            ),
+          );
+        }
+
+        // final users = await FirebaseFirestore.instance
+        //     .collection('users')
+        //     .where('practiceNumber', isEqualTo: email.text.toLowerCase())
+        //     .get();
+
+        //If user exist send link
+        // if (users.docs.length >= 1) {
+        //   //Update email variable
+        //   widget.getEmail(users.docs[0].get("email"));
+        //   //Mobile OTP send
+        //   if (_character == SingingCharacter.mobile) {
+        //     widget.changePage(3);
+        //   } else {
+        //     String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+        //     await sendOtp(otp: randomOtp, email: users.docs[0].get("email"));
+        //     widget.changePage(14);
+        //   }
+        // } else {
+        //   openValidateDialog();
+        // }
       } else {
-        String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
-        await sendOtp(otp: randomOtp, email: users.docs[0].get("email"));
-        widget.changePage(14);
+        setState(() {
+          isLoading = false;
+        });
+        openValidateDialog();
       }
-    } else {
-      openValidateDialog();
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('error validation $e');
     }
   }
 
@@ -145,6 +204,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               Padding(
                 padding: const EdgeInsets.only(left: 25),
                 child: StyleButton(
+                  waiting: isLoading,
                   description: "SEND OTP",
                   height: 55,
                   width: 145,
