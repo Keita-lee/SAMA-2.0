@@ -38,6 +38,28 @@ class _MemberMediaState extends State<MemberMedia> {
         ));
       });
 
+  adjustDates() async {
+    final doc = await FirebaseFirestore.instance.collection('media').get();
+
+    if (doc.docs.isNotEmpty) {
+      for (var i = 0; i < doc.docs.length; i++) {
+        var str = doc.docs[i]['releaseDate'].split("-");
+        var releaseDate = "${str[2]}-${str[1]}-${str[0]}";
+        print(releaseDate);
+        FirebaseFirestore.instance
+            .collection('media')
+            .doc(doc.docs[i]['id'])
+            .update({"releaseDate": releaseDate}); /* */
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // adjustDates();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -127,8 +149,12 @@ class _MemberMediaState extends State<MemberMedia> {
 
                     final List<DocumentSnapshot> documents =
                         snapshot.data!.docs;
-                    documents.sort(
-                        (b, a) => a["releaseDate"].compareTo(b["releaseDate"]));
+                    documents.sort((a, b) {
+                      //sorting in ascending order
+                      return DateTime.parse(b["releaseDate"])
+                          .compareTo(DateTime.parse(a["releaseDate"]));
+                    });
+
                     if (documents.isEmpty) {
                       return Center(child: Text('No Media & Webinars yet'));
                     }
@@ -162,7 +188,7 @@ class _MemberMediaState extends State<MemberMedia> {
                                             : false,
                                     child: MediaContainerStyle(
                                       view: () {
-                                        openMediaDialog(document['title']);
+                                        openMediaDialog(document['id']);
                                       },
                                       onpress: () {
                                         showDialog(

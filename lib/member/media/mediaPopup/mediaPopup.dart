@@ -36,15 +36,17 @@ class _MediaPopupState extends State<MediaPopup> {
   }
 
   Future<void> _fetchVideoUrl() async {
+    print(widget.id);
     try {
       final doc = await FirebaseFirestore.instance
           .collection('media')
-          .where("id", isEqualTo: widget.id)
+          .doc(widget.id)
           .get();
-      if (doc.docs.isNotEmpty) {
+      if (doc.exists) {
         setState(() {
-          videoUrl = doc.docs[0]['urlLink'];
-          title = doc.docs[0]['title'];
+          videoUrl = doc.get('urlLink');
+          title = doc.get('title');
+          print(doc.get('urlLink'));
           //  description = doc.docs[0]['description'];
 
           if (videoUrl != null) {
@@ -56,7 +58,7 @@ class _MediaPopupState extends State<MediaPopup> {
                 showFullscreenButton: true,
               ),
             );
-          }
+          } /**/
         });
       }
     } catch (e) {
@@ -66,7 +68,7 @@ class _MediaPopupState extends State<MediaPopup> {
 
   @override
   void dispose() {
-    _youtubePlayerController.close();
+    // _youtubePlayerController.close();
     super.dispose();
   }
 
@@ -114,20 +116,19 @@ class _MediaPopupState extends State<MediaPopup> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              width: MyUtility(context).width / 2.1,
-              // height: MyUtility(context).height / 2.1,
-              child: YoutubePlayerScaffold(
-                controller: _youtubePlayerController,
-                aspectRatio: 16 / 9,
-                builder: (context, player) {
-                  return Column(
-                    children: [
-                      player,
-                    ],
-                  );
-                },
-              ),
-            ),
+                width: MyUtility(context).width / 2.1,
+                // height: MyUtility(context).height / 2.1,
+                child: YoutubePlayerScaffold(
+                  controller: _youtubePlayerController,
+                  aspectRatio: 16 / 9,
+                  builder: (context, player) {
+                    return Column(
+                      children: [
+                        player,
+                      ],
+                    );
+                  },
+                )),
           ),
 
           /*   Padding(
