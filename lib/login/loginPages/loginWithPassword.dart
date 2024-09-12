@@ -10,7 +10,7 @@ import 'package:sama/components/utility.dart';
 import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/login/popups/validateDialog.dart';
 
-import '../../components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import '../../components/mobile/Navbar/footer.dart';
 import '../../components/mobile/Navbar/navbar.dart';
 
@@ -86,6 +86,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         child: Column(
           children: [
             Navbar(
+              userType: "",
               onButton1Pressed: (value) {},
               onButton2Pressed: (value) {},
               onDropdownChanged: (value) {},

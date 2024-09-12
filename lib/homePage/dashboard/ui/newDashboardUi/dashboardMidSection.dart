@@ -9,6 +9,8 @@ import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardItems/dashMed
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardItems/dashPrivateMessahes.dart';
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardItems/dashProfessionalDev.dart';
 
+import '../../../../components/myutility.dart';
+
 class DashboardMidSection extends StatefulWidget {
   Function(int) changePageIndex;
   DashboardMidSection({super.key, required this.changePageIndex});

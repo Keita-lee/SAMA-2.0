@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/mobile/Navbar/footer.dart';
 import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/myutility.dart';
@@ -65,6 +65,7 @@ class _DisplayUsernameState extends State<DisplayUsername> {
         child: Column(
           children: [
             Navbar(
+              userType: "",
               onButton1Pressed: (value) {},
               onButton2Pressed: (value) {},
               onDropdownChanged: (value) {},

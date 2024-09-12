@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
+import '../../../../../components/myutility.dart';
 import '../dasboardInfoContainers.dart';
 import '../dashboardTextButton.dart';
 
@@ -16,23 +17,33 @@ class DashPrivateMessages extends StatefulWidget {
 class _DashPrivateMessagesState extends State<DashPrivateMessages> {
   @override
   Widget build(BuildContext context) {
-    return DashboardInfoContainers(
-      height: 180,
-      headerTextButton: true,
-      topBarColor: SamaColors().lightBlue,
-      image: "images/icon_chat.svg",
-      header: 'Private Messages',
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Coming soon!',
-              style: GoogleFonts.openSans(
-                  fontSize: 12, fontWeight: FontWeight.w600),
-            ),
-            /*  InkWell(
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+    if (isMobile) {
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          'Coming soon!',
+          style:
+              GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
+        ),
+      ]);
+    } else {
+      return DashboardInfoContainers(
+        height: 180,
+        headerTextButton: true,
+        topBarColor: SamaColors().lightBlue,
+        image: "images/icon_chat.svg",
+        header: 'Private Messages',
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Coming soon!',
+                style: GoogleFonts.openSans(
+                    fontSize: 12, fontWeight: FontWeight.w600),
+              ),
+              /*  InkWell(
                 onTap: () {
                   widget.changePageIndex(1);
                 },
@@ -41,10 +52,10 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
                     onTap: () {
                       widget.changePageIndex(1);
                     })),*/
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-    ;
+      );
+    }
   }
 }

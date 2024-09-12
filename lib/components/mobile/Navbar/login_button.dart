@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sama/components/mobile/Navbar/Themes/custom_colors.dart';
+import 'package:sama/components/mobile/components/Themes/custom_colors.dart';
 
 class LoginButton extends StatelessWidget {
   final VoidCallback onPressed;

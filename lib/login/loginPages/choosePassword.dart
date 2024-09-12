@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
-import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+
 import 'package:sama/components/mobile/Navbar/footer.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
@@ -103,6 +104,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
         child: Column(
           children: [
             Navbar(
+              userType: "",
               onButton1Pressed: (value) {},
               onButton2Pressed: (value) {},
               onDropdownChanged: (value) {},

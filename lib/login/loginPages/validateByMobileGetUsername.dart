@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
-import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/mobile/Navbar/footer.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -103,6 +103,7 @@ class _ValidateByMobileGetUsernameState
         child: Column(
           children: [
             Navbar(
+              userType: "",
               onButton1Pressed: (value) {},
               onButton2Pressed: (value) {},
               onDropdownChanged: (value) {},

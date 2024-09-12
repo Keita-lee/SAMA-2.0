@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 class Footer extends StatelessWidget {
   const Footer({super.key});

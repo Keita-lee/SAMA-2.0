@@ -11,7 +11,7 @@ import 'package:sama/components/email/sendBugReport.dart';
 
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/email/sendPasswordResetLink.dart';
-import 'package:sama/components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/mobile/Navbar/footer.dart';
 import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
@@ -427,6 +427,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           child: Column(
             children: [
               Navbar(
+                userType: "",
                 onButton1Pressed: (value) {},
                 onButton2Pressed: (value) {},
                 onDropdownChanged: (value) {},

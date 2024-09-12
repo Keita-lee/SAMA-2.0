@@ -12,6 +12,7 @@ import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/memberManagement/memberManagementMainCon.dart';
 import 'package:sama/admin/products/products.dart';
 import 'package:sama/admin/transactions/transactionsAdmin.dart';
+import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/homePage/dashboard/ui/SamaTopTabBar.dart';
 import 'package:sama/homePage/dashboard/ui/onHoverButtons.dart';
 import 'package:sama/homePage/dashboard/ui/popups/notificationList.dart';
@@ -265,209 +266,228 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     var heightDevice = MediaQuery.of(context).size.height;
 
     var widthDevice = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Stack(
+
+    if (widthDevice < 600) {
+      return Column(
         children: [
+          Navbar(
+            userType: userType,
+            visible: true,
+            onButton1Pressed: (value) {},
+            onButton2Pressed: (value) {},
+            onDropdownChanged: (value) {},
+          ),
           Container(
-            color: Color(0xFFF8FAFF),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    height: 65,
-                    width: widthDevice,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1.5,
-                            color: Color.fromRGBO(211, 230, 250, 1)),
+            child: pages[pageIndex!],
+          )
+        ],
+      );
+    } else {
+      return Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              color: Color(0xFFF8FAFF),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 65,
+                      width: widthDevice,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1.5,
+                              color: Color.fromRGBO(211, 230, 250, 1)),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage('images/sama_logo.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Visibility(
-                              visible: menuSize == 6.5 ? true : false,
-                              child: Text(
-                                userType == "Admin"
-                                    ? 'Admin Portal'
-                                    : userType == "NonMember"
-                                        ? "Member Portal (beta)"
-                                        : 'Member Portal BETA',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color(0xFF174486),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            SizedBox(width: menuSize == 6.5 ? 30 : 10),
-                            Visibility(
-                              visible: menuSize == 6.5 ? true : false,
-                              child: GestureDetector(
-                                onTap: () {
-                                  changeSideMenuSize();
-                                },
-                                child: SizedBox(
-                                  width: MyUtility(context).width * 0.025,
-                                  child: Icon(
-                                    Icons.menu,
-                                    color: Color.fromRGBO(174, 204, 236, 1),
-                                    size: 30,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('images/sama_logo.png'),
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
-                            ),
-                            Visibility(
-                              visible: menuSize != 6.5 ? true : false,
-                              child: GestureDetector(
-                                onTap: () {
-                                  changeSideMenuSize();
-                                },
-                                child: SizedBox(
-                                  width: MyUtility(context).width * 0.025,
-                                  child: Icon(
-                                    Icons.menu,
-                                    size: 30,
-                                    color: Colors.grey,
+                              SizedBox(width: 10),
+                              Visibility(
+                                visible: menuSize == 6.5 ? true : false,
+                                child: Text(
+                                  userType == "Admin"
+                                      ? 'Admin Portal'
+                                      : userType == "NonMember"
+                                          ? "Member Portal (beta)"
+                                          : 'Member Portal BETA',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFF174486),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(width: menuSize == 6.5 ? 30 : 10),
+                              Visibility(
+                                visible: menuSize == 6.5 ? true : false,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    changeSideMenuSize();
+                                  },
+                                  child: SizedBox(
+                                    width: MyUtility(context).width * 0.025,
+                                    child: Icon(
+                                      Icons.menu,
+                                      color: Color.fromRGBO(174, 204, 236, 1),
+                                      size: 30,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                              width: widthDevice / 10,
-                            ),
-                            /*   Visibility(
+                              Visibility(
+                                visible: menuSize != 6.5 ? true : false,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    changeSideMenuSize();
+                                  },
+                                  child: SizedBox(
+                                    width: MyUtility(context).width * 0.025,
+                                    child: Icon(
+                                      Icons.menu,
+                                      size: 30,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              SizedBox(
+                                width: widthDevice / 10,
+                              ),
+                              /*   Visibility(
                                 visible: userType != 'Admin' &&
                                     userType != "NonMember",
                                 child: SamaTopTabBar()),*/
-                            Spacer(),
-                            Visibility(
-                                visible: userType == 'NonMember',
-                                child: Row(
+                              Spacer(),
+                              Visibility(
+                                  visible: userType == 'NonMember',
+                                  child: Row(
+                                    children: [
+                                      OnHoverButtons(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Material(
+                                                        child: LoginPages(
+                                                          pageIndex: 0,
+                                                        ),
+                                                      )),
+                                            );
+                                          },
+                                          height: 35,
+                                          width: 60,
+                                          baseColor:
+                                              Color.fromRGBO(237, 157, 4, 1),
+                                          hoverColor:
+                                              Color.fromRGBO(19, 43, 81, 1),
+                                          description: 'LOGIN'),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      OnHoverButtons(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Material(
+                                                        child: LoginPages(
+                                                          pageIndex: 9,
+                                                        ),
+                                                      )),
+                                            );
+                                          },
+                                          height: 35,
+                                          width: 60,
+                                          baseColor: Color(0xFF174486),
+                                          hoverColor:
+                                              Color.fromRGBO(19, 43, 81, 1),
+                                          description: 'REGISTER')
+                                    ],
+                                  )),
+                              SizedBox(width: 20),
+                              Visibility(
+                                visible: userType != 'Admin' &&
+                                    userType != "NonMember",
+                                child: Stack(
                                   children: [
-                                    OnHoverButtons(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Material(
-                                                      child: LoginPages(
-                                                        pageIndex: 0,
-                                                      ),
-                                                    )),
-                                          );
+                                    IconButton(
+                                        onPressed: () {
+                                          changePage(17);
                                         },
-                                        height: 35,
-                                        width: 60,
-                                        baseColor:
-                                            Color.fromRGBO(237, 157, 4, 1),
-                                        hoverColor:
-                                            Color.fromRGBO(19, 43, 81, 1),
-                                        description: 'LOGIN'),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    OnHoverButtons(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Material(
-                                                      child: LoginPages(
-                                                        pageIndex: 9,
-                                                      ),
-                                                    )),
-                                          );
-                                        },
-                                        height: 35,
-                                        width: 60,
-                                        baseColor: Color(0xFF174486),
-                                        hoverColor:
-                                            Color.fromRGBO(19, 43, 81, 1),
-                                        description: 'REGISTER')
-                                  ],
-                                )),
-                            SizedBox(width: 20),
-                            Visibility(
-                              visible: userType != 'Admin' &&
-                                  userType != "NonMember",
-                              child: Stack(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        changePage(17);
-                                      },
-                                      icon: SvgPicture.string(
-                                        '''
+                                        icon: SvgPicture.string(
+                                          '''
                                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1109 1024">
                                             <path fill="currentColor" d="M1012.920568 469.559268c-15.332419 43.758169-43.523597 85.298574-85.298574 85.298574L294.493327 554.857842 309.207331 661.48106c3.326644 23.542406 19.085556 42.649287 42.649287 42.649287l618.414663 0 0 42.649287L330.531975 746.779634c-35.334934 0-57.960381-27.956608-63.973931-63.973931L181.25947 43.066397 10.662322 43.066397 10.662322 0.41711c0 0 131.317155-0.938284 170.597148 0 27.977932 0.661064 42.649287 42.649287 42.649287 42.649287l11.771203 85.298574L1012.920568 128.364971c59.090587 0 86.620702 24.864534 85.298574 85.298574L1012.920568 469.559268zM1012.920568 171.014258 351.856618 171.014258l-85.298574 0-24.992482 0 47.042164 341.194297L309.207331 512.208555l0 0 597.090019 0c36.550439 0 51.904182-10.79027 63.973931-42.649287l85.298574-234.571079C1063.438649 190.270411 1043.308185 171.014258 1012.920568 171.014258zM426.492871 789.428921c64.784267 0 117.285539 52.501272 117.285539 117.285539S491.277138 1024 426.492871 1024 309.207331 971.498728 309.207331 906.714461 361.708604 789.428921 426.492871 789.428921zM426.492871 981.350713c41.220536 0 74.636252-33.394392 74.636252-74.636252S467.713407 832.078208 426.492871 832.078208 351.856618 865.4726 351.856618 906.714461 385.272335 981.350713 426.492871 981.350713zM874.310385 789.428921c64.784267 0 117.285539 52.501272 117.285539 117.285539S939.094652 1024 874.310385 1024 757.024846 971.498728 757.024846 906.714461 809.526118 789.428921 874.310385 789.428921zM874.310385 981.350713c41.241861 0 74.636252-33.394392 74.636252-74.636252S915.552246 832.078208 874.310385 832.078208 799.674133 865.4726 799.674133 906.714461 833.068525 981.350713 874.310385 981.350713z" />
                                           </svg>
                                         ''',
-                                        width: 20.0,
-                                        height: 20.0,
-                                        color: Color.fromRGBO(23, 68, 134, 1),
-                                      )),
-                                  // Positioned(
-                                  //   right: 0,
-                                  //   top: 0,
-                                  //   child: Container(
-                                  //     padding: EdgeInsets.all(2),
-                                  //     decoration: BoxDecoration(
-                                  //       color: Color.fromRGBO(73, 91, 155, 1),
-                                  //       borderRadius: BorderRadius.circular(12),
-                                  //     ),
-                                  //     constraints: BoxConstraints(
-                                  //       minWidth: 20,
-                                  //       minHeight: 20,
-                                  //     ),
-                                  //     child: Text(
-                                  //       '3', // Replace '3' with your dynamic cart item count
-                                  //       style: TextStyle(
-                                  //         color: Colors.white,
-                                  //         fontSize: 12,
-                                  //         fontWeight: FontWeight.bold,
-                                  //       ),
-                                  //       textAlign: TextAlign.center,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
+                                          width: 20.0,
+                                          height: 20.0,
+                                          color: Color.fromRGBO(23, 68, 134, 1),
+                                        )),
+                                    // Positioned(
+                                    //   right: 0,
+                                    //   top: 0,
+                                    //   child: Container(
+                                    //     padding: EdgeInsets.all(2),
+                                    //     decoration: BoxDecoration(
+                                    //       color: Color.fromRGBO(73, 91, 155, 1),
+                                    //       borderRadius: BorderRadius.circular(12),
+                                    //     ),
+                                    //     constraints: BoxConstraints(
+                                    //       minWidth: 20,
+                                    //       minHeight: 20,
+                                    //     ),
+                                    //     child: Text(
+                                    //       '3', // Replace '3' with your dynamic cart item count
+                                    //       style: TextStyle(
+                                    //         color: Colors.white,
+                                    //         fontSize: 12,
+                                    //         fontWeight: FontWeight.bold,
+                                    //       ),
+                                    //       textAlign: TextAlign.center,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Visibility(
-                              visible: userType != "NonMember",
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      openNotificationList();
-                                    },
-                                    icon: SvgPicture.asset(
-                                      'images/icon_bell.svg',
-                                      width: 20,
-                                      height: 20,
-                                      color: Color.fromRGBO(73, 91, 155, 1),
+                              Visibility(
+                                visible: userType != "NonMember",
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        openNotificationList();
+                                      },
+                                      icon: SvgPicture.asset(
+                                        'images/icon_bell.svg',
+                                        width: 20,
+                                        height: 20,
+                                        color: Color.fromRGBO(73, 91, 155, 1),
+                                      ),
                                     ),
-                                  ),
-                                  /*     IconButton(
+                                    /*     IconButton(
                                     onPressed: () {
                                       openReportPopup();
                                     },
@@ -479,121 +499,124 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                     ),
                                   ),
                            */
-                                  PopupMenuButton(
-                                    key: _menuKey,
-                                    onSelected: (value) {
-                                      if (value == "viewProfile") {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Material(
-                                                      child: PostLoginLandingPage(
-                                                          pageIndex: 3,
-                                                          userId: FirebaseAuth
-                                                                      .instance
-                                                                      .currentUser !=
-                                                                  null
-                                                              ? FirebaseAuth
-                                                                  .instance
-                                                                  .currentUser!
-                                                                  .uid
-                                                              : "",
-                                                          activeIndex: 3),
-                                                    )));
-                                        //changePage(3);
-                                      } else if (value == "logout") {
-                                        openLogoutDialog();
-                                      }
-                                    },
-                                    itemBuilder: (BuildContext context) =>
-                                        <PopupMenuEntry>[
-                                      PopupMenuItem(
-                                        height: 22,
-                                        value: "viewProfile",
-                                        child: const Text(
-                                          'View Profile',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF174486),
-                                              fontWeight: FontWeight.bold),
+                                    PopupMenuButton(
+                                      key: _menuKey,
+                                      onSelected: (value) {
+                                        if (value == "viewProfile") {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Material(
+                                                        child: PostLoginLandingPage(
+                                                            pageIndex: 3,
+                                                            userId: FirebaseAuth
+                                                                        .instance
+                                                                        .currentUser !=
+                                                                    null
+                                                                ? FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser!
+                                                                    .uid
+                                                                : "",
+                                                            activeIndex: 3),
+                                                      )));
+                                          //changePage(3);
+                                        } else if (value == "logout") {
+                                          openLogoutDialog();
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry>[
+                                        PopupMenuItem(
+                                          height: 22,
+                                          value: "viewProfile",
+                                          child: const Text(
+                                            'View Profile',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF174486),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        PopupMenuItem(
+                                          height: 22,
+                                          value: "logout",
+                                          child: const Text(
+                                            'Logout',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF174486),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Container(
+                                          width: 55,
+                                          height: 55,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: Colors.white,
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(0.0),
+                                            child: profileUrl != ""
+                                                ? ImageNetwork(
+                                                    onTap: () {
+                                                      dynamic state =
+                                                          _menuKey.currentState;
+                                                      state.showButtonMenu();
+                                                    },
+                                                    image: profileUrl!,
+                                                    height: 55,
+                                                    width: 55,
+                                                  )
+                                                : Container(),
+                                          ),
                                         ),
                                       ),
-                                      PopupMenuItem(
-                                        height: 22,
-                                        value: "logout",
-                                        child: const Text(
-                                          'Logout',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF174486),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: Container(
-                                        width: 55,
-                                        height: 55,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          color: Colors.white,
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(0.0),
-                                          child: profileUrl != ""
-                                              ? ImageNetwork(
-                                                  onTap: () {
-                                                    dynamic state =
-                                                        _menuKey.currentState;
-                                                    state.showButtonMenu();
-                                                  },
-                                                  image: profileUrl!,
-                                                  height: 55,
-                                                  width: 55,
-                                                )
-                                              : Container(),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.04,
-                            )
-                          ],
+                              SizedBox(
+                                width: MyUtility(context).width * 0.04,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          PostLoginLeft(
-                            changePage: changePage,
-                            menuSize: menuSize,
-                            activeIndex: widget.activeIndex,
-                          ),
-                          Container(
-                            child: pages[pageIndex!],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            PostLoginLeft(
+                              changePage: changePage,
+                              menuSize: menuSize,
+                              activeIndex: widget.activeIndex,
+                            ),
+                            Container(
+                              child: pages[pageIndex!],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    }
   }
 }

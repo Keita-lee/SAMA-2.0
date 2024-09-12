@@ -8,7 +8,7 @@ import 'package:sama/components/styleTextfield.dart';
 
 import 'package:sama/components/utility.dart';
 
-import '../../components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import '../../components/mobile/Navbar/footer.dart';
 import '../../components/mobile/Navbar/navbar.dart';
 
@@ -106,6 +106,7 @@ class _ValidateByMobileOtpState extends State<ValidateByMobileOtp> {
         child: Column(
           children: [
             Navbar(
+              userType: "",
               onButton1Pressed: (value) {},
               onButton2Pressed: (value) {},
               onDropdownChanged: (value) {},

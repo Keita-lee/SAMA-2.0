@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
+import '../../../../../components/myutility.dart';
 import '../../../../../member/media/mediaPopup/mediaPopup.dart';
 import '../dasboardInfoContainers.dart';
 import '../dashboardTextButton.dart';
@@ -48,32 +49,55 @@ class _DashMediaWebState extends State<DashMediaWeb> {
 
   @override
   Widget build(BuildContext context) {
-    return DashboardInfoContainers(
-      height: 180,
-      topBarColor: SamaColors().teal,
-      image: "images/icon_media.svg",
-      header: 'Media & Webinars',
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Latest',
-              style: GoogleFonts.openSans(
-                  fontSize: 12, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            DashboardTextButton(
-                text: title,
-                onTap: () {
-                  openMediaDialog(id);
-                }),
-          ],
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Latest',
+            style:
+                GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          DashboardTextButton(
+              text: title,
+              onTap: () {
+                openMediaDialog(id);
+              }),
+        ],
+      );
+    } else {
+      return DashboardInfoContainers(
+        height: 180,
+        topBarColor: SamaColors().teal,
+        image: "images/icon_media.svg",
+        header: 'Media & Webinars',
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Latest',
+                style: GoogleFonts.openSans(
+                    fontSize: 12, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DashboardTextButton(
+                  text: title,
+                  onTap: () {
+                    openMediaDialog(id);
+                  }),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

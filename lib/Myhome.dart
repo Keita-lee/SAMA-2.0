@@ -20,12 +20,10 @@ class _MyHomeState extends State<MyHome> {
     var width = MyUtility(context).width;
     return Stack(children: <Widget>[
       Center(
-          child: width < 800
-              ? PageUnderConstruction()
-              : PostLoginLandingPage(
-                  userId: "",
-                  activeIndex: 0,
-                )),
+          child: PostLoginLandingPage(
+        userId: "",
+        activeIndex: 0,
+      )),
     ]);
   }
 }

@@ -12,7 +12,7 @@ import 'package:sama/components/utility.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/utils/oracleDbManager.dart';
 
-import '../../components/mobile/Navbar/Themes/font_text.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import '../../components/mobile/Navbar/footer.dart';
 import '../../components/mobile/Navbar/navbar.dart';
 
@@ -150,6 +150,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: Column(
           children: [
             Navbar(
+              userType: "",
               onButton1Pressed: (value) {},
               onButton2Pressed: (value) {},
               onDropdownChanged: (value) {},

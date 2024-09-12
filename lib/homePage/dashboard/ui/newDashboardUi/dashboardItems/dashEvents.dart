@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/myutility.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
 import '../../../../../member/Events/MemberEventDetails/MemberEventDetails.dart';
@@ -52,37 +53,65 @@ class _DashEventsState extends State<DashEvents> {
 
   @override
   Widget build(BuildContext context) {
-    return DashboardInfoContainers(
-      height: 180,
-      topBarColor: SamaColors().teal,
-      image: "images/icon_events.svg",
-      header: 'Events',
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Latest',
-              style: GoogleFonts.openSans(
-                  fontSize: 12, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            DashboardTextButton(
-                text: latestEvent,
-                onTap: () {
-                  openEventDetails(latestEventId);
-                }),
-            DashboardTextButton(
-                text: secondEvent,
-                onTap: () {
-                  openEventDetails(secondEventId);
-                }),
-          ],
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Latest',
+            style:
+                GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          DashboardTextButton(
+              text: latestEvent,
+              onTap: () {
+                openEventDetails(latestEventId);
+              }),
+          DashboardTextButton(
+              text: secondEvent,
+              onTap: () {
+                openEventDetails(secondEventId);
+              }),
+        ],
+      );
+    } else {
+      return DashboardInfoContainers(
+        height: 180,
+        topBarColor: SamaColors().teal,
+        image: "images/icon_events.svg",
+        header: 'Events',
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Latest',
+                style: GoogleFonts.openSans(
+                    fontSize: 12, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DashboardTextButton(
+                  text: latestEvent,
+                  onTap: () {
+                    openEventDetails(latestEventId);
+                  }),
+              DashboardTextButton(
+                  text: secondEvent,
+                  onTap: () {
+                    openEventDetails(secondEventId);
+                  }),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

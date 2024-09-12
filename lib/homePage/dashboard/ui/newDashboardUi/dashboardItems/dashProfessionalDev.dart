@@ -5,6 +5,7 @@ import 'package:sama/homePage/PostLoginLandingPage.dart';
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardTextButton.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
+import '../../../../../components/myutility.dart';
 import '../dasboardInfoContainers.dart';
 
 class DashProfessionalDev extends StatefulWidget {
@@ -18,20 +19,44 @@ class DashProfessionalDev extends StatefulWidget {
 class _DashProfessionalDevState extends State<DashProfessionalDev> {
   @override
   Widget build(BuildContext context) {
-    return DashboardInfoContainers(
-      height: 180,
-      activeTopBar: false,
-      topBarColor: SamaColors().yellow,
-      image: 'images/icon_prof_dev.svg',
-      header: 'Professional Development',
-      svgColor: Colors.black,
-      extendedTopBarColor: SamaColors().yellow,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /*   Align(
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
+    if (isMobile) {
+      return Column(
+        children: [
+          DashboardTextButton(
+              text: 'List and find CPD Quizes',
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(
+                              child: PostLoginLandingPage(
+                                  pageIndex: 19,
+                                  userId: FirebaseAuth.instance.currentUser !=
+                                          null
+                                      ? FirebaseAuth.instance.currentUser!.uid
+                                      : "",
+                                  activeIndex: 19),
+                            )));
+              })
+        ],
+      );
+    } else {
+      return DashboardInfoContainers(
+        height: 180,
+        activeTopBar: false,
+        topBarColor: SamaColors().yellow,
+        image: 'images/icon_prof_dev.svg',
+        header: 'Professional Development',
+        svgColor: Colors.black,
+        extendedTopBarColor: SamaColors().yellow,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*   Align(
               alignment: Alignment.center,
               child: Text.rich(
                 TextSpan(
@@ -47,29 +72,32 @@ class _DashProfessionalDevState extends State<DashProfessionalDev> {
                 ),
               ),
             ),*/
-            const SizedBox(
-              height: 20,
-            ),
-            //DashboardTextButton(text: 'View CPD Quizes', onTap: () {}),
-            DashboardTextButton(
-                text: 'List and find CPD Quizes',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Material(
-                                child: PostLoginLandingPage(
-                                    pageIndex: 19,
-                                    userId: FirebaseAuth.instance.currentUser !=
-                                            null
-                                        ? FirebaseAuth.instance.currentUser!.uid
-                                        : "",
-                                    activeIndex: 19),
-                              )));
-                })
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              //DashboardTextButton(text: 'View CPD Quizes', onTap: () {}),
+              DashboardTextButton(
+                  text: 'List and find CPD Quizes',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Material(
+                                  child: PostLoginLandingPage(
+                                      pageIndex: 19,
+                                      userId:
+                                          FirebaseAuth.instance.currentUser !=
+                                                  null
+                                              ? FirebaseAuth
+                                                  .instance.currentUser!.uid
+                                              : "",
+                                      activeIndex: 19),
+                                )));
+                  })
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
