@@ -36,44 +36,6 @@ class CourseModel {
 class _professionalDevelopmentMainConState
     extends State<professionalDevelopmentMainCon> {
   final _firestore = FirebaseFirestore.instance;
-  final List<CourseModel> _coursesData = [
-    CourseModel(
-        id: '01',
-        imageUrl: 'images/sama_logo.png',
-        title: 'South African Medical Journal - July 2024 Vol 114 No 7',
-        cpdPoints: '3.0 Clinical Points',
-        level: 'Level 2'),
-    CourseModel(
-        id: '01',
-        imageUrl: 'images/sama_logo.png',
-        title: 'South African Medical Journal - July 2024 Vol 114 No 6',
-        cpdPoints: '3.0 Clinical Points',
-        level: 'Level 2'),
-    CourseModel(
-        id: '01',
-        imageUrl: 'images/sama_logo.png',
-        title: 'South African Medical Journal - July 2024 Vol 114 No 5',
-        cpdPoints: '3.0 Clinical Points',
-        level: 'Level 2'),
-    CourseModel(
-        id: '01',
-        imageUrl: 'images/sama_logo.png',
-        title: 'South African Medical Journal - July 2024 Vol 114 No 7',
-        cpdPoints: '3.0 Clinical Points',
-        level: 'Level 2'),
-    CourseModel(
-        id: '01',
-        imageUrl: 'images/sama_logo.png',
-        title: 'South African Medical Journal - July 2024 Vol 114 No 6',
-        cpdPoints: '3.0 Clinical Points',
-        level: 'Level 2'),
-    CourseModel(
-        id: '01',
-        imageUrl: 'images/sama_logo.png',
-        title: 'South African Medical Journal - July 2024 Vol 114 No 5',
-        cpdPoints: '3.0 Clinical Points',
-        level: 'Level 2'),
-  ];
   int pageIndex = 0;
   CourseModel selectedCourse =
       CourseModel(id: '0', imageUrl: '', title: '', cpdPoints: '', level: '');
@@ -103,19 +65,27 @@ class _professionalDevelopmentMainConState
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+    return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
           const SamaBlueBanner(pageName: 'PROFESSIONAL DEVELOPMENT'),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 30,
-              left: 80,
-            ),
+            padding: isMobile
+                ? EdgeInsets.all(8)
+                : EdgeInsets.only(
+                    top: 30,
+                    left: 80,
+                  ),
             child: SizedBox(
-              width: MyUtility(context).width * 0.68,
-              height: MyUtility(context).height,
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width * 0.68,
+              height: isMobile
+                  ? MyUtility(context).height / 1.5
+                  : MyUtility(context).height,
               child: Column(
                 children: [
                   /*Row(
@@ -196,7 +166,9 @@ class _professionalDevelopmentMainConState
 
                           return Container(
                               //color: const Color.fromARGB(137, 255, 193, 7),
-                              width: MyUtility(context).width / 1.6,
+                              width: isMobile
+                                  ? MyUtility(context).width
+                                  : MyUtility(context).width / 1.6,
                               //width: MyUtility(context).width / 1.6,
                               /* width: MyUtility(context).width -
                         (MyUtility(context).width * 0.25),*/
@@ -204,8 +176,8 @@ class _professionalDevelopmentMainConState
                               child: GridView.builder(
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    childAspectRatio: 0.88,
+                                    crossAxisCount: isMobile ? 1 : 3,
+                                    childAspectRatio: isMobile ? 0.2 : 0.88,
                                   ),
                                   itemCount: documents.length,
                                   itemBuilder:

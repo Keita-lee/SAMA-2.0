@@ -98,20 +98,143 @@ class _MemberContainerState extends State<MemberContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //width: MyUtility(context).width * 0.22,
-      decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: Color(0xFFF8FAFF),
-          )),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /*Container(
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
+    if (isMobile) {
+      return Container(
+          //width: MyUtility(context).width * 0.22,
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                color: Color(0xFFF8FAFF),
+              )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${getDay(widget.dateTill)}\n',
+                            style: TextStyle(
+                              color: Color.fromARGB(176, 0, 0, 0),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '${getDayNumber(widget.dateTill)}',
+                            style: TextStyle(
+                              color: Color.fromARGB(176, 0, 0, 0),
+                              fontSize: 34,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Visibility(
+                      visible: widget.eventImage == "" ? true : false,
+                      child: ClipRRect(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("images/imageIcon.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          width: MyUtility(context).width / 2,
+                          height: MyUtility(context).height / 4,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: widget.eventImage == "" ? false : true,
+                      child: ClipRRect(
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: ImageNetwork(
+                            image: widget.eventImage,
+                            width: MyUtility(context).width / 2,
+                            height: MyUtility(context).height / 4,
+                            fitWeb: BoxFitWeb.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: SizedBox(
+                  child: Text(
+                    '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF3D3D3D),
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                child: Container(
+                  height: 30,
+                  child: Text(
+                    widget.eventName,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromRGBO(0, 159, 158, 1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Text(
+                widget.location,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF3D3D3D),
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              StyleButton(
+                  description: "View Details",
+                  fontSize: 13,
+                  height: 38,
+                  buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                  width: 50,
+                  onTap: () {
+                    widget.onPressed();
+                  }),
+            ],
+          ));
+    } else {
+      return Container(
+        //width: MyUtility(context).width * 0.22,
+        decoration: BoxDecoration(
+            color: Color.fromARGB(255, 255, 255, 255),
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: Color(0xFFF8FAFF),
+            )),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*Container(
               height: MyUtility(context).height * 0.1,
               width: 10.0,
               decoration: BoxDecoration(
@@ -122,132 +245,133 @@ class _MemberContainerState extends State<MemberContainer> {
                 ),
               ),
             ),*/
-            SizedBox(
-              width: 15,
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${getDay(widget.dateTill)}\n',
-                    style: TextStyle(
-                      color: Color.fromARGB(176, 0, 0, 0),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextSpan(
-                    text: '${getDayNumber(widget.dateTill)}',
-                    style: TextStyle(
-                      color: Color.fromARGB(176, 0, 0, 0),
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              SizedBox(
+                width: 15,
               ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Visibility(
-              visible: widget.eventImage == "" ? true : false,
-              child: ClipRRect(
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("images/imageIcon.png"),
-                      fit: BoxFit.cover,
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${getDay(widget.dateTill)}\n',
+                      style: TextStyle(
+                        color: Color.fromARGB(176, 0, 0, 0),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  width: 165,
-                  height: 130,
+                    TextSpan(
+                      text: '${getDayNumber(widget.dateTill)}',
+                      style: TextStyle(
+                        color: Color.fromARGB(176, 0, 0, 0),
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Visibility(
-              visible: widget.eventImage == "" ? false : true,
-              child: ClipRRect(
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: ImageNetwork(
-                    image: widget.eventImage,
+              SizedBox(
+                width: 15,
+              ),
+              Visibility(
+                visible: widget.eventImage == "" ? true : false,
+                child: ClipRRect(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/imageIcon.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     width: 165,
                     height: 130,
-                    fitWeb: BoxFitWeb.cover,
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Container(
-              width: MyUtility(context).width * 0.60 - 295,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: SizedBox(
-                      child: Text(
-                        '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Color(0xFF3D3D3D),
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
+              Visibility(
+                visible: widget.eventImage == "" ? false : true,
+                child: ClipRRect(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: ImageNetwork(
+                      image: widget.eventImage,
+                      width: 165,
+                      height: 130,
+                      fitWeb: BoxFitWeb.cover,
                     ),
                   ),
-                  SizedBox(
-                    child: Container(
-                      height: 30,
-                      child: Text(
-                        widget.eventName,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromRGBO(0, 159, 158, 1),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    widget.location,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 20,
-                      ),
-                      Spacer(),
-                      StyleButton(
-                          description: "View Details",
-                          fontSize: 13,
-                          height: 38,
-                          buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                          width: 50,
-                          onTap: () {
-                            widget.onPressed();
-                          }),
-                    ],
-                  )
-                ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                width: 15,
+              ),
+              Container(
+                width: MyUtility(context).width * 0.60 - 295,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: SizedBox(
+                        child: Text(
+                          '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Color(0xFF3D3D3D),
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: Container(
+                        height: 30,
+                        child: Text(
+                          widget.eventName,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromRGBO(0, 159, 158, 1),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      widget.location,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 20,
+                        ),
+                        Spacer(),
+                        StyleButton(
+                            description: "View Details",
+                            fontSize: 13,
+                            height: 38,
+                            buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                            width: 50,
+                            onTap: () {
+                              widget.onPressed();
+                            }),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

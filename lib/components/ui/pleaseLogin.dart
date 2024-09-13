@@ -16,15 +16,17 @@ class PleaseLogin extends StatefulWidget {
 class _PleaseLoginState extends State<PleaseLogin> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-      width: MyUtility(context).width / 1.3,
+      width:
+          isMobile ? MyUtility(context).width : MyUtility(context).width / 1.3,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
           border: Border.all(
               color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
       child: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: isMobile ? EdgeInsets.all(5) : EdgeInsets.all(25.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,11 +67,16 @@ class _PleaseLoginState extends State<PleaseLogin> {
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      widget.pleaseLoginText,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 116, 116, 116),
+                    SizedBox(
+                      width: isMobile
+                          ? MyUtility(context).width / 1.5
+                          : MyUtility(context).width / 1.3,
+                      child: Text(
+                        widget.pleaseLoginText,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 116, 116, 116),
+                        ),
                       ),
                     ),
                     Container(

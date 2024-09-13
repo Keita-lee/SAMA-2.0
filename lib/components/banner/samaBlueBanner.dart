@@ -18,7 +18,7 @@ class _SamaBlueBannerState extends State<SamaBlueBanner> {
       width: isMobile
           ? MyUtility(context).width
           : MyUtility(context).width - MyUtility(context).width / 6.5,
-      height: 90,
+      height: isMobile ? 60 : 90,
       decoration: BoxDecoration(
         image: DecorationImage(
             image: AssetImage('images/bannerBackground.jpg'), fit: BoxFit.fill),
@@ -31,7 +31,7 @@ class _SamaBlueBannerState extends State<SamaBlueBanner> {
             widget.pageName,
             style: GoogleFonts.openSans(
                 color: Colors.white,
-                fontSize: 27,
+                fontSize: isMobile ? 20 : 27,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.2),
           ),

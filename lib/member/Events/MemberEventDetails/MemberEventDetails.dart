@@ -216,6 +216,7 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     //check if user already made booking
     for (int i = 0; i < attending.length; i++) {
       if (attending[i]["email"] == email.text) {
@@ -225,227 +226,378 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
         });
       }
     }
-
-    return Padding(
-      padding: widget.popup != null
-          ? EdgeInsets.only(left: 0, top: 0)
-          : const EdgeInsets.only(left: 50, top: 25),
-      child: Container(
+    if (isMobile) {
+      return Container(
         decoration: BoxDecoration(
             color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(10.0),
             border: Border.all(
               color: Color.fromARGB(255, 169, 170, 170),
             )),
-        width: MyUtility(context).width * 0.50,
+        width: MyUtility(context).width,
+        height: MyUtility(context).height / 2.2,
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Visibility(
-                  visible: widget.popup != null,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            widget.closeDialog!();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              "X",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                          ),
-                        ),
-                      ],
+          child: Column(
+            children: [
+              Visibility(
+                visible: eventsImage == "" ? true : false,
+                child: ClipRRect(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/imageIcon.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    width: MyUtility(context).width / 2,
+                    height: MyUtility(context).height / 4,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: eventsImage == "" ? false : true,
+                child: ClipRRect(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: ImageNetwork(
+                      image: eventsImage,
+                      width: MyUtility(context).width / 2,
+                      height: MyUtility(context).height / 4,
+                      fitWeb: BoxFitWeb.cover,
                     ),
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+              ),
+              Text(
+                _title.text,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              Text.rich(
+                TextSpan(
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Visibility(
-                          visible: eventsImage == "" ? true : false,
-                          child: ClipRRect(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage("images/imageIcon.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              width: 185,
-                              height: 150,
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: eventsImage == "" ? false : true,
-                          child: ClipRRect(
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: ImageNetwork(
-                                image: eventsImage,
-                                width: 210,
-                                height: 160,
-                                fitWeb: BoxFitWeb.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    TextSpan(
+                      text: 'From: ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF3D3D3D),
+                      ),
                     ),
-                    SizedBox(
-                      width: 25,
+                    TextSpan(
+                      text: _date.text,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF3D3D3D),
+                      ),
                     ),
-                    SizedBox(
-                      height: 500,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: MyUtility(context).width * 0.25,
-                            child: Text(
-                              _title.text,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromRGBO(0, 159, 158, 1),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'From: ',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF3D3D3D),
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: _date.text,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF3D3D3D),
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '   to   ' + endDate.text,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF3D3D3D),
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '\nTime: ',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF3D3D3D),
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: _times.text,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF3D3D3D),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 35,
-                          ),
-                          SizedBox(
-                            width: MyUtility(context).width * 0.50 - 310,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: QuillEditor.basic(
-                                configurations: QuillEditorConfigurations(
-                                  controller: quillController,
-                                  sharedConfigurations:
-                                      const QuillSharedConfigurations(),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Spacer(),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Event Organizer: ',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: _eventProvider.text,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '\nCPD Accreditation: ',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: _CPDAccreditation.text,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF3D3D3D),
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 35,
-                          ),
-                        ],
+                    TextSpan(
+                      text: '   to   ' + endDate.text,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF3D3D3D),
+                      ),
+                    ),
+                    TextSpan(
+                      text: '\nTime: ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF3D3D3D),
+                      ),
+                    ),
+                    TextSpan(
+                      text: _times.text,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF3D3D3D),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: quillController,
+                  sharedConfigurations: const QuillSharedConfigurations(),
+                ),
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Event Organizer: ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: _eventProvider.text,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '\nCPD Accreditation: ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: _CPDAccreditation.text,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ],
                 ),
-                Column(
-                  //mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /*Text(
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Padding(
+        padding: widget.popup != null
+            ? EdgeInsets.only(left: 0, top: 0)
+            : const EdgeInsets.only(left: 50, top: 25),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                color: Color.fromARGB(255, 169, 170, 170),
+              )),
+          width: MyUtility(context).width * 0.50,
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                    visible: widget.popup != null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              widget.closeDialog!();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Text(
+                                "X",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Visibility(
+                            visible: eventsImage == "" ? true : false,
+                            child: ClipRRect(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage("images/imageIcon.png"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                width: 185,
+                                height: 150,
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: eventsImage == "" ? false : true,
+                            child: ClipRRect(
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: ImageNetwork(
+                                  image: eventsImage,
+                                  width: 210,
+                                  height: 160,
+                                  fitWeb: BoxFitWeb.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 25,
+                      ),
+                      SizedBox(
+                        height: 500,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: MyUtility(context).width * 0.25,
+                              child: Text(
+                                _title.text,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(0, 159, 158, 1),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'From: ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF3D3D3D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: _date.text,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFF3D3D3D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '   to   ' + endDate.text,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFF3D3D3D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '\nTime: ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF3D3D3D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: _times.text,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFF3D3D3D),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 35,
+                            ),
+                            SizedBox(
+                              width: MyUtility(context).width * 0.50 - 310,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: QuillEditor.basic(
+                                  configurations: QuillEditorConfigurations(
+                                    controller: quillController,
+                                    sharedConfigurations:
+                                        const QuillSharedConfigurations(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Spacer(),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Event Organizer: ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xFF3D3D3D),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: _eventProvider.text,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xFF3D3D3D),
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '\nCPD Accreditation: ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xFF3D3D3D),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: _CPDAccreditation.text,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xFF3D3D3D),
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 35,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    //mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /*Text(
                       'Member Pricing:',
                       style: TextStyle(
                         fontSize: 20,
@@ -465,13 +617,14 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                         textAlign: TextAlign.start,
                       ),
                     ),*/
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

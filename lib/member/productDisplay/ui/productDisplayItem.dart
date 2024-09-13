@@ -49,15 +49,19 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-      width: MyUtility(context).width * 0.50,
+      width:
+          isMobile ? MyUtility(context).width : MyUtility(context).width * 0.50,
       // decoration: BoxDecoration(
       //     borderRadius: BorderRadius.circular(10),
       //     color: Colors.white,
       //     border: Border.all(
       //         color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        padding: isMobile
+            ? EdgeInsets.all(0)
+            : EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,15 +84,21 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               child: ImageNetwork(
                 fitWeb: BoxFitWeb.contain,
                 image: widget.productImage,
-                width: MyUtility(context).width / 4,
-                height: MyUtility(context).height / 4,
+                width: isMobile
+                    ? MyUtility(context).width / 2
+                    : MyUtility(context).width / 4,
+                height: isMobile
+                    ? MyUtility(context).width / 2
+                    : MyUtility(context).height / 4,
               ),
             ),
             const SizedBox(
               height: 20,
             ),
             Container(
-              width: MyUtility(context).width * 0.70 - 280,
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width * 0.70 - 280,
               height: 110,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

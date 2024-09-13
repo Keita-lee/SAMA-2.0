@@ -80,6 +80,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -88,10 +89,12 @@ class _MemberBenifitsState extends State<MemberBenifits> {
           pageName: 'MEMBER BENEFITS',
         ),
         SizedBox(
-          height: 30,
+          height: 20,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
+          padding: isMobile
+              ? EdgeInsets.all(0)
+              : EdgeInsets.symmetric(horizontal: 50),
           child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,8 +147,12 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                         return Padding(
                           padding: const EdgeInsets.all(0.0),
                           child: Container(
-                            width: MyUtility(context).width * 0.55,
-                            height: MyUtility(context).height / 1.4,
+                            width: isMobile
+                                ? MyUtility(context).width
+                                : MyUtility(context).width * 0.55,
+                            height: isMobile
+                                ? MyUtility(context).height / 1.8
+                                : MyUtility(context).height / 1.8,
                             //color: Colors.transparent,
                             /* child: DraggableScrollbar.rrect(
                             alwaysVisibleScrollThumb: true,

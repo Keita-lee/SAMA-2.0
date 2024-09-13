@@ -38,6 +38,7 @@ class _MemberEventsState extends State<MemberEvents> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -48,7 +49,9 @@ class _MemberEventsState extends State<MemberEvents> {
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: Padding(
-            padding: const EdgeInsets.only(left: 50, top: 0),
+            padding: isMobile
+                ? EdgeInsets.all(0)
+                : EdgeInsets.only(left: 50, top: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -105,8 +108,10 @@ class _MemberEventsState extends State<MemberEvents> {
                     }
 
                     return Container(
-                      width: MyUtility(context).width * 0.60,
-                      height: 700,
+                      width: isMobile
+                          ? MyUtility(context).width
+                          : MyUtility(context).width * 0.60,
+                      height: isMobile ? MyUtility(context).height / 2.2 : 700,
                       child: ListView.builder(
                         itemCount: documents.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -116,7 +121,9 @@ class _MemberEventsState extends State<MemberEvents> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              width: MyUtility(context).width * 0.9,
+                              width: isMobile
+                                  ? MyUtility(context).width
+                                  : MyUtility(context).width * 0.9,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,

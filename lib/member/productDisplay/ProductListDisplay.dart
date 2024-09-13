@@ -174,8 +174,11 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SizedBox(
-      width: MyUtility(context).width - MyUtility(context).width / 6.5,
+      width: isMobile
+          ? MyUtility(context).width
+          : MyUtility(context).width - MyUtility(context).width / 6.5,
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -188,7 +191,9 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
             Visibility(
                 visible: pageIndex == 0 ? true : false,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  padding: isMobile
+                      ? EdgeInsets.all(0)
+                      : EdgeInsets.symmetric(horizontal: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -220,14 +225,18 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                         height: 35,
                       ),
                       Container(
-                        height: MyUtility(context).height * 1.25,
-                        width: MyUtility(context).width -
-                            MyUtility(context).width / 3.5,
+                        height: isMobile
+                            ? MyUtility(context).height / 2.5
+                            : MyUtility(context).height * 1.25,
+                        width: isMobile
+                            ? MyUtility(context).width
+                            : MyUtility(context).width -
+                                MyUtility(context).width / 3.5,
                         child: GridView.builder(
                           padding: const EdgeInsets.all(8.0),
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, // 3 items per row
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isMobile ? 1 : 3,
                             crossAxisSpacing: 8.0,
                             mainAxisSpacing: 8.0,
                             childAspectRatio:

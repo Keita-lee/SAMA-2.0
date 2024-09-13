@@ -5,6 +5,7 @@ import 'package:sama/member/communities/sections/forums/sections/topics.dart';
 import 'package:sama/member/communities/sections/resources/resources.dart';
 
 import '../../components/banner/samaBlueBanner.dart';
+import '../../components/myutility.dart';
 import 'sections/comTypes/comTypes.dart';
 import 'sections/forums/forums.dart';
 
@@ -48,6 +49,7 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +61,9 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
         Visibility(
             visible: widget.userType == "NonMember",
             child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: isMobile
+                    ? EdgeInsets.all(5)
+                    : EdgeInsets.symmetric(horizontal: 50),
                 child: PleaseLogin(
                   pleaseLoginText:
                       'Access to this content is restricted. Please log in to view or sign up for membership today.',
@@ -67,7 +71,9 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
         Visibility(
           visible: widget.userType != "NonMember",
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
+            padding: isMobile
+                ? EdgeInsets.all(0)
+                : const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,

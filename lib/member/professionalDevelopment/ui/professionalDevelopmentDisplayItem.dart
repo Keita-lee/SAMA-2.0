@@ -31,13 +31,14 @@ class _professionalDevelopmentDisplayItemState
     extends State<professionalDevelopmentDisplayItem> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     String image = widget.imageUrl;
     String title = widget.title;
     String points = widget.cpdPoints;
     String level = widget.level;
 
     return SizedBox(
-      width: MyUtility(context).width / 5,
+      width: isMobile ? MyUtility(context).width : MyUtility(context).width / 5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,8 +52,12 @@ class _professionalDevelopmentDisplayItemState
                   fit: BoxFit.cover,
                 ),
               ),
-              width: MyUtility(context).width * 0.2,
-              height: MyUtility(context).width * 0.18,
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width * 0.2,
+              height: isMobile
+                  ? MyUtility(context).height / 3
+                  : MyUtility(context).width * 0.18,
             ),
           ),
           Visibility(
@@ -60,15 +65,21 @@ class _professionalDevelopmentDisplayItemState
             child: ImageNetwork(
               fitWeb: BoxFitWeb.contain,
               image: image,
-              width: MyUtility(context).width * 0.2,
-              height: MyUtility(context).width * 0.14,
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width * 0.2,
+              height: isMobile
+                  ? MyUtility(context).height / 3
+                  : MyUtility(context).width * 0.14,
             ),
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: isMobile ? 5 : 20,
           ),
           SizedBox(
-            width: MyUtility(context).width * 0.70 - 280,
+            width: isMobile
+                ? MyUtility(context).width
+                : MyUtility(context).width * 0.70 - 280,
             height: 150,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
