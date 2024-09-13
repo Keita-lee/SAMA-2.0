@@ -20,11 +20,24 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     if (isMobile) {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          'Coming soon!',
-          style:
-              GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
-        ),
+        DashboardInfoContainers(
+            customWidth: MyUtility(context).width,
+            height: 125,
+            headerTextButton: true,
+            topBarColor: SamaColors().lightBlue,
+            image: "images/icon_chat.svg",
+            header: 'Private Messages',
+            child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Coming soon!',
+                        style: GoogleFonts.openSans(
+                            fontSize: 12, fontWeight: FontWeight.w600),
+                      ),
+                    ])))
       ]);
     } else {
       return DashboardInfoContainers(

@@ -24,22 +24,39 @@ class _DashProfessionalDevState extends State<DashProfessionalDev> {
     if (isMobile) {
       return Column(
         children: [
-          DashboardTextButton(
-              text: 'List and find CPD Quizes',
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Material(
-                              child: PostLoginLandingPage(
-                                  pageIndex: 19,
-                                  userId: FirebaseAuth.instance.currentUser !=
-                                          null
-                                      ? FirebaseAuth.instance.currentUser!.uid
-                                      : "",
-                                  activeIndex: 19),
-                            )));
-              })
+          DashboardInfoContainers(
+              customWidth: MyUtility(context).width,
+              height: 125,
+              activeTopBar: false,
+              topBarColor: SamaColors().yellow,
+              image: 'images/icon_prof_dev.svg',
+              header: 'Professional Development',
+              svgColor: Colors.black,
+              extendedTopBarColor: SamaColors().yellow,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DashboardTextButton(
+                            text: 'List and find CPD Quizes',
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Material(
+                                            child: PostLoginLandingPage(
+                                                pageIndex: 19,
+                                                userId: FirebaseAuth.instance
+                                                            .currentUser !=
+                                                        null
+                                                    ? FirebaseAuth.instance
+                                                        .currentUser!.uid
+                                                    : "",
+                                                activeIndex: 19),
+                                          )));
+                            })
+                      ])))
         ],
       );
     } else {

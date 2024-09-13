@@ -40,13 +40,20 @@ class MediaContainerStyle extends StatefulWidget {
 class _MediaContainerStyleState extends State<MediaContainerStyle> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+    var width = MyUtility(context).width;
+    var height = MyUtility(context).height;
+
     return Container(
-      width: 360,
-      height: 340,
+      width: isMobile ? width : 360,
+      height: isMobile ? height / 2.5 : 340,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
+        padding: isMobile
+            ? EdgeInsets.fromLTRB(0, 0, 0, 10)
+            : EdgeInsets.fromLTRB(0, 10, 30, 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
           children: [
             Visibility(
               visible: widget.image == "" ? true : false,
@@ -57,16 +64,16 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                width: 300,
-                height: 200,
+                width: isMobile ? width : 300,
+                height: isMobile ? height / 4 : 200,
               ),
             ),
 
             Visibility(
               visible: widget.image != "" ? true : false,
               child: Container(
-                width: 350,
-                height: 200,
+                width: isMobile ? width : 350,
+                height: isMobile ? height / 4 : 200,
                 decoration: BoxDecoration(
                   color: Color(0xFFD1D1D1),
                 ),
@@ -74,8 +81,8 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   child: ImageNetwork(
                     image: widget.image,
                     fitWeb: BoxFitWeb.contain,
-                    width: 350,
-                    height: 200,
+                    width: isMobile ? width : 350,
+                    height: isMobile ? height / 4 : 200,
                   ),
                 ),
               ),
@@ -84,7 +91,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Text(
               "${widget.releaseDate}",
               style: TextStyle(
-                  fontSize: 12,
+                  fontSize: isMobile ? 16 : 12,
                   letterSpacing: 1.2,
                   color: Color.fromARGB(148, 158, 158, 158),
                   fontWeight: FontWeight.w600),
@@ -95,34 +102,12 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Text(
               (widget.title),
               style: TextStyle(
-                  fontSize: 16,
+                  fontSize: isMobile ? 18 : 16,
                   height: 1,
                   color: Color(0xFF3D3D3D),
                   fontWeight: FontWeight.bold),
             ),
             Spacer(),
-            /* Padding(
-              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-              child: Row(
-                children: [
-                  Text(
-                    (widget.category),
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal),
-                  ),
-                  Spacer(),
-                  Text(
-                    (widget.duration),
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal),
-                  ),
-                ],
-              ),
-            ),*/
 
             SizedBox(
               height: 10,
@@ -131,7 +116,9 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             Visibility(
               visible: widget.adminType != "true" ? true : false,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: isMobile
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
                 children: [
                   StyleButton(
                     buttonColor: Color.fromRGBO(0, 159, 158, 1),

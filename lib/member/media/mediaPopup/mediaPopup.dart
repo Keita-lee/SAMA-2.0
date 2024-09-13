@@ -74,9 +74,13 @@ class _MediaPopupState extends State<MediaPopup> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-        width: MyUtility(context).width / 2,
-        height: MyUtility(context).height / 1.4,
+        width:
+            isMobile ? MyUtility(context).width : MyUtility(context).width / 2,
+        height: isMobile
+            ? MyUtility(context).height / 2
+            : MyUtility(context).height / 1.4,
         decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
@@ -116,7 +120,9 @@ class _MediaPopupState extends State<MediaPopup> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-                width: MyUtility(context).width / 2.1,
+                width: isMobile
+                    ? MyUtility(context).width
+                    : MyUtility(context).width / 2.1,
                 // height: MyUtility(context).height / 2.1,
                 child: YoutubePlayerScaffold(
                   controller: _youtubePlayerController,

@@ -13,14 +13,15 @@ class SamaBlueBanner extends StatefulWidget {
 class _SamaBlueBannerState extends State<SamaBlueBanner> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-      width: MyUtility(context).width - MyUtility(context).width / 6.5,
+      width: isMobile
+          ? MyUtility(context).width
+          : MyUtility(context).width - MyUtility(context).width / 6.5,
       height: 90,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('images/bannerBackground.jpg'),
-          fit: BoxFit.fill
-        ),
+            image: AssetImage('images/bannerBackground.jpg'), fit: BoxFit.fill),
       ),
       child: Align(
         alignment: Alignment.centerLeft,
@@ -28,7 +29,11 @@ class _SamaBlueBannerState extends State<SamaBlueBanner> {
           padding: const EdgeInsets.only(left: 25),
           child: Text(
             widget.pageName,
-            style: GoogleFonts.openSans(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w600, letterSpacing: 1.2),
+            style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontSize: 27,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.2),
           ),
         ),
       ),

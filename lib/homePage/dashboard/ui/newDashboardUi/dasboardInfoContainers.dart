@@ -14,6 +14,7 @@ class DashboardInfoContainers extends StatefulWidget {
   final bool? activeTopBar;
   final Color? borderColor;
   final bool? headerTextButton;
+  final double? customWidth;
   const DashboardInfoContainers(
       {super.key,
       required this.height,
@@ -25,7 +26,8 @@ class DashboardInfoContainers extends StatefulWidget {
       this.extendedTopBarColor,
       this.activeTopBar,
       this.borderColor,
-      this.headerTextButton});
+      this.headerTextButton,
+      this.customWidth});
 
   @override
   State<DashboardInfoContainers> createState() =>
@@ -37,7 +39,7 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
   Widget build(BuildContext context) {
     return Container(
       height: widget.height,
-      width: 300,
+      width: widget.customWidth != null ? widget.customWidth : 300,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
@@ -49,7 +51,7 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
           Visibility(
             visible: widget.activeTopBar == null ? true : false,
             child: Container(
-              width: 300,
+              width: widget.customWidth != null ? widget.customWidth : 300,
               height: 10,
               decoration: BoxDecoration(
                 color: widget.topBarColor,

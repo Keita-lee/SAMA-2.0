@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sama/components/styleButton.dart';
@@ -17,6 +18,7 @@ import 'package:sama/components/myutility.dart';
 
 import 'package:sama/profile/logoutPopup.dart';
 import 'package:sama/profile/profileHome.dart';
+import 'package:sama/profile/ui/profile_button.dart';
 import 'package:uuid/uuid.dart';
 
 import 'bio.dart';
@@ -39,6 +41,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
   String profileUrl = "";
   String profileView = "";
   String profilePicView = "";
+
   getUserData() async {
     final data = await FirebaseFirestore.instance
         .collection('users')
@@ -79,6 +82,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
     //Change pageIndex value
     changePage(value) {
       setState(() {
@@ -141,139 +146,248 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
       //Navigator.pop(context);
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 50, top: 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 35,
-          ),
-          Container(
-            width: MyUtility(context).width / 1.5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                border: Border.all(
-                    color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Container(
-                        width: 110,
-                        height: 110,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: imageUrl != ""
-                              ? ImageNetwork(
-                                  image: imageUrl!,
-                                  height: 110,
-                                  width: 110,
-                                )
-                              : Container(),
+    if (isMobile) {
+      return Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Your Profile",
+                style: GoogleFonts.openSans(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromRGBO(0, 159, 158, 1),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Container(
+                          width: 110,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(0.0),
+                            child: imageUrl != ""
+                                ? ImageNetwork(
+                                    image: imageUrl!,
+                                    height: 110,
+                                    width: 110,
+                                  )
+                                : Container(),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _pickImageGallery();
-                      },
-                      child: Text(
-                        ' Edit',
+                      SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _pickImageGallery();
+                        },
+                        child: Text(
+                          ' Edit',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 163, 163, 163),
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ' ${title}. ${fullName}',
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 163, 163, 163),
+                            fontSize: 20,
+                            color: const Color.fromARGB(255, 116, 116, 116),
                             fontWeight: FontWeight.normal),
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Membership :',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: const Color.fromARGB(255, 116, 116, 116),
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Text(
+                        'Status :',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: const Color.fromARGB(255, 116, 116, 116),
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ProfileDropdownButton(
+                onOptionSelected: (String) {},
+                changePageIndex: changePage,
+              ),
+            ),
+            Container(
+              child: pages[pageIndex],
+            )
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(left: 50, top: 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 35,
+            ),
+            Container(
+              width: MyUtility(context).width / 1.5,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  border: Border.all(
+                      color: Color.fromARGB(255, 212, 210, 210), width: 1.5)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Container(
+                          width: 110,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(0.0),
+                            child: imageUrl != ""
+                                ? ImageNetwork(
+                                    image: imageUrl!,
+                                    height: 110,
+                                    width: 110,
+                                  )
+                                : Container(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _pickImageGallery();
+                        },
+                        child: Text(
+                          ' Edit',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 163, 163, 163),
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        ' ${title}. ${fullName}',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: const Color.fromARGB(255, 116, 116, 116),
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Text(
+                        'Membership :',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: const Color.fromARGB(255, 116, 116, 116),
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Text(
+                        'Status :',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: const Color.fromARGB(255, 116, 116, 116),
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                StyleButton(
+                    description: "PROFILE HOME",
+                    height: 35,
+                    width: 85,
+                    onTap: () {
+                      changePage(0);
+                    }),
+                SizedBox(
+                  width: 15,
                 ),
-                Column(
-                  children: [
-                    Text(
-                      ' ${title}. ${fullName}',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: const Color.fromARGB(255, 116, 116, 116),
-                          fontWeight: FontWeight.normal),
-                    ),
-                    Text(
-                      'Membership :',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: const Color.fromARGB(255, 116, 116, 116),
-                          fontWeight: FontWeight.normal),
-                    ),
-                    Text(
-                      'Status :',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: const Color.fromARGB(255, 116, 116, 116),
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ],
+                StyleButton(
+                    description: "MY DETAILS",
+                    height: 35,
+                    width: 85,
+                    onTap: () {
+                      changePage(1);
+                    }),
+                SizedBox(
+                  width: 15,
                 ),
+                StyleButton(
+                    description: "MY BIOGRAPHY",
+                    height: 35,
+                    width: 85,
+                    onTap: () {
+                      changePage(2);
+                    }),
+                SizedBox(
+                  width: 15,
+                ),
+                StyleButton(
+                    description: "SECURITY",
+                    height: 35,
+                    width: 85,
+                    onTap: () {
+                      changePage(3);
+                    })
               ],
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              StyleButton(
-                  description: "PROFILE HOME",
-                  height: 35,
-                  width: 85,
-                  onTap: () {
-                    changePage(0);
-                  }),
-              SizedBox(
-                width: 15,
-              ),
-              StyleButton(
-                  description: "MY DETAILS",
-                  height: 35,
-                  width: 85,
-                  onTap: () {
-                    changePage(1);
-                  }),
-              SizedBox(
-                width: 15,
-              ),
-              StyleButton(
-                  description: "MY BIOGRAPHY",
-                  height: 35,
-                  width: 85,
-                  onTap: () {
-                    changePage(2);
-                  }),
-              SizedBox(
-                width: 15,
-              ),
-              StyleButton(
-                  description: "SECURITY",
-                  height: 35,
-                  width: 85,
-                  onTap: () {
-                    changePage(3);
-                  })
-            ],
-          ),
-          /*     SizedBox(
+            /*     SizedBox(
             height: MyUtility(context).height * 0.2,
             child: SizedBox(
               width: MyUtility(context).width / 1.3,
@@ -389,15 +503,15 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
             ),
           ),
        */
-          SizedBox(
-            width: MyUtility(context).width / 1.3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /*     Row(
+            SizedBox(
+              width: MyUtility(context).width / 1.3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /*     Row(
                       children: [
                         Text(
                           'Your image is visible to the public',
@@ -420,14 +534,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                         ),
                       ],
                     ),*/
-                    SizedBox(
-                      height: MyUtility(context).height * 0.02,
-                    ),
-                    Container(
-                      child: pages[pageIndex],
-                    )
+                      SizedBox(
+                        height: MyUtility(context).height * 0.02,
+                      ),
+                      Container(
+                        child: pages[pageIndex],
+                      )
 
-                    /*   Row(
+                      /*   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -621,13 +735,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                         /*Security()*/
                       ],
                     ),*/
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
   }
 }

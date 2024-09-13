@@ -21,43 +21,53 @@ class _DashCentreState extends State<DashCentre> {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
 
     if (isMobile) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Coming soon!',
-            style:
-                GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Text(
-            'Become a contributor',
-            style:
-                GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          DashboardTextButton(
-              text: 'Learn more',
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Material(
-                              child: PostLoginLandingPage(
-                                  pageIndex: 1,
-                                  userId: FirebaseAuth.instance.currentUser !=
-                                          null
-                                      ? FirebaseAuth.instance.currentUser!.uid
-                                      : "",
-                                  activeIndex: 1),
-                            )));
-              }),
-        ],
-      );
+      return DashboardInfoContainers(
+          customWidth: MyUtility(context).width,
+          height: 125,
+          topBarColor: SamaColors().teal,
+          image: "images/icon_centre_of.svg",
+          header: 'Centre of Excellence',
+          child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Coming soon!',
+                    style: GoogleFonts.openSans(
+                        fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Become a contributor',
+                    style: GoogleFonts.openSans(
+                        fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  DashboardTextButton(
+                      text: 'Learn more',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: PostLoginLandingPage(
+                                          pageIndex: 1,
+                                          userId: FirebaseAuth
+                                                      .instance.currentUser !=
+                                                  null
+                                              ? FirebaseAuth
+                                                  .instance.currentUser!.uid
+                                              : "",
+                                          activeIndex: 1),
+                                    )));
+                      }),
+                ],
+              )));
     } else {
       return DashboardInfoContainers(
         height: 180,

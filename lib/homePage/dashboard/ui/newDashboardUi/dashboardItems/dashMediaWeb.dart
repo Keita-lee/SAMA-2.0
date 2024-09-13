@@ -55,19 +55,31 @@ class _DashMediaWebState extends State<DashMediaWeb> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Latest',
-            style:
-                GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          DashboardTextButton(
-              text: title,
-              onTap: () {
-                openMediaDialog(id);
-              }),
+          DashboardInfoContainers(
+              customWidth: MyUtility(context).width,
+              height: 125,
+              topBarColor: SamaColors().teal,
+              image: "images/icon_media.svg",
+              header: 'Media & Webinars',
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Latest',
+                          style: GoogleFonts.openSans(
+                              fontSize: 12, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        DashboardTextButton(
+                            text: title,
+                            onTap: () {
+                              openMediaDialog(id);
+                            }),
+                      ])))
         ],
       );
     } else {

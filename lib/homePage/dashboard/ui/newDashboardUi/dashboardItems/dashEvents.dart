@@ -56,28 +56,37 @@ class _DashEventsState extends State<DashEvents> {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
 
     if (isMobile) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Latest',
-            style:
-                GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w600),
+      return DashboardInfoContainers(
+        height: 125,
+        topBarColor: SamaColors().teal,
+        image: "images/icon_events.svg",
+        header: 'Events',
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Latest',
+                style: GoogleFonts.openSans(
+                    fontSize: 12, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DashboardTextButton(
+                  text: latestEvent,
+                  onTap: () {
+                    openEventDetails(latestEventId);
+                  }),
+              DashboardTextButton(
+                  text: secondEvent,
+                  onTap: () {
+                    openEventDetails(secondEventId);
+                  }),
+            ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          DashboardTextButton(
-              text: latestEvent,
-              onTap: () {
-                openEventDetails(latestEventId);
-              }),
-          DashboardTextButton(
-              text: secondEvent,
-              onTap: () {
-                openEventDetails(secondEventId);
-              }),
-        ],
+        ),
       );
     } else {
       return DashboardInfoContainers(

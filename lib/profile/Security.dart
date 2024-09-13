@@ -26,6 +26,7 @@ class _SecurityState extends State<Security> {
     final passwordCheck = TextEditingController();
 
     BuildContext? dialogContext;
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
 
     //Dialog for password Validate
     Future openValidatePasswordDialog() => showDialog(
@@ -82,123 +83,137 @@ class _SecurityState extends State<Security> {
       }
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Update Password',
-          style: TextStyle(
-              fontSize: 18, color: Colors.black, fontWeight: FontWeight.normal),
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.05,
-        ),
-        /*   Container(
-          width: MyUtility(context).width * 0.15,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.black,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Update Password',
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal),
             ),
-          ),
-          child: TextField(
-            controller: password,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+            SizedBox(
+              height: MyUtility(context).height * 0.05,
             ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            ),
-          ),
-        ),*/
-        Container(
-          width: MyUtility(context).width / 4,
-          height: 45,
-          decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
-              border: Border.all(
-                color: const Color.fromARGB(255, 51, 51, 51),
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: TextFormField(
-            controller: password,
-            style: TextStyle(
-              color: Color.fromARGB(255, 153, 147, 147),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            onChanged: (value) {
-              passNotifier.value = CustomPassStrength.calculate(text: value);
-            },
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: "Enter Here",
-              hintStyle: TextStyle(
-                color: Color.fromARGB(255, 199, 199, 199),
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-        SizedBox(
-          height: 15,
-        ),
-        SizedBox(
-          width: MyUtility(context).width / 4,
-          child: TextFieldStyling(
-            hintText: 'Confirm Password',
-            textfieldController: passwordCheck,
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        SizedBox(
-          width: MyUtility(context).width / 4,
-          child: PasswordStrengthChecker(
-            strength: passNotifier,
-          ),
-        ),
-        SizedBox(
-          height: MyUtility(context).height * 0.05,
-        ),
-        SizedBox(
-          width: MyUtility(context).width / 1.62,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              width: MyUtility(context).width * 0.05,
+            /*   Container(
+              width: MyUtility(context).width * 0.15,
               height: 50,
               decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                color: Color(0xFF174486),
+                border: Border.all(
+                  color: Colors.black,
+                ),
               ),
-              child: TextButton(
-                onPressed: () {
-                  updatePassword();
+              child: TextField(
+                controller: password,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+              ),
+            ),*/
+            Container(
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width / 4,
+              height: 45,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 51, 51, 51),
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              child: TextFormField(
+                controller: password,
+                style: TextStyle(
+                  color: Color.fromARGB(255, 153, 147, 147),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                onChanged: (value) {
+                  passNotifier.value =
+                      CustomPassStrength.calculate(text: value);
                 },
-                child: Text(
-                  'Save',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Enter Here",
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 199, 199, 199),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
-          ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width / 4,
+              child: TextFieldStyling(
+                hintText: 'Confirm Password',
+                textfieldController: passwordCheck,
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width / 4,
+              child: PasswordStrengthChecker(
+                strength: passNotifier,
+              ),
+            ),
+            SizedBox(
+              height: MyUtility(context).height * 0.05,
+            ),
+            SizedBox(
+              width: isMobile ? 250 : MyUtility(context).width / 1.62,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: isMobile ? 100 : MyUtility(context).width * 0.05,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF174486),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      updatePassword();
+                    },
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MyUtility(context).height * 0.1,
+            )
+          ],
         ),
-        SizedBox(
-          height: MyUtility(context).height * 0.1,
-        )
-      ],
+      ),
     );
   }
 }

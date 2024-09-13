@@ -22,6 +22,8 @@ class _HelpBotState extends State<HelpBot> {
   var bugType = "";
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
     sendEmailFromChatBot() async {
       await sendHelpbotEmail(
           email: 'online@samedical.org',
@@ -34,7 +36,7 @@ class _HelpBotState extends State<HelpBot> {
     }
 
     return Container(
-      width: MyUtility(context).width / 4,
+      width: isMobile ? MyUtility(context).width : MyUtility(context).width / 4,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
@@ -76,7 +78,9 @@ class _HelpBotState extends State<HelpBot> {
                       bugType == "REPORT A BUG" ? Colors.teal : Colors.grey,
                   description: "REPORT A BUG",
                   height: 55,
-                  width: MyUtility(context).width / 4,
+                  width: isMobile
+                      ? MyUtility(context).width
+                      : MyUtility(context).width / 4,
                   onTap: () {
                     setState(() {
                       bugType = "REPORT A BUG";
@@ -90,7 +94,9 @@ class _HelpBotState extends State<HelpBot> {
                       bugType == "ACCOUNT QUERY" ? Colors.teal : Colors.grey,
                   description: "ACCOUNT QUERY",
                   height: 55,
-                  width: MyUtility(context).width / 4,
+                  width: isMobile
+                      ? MyUtility(context).width
+                      : MyUtility(context).width / 4,
                   onTap: () {
                     setState(() {
                       bugType = "ACCOUNT QUERY";
@@ -103,7 +109,9 @@ class _HelpBotState extends State<HelpBot> {
                   buttonColor: bugType == "GENERAL" ? Colors.teal : Colors.grey,
                   description: "GENERAL",
                   height: 55,
-                  width: MyUtility(context).width / 4,
+                  width: isMobile
+                      ? MyUtility(context).width
+                      : MyUtility(context).width / 4,
                   onTap: () {
                     setState(() {
                       bugType = "GENERAL";
@@ -112,21 +120,27 @@ class _HelpBotState extends State<HelpBot> {
               MyProductTextField(
                 hintText: 'Name',
                 textfieldController: name,
-                textFieldWidth: MyUtility(context).width * 0.60,
+                textFieldWidth: isMobile
+                    ? MyUtility(context).width
+                    : MyUtility(context).width * 0.60,
                 topPadding: 0,
                 header: 'Your Name',
               ),
               MyProductTextField(
                 hintText: 'Email',
                 textfieldController: emailAddress,
-                textFieldWidth: MyUtility(context).width * 0.60,
+                textFieldWidth: isMobile
+                    ? MyUtility(context).width
+                    : MyUtility(context).width * 0.60,
                 topPadding: 0,
                 header: 'Email Address',
               ),
               MyProductTextField(
                 hintText: 'Message',
-                textfieldController: name,
-                textFieldWidth: MyUtility(context).width * 0.60,
+                textfieldController: message,
+                textFieldWidth: isMobile
+                    ? MyUtility(context).width
+                    : MyUtility(context).width * 0.60,
                 topPadding: 0,
                 header: 'Message',
               ),

@@ -105,7 +105,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                     SizedBox(
                       height: 15,
                     ),
-                    Row(
+                    Wrap(
                       children: [
                         Text(
                           'To be a contributor, please contact ',

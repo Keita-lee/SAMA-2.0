@@ -62,131 +62,60 @@ class _MemberMediaState extends State<MemberMedia> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SamaBlueBanner(pageName: 'MEDIA & WEBINARS'),
         SizedBox(
-          height: 30,
+          height: isMobile ? 10 : 30,
         ),
-        /*  Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: SizedBox(
-            width: MyUtility(context).width / 1.5,
-            child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              style: GoogleFonts.openSans(fontSize: 16),
-            ),
-          ),
-        ),*/
         Container(
-            padding: EdgeInsets.only(left: 50),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                height: 30,
-              ),
-              /*Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: MyUtility(context).width -
-                    (MyUtility(context).width * 0.45),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            padding:
+                isMobile ? EdgeInsets.only(left: 0) : EdgeInsets.only(left: 50),
+            child: Column(
+                crossAxisAlignment: isMobile
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Select a Category",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Color(0xFF6A6A6A),
-                    ),
+                  SizedBox(
+                    height: 30,
                   ),
-                  DropdownMenu<String>(
-                    width: 250,
-                    controller: category,
-                    requestFocusOnTap: true,
-                    label: const Text(''),
-                    onSelected: (value) {
-                      setState(() {
-                        if (value == "All") {
-                          category.text = "";
-                        } else {
-                          category.text = (value!);
+                  StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('media')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: snapshot error');
                         }
-                      });
-                    },
-                    dropdownMenuEntries:
-                        items.map<DropdownMenuEntry<String>>((value) {
-                      return DropdownMenuEntry<String>(
-                        value: value,
-                        label: value,
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 25,
-          ),*/
-              StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('media')
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error: snapshot error');
-                    }
-                    if (!snapshot.hasData) {
-                      return const Text('Loading...');
-                    }
+                        if (!snapshot.hasData) {
+                          return const Text('Loading...');
+                        }
 
-                    final List<DocumentSnapshot> documents =
-                        snapshot.data!.docs;
-                    documents.sort((a, b) {
-                      //sorting in ascending order
-                      return DateTime.parse(b["releaseDate"])
-                          .compareTo(DateTime.parse(a["releaseDate"]));
-                    });
+                        final List<DocumentSnapshot> documents =
+                            snapshot.data!.docs;
+                        documents.sort((a, b) {
+                          //sorting in ascending order
+                          return DateTime.parse(b["releaseDate"])
+                              .compareTo(DateTime.parse(a["releaseDate"]));
+                        });
 
-                    if (documents.isEmpty) {
-                      return Center(child: Text('No Media & Webinars yet'));
-                    }
-
-                    return Container(
-                        //color: const Color.fromARGB(137, 255, 193, 7),
-                        width: MyUtility(context).width < 1680 ? 900 : 1200,
-                        //width: MyUtility(context).width / 1.6,
-                        /* width: MyUtility(context).width -
-                        (MyUtility(context).width * 0.25),*/
-                        height: MyUtility(context).height * 0.77,
-                        child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount:
-                                  MyUtility(context).width < 1680 ? 3 : 4,
-                              childAspectRatio: 0.88,
-                            ),
-                            itemCount: documents.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final DocumentSnapshot document =
-                                  documents[index];
-                              return Wrap(
-                                direction: Axis.horizontal,
-                                children: [
-                                  Visibility(
-                                    visible: category.text == ""
-                                        ? true
-                                        : category.text == document['category']
-                                            ? true
-                                            : false,
-                                    child: MediaContainerStyle(
+                        if (documents.isEmpty) {
+                          return Center(child: Text('No Media & Webinars yet'));
+                        }
+                        if (isMobile) {
+                          return Container(
+                              width: MyUtility(context).width,
+                              height: MyUtility(context).height / 1.8,
+                              child: ListView.builder(
+                                  itemCount: documents.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final DocumentSnapshot document =
+                                        documents[index];
+                                    return MediaContainerStyle(
                                       view: () {
                                         openMediaDialog(document['id']);
                                       },
@@ -210,13 +139,70 @@ class _MemberMediaState extends State<MemberMedia> {
                                       category: document['category'],
                                       title: document['title'],
                                       id: document['title'],
-                                    ),
-                                  )
-                                ],
-                              );
-                            }));
-                  }),
-            ])),
+                                    );
+                                  }));
+                        } else {
+                          return Container(
+                              width:
+                                  MyUtility(context).width < 1680 ? 900 : 1200,
+                              height: MyUtility(context).height * 0.77,
+                              child: GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:
+                                        MyUtility(context).width < 1680 ? 3 : 4,
+                                    childAspectRatio: 0.88,
+                                  ),
+                                  itemCount: documents.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final DocumentSnapshot document =
+                                        documents[index];
+                                    return Wrap(
+                                      direction: Axis.horizontal,
+                                      children: [
+                                        Visibility(
+                                          visible: category.text == ""
+                                              ? true
+                                              : category.text ==
+                                                      document['category']
+                                                  ? true
+                                                  : false,
+                                          child: MediaContainerStyle(
+                                            view: () {
+                                              openMediaDialog(document['id']);
+                                            },
+                                            onpress: () {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return MediaPopup(
+                                                    id: document["id"],
+                                                    closeDialog: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            adminType: "false",
+                                            image: document['mediaImageUrl'],
+                                            duration: "",
+                                            releaseDate:
+                                                document['releaseDate'],
+                                            category: document['category'],
+                                            title: document['title'],
+                                            id: document['title'],
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  }));
+                        }
+                      }),
+                ])),
       ],
     );
   }
