@@ -23,7 +23,7 @@ class _DashCentreState extends State<DashCentre> {
     if (isMobile) {
       return DashboardInfoContainers(
           customWidth: MyUtility(context).width,
-          height: 125,
+          height: 150,
           topBarColor: SamaColors().teal,
           image: "images/icon_centre_of.svg",
           header: 'Centre of Excellence',

@@ -153,7 +153,7 @@ class _MemberContainerState extends State<MemberContainer> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          width: MyUtility(context).width / 2,
+                          width: MyUtility(context).width / 1.6,
                           height: MyUtility(context).height / 4,
                         ),
                       ),
@@ -165,7 +165,7 @@ class _MemberContainerState extends State<MemberContainer> {
                           fit: BoxFit.contain,
                           child: ImageNetwork(
                             image: widget.eventImage,
-                            width: MyUtility(context).width / 2,
+                            width: MyUtility(context).width / 1.6,
                             height: MyUtility(context).height / 4,
                             fitWeb: BoxFitWeb.cover,
                           ),

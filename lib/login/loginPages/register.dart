@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/email/sendOtp.dart';
+import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -254,78 +255,168 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MyUtility(context).width / 1.5,
+    if (MyUtility(context).width < 600) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Already have a profile?",
+          children: [
+            Navbar(
+              userType: "",
+              onButton1Pressed: (value) {},
+              onButton2Pressed: (value) {},
+              onDropdownChanged: (value) {},
+              visible: false,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Already have a profile?",
+                  style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                      fontSize: 16,
+                    ),
+                    color: Colors.grey[600],
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                InkWell(
+                  onTap: () {
+                    widget.changePage(0);
+                  },
+                  child: Text(
+                    "Click to login",
                     style: GoogleFonts.openSans(
+                      decorationThickness: 2,
+                      height: 1.1,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color.fromRGBO(0, 159, 158, 1),
                       textStyle: TextStyle(
                         fontSize: 16,
                       ),
-                      color: Colors.grey[600],
+                      color: Color.fromRGBO(0, 159, 158, 1),
                     ),
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      widget.changePage(0);
-                    },
-                    child: Text(
-                      "Click to login",
+                )
+              ],
+            ),
+            ProfileTextField(
+              isBold: false,
+              description: 'First name',
+              textfieldController: firstName,
+              customSize: MyUtility(context).width,
+              textFieldType: '',
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            ProfileTextField(
+              isBold: false,
+              description: 'Surname',
+              textfieldController: lastName,
+              customSize: MyUtility(context).width,
+              textFieldType: '',
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            ProfileTextField(
+              isBold: false,
+              description: 'Email address',
+              textfieldController: email,
+              customSize: MyUtility(context).width,
+              textFieldType: '',
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StyleButton(
+                buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                waiting: _isLoading,
+                description: "Next",
+                height: 55,
+                width: 125,
+                onTap: () {
+                  sendEmailVerificationLink();
+                }),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+          width: MyUtility(context).width / 1.5,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Already have a profile?",
                       style: GoogleFonts.openSans(
-                        decorationThickness: 2,
-                        height: 1.1,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
                         textStyle: TextStyle(
                           fontSize: 16,
                         ),
-                        color: Color.fromRGBO(0, 159, 158, 1),
+                        color: Colors.grey[600],
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ProfileTextField(
-                        isBold: false,
-                        description: 'First name',
-                        textfieldController: firstName,
-                        customSize: MyUtility(context).width / 5,
-                        textFieldType: '',
+                    SizedBox(
+                      width: 15,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        widget.changePage(0);
+                      },
+                      child: Text(
+                        "Click to login",
+                        style: GoogleFonts.openSans(
+                          decorationThickness: 2,
+                          height: 1.1,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                          textStyle: TextStyle(
+                            fontSize: 16,
+                          ),
+                          color: Color.fromRGBO(0, 159, 158, 1),
+                        ),
                       ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      ProfileTextField(
-                        isBold: false,
-                        description: 'Surname',
-                        textfieldController: lastName,
-                        customSize: MyUtility(context).width / 5,
-                        textFieldType: '',
-                      ),
-                    ],
-                  ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ProfileTextField(
+                          isBold: false,
+                          description: 'First name',
+                          textfieldController: firstName,
+                          customSize: MyUtility(context).width / 5,
+                          textFieldType: '',
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        ProfileTextField(
+                          isBold: false,
+                          description: 'Surname',
+                          textfieldController: lastName,
+                          customSize: MyUtility(context).width / 5,
+                          textFieldType: '',
+                        ),
+                      ],
+                    ),
 
-                  /* RegisterTextfieldStyle(
+                    /* RegisterTextfieldStyle(
                     description: "First Name:",
                     hintText: "First Name",
                     textfieldController: firstName,
@@ -338,49 +429,50 @@ class _RegisterState extends State<Register> {
                     hintText: "Last Name",
                     textfieldController: lastName,
                   ),*/
-                  SizedBox(
-                    height: 15,
-                  ),
-                  ProfileTextField(
-                    isBold: false,
-                    description: 'Email address',
-                    textfieldController: email,
-                    customSize: MyUtility(context).width / 2.45,
-                    textFieldType: '',
-                  ),
-                  /*  RegisterTextfieldStyle(
+                    SizedBox(
+                      height: 15,
+                    ),
+                    ProfileTextField(
+                      isBold: false,
+                      description: 'Email address',
+                      textfieldController: email,
+                      customSize: MyUtility(context).width / 2.45,
+                      textFieldType: '',
+                    ),
+                    /*  RegisterTextfieldStyle(
                     description: "Email",
                     hintText: "Email",
                     textfieldController: email,
                   ),*/
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 25),
-                child: Row(
-                  children: [
-                    KeyboardListener(
-                      focusNode: _focusNode,
-                      autofocus: true,
-                      onKeyEvent: (KeyEvent event) {
-                        if (HardwareKeyboard.instance
-                            .isLogicalKeyPressed(LogicalKeyboardKey.enter)) {
-                          sendEmailVerificationLink();
-                        }
-                      },
-                      child: StyleButton(
-                          buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                          waiting: _isLoading,
-                          description: "Next",
-                          height: 55,
-                          width: 125,
-                          onTap: () {
-                            sendEmailVerificationLink();
-                          }),
-                    ),
                   ],
                 ),
-              ),
-            ]));
+                Padding(
+                  padding: const EdgeInsets.only(top: 25),
+                  child: Row(
+                    children: [
+                      KeyboardListener(
+                        focusNode: _focusNode,
+                        autofocus: true,
+                        onKeyEvent: (KeyEvent event) {
+                          if (HardwareKeyboard.instance
+                              .isLogicalKeyPressed(LogicalKeyboardKey.enter)) {
+                            sendEmailVerificationLink();
+                          }
+                        },
+                        child: StyleButton(
+                            buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                            waiting: _isLoading,
+                            description: "Next",
+                            height: 55,
+                            width: 125,
+                            onTap: () {
+                              sendEmailVerificationLink();
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+              ]));
+    }
   }
 }

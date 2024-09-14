@@ -57,7 +57,8 @@ class _DashEventsState extends State<DashEvents> {
 
     if (isMobile) {
       return DashboardInfoContainers(
-        height: 125,
+        customWidth: MyUtility(context).width,
+        height: 160,
         topBarColor: SamaColors().teal,
         image: "images/icon_events.svg",
         header: 'Events',

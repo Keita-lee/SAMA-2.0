@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:sama_mobile/MainComponants/Navbar/profile_navbar_options.dart';
 
@@ -6,8 +7,12 @@ import 'package:sama/components/mobile/components/Themes/custom_colors.dart';
 import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/mobile/Navbar/login_button.dart';
 import 'package:sama/components/mobile/Navbar/register_button.dart';
+import 'package:sama/login/loginPages.dart';
+import 'package:sama/profile/logoutPopup.dart';
 
-class Navbar extends StatelessWidget {
+import '../../../homePage/PostLoginLandingPage.dart';
+
+class Navbar extends StatefulWidget {
   final bool visible;
   final String userType;
   final Function(String) onButton1Pressed;
@@ -22,6 +27,36 @@ class Navbar extends StatelessWidget {
     required this.onButton2Pressed,
     required this.onDropdownChanged,
   });
+
+  @override
+  State<Navbar> createState() => _NavbarState();
+}
+
+class _NavbarState extends State<Navbar> {
+  navigateToPage(
+    index,
+    pageIndex,
+  ) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Material(
+                  child: PostLoginLandingPage(
+                      pageIndex: pageIndex,
+                      userId: FirebaseAuth.instance.currentUser != null
+                          ? FirebaseAuth.instance.currentUser!.uid
+                          : "",
+                      activeIndex: index),
+                )));
+  }
+
+  //Dialog for logout
+  Future openLogoutDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: LogoutPopup(closeDialog: () => Navigator.pop(context!)));
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -58,25 +93,76 @@ class Navbar extends StatelessWidget {
               children: [
                 // const ProfileNavbarOptions(),
                 Visibility(
-                  visible: userType == "NonMember",
+                  visible: widget.userType == "NonMember",
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 10.0, top: 32.0),
                     child: LoginButton(
-                        onPressed: () => onButton1Pressed('Button 1')),
+                        onPressed: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Material(
+                                            child: LoginPages(
+                                              pageIndex: 0,
+                                            ),
+                                          )))
+                            }),
                   ),
                 ),
                 Visibility(
-                  visible: userType == "NonMember",
+                  visible: widget.userType == "NonMember",
                   child: RegisterButton(
-                      onPressed: () => onButton2Pressed('Button 2')),
+                      onPressed: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Material(
+                                          child: LoginPages(
+                                            pageIndex: 9,
+                                          ),
+                                        )))
+                          }),
                 ),
                 const SizedBox(height: 8),
 
                 Visibility(
-                  visible: visible,
+                  visible: widget.visible,
                   child: PopupMenuButton<String>(
                     icon: const Icon(Icons.menu),
-                    onSelected: onDropdownChanged,
+                    onSelected: (value) {
+                      switch (value) {
+                        case "Dashboard":
+                          navigateToPage(0, 0);
+                          break;
+                        case "Centre of Excellence":
+                          navigateToPage(1, 1);
+                          break;
+                        case "Media & Webinars":
+                          navigateToPage(2, 9);
+                          break;
+                        case "Professional Development":
+                          navigateToPage(19, 19);
+                          break;
+                        case "E-Store":
+                          navigateToPage(6, 14);
+                          break;
+                        case "Events":
+                          navigateToPage(7, 10);
+                          break;
+                        case "Communities":
+                          navigateToPage(8, 16);
+                          break;
+                        case "Member Benefits":
+                          navigateToPage(9, 2);
+                          break;
+                        case "Branch Voting":
+                          navigateToPage(10, 12);
+                          break;
+                        case "logout":
+                          openLogoutDialog();
+                          break;
+                      }
+                    },
                     itemBuilder: (BuildContext context) {
                       List<PopupMenuEntry<String>> menuItems = [
                         {
@@ -127,9 +213,10 @@ class Navbar extends StatelessWidget {
                       }).toList();
 
                       // Update the "Back to website" button
-                      menuItems.add(
-                        PopupMenuItem<String>(
-                          value: 'Yellow Button',
+                      /*  menuItems.add(PopupMenuItem<String>(
+                        value: 'Yellow Button',
+                        child: Visibility(
+                          visible: widget.userType != "NonMember",
                           child: Container(
                             width: double.infinity,
                             color: CustomColors.yellow,
@@ -142,20 +229,23 @@ class Navbar extends StatelessWidget {
                             ),
                           ),
                         ),
-                      );
+                      ));*/
 
                       // Add the new "Contact Us" button
                       menuItems.add(
                         PopupMenuItem<String>(
-                          value: 'Blue Button',
-                          child: Container(
-                            width: double.infinity,
-                            color: CustomColors.blue,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: const Center(
-                              child: Text(
-                                'LOGOUT',
-                                style: TextStyle(color: Colors.white),
+                          value: 'logout',
+                          child: Visibility(
+                            visible: widget.userType != "NonMember",
+                            child: Container(
+                              width: double.infinity,
+                              color: CustomColors.blue,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: const Center(
+                                child: Text(
+                                  'LOGOUT',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),

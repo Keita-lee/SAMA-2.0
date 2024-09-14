@@ -67,63 +67,79 @@ class _ResourcesState extends State<Resources> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: MyUtility(context).width * 0.78,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ProfileDropDownField(
-                    isBold: false,
-                    description: 'Filter Tags',
-                    customSize: 250,
-                    items: _tags,
-                    onChanged: filterResources,
-                    textfieldController: _tagController),
-                _tagController.text != ''
-                    ? TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _tagController.text = '';
-                          });
-                          filterResources();
-                        },
-                        child: const Text(
-                          'Clear Filter',
-                          style: TextStyle(color: Colors.teal),
-                        ),
-                      )
-                    : const SizedBox.shrink()
-              ],
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            width: isMobile
+                ? MyUtility(context).width
+                : MyUtility(context).width * 0.78,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ProfileDropDownField(
+                      isBold: false,
+                      description: 'Filter Tags',
+                      customSize: 250,
+                      items: _tags,
+                      onChanged: filterResources,
+                      textfieldController: _tagController),
+                  _tagController.text != ''
+                      ? TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _tagController.text = '';
+                            });
+                            filterResources();
+                          },
+                          child: const Text(
+                            'Clear Filter',
+                            style: TextStyle(color: Colors.teal),
+                          ),
+                        )
+                      : const SizedBox.shrink()
+                ],
+              ),
             ),
           ),
-        ),
-        for (int i = 0; i < _filteredResources.length; i++)
-          Column(
-            children: [
-              if (_filteredResources[i]["type"] == "PDF")
-                Visibility(
-                    visible: _filteredResources[i]["type"] == "PDF",
-                    child: ComPdfView(
-                      downloadUrl: _filteredResources[i]["pdfLink"],
-                      title: _filteredResources[i]["title"],
-                      tags: [],
-                    )),
-              if (_filteredResources[i]["type"] == "TEXT")
-                Visibility(
-                    visible: _filteredResources[i]["type"] == "TEXT",
-                    child: ComTextView(
-                      details: _filteredResources[i]["details"],
-                      title: _filteredResources[i]["title"],
-                      tags: [],
-                    )), /* */
-            ],
+          SizedBox(
+            height: isMobile
+                ? MyUtility(context).height / 1.7
+                : MyUtility(context).height,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (int i = 0; i < _filteredResources.length; i++)
+                    Column(
+                      children: [
+                        if (_filteredResources[i]["type"] == "PDF")
+                          Visibility(
+                              visible: _filteredResources[i]["type"] == "PDF",
+                              child: ComPdfView(
+                                downloadUrl: _filteredResources[i]["pdfLink"],
+                                title: _filteredResources[i]["title"],
+                                tags: [],
+                              )),
+                        if (_filteredResources[i]["type"] == "TEXT")
+                          Visibility(
+                              visible: _filteredResources[i]["type"] == "TEXT",
+                              child: ComTextView(
+                                details: _filteredResources[i]["details"],
+                                title: _filteredResources[i]["title"],
+                                tags: [],
+                              )), /* */
+                      ],
+                    )
+                ],
+              ),
+            ),
           )
-      ],
+        ],
+      ),
     );
   }
 }

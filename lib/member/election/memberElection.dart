@@ -247,6 +247,7 @@ class _MemberElectionState extends State<MemberElection> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     var electionPages = [
       ElectionOverView(
         startDate: nominateStartDate,
@@ -307,59 +308,61 @@ class _MemberElectionState extends State<MemberElection> {
           SizedBox(
             height: 30,
           ),
-        Visibility(
-              visible: widget.userType != "NonMember",
-              child:    Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'No branch voting in progress',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(0, 159, 158, 1),
+          Visibility(
+            visible: widget.userType != "NonMember",
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'No branch voting in progress',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(0, 159, 158, 1),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 1.5,
-                  child: Text(
-                    'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
-                    style: GoogleFonts.openSans(fontSize: 16),
+                  SizedBox(
+                    height: 15,
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 1.5,
-                  child: Text(
-                    'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
-                    style: GoogleFonts.openSans(fontSize: 16),
+                  SizedBox(
+                    width: MyUtility(context).width / 1.5,
+                    child: Text(
+                      'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
+                      style: GoogleFonts.openSans(fontSize: 16),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: MyUtility(context).width / 1.5,
-                  child: Text(
-                    'Once branch voting opens, you will be notified.',
-                    style: GoogleFonts.openSans(fontSize: 16),
+                  SizedBox(
+                    height: 15,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: MyUtility(context).width / 1.5,
+                    child: Text(
+                      'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
+                      style: GoogleFonts.openSans(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 1.5,
+                    child: Text(
+                      'Once branch voting opens, you will be notified.',
+                      style: GoogleFonts.openSans(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),),
-
-              Visibility(
+          ),
+          Visibility(
               visible: widget.userType == "NonMember",
               child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  padding: isMobile
+                      ? EdgeInsets.all(8)
+                      : const EdgeInsets.symmetric(horizontal: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -371,7 +374,7 @@ class _MemberElectionState extends State<MemberElection> {
                         ),
                       ),
                     ],
-                  ))),/*
+                  ))), /*
           Visibility(
             visible: widget.userType != "NonMember",
             child: Padding(

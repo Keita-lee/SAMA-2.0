@@ -111,7 +111,7 @@ class _MemberEventsState extends State<MemberEvents> {
                       width: isMobile
                           ? MyUtility(context).width
                           : MyUtility(context).width * 0.60,
-                      height: isMobile ? MyUtility(context).height / 2.2 : 700,
+                      height: isMobile ? MyUtility(context).height / 1.6 : 700,
                       child: ListView.builder(
                         itemCount: documents.length,
                         itemBuilder: (BuildContext context, int index) {

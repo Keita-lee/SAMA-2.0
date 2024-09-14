@@ -227,15 +227,6 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
         userType: userType,
       ),
       MemberManagementMainCon(),
-      /*NominationAcceptance()*/
-      /*ElectionsManageEvent(),*/
-
-      /*BranchMembers(),*/
-      /*AdminEventDetails(),*/
-      /*AdminEvents(),*/
-      /*MemberEvents()*/
-      /*MemberEventDetails()*/
-
       ProfessionalDevAdmin(),
       BugReportList(),
       CodingAcademy(),
