@@ -70,6 +70,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +82,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
           Visibility(
             visible: userType != "Admin" ? true : false,
             child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? 8 : 50),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -96,7 +97,9 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                       height: 15,
                     ),
                     SizedBox(
-                      width: MyUtility(context).width / 1.5,
+                      width: isMobile
+                          ? MyUtility(context).width
+                          : MyUtility(context).width / 1.5,
                       child: Text(
                         'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.',
                         style: GoogleFonts.openSans(fontSize: 16),

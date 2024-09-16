@@ -500,6 +500,13 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                       },
                     ),
                   ),
+                  Text(
+                    validateText,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.red,
+                    ),
+                  ),
                   const SizedBox(height: 30),
                   RichText(
                     text: TextSpan(

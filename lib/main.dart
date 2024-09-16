@@ -39,6 +39,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         home: MyHome(),
         routes: {
+          '/mobileNonMember': (context) => Material(
+                  child: PostLoginLandingPage(
+                userId: "",
+                activeIndex: 0,
+              )),
           '/mobileLogin': (context) => Material(
                   child: LoginPages(
                 pageIndex: 0,
