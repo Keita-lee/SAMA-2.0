@@ -9,7 +9,7 @@ Future sendSamaNumber({
   required String email,
 }) async {
   final serviceId = 'service_igwbojp';
-  final templateId = 'template_sama_no_otp';
+  final templateId = 'template_send_sama_no';
   final userId = 'Jmk16IabzDvgmXBeJ';
   // createOtpVerification(email, otp);
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');

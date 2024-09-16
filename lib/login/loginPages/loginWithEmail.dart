@@ -47,6 +47,8 @@ class LoginWithEmail extends StatefulWidget {
 }
 
 class _LoginWithEmailState extends State<LoginWithEmail> {
+  final firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
   // Text controllers
   final email = TextEditingController(text: '');
   bool isLoading = false;
@@ -96,6 +98,66 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           );
         },
       );
+
+  Future<void> createUser(Map<String, dynamic> memberData) async {
+    UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
+        email: memberData['email_sama'], password: 'Cp123456');
+
+    await firestore.collection('users').doc(userDocRef.user!.uid).set({
+      "id": userDocRef.user!.uid,
+      "title": memberData['title'],
+      "initials": memberData['init'],
+      "landline": '',
+      "profilePic":
+          'https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Fistockphoto-1495088043-612x612.jpg?alt=media&token=6355d1a2-7572-4221-99a3-a2823af52372',
+      "gender": '',
+      "race": '',
+      "dob": '',
+      "passportNumber": '',
+      "practiceNumber": '',
+      "univercityQualification": '',
+      "univercityName": '',
+      "qualificationYear": '',
+      "qualificationMonth": '',
+      "password": '',
+      "userType": "user",
+      "membershipAdded": false,
+      "profilePicView": '',
+      "profileView": '',
+      'firstName': memberData['first_name'],
+      'lastName': memberData['surname'],
+      'mobileNo': memberData['cell_no'],
+      'email': memberData['email_sama'],
+      'samaNo': int.parse(memberData['sama_no']),
+      'idNumber': memberData['id_no'],
+      'hpcsaNumber': memberData['hpc_full_no'],
+      'membershipPaid': memberData['membership_paid'],
+      'samaMember': memberData['sama_member'],
+      'brnchCde': memberData['brnch_cde'],
+      'brnchName': memberData['brnch_name'],
+      'status': 'Active',
+      'loggedIn': true
+    });
+  }
+
+  Future<void> loginUserFirstTime(String id) async {
+    widget.getEmail((email.text).toLowerCase());
+    widget.getEmailChangeType('passwordResetPage');
+    String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+    await sendOtp(otp: randomOtp, email: (email.text).toLowerCase());
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .update({'loggedIn': true});
+
+    setState(() {
+      isLoading = false;
+    });
+    // redirect user to reset password
+    // widget.changePage(14);
+    openPasswordResetDialog();
+  }
 
   Future<Map<String, dynamic>> checkOracleDb(String email) async {
     final TokenManager tokenManager = TokenManager();
@@ -184,7 +246,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           .get();
 
       //Check if user exists in Oracle Db and Firestore
-      Map oracleUser = await checkOracleDb((email.text).toLowerCase());
+      Map<String, dynamic> oracleUser =
+          await checkOracleDb((email.text).toLowerCase());
       bool foundOnOracleDb = oracleUser.isNotEmpty;
       bool foundInFirebase = users.docs.isNotEmpty;
 
@@ -209,23 +272,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             // Send reset password email
             // sendResetEmail(email.text,
             //     '${users.docs.first.data()['firstName']} ${users.docs.first.data()['lastName']}');
-            widget.getEmail((email.text).toLowerCase());
-            widget.getEmailChangeType('passwordResetPage');
-            String randomOtp =
-                Random().nextInt(999999).toString().padLeft(6, '0');
-            await sendOtp(otp: randomOtp, email: (email.text).toLowerCase());
-
-            await FirebaseFirestore.instance
-                .collection('users')
-                .doc(users.docs.first.id)
-                .update({'loggedIn': true});
-
-            setState(() {
-              isLoading = false;
-            });
-            // redirect user to reset password
-            // widget.changePage(14);
-            openPasswordResetDialog();
+            loginUserFirstTime(users.docs.first.id);
           }
         } else {
           updateStateText(
@@ -240,27 +287,28 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       else if (!foundInFirebase && foundOnOracleDb) {
         // updateStateText(
         //     "You are not registered on this site yet. Please register and try again.");
-
-        widget.updateMemberData({
-          "title": oracleUser['title'] ?? '',
-          "email": email.text,
-          "firstName": '',
-          "lastName": '',
-          "cell": "",
-          "samaNo": "",
-          "idNo": "",
-          "hpcsa": "",
-        });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Material(
-              child: LoginPages(
-                pageIndex: 19,
-              ),
-            ),
-          ),
-        );
+        await createUser(oracleUser);
+        await loginUserFirstTime(users.docs.first.id);
+        // widget.updateMemberData({
+        //   "title": oracleUser['title'] ?? '',
+        //   "email": email.text,
+        //   "firstName": '',
+        //   "lastName": '',
+        //   "cell": "",
+        //   "samaNo": "",
+        //   "idNo": "",
+        //   "hpcsa": "",
+        // });
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => Material(
+        //       child: LoginPages(
+        //         pageIndex: 19,
+        //       ),
+        //     ),
+        //   ),
+        // );
         // setState(() {
         //   showSamaAccountCreate = true;
         // });
@@ -325,50 +373,37 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         // sendResetEmail(users.docs.first['email'],
         //     '${data.first['firstName']} ${data.first['surname']}');
 
-        widget.getEmailChangeType('passwordResetPage');
-        String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
-        await sendOtp(
-            otp: randomOtp, email: (data.first['email_sama']).toLowerCase());
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(users.docs.first.id)
-            .update({'loggedIn': true});
-
-        setState(() {
-          isLoading = false;
-        });
-        // redirect user to reset password
-        // widget.changePage(14);
-        openPasswordResetDialog();
+        loginUserFirstTime(users.docs.first.id);
       }
     } else {
+      await createUser(data.first);
+      loginUserFirstTime(users.docs.first.id);
       // updateStateText(
       //     "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
       // //openValidateDialog();
-      widget.updateMemberData({
-        "title": data.first['title'] ?? '',
-        "email": "",
-        "name": '',
-        "lastName": '',
-        "cell": "",
-        "samaNo": email.text,
-        "idNo": "",
-        "hpcsa": "",
-      });
+      // widget.updateMemberData({
+      //   "title": data.first['title'] ?? '',
+      //   "email": "",
+      //   "name": '',
+      //   "lastName": '',
+      //   "cell": "",
+      //   "samaNo": email.text,
+      //   "idNo": "",
+      //   "hpcsa": "",
+      // });
       // setState(() {
       //   showSamaAccountCreate = true;
       // });
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Material(
-            child: LoginPages(
-              pageIndex: 19,
-            ),
-          ),
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => Material(
+      //       child: LoginPages(
+      //         pageIndex: 19,
+      //       ),
+      //     ),
+      //   ),
+      // );
     }
     setState(() {
       isLoading = false;

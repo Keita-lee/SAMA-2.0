@@ -70,33 +70,41 @@ class _ResetPasswordState extends State<ResetPassword> {
         isLoading = true;
       });
       final OracleDbManager oracleDbManager = OracleDbManager();
-      final memberData = await oracleDbManager.checkSamaNo(email.text);
-      final _auth = FirebaseAuth.instance;
-      if (memberData['items'].isNotEmpty) {
-        widget.getEmailChangeType("passwordResetPage");
-        final oracelEmail = memberData['items'][0]['email_sama'];
 
+      // check if sama number is on oracle db
+      Map<String, dynamic> memberData =
+          await oracleDbManager.checkSamaNo(email.text);
+      final data = memberData['items'].first;
+      // sama number found on oracle db
+      if (memberData.isNotEmpty) {
+        widget.getEmailChangeType("passwordResetPage");
+        final oracelEmail = data['email_sama'];
         widget.getEmail(oracelEmail);
+
+        // check if user exist
         final user = await FirebaseFirestore.instance
             .collection('users')
             .where('email', isEqualTo: oracelEmail)
             .get();
 
         if (user.docs.isNotEmpty) {
+          //Mobile OTP send
           if (_character == SingingCharacter.mobile) {
-            //Mobile OTP send
+            // redirect to ValidateByMobileOtp screen to validate otp
             widget.changePage(3);
           } else {
             String randomOtp =
                 Random().nextInt(999999).toString().padLeft(6, '0');
             await sendOtp(
                 otp: randomOtp, email: memberData['items'][0]['email_sama']);
+            // redirect to ValidateByEmailOtp screen to validate otp
             widget.changePage(14);
           }
           setState(() {
             isLoading = false;
           });
         } else {
+          // redirect to create sama account screen
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -108,28 +116,9 @@ class _ResetPasswordState extends State<ResetPassword> {
             ),
           );
         }
-
-        // final users = await FirebaseFirestore.instance
-        //     .collection('users')
-        //     .where('practiceNumber', isEqualTo: email.text.toLowerCase())
-        //     .get();
-
-        //If user exist send link
-        // if (users.docs.length >= 1) {
-        //   //Update email variable
-        //   widget.getEmail(users.docs[0].get("email"));
-        //   //Mobile OTP send
-        //   if (_character == SingingCharacter.mobile) {
-        //     widget.changePage(3);
-        //   } else {
-        //     String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
-        //     await sendOtp(otp: randomOtp, email: users.docs[0].get("email"));
-        //     widget.changePage(14);
-        //   }
-        // } else {
-        //   openValidateDialog();
-        // }
-      } else {
+      }
+      // sama number not found on oracle db
+      else {
         setState(() {
           isLoading = false;
         });
