@@ -53,6 +53,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
     return Container(
       width:
           isMobile ? MyUtility(context).width : MyUtility(context).width * 0.50,
+
       // decoration: BoxDecoration(
       //     borderRadius: BorderRadius.circular(10),
       //     color: Colors.white,
@@ -112,62 +113,16 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // Container(
-                  //   width: MyUtility(context).width / 1.5,
-                  //   height: 55,
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //   ),
-                  //   child: QuillEditor.basic(
-                  //     configurations: QuillEditorConfigurations(
-                  //       controller: quillController,
-                  //       sharedConfigurations: const QuillSharedConfigurations(),
-                  //     ),
-                  //   ),
-                  // ),
-                  /*  SizedBox(
-                    width: MyUtility(context).width / 3.5,
-                    height: 30,
-                    child: Text(
-                      widget.productDescription,
-                      maxLines: 3,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),*/
-                  // Spacer(),
                   SizedBox(height: 20),
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   mainAxisSize: MainAxisSize.max,
-                        //   children: [
-                        //     Text(
-                        //       'R ${widget.price}',
-                        //       style: const TextStyle(
-                        //           fontSize: 20, color: Colors.teal),
-                        //     ),
-                        //     Text(
-                        //       widget.priceInfo,
-                        //       style: const TextStyle(
-                        //         fontSize: 13,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        //Spacer(),
-
                         StyleButton(
-                            fontSize: 13,
+                            fontSize: isMobile ? 16 : 13,
                             description: 'View Options',
-                            height: 40,
+                            height: isMobile ? 65 : 40,
                             width: 110,
                             buttonTextColor: Colors.white,
                             buttonColor: Color.fromRGBO(0, 159, 159, 1),
@@ -175,24 +130,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                               final Uri a = Uri.parse(widget.downloadLink);
 
                               launchUrl(a);
-                              // widget.readMore();
                             }),
-                        // const SizedBox(
-                        //   width: 15,
-                        // ),
-                        // Visibility(
-                        //   visible: isDigital,
-                        //   child: StyleButton(
-                        //     fontSize: 13,
-                        //     buttonColor: Colors.teal,
-                        //     description: 'Buy Now',
-                        //     height: 40,
-                        //     width: 100,
-                        //     onTap: () {
-                        //       widget.buyProduct();
-                        //     },
-                        //   ),
-                        // ),
                       ],
                     ),
                   )

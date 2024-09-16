@@ -68,26 +68,26 @@ class _professionalDevelopmentMainConState
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SizedBox(
       height: isMobile ? MyUtility(context).height : MyUtility(context).height,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment:
-              isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-          children: [
-            const SamaBlueBanner(pageName: 'PROFESSIONAL DEVELOPMENT'),
-            Padding(
-              padding: isMobile
-                  ? EdgeInsets.all(8)
-                  : EdgeInsets.only(
-                      top: 30,
-                      left: 80,
-                    ),
-              child: SizedBox(
-                width: isMobile
-                    ? MyUtility(context).width
-                    : MyUtility(context).width * 0.68,
-                height: isMobile
-                    ? MyUtility(context).height / 1.5
-                    : MyUtility(context).height,
+      child: Column(
+        crossAxisAlignment:
+            isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        children: [
+          const SamaBlueBanner(pageName: 'PROFESSIONAL DEVELOPMENT'),
+          Padding(
+            padding: isMobile
+                ? EdgeInsets.all(8)
+                : EdgeInsets.only(
+                    top: 30,
+                    left: 80,
+                  ),
+            child: SizedBox(
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width * 0.68,
+              height: isMobile
+                  ? MyUtility(context).height / 1.5
+                  : MyUtility(context).height,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     /*Row(
@@ -144,6 +144,7 @@ class _professionalDevelopmentMainConState
                         ),
                       ),
                     ),
+                    /*  */
                     const SizedBox(height: 20),
                     Visibility(
                       visible: pageIndex == 0,
@@ -216,9 +217,9 @@ class _professionalDevelopmentMainConState
                   ],
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
