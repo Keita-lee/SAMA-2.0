@@ -24,6 +24,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
       return Material(
         child: Container(
           width: MyUtility(context).width - 10,
+          //  height: MyUtility(context).height / 1.4,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
@@ -32,7 +33,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
           child: Column(children: [
             SizedBox(
               width: MyUtility(context).width - 50,
-              height: MyUtility(context).height / 2,
+              height: MyUtility(context).height / 1.55,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
