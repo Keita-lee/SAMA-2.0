@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../components/myutility.dart';
 import '../../../components/styleButton.dart';
 import 'ui/applicationContainerStyle.dart';
 
@@ -30,9 +31,12 @@ class _ApplicationTypeState extends State<ApplicationType> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment:
+          isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      mainAxisAlignment:
+          isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         for (var i = 0; i < widget.applicationTypes.length; i++)
           Padding(

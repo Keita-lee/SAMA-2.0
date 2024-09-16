@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/components/myutility.dart';
 
 class CustomCheckbox extends StatelessWidget {
   final bool value;
@@ -16,6 +17,7 @@ class CustomCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return GestureDetector(
       onTap: () => onChanged(!value),
       child: Container(

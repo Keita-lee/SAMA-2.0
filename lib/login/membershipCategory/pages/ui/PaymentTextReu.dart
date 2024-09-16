@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../components/myutility.dart';
+
 class PaymentTextreu extends StatefulWidget {
   final String boldText;
   final String secondText;
@@ -14,13 +16,15 @@ class PaymentTextreu extends StatefulWidget {
 class _PaymentTextreuState extends State<PaymentTextreu> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment:
+          isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         RichText(
           text: TextSpan(
             style: GoogleFonts.openSans(
-              fontSize: 16,
+              fontSize: isMobile ? 22 : 16,
               color: Colors.grey[800],
             ),
             children: <TextSpan>[
@@ -57,13 +61,14 @@ class PaymentTextPr extends StatefulWidget {
 class _PaymentTextPrState extends State<PaymentTextPr> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+    return Wrap(
+      alignment: WrapAlignment.center,
       children: [
         RichText(
           text: TextSpan(
             style: GoogleFonts.openSans(
-              fontSize: 16,
+              fontSize: isMobile ? 22 : 16,
               color: Colors.grey[800],
             ),
             children: <TextSpan>[
@@ -113,6 +118,7 @@ class _JournalCheckBoxState extends State<JournalCheckBox> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return InkWell(
       onTap: () {
         setState(() {
@@ -120,8 +126,7 @@ class _JournalCheckBoxState extends State<JournalCheckBox> {
         });
         widget.onChanged(isChecked);
       },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+      child: Wrap(
         children: [
           Checkbox(
             value: isChecked,
@@ -136,7 +141,7 @@ class _JournalCheckBoxState extends State<JournalCheckBox> {
           Text(
             widget.title,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: isMobile ? 20 : 14,
               color: Colors.grey[700],
             ),
           ),

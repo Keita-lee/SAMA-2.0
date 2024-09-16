@@ -15,10 +15,14 @@ class PaymentTextField extends StatefulWidget {
 class _PaymentTextFieldState extends State<PaymentTextField> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
     return Center(
       child: Container(
-        width: MyUtility(context).width / 3,
-        height: 45,
+        width: isMobile
+            ? MyUtility(context).width - 25
+            : MyUtility(context).width / 3,
+        height: isMobile ? 55 : 45,
         decoration: BoxDecoration(
             color: Color.fromARGB(255, 255, 255, 255),
             border: Border.all(
@@ -29,7 +33,7 @@ class _PaymentTextFieldState extends State<PaymentTextField> {
           controller: widget.textfieldController,
           style: TextStyle(
             color: Color.fromARGB(255, 153, 147, 147),
-            fontSize: 16,
+            fontSize: isMobile ? 18 : 16,
             fontWeight: FontWeight.bold,
           ),
           decoration: InputDecoration(
@@ -38,7 +42,7 @@ class _PaymentTextFieldState extends State<PaymentTextField> {
             hintText: " ${widget.hintText}",
             hintStyle: TextStyle(
               color: Color.fromARGB(255, 199, 199, 199),
-              fontSize: 20,
+              fontSize: isMobile ? 22 : 20,
               fontWeight: FontWeight.w400,
             ),
           ),

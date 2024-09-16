@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/customCheckbox.dart';
+import 'package:sama/components/myutility.dart';
 import 'package:sama/login/membershipCategory/pages/ui/categoryContainer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -68,9 +69,11 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: 10,
@@ -80,7 +83,9 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.black, width: 1)),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: isMobile
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -117,7 +122,7 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
                   child: Text(
                     "Calculated on pro-rata basis when paying annully.",
                     style: TextStyle(
-                        fontSize: 14,
+                        fontSize: isMobile ? 16 : 14,
                         color: Colors.grey[700],
                         fontWeight: FontWeight.bold),
                   ),
@@ -133,14 +138,15 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
           ),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             CustomCheckbox(
-                value: widget.accepted,
-                onChanged: (bool? value) {
-                  setState(() {
-                    widget.accepted = value ?? false;
-                  });
-                },
-                width: 25,
-                height: 25),
+              value: widget.accepted,
+              onChanged: (bool? value) {
+                setState(() {
+                  widget.accepted = value ?? false;
+                });
+              },
+              width: isMobile ? 35 : 25,
+              height: isMobile ? 35 : 25,
+            ),
             // InkWell(
             //   onTap: () {},
             //   child: Container(
@@ -160,7 +166,7 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
             Text(
               "I accept SAMA's",
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: isMobile ? 18 : 14,
                   color: Colors.grey[700],
                   fontWeight: FontWeight.bold),
             ),
@@ -177,7 +183,7 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
               child: Text(
                 "terms and conditions",
                 style: TextStyle(
-                    fontSize: 14,
+                    fontSize: isMobile ? 18 : 14,
                     color: Colors.teal,
                     fontWeight: FontWeight.bold),
               ),

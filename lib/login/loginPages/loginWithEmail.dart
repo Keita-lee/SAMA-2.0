@@ -508,37 +508,91 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Need help?\n\n',
-                          style: FontText(context).bodyMediumBlack,
-                        ),
-                        TextSpan(
-                          text: 'Help me retrieve my SAMA number\n\n',
-                          style: FontText(context).linksBlue.copyWith(
-                                fontSize: MyUtility(context).width / 25,
-                              ),
-                        ),
-                        TextSpan(
-                          text: 'Reset my password\n\n\n',
-                          style: FontText(context).linksBlue.copyWith(
-                                fontSize: MyUtility(context).width / 25,
-                              ),
-                        ),
-                        TextSpan(
-                          text:
-                              'Are you a member and don\'t have a profile?\n\n',
-                          style: FontText(context).bodyMediumBlack,
-                        ),
-                        TextSpan(
-                          text: 'Create one here\n\n',
-                          style: FontText(context).linksBlue.copyWith(
-                                fontSize: MyUtility(context).width / 25,
-                              ),
-                        ),
-                      ],
+                  Text(
+                    "Need help?",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(11);
+                    },
+                    child: Text(
+                      "Help me retrieve my SAMA Number ",
+                      style: GoogleFonts.openSans(
+                        decoration: showForgotSamaBorder == true
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        decorationThickness: 2,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.5,
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(2);
+                    },
+                    child: Text(
+                      "Reset my password ",
+                      style: GoogleFonts.openSans(
+                        decoration: showForgotPasswordBorder == true
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        decorationThickness: 2,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.5,
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Are you a member and dont have a profile ?",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(11);
+                    },
+                    child: Text(
+                      "Create one her",
+                      style: GoogleFonts.openSans(
+                        decoration: showForgotSamaBorder == true
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        decorationThickness: 2,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.5,
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                      ),
                     ),
                   ),
                 ],
@@ -739,7 +793,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             ),
             InkWell(
               onTap: () {
-                //  widget.changePage(2);
+                widget.changePage(2);
               },
               onHover: (hovered) {
                 setState(() {

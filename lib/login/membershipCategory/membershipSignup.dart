@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/Navbar/navbar.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/login/membershipCategory/pages/applicationProfile.dart';
 import 'package:sama/login/membershipCategory/pages/category.dart';
@@ -352,112 +353,214 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width / 1.5,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Membership Sign Up",
-              style: GoogleFonts.openSans(
-                textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                color: Color.fromRGBO(0, 159, 158, 1),
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
+    if (isMobile) {
+      return Column(
+        children: [
+          Text(
+            "Membership Sign Up",
+            style: GoogleFonts.openSans(
+              textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              color: Color.fromRGBO(0, 159, 158, 1),
+            ),
+          ),
+          Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MemberCategoryTabStyle(
+                  onpress: changePageIndex,
+                  index: pageIndex,
+                  value: 0,
+                  description: 'APPLICATION TYPE',
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            widget.pageIndex == null
-                ? Row(
-                    children: [
-                      MemberCategoryTabStyle(
-                        onpress: changePageIndex,
-                        index: pageIndex,
-                        value: 0,
-                        description: 'APPLICATION TYPE',
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      MemberCategoryTabStyle(
-                        onpress: changePageIndex,
-                        index: pageIndex,
-                        value: 1,
-                        description: 'CATEGORY',
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      MemberCategoryTabStyle(
-                        onpress: changePageIndex,
-                        index: pageIndex,
-                        value: 2,
-                        description: 'PAYMENT METHODS',
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      MemberCategoryTabStyle(
-                        onpress: changePageIndex,
-                        index: pageIndex,
-                        value: 3,
-                        description: 'YOUR PROFILE',
-                      ),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-            SizedBox(
-              height: 10,
-            ),
-            Visibility(
-              visible: sectionIndex == 0,
-              child: ApplicationType(
-                  applicationTypes: applicationTypes,
-                  nextSection: nextSection,
-                  applicationTypeSelected: applicationTypeSelected),
-            ),
-            Visibility(
-              visible: sectionIndex == 1,
-              child: MemberCategoryReg(
-                title: applicationSelected,
-                options: applicationOptions,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MemberCategoryTabStyle(
+                  onpress: changePageIndex,
+                  index: pageIndex,
+                  value: 1,
+                  description: 'CATEGORY',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MemberCategoryTabStyle(
+                  onpress: changePageIndex,
+                  index: pageIndex,
+                  value: 2,
+                  description: 'PAYMENT METHODS',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MemberCategoryTabStyle(
+                  onpress: changePageIndex,
+                  index: pageIndex,
+                  value: 3,
+                  description: 'YOUR PROFILE',
+                ),
+              ),
+            ],
+          ),
+          Visibility(
+            visible: sectionIndex == 0,
+            child: ApplicationType(
+                applicationTypes: applicationTypes,
                 nextSection: nextSection,
-                priceSelected: priceSelected,
-                applicationPrice: applicationPrice,
-                accepted: accepted,
-              ),
+                applicationTypeSelected: applicationTypeSelected),
+          ),
+          Visibility(
+            visible: sectionIndex == 1,
+            child: MemberCategoryReg(
+              title: applicationSelected,
+              options: applicationOptions,
+              nextSection: nextSection,
+              priceSelected: priceSelected,
+              applicationPrice: applicationPrice,
+              accepted: accepted,
             ),
-            Visibility(
-              visible: sectionIndex == 2,
-              child: PaymentMethod(
-                  email: widget.email,
-                  title: applicationSelected,
-                  nextSection: nextSection,
-                  applicationPrice: applicationPrice,
-                  applicationCategory: applicationCategory,
-                  paymentType: paymentType,
-                  getPaymentRef: getPaymentRef,
-                  getDebitOrder: getDebitOrder,
-                  getPaymentDetails: getPaymentDetails,
-                  prodCatCde: prodCatCde),
-            ),
-            Visibility(
-              visible: sectionIndex == 3,
-              child: ApplicationProfile(
+          ),
+          Visibility(
+            visible: sectionIndex == 2,
+            child: PaymentMethod(
                 email: widget.email,
+                title: applicationSelected,
                 nextSection: nextSection,
-                debitOrder: debitOrder,
+                applicationPrice: applicationPrice,
+                applicationCategory: applicationCategory,
                 paymentType: paymentType,
-                prodCatCde: prodCatCde,
-                paymentDetails: paymentDetails,
-                shouldShowPrevBtn: widget.pageIndex == null,
-              ),
+                getPaymentRef: getPaymentRef,
+                getDebitOrder: getDebitOrder,
+                getPaymentDetails: getPaymentDetails,
+                prodCatCde: prodCatCde),
+          ),
+          Visibility(
+            visible: sectionIndex == 3,
+            child: ApplicationProfile(
+              email: widget.email,
+              nextSection: nextSection,
+              debitOrder: debitOrder,
+              paymentType: paymentType,
+              prodCatCde: prodCatCde,
+              paymentDetails: paymentDetails,
+              shouldShowPrevBtn: widget.pageIndex == null,
             ),
-          ],
+          )
+        ],
+      );
+    } else {
+      return Container(
+        width: MyUtility(context).width / 1.5,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Membership Sign Up",
+                style: GoogleFonts.openSans(
+                  textStyle:
+                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  color: Color.fromRGBO(0, 159, 158, 1),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              widget.pageIndex == null
+                  ? Row(
+                      children: [
+                        MemberCategoryTabStyle(
+                          onpress: changePageIndex,
+                          index: pageIndex,
+                          value: 0,
+                          description: 'APPLICATION TYPE',
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        MemberCategoryTabStyle(
+                          onpress: changePageIndex,
+                          index: pageIndex,
+                          value: 1,
+                          description: 'CATEGORY',
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        MemberCategoryTabStyle(
+                          onpress: changePageIndex,
+                          index: pageIndex,
+                          value: 2,
+                          description: 'PAYMENT METHODS',
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        MemberCategoryTabStyle(
+                          onpress: changePageIndex,
+                          index: pageIndex,
+                          value: 3,
+                          description: 'YOUR PROFILE',
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+              SizedBox(
+                height: 10,
+              ),
+              Visibility(
+                visible: sectionIndex == 0,
+                child: ApplicationType(
+                    applicationTypes: applicationTypes,
+                    nextSection: nextSection,
+                    applicationTypeSelected: applicationTypeSelected),
+              ),
+              Visibility(
+                visible: sectionIndex == 1,
+                child: MemberCategoryReg(
+                  title: applicationSelected,
+                  options: applicationOptions,
+                  nextSection: nextSection,
+                  priceSelected: priceSelected,
+                  applicationPrice: applicationPrice,
+                  accepted: accepted,
+                ),
+              ),
+              Visibility(
+                visible: sectionIndex == 2,
+                child: PaymentMethod(
+                    email: widget.email,
+                    title: applicationSelected,
+                    nextSection: nextSection,
+                    applicationPrice: applicationPrice,
+                    applicationCategory: applicationCategory,
+                    paymentType: paymentType,
+                    getPaymentRef: getPaymentRef,
+                    getDebitOrder: getDebitOrder,
+                    getPaymentDetails: getPaymentDetails,
+                    prodCatCde: prodCatCde),
+              ),
+              Visibility(
+                visible: sectionIndex == 3,
+                child: ApplicationProfile(
+                  email: widget.email,
+                  nextSection: nextSection,
+                  debitOrder: debitOrder,
+                  paymentType: paymentType,
+                  prodCatCde: prodCatCde,
+                  paymentDetails: paymentDetails,
+                  shouldShowPrevBtn: widget.pageIndex == null,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

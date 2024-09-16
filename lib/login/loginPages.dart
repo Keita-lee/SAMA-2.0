@@ -15,6 +15,7 @@ import 'package:sama/login/loginPages/choosePassword.dart';
 import 'package:sama/login/loginPages/createSamaAccount.dart';
 import 'package:sama/login/loginPages/displayUsername.dart';
 import 'package:sama/login/loginPages/getUserName.dart';
+import 'package:sama/login/loginPages/membershipSignUp.dart';
 import 'package:sama/login/loginPages/tempView.dart';
 import 'package:sama/login/loginPages/validateByEmailOtp.dart';
 import 'package:sama/login/loginPages/validateByMobile.dart';

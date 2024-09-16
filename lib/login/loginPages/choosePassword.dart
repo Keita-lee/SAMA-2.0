@@ -101,94 +101,97 @@ class _ChoosePasswordState extends State<ChoosePassword> {
   Widget build(BuildContext context) {
     if (MyUtility(context).width < 600) {
       return SingleChildScrollView(
-        child: Column(
-          children: [
-            Navbar(
-              userType: "",
-              onButton1Pressed: (value) {},
-              onButton2Pressed: (value) {},
-              onDropdownChanged: (value) {},
-              visible: false,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Create New Password',
-                    style: FontText(context).mediumBlue,
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    width: MyUtility(context).width,
-                    height: 45,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        border: Border.all(
-                          color: Color.fromARGB(255, 153, 147, 147),
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: TextFormField(
-                      obscureText: true,
-                      controller: password,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 153, 147, 147),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      onChanged: (value) {
-                        passNotifier.value =
-                            CustomPassStrength.calculate(text: value);
-                      },
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "",
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 199, 199, 199),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  PasswordStrengthChecker(
-                    configuration: PasswordStrengthCheckerConfiguration(
-                      height: 28,
-                      borderWidth: 0.5,
-                      inactiveBorderColor:
-                          const Color.fromARGB(255, 126, 126, 126),
-                      externalBorderRadius: BorderRadius.circular(30),
-                    ),
-                    strength: passNotifier,
-                  ),
-                  SizedBox(height: 20),
-                  ProfileTextField(
-                      isPassword: true,
-                      isBold: false,
-                      description: 'Confirm Password',
-                      customSize: MyUtility(context).width,
-                      textFieldType: 'IntType',
-                      textfieldController: passwordCheck),
-                  const SizedBox(height: 40),
-                  StyleButton(
-                      description: "Create",
-                      fontSize: 15,
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      height: 55,
-                      width: 125,
-                      onTap: () {
-                        updatePassword();
-                      }),
-                  const SizedBox(height: 30),
-                ],
+        child: Container(
+          color:Colors.white,
+          child: Column(
+            children: [
+              Navbar(
+                userType: "",
+                onButton1Pressed: (value) {},
+                onButton2Pressed: (value) {},
+                onDropdownChanged: (value) {},
+                visible: false,
               ),
-            ),
-            const Footer(),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Create New Password',
+                      style: FontText(context).mediumBlue,
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      width: MyUtility(context).width,
+                      height: 45,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          border: Border.all(
+                            color: Color.fromARGB(255, 153, 147, 147),
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: TextFormField(
+                        obscureText: true,
+                        controller: password,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 153, 147, 147),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        onChanged: (value) {
+                          passNotifier.value =
+                              CustomPassStrength.calculate(text: value);
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 199, 199, 199),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    PasswordStrengthChecker(
+                      configuration: PasswordStrengthCheckerConfiguration(
+                        height: 28,
+                        borderWidth: 0.5,
+                        inactiveBorderColor:
+                            const Color.fromARGB(255, 126, 126, 126),
+                        externalBorderRadius: BorderRadius.circular(30),
+                      ),
+                      strength: passNotifier,
+                    ),
+                    SizedBox(height: 20),
+                    ProfileTextField(
+                        isPassword: true,
+                        isBold: false,
+                        description: 'Confirm Password',
+                        customSize: MyUtility(context).width,
+                        textFieldType: 'IntType',
+                        textfieldController: passwordCheck),
+                    const SizedBox(height: 40),
+                    StyleButton(
+                        description: "Create",
+                        fontSize: 15,
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        height: 55,
+                        width: 125,
+                        onTap: () {
+                          updatePassword();
+                        }),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+              const Footer(),
+            ],
+          ),
         ),
       );
     } else {

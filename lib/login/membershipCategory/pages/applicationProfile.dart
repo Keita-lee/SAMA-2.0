@@ -201,7 +201,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
   Widget build(BuildContext context) {
     bool showRegisterBorder = false;
     final _formKey = GlobalKey<FormState>();
-
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Form(
       key: _formKey,
       child: Container(
@@ -209,7 +209,7 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
         width: MyUtility(context).width,
         height: MyUtility(context).height,
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: isMobile ? EdgeInsets.all(5) : EdgeInsets.all(25.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -225,7 +225,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "First Name",
                             textfieldController: firstName,
                             textFieldType: "stringType"),
@@ -233,7 +235,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                           width: MyUtility(context).width * 0.015,
                         ),
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "Last Name",
                             textfieldController: lastName,
                             textFieldType: "stringType")
@@ -248,7 +252,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ProfileTextField(
-                              customSize: MyUtility(context).width * 0.27,
+                              customSize: isMobile
+                                  ? MyUtility(context).width / 2 - 15
+                                  : MyUtility(context).width * 0.27,
                               description: "Title",
                               textfieldController: title,
                               textFieldType: "stringType"),
@@ -256,7 +262,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                             width: MyUtility(context).width * 0.015,
                           ),
                           ProfileTextField(
-                              customSize: MyUtility(context).width * 0.27,
+                              customSize: isMobile
+                                  ? MyUtility(context).width / 2 - 15
+                                  : MyUtility(context).width * 0.27,
                               description: "Initials",
                               textfieldController: initials,
                               textFieldType: "stringType")
@@ -271,7 +279,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.5,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 1.5
+                                : MyUtility(context).width * 0.5,
                             description: "Email",
                             textfieldController: email,
                             textFieldType: "emailType"),
@@ -285,7 +295,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "Mobile Number",
                             textfieldController: mobileNo,
                             textFieldType: "stringType"),
@@ -293,7 +305,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                           width: MyUtility(context).width * 0.015,
                         ),
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "Landline",
                             textfieldController: landline,
                             textFieldType: "")
@@ -302,22 +316,17 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                     SizedBox(
                       height: MyUtility(context).height * 0.015,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
                       children: [
                         ProfileDropDownField(
                           description: "Gender",
                           items: ["Male", "Female"],
-                          customSize: MyUtility(context).width * 0.17,
+                          customSize: isMobile
+                              ? MyUtility(context).width / 2 - 15
+                              : MyUtility(context).width * 0.17,
                           textfieldController: gender,
                         ),
-
-                        /*  ProfileTextField(
-                            customSize: MyUtility(context).width * 0.195,
-                            description: "Gender",
-                            textfieldController: gender,
-                            textFieldType: "stringType"),*/
                         SizedBox(
                           width: MyUtility(context).width * 0.015,
                         ),
@@ -333,20 +342,18 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                             "Middle Eastern/North African",
                             "Other",
                           ],
-                          customSize: MyUtility(context).width * 0.17,
+                          customSize: isMobile
+                              ? MyUtility(context).width / 2 - 15
+                              : MyUtility(context).width * 0.17,
                           textfieldController: race,
                         ),
                         SizedBox(
                           width: MyUtility(context).width * 0.015,
                         ),
-                        /* ProfileTextField(
-                            customSize: MyUtility(context).width * 0.195,
-                            description: "Date of birth",
-                            textfieldController: dob,
-                            textFieldType: "stringType"),
-                                */
                         SizedBox(
-                          width: MyUtility(context).width * 0.17,
+                          width: isMobile
+                              ? MyUtility(context).width / 2 - 15
+                              : MyUtility(context).width * 0.17,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,7 +371,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                                   height: 10,
                                 ),
                                 Container(
-                                  width: MyUtility(context).width * 0.195,
+                                  width: isMobile
+                                      ? MyUtility(context).width / 2 - 15
+                                      : MyUtility(context).width * 0.195,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -409,7 +418,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                               height: 10,
                             ),
                             Container(
-                              width: MyUtility(context).width * 0.27,
+                              width: isMobile
+                                  ? MyUtility(context).width / 2 - 15
+                                  : MyUtility(context).width * 0.27,
                               height: 50,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -480,7 +491,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                               height: 10,
                             ),
                             Container(
-                              width: MyUtility(context).width * 0.27,
+                              width: isMobile
+                                  ? MyUtility(context).width / 2 - 15
+                                  : MyUtility(context).width * 0.27,
                               height: 50,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -536,7 +549,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "HPCSA number",
                             textfieldController: hpcsa,
                             textFieldType: "stringType"),
@@ -544,7 +559,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                           width: MyUtility(context).width * 0.015,
                         ),
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "Practice number",
                             textfieldController: practiceNumber,
                             textFieldType: "stringType")
@@ -560,7 +577,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                         ProfileDropDownField(
                           description: "University Names",
                           items: allUniversities,
-                          customSize: MyUtility(context).width * 0.27,
+                          customSize: isMobile
+                              ? MyUtility(context).width / 2 - 15
+                              : MyUtility(context).width * 0.27,
                           textfieldController: univercityName,
                         ),
                         SizedBox(
@@ -569,7 +588,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                         ProfileDropDownField(
                           description: "University Qualification",
                           items: universityQualifications,
-                          customSize: MyUtility(context).width * 0.27,
+                          customSize: isMobile
+                              ? MyUtility(context).width / 2 - 15
+                              : MyUtility(context).width * 0.27,
                           textfieldController: univercityQualification,
                         ),
                       ],
@@ -598,7 +619,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                         ),*/
 
                         ProfileTextField(
-                            customSize: MyUtility(context).width * 0.27,
+                            customSize: isMobile
+                                ? MyUtility(context).width / 2 - 15
+                                : MyUtility(context).width * 0.27,
                             description: "Qualification year",
                             textfieldController: qualificationYear,
                             textFieldType: "stringType"),
@@ -621,7 +644,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                             "November",
                             "December",
                           ],
-                          customSize: MyUtility(context).width * 0.27,
+                          customSize: isMobile
+                              ? MyUtility(context).width / 2 - 15
+                              : MyUtility(context).width * 0.27,
                           textfieldController: qualificationMonth,
                         ),
                         /*  ProfileTextField(
@@ -670,7 +695,9 @@ class _ApplicationProfileState extends State<ApplicationProfile> {
                       ],
                     ),*/
                     SizedBox(
-                      width: MyUtility(context).width / 1.63,
+                      width: isMobile
+                          ? MyUtility(context).width - 25
+                          : MyUtility(context).width / 1.63,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

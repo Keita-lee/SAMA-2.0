@@ -74,9 +74,9 @@ class _NavbarState extends State<Navbar> {
               children: [
                 Image.asset(
                   'images/sama_logo.png',
-                  height: height * 0.14,
-                  width: width * 0.32,
-                  fit: BoxFit.fill,
+                  height: height / 6,
+                  width: width / 3,
+                  fit: BoxFit.contain,
                 ),
                 Text(
                   'Member Portal \n(beta)',
