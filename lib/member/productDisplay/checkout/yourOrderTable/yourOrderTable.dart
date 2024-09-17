@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../login/popups/validateDialog.dart';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 class YourOrderTable extends StatefulWidget {
   List orderProduct;
@@ -94,7 +95,7 @@ class _YourOrderTableState extends State<YourOrderTable> {
     );
   }
 
-  savePaymentsToHistory() {
+  savePaymentsToHistory() async {
     List products = [];
     /*
     productImage: widget.productItems[i]['productImage'],
@@ -102,15 +103,23 @@ class _YourOrderTableState extends State<YourOrderTable> {
                     productPrice: widget.productItems[i]['productPrice'],
                     qtyWidget: widget.productItems[i]['quantity'],
      */
+    List<String> productCodes = [];
 
     for (int i = 0; i < widget.orderProduct.length; i++) {
-      var product = {
+      Map<String, dynamic> product = {
         "productImage": widget.orderProduct[i]['productImage'],
         "productName": widget.orderProduct[i]['name'],
         "productPrice": widget.orderProduct[i]['price'],
         "quantity": widget.orderProduct[i]['quantity'],
         "downloadLink": widget.orderProduct[i]['downloadLink'],
       };
+
+      if (widget.orderProduct[i].containsKey('productCode')) {
+        product.putIfAbsent(
+            'productCode', () => widget.orderProduct[i]['productCode']);
+        productCodes.add(widget.orderProduct[i]['productCode']);
+      }
+
       products.add(product);
     }
 
@@ -121,7 +130,61 @@ class _YourOrderTableState extends State<YourOrderTable> {
       "user": FirebaseAuth.instance.currentUser!.uid
     };
 
-    FirebaseFirestore.instance.collection('storeHistory').add(productHistory);
+    DocumentReference doc = await FirebaseFirestore.instance
+        .collection('storeHistory')
+        .add(productHistory);
+
+    if (productCodes.isNotEmpty) {
+      addCodingLicenses(productCodes, doc.id);
+    }
+  }
+
+  addCodingLicenses(List<String> productCodes, String docId) async {
+    var uuid = Uuid();
+
+    for (String code in productCodes) {
+      String licenseKey = uuid.v1();
+      if (code.contains('ICD10')) {
+        await FirebaseFirestore.instance.collection('icd10Licenses').add({
+          "accTxid": docId,
+          "computercode": '',
+          "createdon": '',
+          "expiryData": '',
+          "installcount": '',
+          "installdate": '',
+          "installed": 0,
+          "licensekey": licenseKey,
+          "productCode": code,
+        });
+      } else if (code.contains('MDCM')) {
+        await FirebaseFirestore.instance.collection('emdcmLicenses').add({
+          "accTxid": docId,
+          "computercode": '',
+          "createdon": '',
+          "expiryData": '',
+          "installcount": '',
+          "installdate": '',
+          "installed": 0,
+          "licensekey": licenseKey,
+          "productCode": code,
+          "lastComms": '',
+          "webLastlogin": '',
+          "webSessionid": '',
+        });
+      } else if (code.contains('CCSA')) {
+        await FirebaseFirestore.instance.collection('ccsaLicenses').add({
+          "accTxid": docId,
+          "computercode": '',
+          "createdon": '',
+          "expiryData": '',
+          "installcount": '',
+          "installdate": '',
+          "installed": 0,
+          "licensekey": licenseKey,
+          "productCode": code,
+        });
+      }
+    }
   }
 
   afterPaymentMade() {

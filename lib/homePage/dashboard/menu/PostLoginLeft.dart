@@ -141,10 +141,34 @@ class PostLoginLeft extends StatefulWidget {
   State<PostLoginLeft> createState() => _PostLoginLeftState();
 }
 
+enum PermissionNames {
+  fullAccess,
+  excellence,
+  memberBenefits,
+  mediaWebinars,
+  proffesionalDev,
+  events,
+  communities,
+  branchVoting,
+  eStore,
+  memberManagement,
+}
+
 class _PostLoginLeftState extends State<PostLoginLeft> {
   var pages = [];
   String userType = "";
-
+  List permissions = [
+    {'name': 'Full Access', 'permission': false},
+    {'name': 'Centre of Excellence', 'permission': false},
+    {'name': 'Member Benefits', 'permission': false},
+    {'name': 'Media & Webinars', 'permission': false},
+    {'name': 'Professional Development', 'permission': false},
+    {'name': 'Events', 'permission': false},
+    {'name': 'Communities', 'permission': false},
+    {'name': 'Branch Voting', 'permission': false},
+    {'name': 'E-store', 'permission': false},
+    {'name': 'Member Management', 'permission': false},
+  ];
   int? currentOpenDropdown;
 
   void toggleDropdown(int index) {
@@ -189,9 +213,16 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
         .get();
 
     if (data.exists) {
-      setState(() {
-        userType = data.get('userType');
-      });
+      if (data.get('userType') == "Admin") {
+        setState(() {
+          userType = data.get('userType');
+          permissions = data.get('permissions');
+        });
+      } else {
+        setState(() {
+          userType = data.get('userType');
+        });
+      }
     }
   }
 
@@ -239,7 +270,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
               height: 10,
             ),
             Visibility(
-                visible: userType == "Admin" ? true : false,
+                visible: userType == "Admin" && permissions.isNotEmpty,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -253,94 +284,132 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         widget.changePage(0);
                       },
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 1,
-                      menuSize: widget.menuSize,
-                      description: 'Centre of Excellence',
-                      iconPath: "images/icon_centre_of.svg",
-                      onPressed: () {
-                        _handleItemClick(1, 1);
-                        widget.changePage(1);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.excellence.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 1,
+                        menuSize: widget.menuSize,
+                        description: 'Centre of Excellence',
+                        iconPath: "images/icon_centre_of.svg",
+                        onPressed: () {
+                          _handleItemClick(1, 1);
+                          widget.changePage(1);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 11,
-                      menuSize: widget.menuSize,
-                      description: 'Member Benefits',
-                      iconPath: "images/icon_benefits.svg",
-                      onPressed: () {
-                        _handleItemClick(11, 2);
-                        widget.changePage(2);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.memberBenefits.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 11,
+                        menuSize: widget.menuSize,
+                        description: 'Member Benefits',
+                        iconPath: "images/icon_benefits.svg",
+                        onPressed: () {
+                          _handleItemClick(11, 2);
+                          widget.changePage(2);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 2,
-                      menuSize: widget.menuSize,
-                      description: 'Media & Webinars',
-                      iconPath: "images/icon_media.svg",
-                      onPressed: () {
-                        _handleItemClick(2, 7);
-                        widget.changePage(7);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.mediaWebinars.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 2,
+                        menuSize: widget.menuSize,
+                        description: 'Media & Webinars',
+                        iconPath: "images/icon_media.svg",
+                        onPressed: () {
+                          _handleItemClick(2, 7);
+                          widget.changePage(7);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 21,
-                      menuSize: widget.menuSize,
-                      description: "Professional Development1",
-                      iconPath: "images/icon_prof_dev.svg",
-                      onPressed: () {
-                        _handleItemClick(21, 21);
-                      },
+                    Visibility(
+                      visible:
+                          permissions[PermissionNames.proffesionalDev.index]
+                              ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 21,
+                        menuSize: widget.menuSize,
+                        description: "Professional Development1",
+                        iconPath: "images/icon_prof_dev.svg",
+                        onPressed: () {
+                          _handleItemClick(21, 21);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 3,
-                      menuSize: widget.menuSize,
-                      description: 'Events',
-                      iconPath: "images/icon_events.svg",
-                      onPressed: () {
-                        _handleItemClick(3, 8);
-                        widget.changePage(8);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.events.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 3,
+                        menuSize: widget.menuSize,
+                        description: 'Events',
+                        iconPath: "images/icon_events.svg",
+                        onPressed: () {
+                          _handleItemClick(3, 8);
+                          widget.changePage(8);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 15,
-                      menuSize: widget.menuSize,
-                      description: "Communities",
-                      iconPath: "images/icon_categories.svg",
-                      onPressed: () {
-                        _handleItemClick(15, 15);
-                        widget.changePage(15);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.communities.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 15,
+                        menuSize: widget.menuSize,
+                        description: "Communities",
+                        iconPath: "images/icon_categories.svg",
+                        onPressed: () {
+                          _handleItemClick(15, 15);
+                          widget.changePage(15);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 4,
-                      menuSize: widget.menuSize,
-                      description: 'Branch Voting',
-                      iconPath: "images/icon_voting.svg",
-                      onPressed: () {
-                        _handleItemClick(4, 11);
-                        widget.changePage(11);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.branchVoting.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 4,
+                        menuSize: widget.menuSize,
+                        description: 'Branch Voting',
+                        iconPath: "images/icon_voting.svg",
+                        onPressed: () {
+                          _handleItemClick(4, 11);
+                          widget.changePage(11);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 5,
-                      menuSize: widget.menuSize,
-                      description: 'E-Store',
-                      iconPath: "images/icon_estore.svg",
-                      onPressed: () {
-                        _handleItemClick(5, 13);
-                        widget.changePage(13);
-                      },
+                    Visibility(
+                      visible: permissions[PermissionNames.eStore.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 5,
+                        menuSize: widget.menuSize,
+                        description: 'E-Store',
+                        iconPath: "images/icon_estore.svg",
+                        onPressed: () {
+                          _handleItemClick(5, 13);
+                          widget.changePage(13);
+                        },
+                      ),
                     ),
-                    HoverItem(
-                      isActive: activeIndex == 6,
-                      menuSize: widget.menuSize,
-                      description: "Member Management",
-                      iconPath: "images/icon_voting.svg",
-                      onPressed: () {
-                        _handleItemClick(6, 20);
-                        widget.changePage(20);
-                      },
+                    Visibility(
+                      visible:
+                          permissions[PermissionNames.memberManagement.index]
+                              ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 6,
+                        menuSize: widget.menuSize,
+                        description: "Member Management",
+                        iconPath: "images/icon_voting.svg",
+                        onPressed: () {
+                          _handleItemClick(6, 20);
+                          widget.changePage(20);
+                        },
+                      ),
                     ),
                     HoverItem(
                       isActive: activeIndex == 22,
@@ -351,6 +420,20 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         _handleItemClick(22, 22);
                         widget.changePage(22);
                       },
+                    ),
+                    Visibility(
+                      visible: permissions[PermissionNames.fullAccess.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 24,
+                        menuSize: widget.menuSize,
+                        description: 'Permissions',
+                        iconPath: "",
+                        onPressed: () {
+                          _handleItemClick(24, 24);
+                          widget.changePage(24);
+                        },
+                      ),
                     ),
                   ],
                 )),

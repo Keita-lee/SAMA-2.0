@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sama/admin/permissions/updatePermissions.dart';
+import 'package:sama/admin/adminManagement/permissions/updatePermissions.dart';
 import 'package:sama/components/AdminTable.dart';
 import 'package:sama/components/myutility.dart';
 
@@ -128,10 +128,6 @@ class AdminPermissionsState extends State<AdminPermissions> {
                             icon: const Icon(Icons.delete, size: 24.0),
                           ),
                     ])),
-            Visibility(
-              visible: _activeTabIndex == 1,
-              child: UpdatePermissions(),
-            ),
           ],
         ),
       ),

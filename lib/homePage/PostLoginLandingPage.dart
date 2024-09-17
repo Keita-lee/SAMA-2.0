@@ -5,11 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/nominationsSetup.dart';
 import 'package:sama/admin/Events/AdminEvents/Event.dart';
+import 'package:sama/admin/adminManagement/adminManagement.dart';
 import 'package:sama/admin/centerOfExcellence/centerOfExcellnceList.dart';
 import 'package:sama/admin/communities/comunitiesAdmin.dart';
 import 'package:sama/admin/media/adminMedia.dart';
 import 'package:sama/admin/memberBenefits/memberBenifitsList.dart';
 import 'package:sama/admin/memberManagement/memberManagementMainCon.dart';
+import 'package:sama/admin/adminManagement/permissions/adminPermissions.dart';
 import 'package:sama/admin/products/products.dart';
 import 'package:sama/admin/transactions/transactionsAdmin.dart';
 import 'package:sama/components/mobile/Navbar/navbar.dart';
@@ -230,6 +232,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
       ProfessionalDevAdmin(),
       BugReportList(),
       CodingAcademy(),
+      AdminManagement(),
     ];
 
     //Dialog for logout
@@ -369,53 +372,52 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                 child: SamaTopTabBar()),*/
                               Spacer(),
                               Visibility(
-                                  visible: userType == 'NonMember',
-                                  child: Row(
-                                    children: [
-                                      OnHoverButtons(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Material(
-                                                        child: LoginPages(
-                                                          pageIndex: 0,
-                                                        ),
-                                                      )),
-                                            );
-                                          },
-                                          height: 35,
-                                          width: 60,
-                                          baseColor:
-                                              Color.fromRGBO(237, 157, 4, 1),
-                                          hoverColor:
-                                              Color.fromRGBO(19, 43, 81, 1),
-                                          description: 'LOGIN'),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      OnHoverButtons(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Material(
-                                                        child: LoginPages(
-                                                          pageIndex: 9,
-                                                        ),
-                                                      )),
-                                            );
-                                          },
-                                          height: 35,
-                                          width: 60,
-                                          baseColor: Color(0xFF174486),
-                                          hoverColor:
-                                              Color.fromRGBO(19, 43, 81, 1),
-                                          description: 'REGISTER')
-                                    ],
-                                  )),
+                                visible: userType == 'NonMember',
+                                child: Row(
+                                  children: [
+                                    OnHoverButtons(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Material(
+                                                      child: LoginPages(
+                                                        pageIndex: 0,
+                                                      ),
+                                                    )),
+                                          );
+                                        },
+                                        height: 35,
+                                        width: 60,
+                                        baseColor:
+                                            Color.fromRGBO(237, 157, 4, 1),
+                                        hoverColor:
+                                            Color.fromRGBO(19, 43, 81, 1),
+                                        description: 'LOGIN'),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    OnHoverButtons(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Material(
+                                                      child: LoginPages(
+                                                        pageIndex: 9,
+                                                      ),
+                                                    )),
+                                          );
+                                        },
+                                        height: 35,
+                                        width: 60,
+                                        baseColor: Color(0xFF174486),
+                                        hoverColor:
+                                            Color.fromRGBO(19, 43, 81, 1),
+                                        description: 'REGISTER')
+                                  ],
+                                ),
+                              ),
                               SizedBox(width: 20),
                               Visibility(
                                 visible: userType != 'Admin' &&
