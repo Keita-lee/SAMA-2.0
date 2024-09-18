@@ -102,7 +102,8 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                           : MyUtility(context).width / 1.5,
                       child: Text(
                         'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.',
-                        style: GoogleFonts.openSans(fontSize: 16),
+                        style: GoogleFonts.openSans(
+                            fontSize: MyUtility(context).width < 400 ? 14 : 16),
                       ),
                     ),
                     SizedBox(
@@ -112,12 +113,17 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                       children: [
                         Text(
                           'To be a contributor, please contact ',
-                          style: GoogleFonts.openSans(fontSize: 16),
+                          style: GoogleFonts.openSans(
+                              fontSize:
+                                  MyUtility(context).width < 400 ? 14 : 16),
                         ),
                         Text(
                           'online@samedical.org',
                           style: GoogleFonts.openSans(
-                              fontSize: 16, color: Colors.teal),
+                              fontSize:
+                                  MyUtility(context).width < 400 ? 14 : 16,
+                              color: Colors
+                                  .teal), // Moved color parameter inside GoogleFonts.openSans
                         ),
                       ],
                     )
@@ -132,7 +138,8 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                 width: MyUtility(context).width / 1.5,
                 child: Text(
                   'Welcome to the Centre of Excellence, your premier resource for expert insights and practical advice from leading doctors in the medical field. Here, you\'ll find a collection of articles written by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Whether you\'re seeking clinical guidance, professional development tips, or cutting-edge research, our Centre of Excellence is your go-to destination for invaluable expertise and inspiration.',
-                  style: GoogleFonts.openSans(fontSize: 16),
+                  style: GoogleFonts.openSans(
+                      fontSize: MyUtility(context).width < 400 ? 14 : 16),
                 ),
               ),
             ),
