@@ -86,8 +86,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                 height: 30,
               ),
               Visibility(
-                //CHANGE
-                visible: userType == "Admin" ? true : false,
+                visible: userType != "Admin" ? true : false,
                 child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: isMobile ? 8 : 50),
@@ -153,8 +152,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                     )),
               ),
               Visibility(
-                //CHANGE
-                visible: userType != "Admin" ? true : false,
+                visible: userType == "Admin" ? true : false,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   child: SizedBox(
@@ -171,8 +169,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                 height: 30,
               ),
               Visibility(
-                  //CHANGE
-                  visible: userType != "Admin" ? true : false,
+                  visible: userType == "Admin" ? true : false,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
