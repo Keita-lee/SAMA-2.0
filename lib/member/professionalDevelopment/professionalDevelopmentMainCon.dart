@@ -170,7 +170,7 @@ class _professionalDevelopmentMainConState
                             return Container(
                                 width: isMobile
                                     ? MyUtility(context).width
-                                    : MyUtility(context).width / 1.6,
+                                    : MyUtility(context).width / 1.5,
                                 height: isMobile
                                     ? MyUtility(context).height
                                     : MyUtility(context).height / 1.5,
@@ -178,7 +178,7 @@ class _professionalDevelopmentMainConState
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: isMobile ? 1 : 3,
-                                      childAspectRatio: isMobile ? 0.2 : 0.88,
+                                      childAspectRatio: isMobile ? 0.9 : 0.8,
                                     ),
                                     itemCount: documents.length,
                                     itemBuilder:

@@ -44,40 +44,36 @@ class _NewsContainerState extends State<NewsContainer> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-      
-      width: 250,
+      width: isMobile ? MyUtility(context).width : 250,
       height: widget.userType == "Admin" ? 365 : 335,
-      
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            
-            width: 250,
-           // width: MyUtility(context).width / 5.6,
+            width: isMobile ? MyUtility(context).width : 250,
+            // width: MyUtility(context).width / 5.6,
             height: 200,
             decoration: BoxDecoration(
-              
               color: Color(0xFFD1D1D1),
             ),
             child: ClipRRect(
-                
                 child: ImageNetwork(
-                  image: widget.image,
-                  fitWeb: BoxFitWeb.cover,
-                  width: 250,
-                  //width: MyUtility(context).width / 5.6,
-                  height: 200,
-                )
-            
-              
-                ),
+              image: widget.image,
+              fitWeb: BoxFitWeb.cover,
+              width: isMobile ? MyUtility(context).width : 250,
+              //width: MyUtility(context).width / 5.6,
+              height: 200,
+            )),
           ),
           SizedBox(
             height: 10,
           ),
           SizedBox(
-            width: MyUtility(context).width / 5.6,
+            width: isMobile
+                ? MyUtility(context).width
+                : MyUtility(context).width / 5.6,
             child: RichText(
               text: TextSpan(
                 style: TextStyle(
@@ -88,7 +84,7 @@ class _NewsContainerState extends State<NewsContainer> {
                   TextSpan(
                     text: _formatDateTime(widget.date),
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: isMobile ? 16 : 12,
                       letterSpacing: 1.2,
                       fontWeight: FontWeight.w600,
                       color: Color.fromARGB(148, 158, 158, 158),
@@ -102,7 +98,9 @@ class _NewsContainerState extends State<NewsContainer> {
             height: 10,
           ),
           SizedBox(
-            width: MyUtility(context).width /5.2,
+            width: isMobile
+                ? MyUtility(context).width
+                : MyUtility(context).width / 5.2,
             //height: 60,
             child: RichText(
               text: TextSpan(
@@ -119,30 +117,30 @@ class _NewsContainerState extends State<NewsContainer> {
               ),
             ),
           ),
-         Spacer(),
+          Spacer(),
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: SizedBox(
-              width: MyUtility(context).width / 4.7,
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width / 4.7,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  
-                  height: 30,
+                  height: isMobile ? 55 : 30,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Color.fromRGBO(0, 159, 158, 1),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric( horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextButton(
                       onPressed: widget.onPressed,
                       child: Text(
                         'Read',
                         style: TextStyle(
                           color: Colors.white,
-                          
-                          fontSize: 13,
+                          fontSize: isMobile ? 16 : 13,
                         ),
                       ),
                     ),
@@ -176,7 +174,6 @@ class _NewsContainerState extends State<NewsContainer> {
                           'Edit',
                           style: TextStyle(
                             color: Colors.white,
-                            
                             fontSize: 13,
                           ),
                         ),

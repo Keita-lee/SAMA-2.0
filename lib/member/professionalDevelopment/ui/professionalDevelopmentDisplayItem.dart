@@ -69,18 +69,18 @@ class _professionalDevelopmentDisplayItemState
                   ? MyUtility(context).width
                   : MyUtility(context).width * 0.2,
               height: isMobile
-                  ? MyUtility(context).height / 3
-                  : MyUtility(context).width * 0.14,
+                  ? MyUtility(context).height / 3.5
+                  : MyUtility(context).height / 4,
             ),
           ),
           SizedBox(
-            height: isMobile ? 5 : 20,
+            height: isMobile ? 2 : 20,
           ),
           SizedBox(
             width: isMobile
                 ? MyUtility(context).width
                 : MyUtility(context).width * 0.70 - 280,
-            height: 150,
+            height: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,29 +108,21 @@ class _professionalDevelopmentDisplayItemState
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(146, 146, 147, 1)),
                 ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      StyleButton(
-                        fontSize: 13,
-                        description: 'Read More',
-                        height: 40,
-                        width: 110,
-                        buttonTextColor: Colors.white,
-                        buttonColor: const Color.fromRGBO(0, 159, 159, 1),
-                        onTap: () {
-                          final Uri a = Uri.parse(widget.subDescription);
+                StyleButton(
+                  fontSize: 13,
+                  description: 'Read More',
+                  height: 40,
+                  width: 110,
+                  buttonTextColor: Colors.white,
+                  buttonColor: const Color.fromRGBO(0, 159, 159, 1),
+                  onTap: () {
+                    final Uri a = Uri.parse(widget.subDescription);
 
-                          launchUrl(a);
-                          // widget.onPressed(widget.course);
-                        },
-                      ),
-                    ],
-                  ),
+                    launchUrl(a);
+                    // widget.onPressed(widget.course);
+                  },
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
