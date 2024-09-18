@@ -597,6 +597,9 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 15,
+              ),
               Footer(),
             ],
           ),

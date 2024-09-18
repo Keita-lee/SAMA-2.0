@@ -149,109 +149,112 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
     if (isMobile) {
       return Container(
         color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Your Profile",
-                style: GoogleFonts.openSans(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromRGBO(0, 159, 158, 1),
+        height: MyUtility(context).height / 1.4,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Your Profile",
+                  style: GoogleFonts.openSans(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromRGBO(0, 159, 158, 1),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Container(
-                          width: 110,
-                          height: 110,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(0.0),
-                            child: imageUrl != ""
-                                ? ImageNetwork(
-                                    image: imageUrl!,
-                                    height: 110,
-                                    width: 110,
-                                  )
-                                : Container(),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Container(
+                            width: 110,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: imageUrl != ""
+                                  ? ImageNetwork(
+                                      image: imageUrl!,
+                                      height: 110,
+                                      width: 110,
+                                    )
+                                  : Container(),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          _pickImageGallery();
-                        },
-                        child: Text(
-                          ' Edit',
+                        SizedBox(
+                          height: 15,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _pickImageGallery();
+                          },
+                          child: Text(
+                            ' Edit',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 163, 163, 163),
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ' ${title}. ${fullName}',
                           style: TextStyle(
-                              fontSize: 16,
-                              color: Color.fromARGB(255, 163, 163, 163),
+                              fontSize: 20,
+                              color: const Color.fromARGB(255, 116, 116, 116),
                               fontWeight: FontWeight.normal),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        ' ${title}. ${fullName}',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: const Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Text(
-                        'Membership :',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: const Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Text(
-                        'Status :',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: const Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                ],
+                        Text(
+                          'Membership :',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: const Color.fromARGB(255, 116, 116, 116),
+                              fontWeight: FontWeight.normal),
+                        ),
+                        Text(
+                          'Status :',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: const Color.fromARGB(255, 116, 116, 116),
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ProfileDropdownButton(
-                onOptionSelected: (String) {},
-                changePageIndex: changePage,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ProfileDropdownButton(
+                  onOptionSelected: (String) {},
+                  changePageIndex: changePage,
+                ),
               ),
-            ),
-            Container(
-              child: pages[pageIndex],
-            )
-          ],
+              Container(
+                child: pages[pageIndex],
+              )
+            ],
+          ),
         ),
       );
     } else {
