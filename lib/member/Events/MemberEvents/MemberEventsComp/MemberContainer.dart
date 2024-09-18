@@ -109,116 +109,119 @@ class _MemberContainerState extends State<MemberContainer> {
               border: Border.all(
                 color: Color(0xFFF8FAFF),
               )),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${getDay(widget.dateTill)}\n',
-                            style: TextStyle(
-                              color: Color.fromARGB(176, 0, 0, 0),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${getDay(widget.dateTill)}\n',
+                              style: TextStyle(
+                                color: Color.fromARGB(176, 0, 0, 0),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: '${getDayNumber(widget.dateTill)}',
-                            style: TextStyle(
-                              color: Color.fromARGB(176, 0, 0, 0),
-                              fontSize: 34,
-                              fontWeight: FontWeight.bold,
+                            TextSpan(
+                              text: '${getDayNumber(widget.dateTill)}',
+                              style: TextStyle(
+                                color: Color.fromARGB(176, 0, 0, 0),
+                                fontSize: 34,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Visibility(
-                      visible: widget.eventImage == "" ? true : false,
-                      child: ClipRRect(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("images/imageIcon.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          width: MyUtility(context).width / 1.6,
-                          height: MyUtility(context).height / 4,
+                          ],
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: widget.eventImage == "" ? false : true,
-                      child: ClipRRect(
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: ImageNetwork(
-                            image: widget.eventImage,
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Visibility(
+                        visible: widget.eventImage == "" ? true : false,
+                        child: ClipRRect(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("images/imageIcon.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                             width: MyUtility(context).width / 1.6,
                             height: MyUtility(context).height / 4,
-                            fitWeb: BoxFitWeb.cover,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Visibility(
+                        visible: widget.eventImage == "" ? false : true,
+                        child: ClipRRect(
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: ImageNetwork(
+                              image: widget.eventImage,
+                              width: MyUtility(context).width / 1.6,
+                              height: MyUtility(context).height / 4,
+                              fitWeb: BoxFitWeb.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: SizedBox(
-                  child: Text(
-                    '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF3D3D3D),
-                      fontWeight: FontWeight.normal,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: SizedBox(
+                    child: Text(
+                      '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF3D3D3D),
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                child: Container(
-                  height: 30,
-                  child: Text(
-                    widget.eventName,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromRGBO(0, 159, 158, 1),
-                      fontWeight: FontWeight.bold,
+                SizedBox(
+                  child: Container(
+                    height: 30,
+                    child: Text(
+                      widget.eventName,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color.fromRGBO(0, 159, 158, 1),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Text(
-                widget.location,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.normal,
+                Text(
+                  widget.location,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF3D3D3D),
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
-              ),
-              StyleButton(
-                  description: "View Details",
-                  fontSize: 13,
-                  height: 38,
-                  buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                  width: 50,
-                  onTap: () {
-                    widget.onPressed();
-                  }),
-            ],
+                StyleButton(
+                    description: "View Details",
+                    fontSize: 13,
+                    height: 38,
+                    buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                    width: 50,
+                    onTap: () {
+                      widget.onPressed();
+                    }),
+              ],
+            ),
           ));
     } else {
       return Container(

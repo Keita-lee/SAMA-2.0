@@ -227,153 +227,156 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
       }
     }
     if (isMobile) {
-      return Container(
-        decoration: BoxDecoration(
-            color: Color.fromARGB(255, 255, 255, 255),
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-              color: Color.fromARGB(255, 169, 170, 170),
-            )),
-        width: MyUtility(context).width,
-        height: MyUtility(context).height / 2.2,
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Visibility(
-                visible: eventsImage == "" ? true : false,
-                child: ClipRRect(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("images/imageIcon.png"),
-                        fit: BoxFit.cover,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                color: Color.fromARGB(255, 169, 170, 170),
+              )),
+          width: MyUtility(context).width,
+          height: MyUtility(context).height / 1.6,
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Visibility(
+                  visible: eventsImage == "" ? true : false,
+                  child: ClipRRect(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("images/imageIcon.png"),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    width: MyUtility(context).width / 2,
-                    height: MyUtility(context).height / 4,
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: eventsImage == "" ? false : true,
-                child: ClipRRect(
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: ImageNetwork(
-                      image: eventsImage,
                       width: MyUtility(context).width / 2,
                       height: MyUtility(context).height / 4,
-                      fitWeb: BoxFitWeb.cover,
                     ),
                   ),
                 ),
-              ),
-              Text(
-                _title.text,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color.fromRGBO(0, 159, 158, 1),
-                  fontWeight: FontWeight.bold,
+                Visibility(
+                  visible: eventsImage == "" ? false : true,
+                  child: ClipRRect(
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: ImageNetwork(
+                        image: eventsImage,
+                        width: MyUtility(context).width / 2,
+                        height: MyUtility(context).height / 4,
+                        fitWeb: BoxFitWeb.cover,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'From: ',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF3D3D3D),
-                      ),
-                    ),
-                    TextSpan(
-                      text: _date.text,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF3D3D3D),
-                      ),
-                    ),
-                    TextSpan(
-                      text: '   to   ' + endDate.text,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF3D3D3D),
-                      ),
-                    ),
-                    TextSpan(
-                      text: '\nTime: ',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF3D3D3D),
-                      ),
-                    ),
-                    TextSpan(
-                      text: _times.text,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF3D3D3D),
-                      ),
-                    )
-                  ],
+                Text(
+                  _title.text,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              QuillEditor.basic(
-                configurations: QuillEditorConfigurations(
-                  controller: quillController,
-                  sharedConfigurations: const QuillSharedConfigurations(),
+                SizedBox(
+                  height: 35,
                 ),
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Event Organizer: ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.bold,
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'From: ',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF3D3D3D),
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: _eventProvider.text,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
+                      TextSpan(
+                        text: _date.text,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF3D3D3D),
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: '\nCPD Accreditation: ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.bold,
+                      TextSpan(
+                        text: '   to   ' + endDate.text,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF3D3D3D),
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: _CPDAccreditation.text,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
+                      TextSpan(
+                        text: '\nTime: ',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF3D3D3D),
+                        ),
                       ),
-                    ),
-                  ],
+                      TextSpan(
+                        text: _times.text,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF3D3D3D),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 35,
+                ),
+                QuillEditor.basic(
+                  configurations: QuillEditorConfigurations(
+                    controller: quillController,
+                    sharedConfigurations: const QuillSharedConfigurations(),
+                  ),
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Event Organizer: ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF3D3D3D),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: _eventProvider.text,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF3D3D3D),
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '\nCPD Accreditation: ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF3D3D3D),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: _CPDAccreditation.text,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF3D3D3D),
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
