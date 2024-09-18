@@ -250,808 +250,857 @@ class _BioState extends State<Bio> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MyUtility(context).width / 1.7,
-      height: MyUtility(context).height / 1.2,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Curriculum Vitae/Biography',
-              style: GoogleFonts.openSans(
-                fontSize: 24,
-                color: Color(0xFF174486),
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+    if (isMobile) {
+      return SizedBox(
+        width: MyUtility(context).width - 15,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                'Curriculum Vitae/Biography',
+                style: GoogleFonts.openSans(
+                  fontSize: 24,
+                  color: Color(0xFF174486),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            MyDidiver(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BoiFormText(mainFormText: 'Date of Birth:'),
-                //Text Controller
-                MyDatePicker(
-                  textfieldController: dob,
-                  hintText: 'Date of Birth',
-                  refresh: () {
-                    setState(() {});
-                  },
+              SizedBox(
+                height: 15,
+              ),
+              BoiFormText(mainFormText: 'Date of Birth:'),
+              SizedBox(
+                height: 15,
+              ),
+              MyDatePicker(
+                textfieldController: dob,
+                hintText: 'Date of Birth',
+                refresh: () {
+                  setState(() {});
+                },
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              BoiFormText(mainFormText: 'Marital Status:'),
+              SizedBox(
+                height: 15,
+              ),
+              ProfileDropDownField(
+                customSize: MyUtility(context).width / 1.1,
+                //Controller here
+                textfieldController: maritalStatus,
+                items: ['Married', 'Single'],
+              ),
+              BoiFormText(mainFormText: 'Occupation/Work Experience:'),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return SizedBox(
+        width: MyUtility(context).width / 1.7,
+        height: MyUtility(context).height / 1.2,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Curriculum Vitae/Biography',
+                style: GoogleFonts.openSans(
+                  fontSize: 24,
+                  color: Color(0xFF174486),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyDidiver(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BoiFormText(mainFormText: 'Marital Status:'),
-                ProfileDropDownField(
-                  customSize: 300,
-                  //Controller here
-                  textfieldController: maritalStatus,
-                  items: ['Married', 'Single'],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyDidiver(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BoiFormText(mainFormText: 'Occupation/Work Experience:'),
-                    /*  const SizedBox(
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              MyDidiver(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BoiFormText(mainFormText: 'Date of Birth:'),
+                  //Text Controller
+                  MyDatePicker(
+                    textfieldController: dob,
+                    hintText: 'Date of Birth',
+                    refresh: () {
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyDidiver(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BoiFormText(mainFormText: 'Marital Status:'),
+                  ProfileDropDownField(
+                    customSize: 300,
+                    //Controller here
+                    textfieldController: maritalStatus,
+                    items: ['Married', 'Single'],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyDidiver(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BoiFormText(mainFormText: 'Occupation/Work Experience:'),
+                      /*  const SizedBox(
                       height: 8,
                     ),
                     Text(
                       'Click the link above to view your Occupation/Work Experience.',
                       style: GoogleFonts.openSans(fontSize: 12),
                     )*/
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //Text Controller
-                    MyDatePicker(
-                      textfieldController: workExperienceTo,
-                      hintText: 'From',
-                      refresh: () {
-                        setState(() {});
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    //Text Controller
-                    MyDatePicker(
-                      textfieldController: workExperienceFrom,
-                      hintText: 'To',
-                      refresh: () {
-                        setState(() {});
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ProfileTextField(
-                      customSize: 300,
-                      textFieldType: '',
-                      //Controller here
-                      textfieldController: workExperienceDescription,
-                      ////
-                      hintText: 'Description',
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        addRemoveWorkExperience("");
-                      },
-                      child: Text(
-                        'Add More',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF174486),
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xFF174486),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //Text Controller
+                      MyDatePicker(
+                        textfieldController: workExperienceTo,
+                        hintText: 'From',
+                        refresh: () {
+                          setState(() {});
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //Text Controller
+                      MyDatePicker(
+                        textfieldController: workExperienceFrom,
+                        hintText: 'To',
+                        refresh: () {
+                          setState(() {});
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ProfileTextField(
+                        customSize: 300,
+                        textFieldType: '',
+                        //Controller here
+                        textfieldController: workExperienceDescription,
+                        ////
+                        hintText: 'Description',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          addRemoveWorkExperience("");
+                        },
+                        child: Text(
+                          'Add More',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF174486),
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFF174486),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            BoiFormText(mainFormText: 'Your Occupation/Work Experience'),
-            const SizedBox(
-              height: 30,
-            ),
-            WorkExperience(
-                workExperienceList: workExperience,
-                removeExperience: addRemoveWorkExperience),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40),
-              child: Container(
-                width: MyUtility(context).width / 1.7,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(252, 251, 242, 1),
-                  border: Border.all(
-                    color: Color.fromRGBO(250, 240, 201, 1),
-                  ),
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text.rich(
-                      TextSpan(children: [
-                        TextSpan(
-                            text: 'N.B: ',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text:
-                                'Qualifications can only be updated if your SAMA Number under Details is up to date.',
-                            style: TextStyle(fontSize: 16))
-                      ]),
-                    ),
-                  ),
-                ),
+                    ],
+                  )
+                ],
               ),
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BoiFormText(mainFormText: 'Qualifications:'),
-                    const SizedBox(
-                      height: 8,
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              BoiFormText(mainFormText: 'Your Occupation/Work Experience'),
+              const SizedBox(
+                height: 30,
+              ),
+              WorkExperience(
+                  workExperienceList: workExperience,
+                  removeExperience: addRemoveWorkExperience),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Container(
+                  width: MyUtility(context).width / 1.7,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(252, 251, 242, 1),
+                    border: Border.all(
+                      color: Color.fromRGBO(250, 240, 201, 1),
                     ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text.rich(
+                        TextSpan(children: [
                           TextSpan(
-                              text: 'Note: ',
+                              text: 'N.B: ',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                           TextSpan(
                               text:
-                                  'Each qaulification is comma delimited in this format:\n',
-                              style: TextStyle(fontSize: 16)),
-                          TextSpan(
-                              text: 'University - Qaulification - Year',
+                                  'Qualifications can only be updated if your SAMA Number under Details is up to date.',
                               style: TextStyle(fontSize: 16))
-                        ],
+                        ]),
                       ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    LongTextField(
-                      textFieldWidth: 300,
-                      //Text Controller
-                      textEditingController: qualification,
-                      lines: 5,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Institution Name - Qualification Desc -\n',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: 'Qualification Year\n',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          TextSpan(
-                            text: 'Free State University',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BoiFormText(mainFormText: 'Published Articles:'),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    /*   Text(
-                      'Click the link above to view your Occupation/Work Experience.',
-                      style: GoogleFonts.openSans(fontSize: 12),
-                    )*/
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyDatePicker(
-                      hintText: 'Select Date',
-                      //Text Controller
-                      textfieldController: articleDate,
-                      refresh: () {
-                        setState(() {});
-                      },
-                      //////
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ProfileTextField(
-                      hintText: 'Description',
-                      customSize: 300,
-                      textFieldType: '',
-                      //Text Controller
-                      textfieldController: articleDescription,
-                      ///////
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        addRemoveArticle("");
-                      },
-                      child: Text(
-                        'Add More',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF174486),
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xFF174486),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            BoiFormText(mainFormText: 'Your Published articles:'),
-            const SizedBox(
-              height: 15,
-            ),
-            PublishedArticlesTable(
-                articlesList: articles, removeArticle: addRemoveArticle),
-            const SizedBox(
-              height: 50,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BoiFormText(mainFormText: 'Volunteer Work:'),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    /*   Text(
-                      'Click the link above to view your Volunteer Work information.',
-                      style: GoogleFonts.openSans(fontSize: 12),
-                    )*/
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyDatePicker(
-                      hintText: 'Select Date',
-                      //Text Controller
-                      textfieldController: volunteerDate,
-                      refresh: () {
-                        setState(() {});
-                      },
-                      //////
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ProfileTextField(
-                      customSize: 300,
-                      hintText: 'Description',
-                      textFieldType: '',
-                      //Text Controller
-                      textfieldController: volunteerDescription,
-                      ///////
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        addRemoveVolunteer("");
-                      },
-                      child: Text(
-                        'Add More',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF174486),
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xFF174486),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            BoiFormText(mainFormText: 'Your Volunteer Work:'),
-            const SizedBox(
-              height: 15,
-            ),
-            VolunteerWorkTable(
-                volunteerWork: volunteerWork,
-                removeVolunteerWork: addRemoveVolunteer),
-            const SizedBox(
-              height: 30,
-            ),
-            MyDidiver(),
-            Text(
-              'We want to understand your views on current operations and membership needs and how your potential contributors might fit with the SAMA\'S vision.\nPlease answer the following questions. (Limit your response to the space provided).',
-              style: GoogleFonts.openSans(
-                  fontWeight: FontWeight.bold, height: 1.3, fontSize: 16),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Why do you seek a position on the SAMA Gauteng Council ?',
-                      style: GoogleFonts.openSans(
-                        fontSize: 18,
-                        height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Hint: ',
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: 'Maximum of 500 words allowed.',
-                              style: TextStyle(fontSize: 12)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                LongTextField(
-                  textFieldWidth: 300,
-                  //Text Controller
-                  textEditingController: TextEditingController(),
-                  lines: 10,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'SAMA leadership motivation- Please outline the specific skills you bring,\nor contributions you hope to make to SAMA:',
-                      style: GoogleFonts.openSans(
-                        fontSize: 18,
-                        height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Hint: ',
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: 'Maximum of 500 words allowed.',
-                              style: TextStyle(fontSize: 12)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                LongTextField(
-                  textFieldWidth: 300,
-                  //Text Controller
-                  textEditingController: TextEditingController(),
-                  lines: 10,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 2.5,
-                  child: Text(
-                    'Are you currently serving on any other board of directors, committees or leadership positions for another organisations, whether in your private or professional capacity? if so, please list organisation name and your position/role:',
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      height: 1.2,
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileTextField(
-                      customSize: 300,
-                      hintText: 'Organisation name',
-                      textFieldType: '',
-                      //Text Controller
-                      textfieldController: organizationName,
-                      ///////
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ProfileTextField(
-                      customSize: 300,
-                      hintText: 'Position/role',
-                      textFieldType: '',
-                      //Text Controller
-                      textfieldController: organizationRole,
-                      ///////
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        addRemoveOrganization("");
-                      },
-                      child: Text(
-                        'Add More',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF174486),
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xFF174486),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            BoiFormText(mainFormText: 'Your Organisations:'),
-            const SizedBox(
-              height: 15,
-            ),
-            OrganisationsTable(
-                removeOrganization: addRemoveOrganization,
-                organizations: organizations),
-            const SizedBox(
-              height: 30,
-            ),
-            const MyDidiver(),
-            Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 2.5,
-                  child: Text(
-                    'Have you ever been involved in or have a pending disciplinary action against in your capacity as a SAMA member for allegedly breaching SAMA\'s code of conduct or other governance documents?',
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      height: 1.2,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                CheckBoxCircle(
-                  header: 'Yes',
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                CheckBoxCircle(
-                  header: 'No',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 2.5,
-                  child: Text(
-                    'Have you ever been involved in or have a pending disciplinary action against you at the HPCSA?',
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      height: 1.2,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                CheckBoxCircle(
-                  header: 'Yes',
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                CheckBoxCircle(
-                  header: 'No',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 2.5,
-                  child: Text(
-                    'Have you ever received a civil judgement against you?',
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      height: 1.2,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                CheckBoxCircle(
-                  header: 'Yes',
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                CheckBoxCircle(
-                  header: 'No',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 2.5,
-                  child: Text(
-                    'Have you ever been removed from a position of trust?',
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      height: 1.2,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                CheckBoxCircle(
-                  header: 'Yes',
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                CheckBoxCircle(
-                  header: 'No',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            Row(
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width / 2.5,
-                  child: Text(
-                    'Have you ever been charged and/or convicted of crime?',
-                    style: GoogleFonts.openSans(
-                      fontSize: 18,
-                      height: 1.2,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                CheckBoxCircle(
-                  header: 'Yes',
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                CheckBoxCircle(
-                  header: 'No',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const MyDidiver(),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    width: MyUtility(context).width * 0.05,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(0xFF174486),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        pickFile();
-                      },
-                      child: Text(
-                        'Upload Cv',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  fileUploadStatus,
-                  style: GoogleFonts.openSans(
-                    fontSize: 18,
-                    height: 1.2,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                width: MyUtility(context).width * 0.05,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFF174486),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    updateUserBio();
-                  },
-                  child: Text(
-                    'Update',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BoiFormText(mainFormText: 'Qualifications:'),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Note: ',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text:
+                                    'Each qaulification is comma delimited in this format:\n',
+                                style: TextStyle(fontSize: 16)),
+                            TextSpan(
+                                text: 'University - Qaulification - Year',
+                                style: TextStyle(fontSize: 16))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      LongTextField(
+                        textFieldWidth: 300,
+                        //Text Controller
+                        textEditingController: qualification,
+                        lines: 5,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text:
+                                    'Institution Name - Qualification Desc -\n',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: 'Qualification Year\n',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            TextSpan(
+                              text: 'Free State University',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BoiFormText(mainFormText: 'Published Articles:'),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      /*   Text(
+                      'Click the link above to view your Occupation/Work Experience.',
+                      style: GoogleFonts.openSans(fontSize: 12),
+                    )*/
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyDatePicker(
+                        hintText: 'Select Date',
+                        //Text Controller
+                        textfieldController: articleDate,
+                        refresh: () {
+                          setState(() {});
+                        },
+                        //////
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ProfileTextField(
+                        hintText: 'Description',
+                        customSize: 300,
+                        textFieldType: '',
+                        //Text Controller
+                        textfieldController: articleDescription,
+                        ///////
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          addRemoveArticle("");
+                        },
+                        child: Text(
+                          'Add More',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF174486),
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFF174486),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              BoiFormText(mainFormText: 'Your Published articles:'),
+              const SizedBox(
+                height: 15,
+              ),
+              PublishedArticlesTable(
+                  articlesList: articles, removeArticle: addRemoveArticle),
+              const SizedBox(
+                height: 50,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BoiFormText(mainFormText: 'Volunteer Work:'),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      /*   Text(
+                      'Click the link above to view your Volunteer Work information.',
+                      style: GoogleFonts.openSans(fontSize: 12),
+                    )*/
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyDatePicker(
+                        hintText: 'Select Date',
+                        //Text Controller
+                        textfieldController: volunteerDate,
+                        refresh: () {
+                          setState(() {});
+                        },
+                        //////
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ProfileTextField(
+                        customSize: 300,
+                        hintText: 'Description',
+                        textFieldType: '',
+                        //Text Controller
+                        textfieldController: volunteerDescription,
+                        ///////
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          addRemoveVolunteer("");
+                        },
+                        child: Text(
+                          'Add More',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF174486),
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFF174486),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              BoiFormText(mainFormText: 'Your Volunteer Work:'),
+              const SizedBox(
+                height: 15,
+              ),
+              VolunteerWorkTable(
+                  volunteerWork: volunteerWork,
+                  removeVolunteerWork: addRemoveVolunteer),
+              const SizedBox(
+                height: 30,
+              ),
+              MyDidiver(),
+              Text(
+                'We want to understand your views on current operations and membership needs and how your potential contributors might fit with the SAMA\'S vision.\nPlease answer the following questions. (Limit your response to the space provided).',
+                style: GoogleFonts.openSans(
+                    fontWeight: FontWeight.bold, height: 1.3, fontSize: 16),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Why do you seek a position on the SAMA Gauteng Council ?',
+                        style: GoogleFonts.openSans(
+                          fontSize: 18,
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Hint: ',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: 'Maximum of 500 words allowed.',
+                                style: TextStyle(fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  LongTextField(
+                    textFieldWidth: 300,
+                    //Text Controller
+                    textEditingController: TextEditingController(),
+                    lines: 10,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'SAMA leadership motivation- Please outline the specific skills you bring,\nor contributions you hope to make to SAMA:',
+                        style: GoogleFonts.openSans(
+                          fontSize: 18,
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Hint: ',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: 'Maximum of 500 words allowed.',
+                                style: TextStyle(fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  LongTextField(
+                    textFieldWidth: 300,
+                    //Text Controller
+                    textEditingController: TextEditingController(),
+                    lines: 10,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 2.5,
+                    child: Text(
+                      'Are you currently serving on any other board of directors, committees or leadership positions for another organisations, whether in your private or professional capacity? if so, please list organisation name and your position/role:',
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProfileTextField(
+                        customSize: 300,
+                        hintText: 'Organisation name',
+                        textFieldType: '',
+                        //Text Controller
+                        textfieldController: organizationName,
+                        ///////
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ProfileTextField(
+                        customSize: 300,
+                        hintText: 'Position/role',
+                        textFieldType: '',
+                        //Text Controller
+                        textfieldController: organizationRole,
+                        ///////
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          addRemoveOrganization("");
+                        },
+                        child: Text(
+                          'Add More',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF174486),
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFF174486),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              BoiFormText(mainFormText: 'Your Organisations:'),
+              const SizedBox(
+                height: 15,
+              ),
+              OrganisationsTable(
+                  removeOrganization: addRemoveOrganization,
+                  organizations: organizations),
+              const SizedBox(
+                height: 30,
+              ),
+              const MyDidiver(),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 2.5,
+                    child: Text(
+                      'Have you ever been involved in or have a pending disciplinary action against in your capacity as a SAMA member for allegedly breaching SAMA\'s code of conduct or other governance documents?',
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  CheckBoxCircle(
+                    header: 'Yes',
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  CheckBoxCircle(
+                    header: 'No',
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 2.5,
+                    child: Text(
+                      'Have you ever been involved in or have a pending disciplinary action against you at the HPCSA?',
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  CheckBoxCircle(
+                    header: 'Yes',
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  CheckBoxCircle(
+                    header: 'No',
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 2.5,
+                    child: Text(
+                      'Have you ever received a civil judgement against you?',
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  CheckBoxCircle(
+                    header: 'Yes',
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  CheckBoxCircle(
+                    header: 'No',
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 2.5,
+                    child: Text(
+                      'Have you ever been removed from a position of trust?',
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  CheckBoxCircle(
+                    header: 'Yes',
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  CheckBoxCircle(
+                    header: 'No',
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width / 2.5,
+                    child: Text(
+                      'Have you ever been charged and/or convicted of crime?',
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  CheckBoxCircle(
+                    header: 'Yes',
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  CheckBoxCircle(
+                    header: 'No',
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const MyDidiver(),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      width: MyUtility(context).width * 0.05,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF174486),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          pickFile();
+                        },
+                        child: Text(
+                          'Upload Cv',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    fileUploadStatus,
+                    style: GoogleFonts.openSans(
+                      fontSize: 18,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: MyUtility(context).width * 0.05,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF174486),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      updateUserBio();
+                    },
+                    child: Text(
+                      'Update',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

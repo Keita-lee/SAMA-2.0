@@ -158,6 +158,9 @@ class _NavbarState extends State<Navbar> {
                         case "Branch Voting":
                           navigateToPage(10, 12);
                           break;
+                        case "View Profile":
+                          navigateToPage(3, 3);
+                          break;
                         case "logout":
                           openLogoutDialog();
                           break;
@@ -231,7 +234,25 @@ class _NavbarState extends State<Navbar> {
                         ),
                       ));*/
 
-                      // Add the new "Contact Us" button
+                      menuItems.add(
+                        PopupMenuItem<String>(
+                          value: 'View Profile',
+                          child: Visibility(
+                            visible: widget.userType != "NonMember",
+                            child: Container(
+                              width: double.infinity,
+                              color: CustomColors.yellow,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: const Center(
+                                child: Text(
+                                  'VIEW PROFILE',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                       menuItems.add(
                         PopupMenuItem<String>(
                           value: 'logout',
