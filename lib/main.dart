@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
                 pageIndex: 0,
               )),
           '/login': (context) => MyUtility(context).width < 600
-              ? Material(child: PageUnderConstruction())
+              ? Material(child: LoginPages())
               : Material(
                   child: LoginPages(
                   pageIndex: 0,

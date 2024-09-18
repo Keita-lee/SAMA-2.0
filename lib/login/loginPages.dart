@@ -139,7 +139,7 @@ class _LoginPagesState extends State<LoginPages> {
     ];
 
     return Container(
-      color: Color(0xFFF8FAFF),
+      color: Colors.white,
       width: MyUtility(context).width,
       height: MyUtility(context).height,
       child: SingleChildScrollView(

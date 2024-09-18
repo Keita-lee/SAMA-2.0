@@ -103,7 +103,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    width: MyUtility(context).width - 10,
+                    width: MyUtility(context).width,
                     child: TextFieldStyling(
                       obscure: true,
                       hintText: 'Password',

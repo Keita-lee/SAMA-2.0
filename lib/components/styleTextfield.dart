@@ -46,7 +46,7 @@ class _TextFieldStylingState extends State<TextFieldStyling> {
                 hintText: " ${widget.hintText}",
                 hintStyle: TextStyle(
                   color: Color.fromARGB(255, 199, 199, 199),
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
               ),
