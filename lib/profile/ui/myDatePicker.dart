@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sama/components/myutility.dart';
 
 class MyDatePicker extends StatefulWidget {
   final String hintText;
@@ -35,7 +36,8 @@ class _MyDatePickerState extends State<MyDatePicker> {
     }
 
     return Container(
-      width: 300,
+      width:
+          MyUtility(context).width < 600 ? MyUtility(context).width / 1.1 : 300,
       height: 50,
       decoration: BoxDecoration(
         color: Colors.white,

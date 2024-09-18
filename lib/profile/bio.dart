@@ -283,7 +283,7 @@ class _BioState extends State<Bio> {
               ),
               BoiFormText(mainFormText: 'Marital Status:'),
               SizedBox(
-                height: 15,
+                height: 10,
               ),
               ProfileDropDownField(
                 customSize: MyUtility(context).width / 1.1,
@@ -291,7 +291,336 @@ class _BioState extends State<Bio> {
                 textfieldController: maritalStatus,
                 items: ['Married', 'Single'],
               ),
+              SizedBox(
+                height: 10,
+              ),
               BoiFormText(mainFormText: 'Occupation/Work Experience:'),
+              SizedBox(
+                height: 10,
+              ),
+
+              MyDatePicker(
+                textfieldController: workExperienceTo,
+                hintText: 'From',
+                refresh: () {
+                  setState(() {});
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              //Text Controller
+              MyDatePicker(
+                textfieldController: workExperienceFrom,
+                hintText: 'To',
+                refresh: () {
+                  setState(() {});
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ProfileTextField(
+                customSize: MyUtility(context).width / 1.1,
+                textFieldType: '',
+                //Controller here
+                textfieldController: workExperienceDescription,
+                ////
+                hintText: 'Description',
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                onPressed: () {
+                  addRemoveWorkExperience("");
+                },
+                child: Text(
+                  'Add More',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF174486),
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFF174486),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BoiFormText(mainFormText: 'Your Occupation/Work Experience'),
+              const SizedBox(
+                height: 20,
+              ),
+              WorkExperience(
+                  workExperienceList: workExperience,
+                  removeExperience: addRemoveWorkExperience),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              BoiFormText(mainFormText: 'Qualifications:'),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Note: ',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text:
+                            'Each qaulification is comma delimited in this format:\n',
+                        style: TextStyle(fontSize: 16)),
+                    TextSpan(
+                        text: 'University - Qaulification - Year',
+                        style: TextStyle(fontSize: 16))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+              LongTextField(
+                textFieldWidth: MyUtility(context).width / 1.1,
+                //Text Controller
+                textEditingController: qualification,
+                lines: 5,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Institution Name - Qualification Desc -\n',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: 'Qualification Year\n',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text: 'Free State University',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              BoiFormText(mainFormText: 'Published Articles:'),
+              const SizedBox(
+                height: 10,
+              ),
+              MyDatePicker(
+                hintText: 'Select Date',
+                //Text Controller
+                textfieldController: articleDate,
+                refresh: () {
+                  setState(() {});
+                },
+                //////
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ProfileTextField(
+                hintText: 'Description',
+                customSize: MyUtility(context).width / 1.1,
+                textFieldType: '',
+                //Text Controller
+                textfieldController: articleDescription,
+                ///////
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                onPressed: () {
+                  addRemoveArticle("");
+                },
+                child: Text(
+                  'Add More',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF174486),
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFF174486),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+
+              BoiFormText(mainFormText: 'Your Published articles:'),
+              const SizedBox(
+                height: 10,
+              ),
+              PublishedArticlesTable(
+                  articlesList: articles, removeArticle: addRemoveArticle),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              BoiFormText(mainFormText: 'Volunteer Work:'),
+
+              const SizedBox(
+                height: 10,
+              ),
+              MyDatePicker(
+                hintText: 'Select Date',
+                //Text Controller
+                textfieldController: volunteerDate,
+                refresh: () {
+                  setState(() {});
+                },
+                //////
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ProfileTextField(
+                customSize: MyUtility(context).width / 1.1,
+                hintText: 'Description',
+                textFieldType: '',
+                //Text Controller
+                textfieldController: volunteerDescription,
+                ///////
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                onPressed: () {
+                  addRemoveVolunteer("");
+                },
+                child: Text(
+                  'Add More',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF174486),
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFF174486),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              VolunteerWorkTable(
+                  volunteerWork: volunteerWork,
+                  removeVolunteerWork: addRemoveVolunteer),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Why do you seek a position on the SAMA Gauteng Council ?',
+                style: GoogleFonts.openSans(
+                  fontSize: 18,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: 'Hint: ',
+                    style:
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                TextSpan(
+                    text: 'Maximum of 500 words allowed.',
+                    style: TextStyle(fontSize: 12)),
+              ])),
+
+              LongTextField(
+                textFieldWidth: MyUtility(context).width / 1.1,
+                //Text Controller
+                textEditingController: TextEditingController(),
+                lines: 10,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: 125,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xFF174486),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            pickFile();
+                          },
+                          child: Text(
+                            'Upload Cv',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      fileUploadStatus,
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: 125,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF174486),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      updateUserBio();
+                    },
+                    child: Text(
+                      'Update',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -309,6 +638,7 @@ class _BioState extends State<Bio> {
                 'Curriculum Vitae/Biography',
                 style: GoogleFonts.openSans(
                   fontSize: 24,
+                  fontWeight: FontWeight.bold,
                   color: Color(0xFF174486),
                 ),
               ),
@@ -555,10 +885,6 @@ class _BioState extends State<Bio> {
                       const SizedBox(
                         height: 8,
                       ),
-                      /*   Text(
-                      'Click the link above to view your Occupation/Work Experience.',
-                      style: GoogleFonts.openSans(fontSize: 12),
-                    )*/
                     ],
                   ),
                   Column(
@@ -637,10 +963,6 @@ class _BioState extends State<Bio> {
                       const SizedBox(
                         height: 8,
                       ),
-                      /*   Text(
-                      'Click the link above to view your Volunteer Work information.',
-                      style: GoogleFonts.openSans(fontSize: 12),
-                    )*/
                     ],
                   ),
                   Column(
