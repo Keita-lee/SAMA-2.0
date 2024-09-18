@@ -471,6 +471,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 30),
                   Text(
                     'Login',
                     style: FontText(context).mediumBlue,

@@ -40,51 +40,54 @@ class _CompanyContainerState extends State<CompanyContainer> {
                 color: Color.fromARGB(136, 169, 170, 170),
               )),
           width: MyUtility(context).width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 5,
-              ),
-              ImageNetwork(
-                onTap: () {
-                  widget.openMemberDetails();
-                },
-                image: widget.image,
-                width: MyUtility(context).width / 1.5,
-                height: 100,
-                fitWeb: BoxFitWeb.contain,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                widget.companyname,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(0, 159, 158, 1),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 5,
                 ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                widget.discription,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF3D3D3D),
+                ImageNetwork(
+                  onTap: () {
+                    widget.openMemberDetails();
+                  },
+                  image: widget.image,
+                  width: MyUtility(context).width / 1.5,
+                  height: 100,
+                  fitWeb: BoxFitWeb.contain,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              StyleButton(
-                buttonColor: Color.fromRGBO(0, 159, 158, 1),
-                description: 'View',
-                height: 40,
-                width: 80,
-                onTap: () {
-                  widget.openMemberDetails();
-                },
-              ),
-            ],
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  widget.companyname,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  widget.discription,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF3D3D3D),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                StyleButton(
+                  buttonColor: Color.fromRGBO(0, 159, 158, 1),
+                  description: 'View',
+                  height: 40,
+                  width: 80,
+                  onTap: () {
+                    widget.openMemberDetails();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );

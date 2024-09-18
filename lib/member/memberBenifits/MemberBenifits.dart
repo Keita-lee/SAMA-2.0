@@ -81,6 +81,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
   @override
   Widget build(BuildContext context) {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -153,7 +154,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                             height: isMobile
                                 ? MyUtility(context).width < 400
                                     ? MyUtility(context).height / 1.6
-                                    : MyUtility(context).height / 1.5
+                                    : MyUtility(context).height / 1.7
                                 : MyUtility(context).height / 1.8,
                             //color: Colors.transparent,
                             /* child: DraggableScrollbar.rrect(
