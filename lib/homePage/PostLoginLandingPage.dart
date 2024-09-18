@@ -262,26 +262,29 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
     var widthDevice = MediaQuery.of(context).size.width;
 
     if (widthDevice < 600) {
-      return Column(
-        children: [
-          Navbar(
-            userType: userType,
-            visible: true,
-            onButton1Pressed: (value) {},
-            onButton2Pressed: (value) {},
-            onDropdownChanged: (value) {},
-          ),
-          Container(
-            child: pages[pageIndex!],
-          )
-        ],
+      return Material(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Navbar(
+              userType: userType,
+              visible: true,
+              onButton1Pressed: (value) {},
+              onButton2Pressed: (value) {},
+              onDropdownChanged: (value) {},
+            ),
+            Container(
+              child: pages[pageIndex!],
+            )
+          ],
+        ),
       );
     } else {
       return Scaffold(
         body: Stack(
           children: [
             Container(
-              color: Color(0xFFF8FAFF),
+              color: Colors.white,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
