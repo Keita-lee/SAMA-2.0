@@ -32,36 +32,39 @@ class _ApplicationTypeState extends State<ApplicationType> {
   @override
   Widget build(BuildContext context) {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
-    return Column(
-      crossAxisAlignment:
-          isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-      mainAxisAlignment:
-          isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
-      children: [
-        for (var i = 0; i < widget.applicationTypes.length; i++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Applicationcontainerstyle(
-              onpress: changePageIndex,
-              applicationTypeSelected: widget.applicationTypeSelected,
-              index: pageIndex,
-              value: i,
-              description: widget.applicationTypes[i],
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment:
+            isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        mainAxisAlignment:
+            isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
+        children: [
+          for (var i = 0; i < widget.applicationTypes.length; i++)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Applicationcontainerstyle(
+                onpress: changePageIndex,
+                applicationTypeSelected: widget.applicationTypeSelected,
+                index: pageIndex,
+                value: i,
+                description: widget.applicationTypes[i],
+              ),
             ),
-          ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            StyleButton(
-                description: "Continue",
-                height: 55,
-                width: 125,
-                onTap: () {
-                  widget.nextSection(1);
-                })
-          ],
-        )
-      ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              StyleButton(
+                  description: "Continue",
+                  height: 55,
+                  width: 125,
+                  onTap: () {
+                    widget.nextSection(1);
+                  })
+            ],
+          )
+        ],
+      ),
     );
   }
 }

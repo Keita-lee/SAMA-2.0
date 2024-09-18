@@ -73,7 +73,9 @@ class _PaymentTextPrState extends State<PaymentTextPr> {
             ),
             children: <TextSpan>[
               TextSpan(
-                text: '${widget.boldText}: \n',
+                text: isMobile
+                    ? '${widget.boldText}: '
+                    : '${widget.boldText}: \n',
                 style: GoogleFonts.openSans(
                     fontWeight: FontWeight.bold, letterSpacing: -0.5),
               ),
@@ -127,6 +129,7 @@ class _JournalCheckBoxState extends State<JournalCheckBox> {
         widget.onChanged(isChecked);
       },
       child: Wrap(
+        alignment: WrapAlignment.center,
         children: [
           Checkbox(
             value: isChecked,

@@ -80,9 +80,13 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   getTotalToPay() {
     var getAm = (widget.applicationPrice).split("R");
-    var payAmount =
-        ((double.parse(getAm[1]) / 12) * CommonService().getMonthDiff())
-            .roundToDouble();
+    var payAmount = 0.00;
+    if (double.parse(getAm[1]) == 0.00) {
+    } else {
+      payAmount =
+          ((double.parse(getAm[1]) / 12) * CommonService().getMonthDiff())
+              .roundToDouble();
+    }
 
     setState(() {
       amountToPay = payAmount;
@@ -92,7 +96,6 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   afterPaymentMade() {
     var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
-      print("TESTTime");
       final response = await checkPaymentMade();
 
       final decode =
@@ -265,6 +268,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
             width: MyUtility(context).width,
             //  height: MyUtility(context).height * 0.3,
             decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Colors.grey, width: 1.5)),
             child: SingleChildScrollView(
@@ -305,8 +309,12 @@ class _PaymentMethodState extends State<PaymentMethod> {
                               ? getTotalToPay()
                               : widget.applicationPrice,
                         ),
-                        PaymentTextPr(
-                            boldText: 'For Period', secondText: getTimeFrame()),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: PaymentTextPr(
+                              boldText: 'For Period',
+                              secondText: getTimeFrame()),
+                        ),
                       ],
                     ),
                   ),
@@ -464,6 +472,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                                 fontSize: 18,
                                 color: Colors.grey[800],
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Spacer(),
                             PayStackCon(),
@@ -611,8 +620,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   Visibility(
                       visible: paymnetType == "MANUAL EFT",
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "BANKING DETAILS",
@@ -628,6 +637,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                               fontSize: 22,
                               color: Colors.grey[800],
                             ),
+                            textAlign: TextAlign.center,
                           ),
                           Text(
                             "Bank: Standard Bank, Hatfield",

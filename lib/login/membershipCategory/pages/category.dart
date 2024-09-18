@@ -70,155 +70,161 @@ class _MemberCategoryRegState extends State<MemberCategoryReg> {
   @override
   Widget build(BuildContext context) {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment:
-            isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black, width: 1)),
-            child: Column(
-              crossAxisAlignment: isMobile
-                  ? CrossAxisAlignment.center
-                  : CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.title!,
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                for (var i = 0; i < widget.options.length; i++)
+    return Container(
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment:
+              isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.black, width: 1)),
+              child: Column(
+                crossAxisAlignment: isMobile
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
+                children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: CategoryContainer(
-                      index: i,
-                      description: widget.options[i]['title'],
-                      hoverDescription: widget.options[i]['info'],
-                      monthly: widget.options[i]['month'],
-                      annually: widget.options[i]['annual'],
-                      priceSelected: widget.priceSelected,
-                      applicationPrice: widget.applicationPrice,
-                      code: widget.options[i]['code'],
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.title!,
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                  child: Text(
-                    "Calculated on pro-rata basis when paying annully.",
+                  SizedBox(
+                    height: 10,
+                  ),
+                  for (var i = 0; i < widget.options.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      child: CategoryContainer(
+                        index: i,
+                        description: widget.options[i]['title'],
+                        hoverDescription: widget.options[i]['info'],
+                        monthly: widget.options[i]['month'],
+                        annually: widget.options[i]['annual'],
+                        priceSelected: widget.priceSelected,
+                        applicationPrice: widget.applicationPrice,
+                        code: widget.options[i]['code'],
+                      ),
+                    ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    child: Text(
+                      "Calculated on pro-rata basis when paying annully.",
+                      style: TextStyle(
+                          fontSize: isMobile ? 16 : 14,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+                mainAxisAlignment:
+                    isMobile ? MainAxisAlignment.center : MainAxisAlignment.end,
+                children: [
+                  CustomCheckbox(
+                    value: widget.accepted,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        widget.accepted = value ?? false;
+                      });
+                    },
+                    width: isMobile ? 35 : 25,
+                    height: isMobile ? 35 : 25,
+                  ),
+                  // InkWell(
+                  //   onTap: () {},
+                  //   child: Container(
+                  //     width: 25,
+                  //     height: 25,
+                  //     decoration: BoxDecoration(
+                  //         shape: BoxShape.rectangle,
+                  //         border: Border.all(
+                  //             color: const Color.fromARGB(255, 145, 145, 145),
+                  //             width: 2),
+                  //         color: Colors.white),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    "I accept SAMA's",
                     style: TextStyle(
-                        fontSize: isMobile ? 16 : 14,
+                        fontSize: isMobile ? 18 : 14,
                         color: Colors.grey[700],
                         fontWeight: FontWeight.bold),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            CustomCheckbox(
-              value: widget.accepted,
-              onChanged: (bool? value) {
-                setState(() {
-                  widget.accepted = value ?? false;
-                });
-              },
-              width: isMobile ? 35 : 25,
-              height: isMobile ? 35 : 25,
-            ),
-            // InkWell(
-            //   onTap: () {},
-            //   child: Container(
-            //     width: 25,
-            //     height: 25,
-            //     decoration: BoxDecoration(
-            //         shape: BoxShape.rectangle,
-            //         border: Border.all(
-            //             color: const Color.fromARGB(255, 145, 145, 145),
-            //             width: 2),
-            //         color: Colors.white),
-            //   ),
-            // ),
-            SizedBox(
-              width: 8,
-            ),
-            Text(
-              "I accept SAMA's",
-              style: TextStyle(
-                  fontSize: isMobile ? 18 : 14,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            InkWell(
-              onTap: () {
-                final Uri a = Uri.parse(
-                    "https://southafricanmedical.org/wp-content/uploads/2024/08/SAMA-Membership-terms-and-conditions_28-Oct.pdf");
+                  SizedBox(
+                    width: 5,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      final Uri a = Uri.parse(
+                          "https://southafricanmedical.org/wp-content/uploads/2024/08/SAMA-Membership-terms-and-conditions_28-Oct.pdf");
 
-                launchUrl(a);
-              },
-              child: Text(
-                "terms and conditions",
-                style: TextStyle(
-                    fontSize: isMobile ? 18 : 14,
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold),
-              ),
+                      launchUrl(a);
+                    },
+                    child: Text(
+                      "terms and conditions",
+                      style: TextStyle(
+                          fontSize: isMobile ? 18 : 14,
+                          color: Colors.teal,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ]),
+            SizedBox(
+              height: 10,
             ),
-          ]),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              StyleButton(
-                buttonColor: const Color.fromARGB(255, 219, 219, 219),
-                description: "PREVIOUS",
-                height: 55,
-                width: 125,
-                onTap: () {
-                  widget.nextSection(0);
-                },
-              ),
-              Spacer(),
-              StyleButton(
-                  description: "CONTINUE",
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                StyleButton(
+                  buttonColor: const Color.fromARGB(255, 219, 219, 219),
+                  description: "PREVIOUS",
                   height: 55,
                   width: 125,
                   onTap: () {
-                    if (!widget.accepted)
-                      openValidateDialog(
-                          "Please accept the terms and conditions");
-                    else
-                      widget.nextSection(2);
-                  })
-            ],
-          )
-        ],
+                    widget.nextSection(0);
+                  },
+                ),
+                Spacer(),
+                StyleButton(
+                    description: "CONTINUE",
+                    height: 55,
+                    width: 125,
+                    onTap: () {
+                      if (!widget.accepted)
+                        openValidateDialog(
+                            "Please accept the terms and conditions");
+                      else
+                        widget.nextSection(2);
+                    })
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

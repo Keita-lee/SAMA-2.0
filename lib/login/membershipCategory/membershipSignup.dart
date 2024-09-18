@@ -48,6 +48,7 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
   void initState() {
     setState(() {
       sectionIndex = widget.pageIndex ?? 0;
+      applicationOptions = paymentTypes[0]['paymentOptions'];
     });
     super.initState();
   }
@@ -70,10 +71,10 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
   applicationTypeSelected(value) {
     setState(() {
       applicationSelected = value;
-
-      var applicationIndex =
+      var applicationIndex = 0;
+      applicationIndex =
           (paymentTypes).indexWhere((item) => item["applicationType"] == value);
-
+      print(applicationIndex);
       applicationOptions = paymentTypes[applicationIndex]['paymentOptions'];
     });
   }
@@ -137,8 +138,9 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
       "applicationType": "Student",
       "paymentOptions": [
         {
+          "code": "E",
           "title": 'Free Membership',
-          "info": "",
+          "info": "test",
           "month": " R0.00",
           "annual": "R 0.00"
         }
@@ -358,53 +360,71 @@ class _MembershipSignUpState extends State<MembershipSignUp> {
     if (isMobile) {
       return Column(
         children: [
-          Text(
-            "Membership Sign Up",
-            style: GoogleFonts.openSans(
-              textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              color: Color.fromRGBO(0, 159, 158, 1),
+          Container(
+            child: Column(
+              children: [
+                Text(
+                  "Membership Sign Up",
+                  style: GoogleFonts.openSans(
+                    textStyle:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MemberCategoryTabStyle(
+                            onpress: changePageIndex,
+                            index: pageIndex,
+                            value: 0,
+                            description: 'APPLICATION TYPE',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MemberCategoryTabStyle(
+                            onpress: changePageIndex,
+                            index: pageIndex,
+                            value: 1,
+                            description: 'CATEGORY',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MemberCategoryTabStyle(
+                            onpress: changePageIndex,
+                            index: pageIndex,
+                            value: 2,
+                            description: 'PAYMENT METHODS',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MemberCategoryTabStyle(
+                            onpress: changePageIndex,
+                            index: pageIndex,
+                            value: 3,
+                            description: 'YOUR PROFILE',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Wrap(
-            alignment: WrapAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 0,
-                  description: 'APPLICATION TYPE',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 1,
-                  description: 'CATEGORY',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 2,
-                  description: 'PAYMENT METHODS',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MemberCategoryTabStyle(
-                  onpress: changePageIndex,
-                  index: pageIndex,
-                  value: 3,
-                  description: 'YOUR PROFILE',
-                ),
-              ),
-            ],
           ),
           Visibility(
             visible: sectionIndex == 0,

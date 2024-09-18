@@ -23,7 +23,7 @@ class _MemberCategoryTabStyleState extends State<MemberCategoryTabStyle> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.onpress(widget.value);
+        //widget.onpress(widget.value);
       },
       child: Container(
         height: 35,

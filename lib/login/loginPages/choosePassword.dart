@@ -102,7 +102,7 @@ class _ChoosePasswordState extends State<ChoosePassword> {
     if (MyUtility(context).width < 600) {
       return SingleChildScrollView(
         child: Container(
-          color:Colors.white,
+          color: Colors.white,
           child: Column(
             children: [
               Navbar(
@@ -176,15 +176,20 @@ class _ChoosePasswordState extends State<ChoosePassword> {
                         textFieldType: 'IntType',
                         textfieldController: passwordCheck),
                     const SizedBox(height: 40),
-                    StyleButton(
-                        description: "Create",
-                        fontSize: 15,
-                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                        height: 55,
-                        width: 125,
-                        onTap: () {
-                          updatePassword();
-                        }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        StyleButton(
+                            description: "Create",
+                            fontSize: 15,
+                            buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                            height: 55,
+                            width: 125,
+                            onTap: () {
+                              updatePassword();
+                            }),
+                      ],
+                    ),
                     const SizedBox(height: 30),
                   ],
                 ),

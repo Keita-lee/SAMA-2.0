@@ -578,10 +578,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   ),
                   InkWell(
                     onTap: () {
-                      widget.changePage(11);
+                      widget.changePage(9);
                     },
                     child: Text(
-                      "Create one her",
+                      "Create one here",
                       style: GoogleFonts.openSans(
                         decoration: showForgotSamaBorder == true
                             ? TextDecoration.underline
@@ -597,7 +597,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   ),
                 ],
               ),
-              const Footer(),
+              Footer(),
             ],
           ),
         ),
