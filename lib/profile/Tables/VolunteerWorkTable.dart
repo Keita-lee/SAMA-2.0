@@ -20,7 +20,9 @@ class _VolunteerWorkTableState extends State<VolunteerWorkTable> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MyUtility(context).width / 1.7,
+      width: MyUtility(context).width < 600
+          ? MyUtility(context).width
+          : MyUtility(context).width / 1.7,
       //height: 500,
       child: Center(
         child: Table(

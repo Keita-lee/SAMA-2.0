@@ -19,8 +19,10 @@ class WorkExperience extends StatefulWidget {
 class _WorkExperienceState extends State<WorkExperience> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SizedBox(
-      width: MyUtility(context).width / 1.7,
+      width:
+          isMobile ? MyUtility(context).width : MyUtility(context).width / 1.7,
       //height: 500,
       child: Center(
         child: Table(
