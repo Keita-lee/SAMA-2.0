@@ -35,7 +35,7 @@ class _ProfileDropdownButtonState extends State<ProfileDropdownButton> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: 8, vertical: 4), // Added vertical padding
+          horizontal: 15, vertical: 15), // Added vertical padding
       decoration: BoxDecoration(
         color: CustomColors.blue,
         borderRadius: BorderRadius.circular(4),

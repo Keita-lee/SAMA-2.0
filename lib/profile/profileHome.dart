@@ -19,21 +19,19 @@ class _ProfileHomeState extends State<ProfileHome> {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
 
     if (isMobile) {
-      return SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            DashProfessionalDev(cpdPoints: '26.8'),
-            const SizedBox(
-              height: 25,
-            ),
-            DashCommunity(),
-            const SizedBox(
-              height: 25,
-            ),
-            DashPrivateMessages(changePageIndex: (int) {}),
-          ],
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          DashProfessionalDev(cpdPoints: '26.8'),
+          const SizedBox(
+            height: 25,
+          ),
+          DashCommunity(),
+          const SizedBox(
+            height: 25,
+          ),
+          DashPrivateMessages(changePageIndex: (int) {}),
+        ],
       );
     } else {
       return Row(

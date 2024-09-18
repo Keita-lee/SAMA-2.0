@@ -167,133 +167,99 @@ class _EditProfileState extends State<EditProfile> {
       return Form(
           key: _formKey,
           child: SizedBox(
-            height: MyUtility(context).height / 2,
+            // height: MyUtility(context).height / 0.2,
             child: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                child: Column(children: [
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Title",
-                      textfieldController: title,
-                      textFieldType: "stringType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Initials",
-                      textfieldController: initials,
-                      textFieldType: "stringType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "First Name",
-                      textfieldController: firstName,
-                      textFieldType: "stringType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Last Name",
-                      textfieldController: lastName,
-                      textFieldType: "stringType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Email",
-                      textfieldController: email,
-                      textFieldType: "emailType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Mobile No",
-                      textfieldController: mobileNo,
-                      textFieldType: "stringType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Landline",
-                      textfieldController: landline,
-                      textFieldType: ""),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileDropDownField(
-                    description: "Gender",
-                    items: ["Male", "Female"],
+              child: Column(children: [
+                ProfileTextField(
                     customSize: MyUtility(context).width,
-                    textfieldController: gender,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileDropDownField(
-                    description: "Race",
-                    items: [
-                      "White/Caucasian",
-                      "Hispanic/Latino",
-                      "Black",
-                      "Asian",
-                      "Native American",
-                      "Pacific Islander",
-                      "Middle Eastern/North African",
-                      "Other",
-                    ],
+                    description: "Title",
+                    textfieldController: title,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
                     customSize: MyUtility(context).width,
-                    textfieldController: race,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Date of Birth",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xFF6A6A6A),
-                          ),
-                        ),
-                        Container(
-                          width: MyUtility(context).width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Colors.black,
-                            ),
-                          ),
-                          child: TextField(
-                            controller: dob,
-                            readOnly: true,
-                            decoration: const InputDecoration(
-                                hintText: "Click here to select date"),
-                            onTap: () => onTapFunction(context: context),
-                          ),
-                        )
-                      ]),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Column(
+                    description: "Initials",
+                    textfieldController: initials,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "First Name",
+                    textfieldController: firstName,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "Last Name",
+                    textfieldController: lastName,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "Email",
+                    textfieldController: email,
+                    textFieldType: "emailType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "Mobile No",
+                    textfieldController: mobileNo,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "Landline",
+                    textfieldController: landline,
+                    textFieldType: ""),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileDropDownField(
+                  description: "Gender",
+                  items: ["Male", "Female"],
+                  customSize: MyUtility(context).width,
+                  textfieldController: gender,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileDropDownField(
+                  description: "Race",
+                  items: [
+                    "White/Caucasian",
+                    "Hispanic/Latino",
+                    "Black",
+                    "Asian",
+                    "Native American",
+                    "Pacific Islander",
+                    "Middle Eastern/North African",
+                    "Other",
+                  ],
+                  customSize: MyUtility(context).width,
+                  textfieldController: race,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "ID number",
+                        "Date of Birth",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -310,125 +276,183 @@ class _EditProfileState extends State<EditProfile> {
                             color: Colors.black,
                           ),
                         ),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (passportNumber.text == "") {
-                              if (value != null && value.isEmpty) {
-                                if (value.length == 13) {
-                                  return "Id length should be 13 characters";
-                                }
+                        child: TextField(
+                          controller: dob,
+                          readOnly: true,
+                          decoration: const InputDecoration(
+                              hintText: "Click here to select date"),
+                          onTap: () => onTapFunction(context: context),
+                        ),
+                      )
+                    ]),
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "ID number",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6A6A6A),
+                      ),
+                    ),
+                    Container(
+                      width: MyUtility(context).width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.black,
+                        ),
+                      ),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (passportNumber.text == "") {
+                            if (value != null && value.isEmpty) {
+                              if (value.length == 13) {
+                                return "Id length should be 13 characters";
                               }
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a value';
-                              }
-
-                              if (num.tryParse(value) == null) {
-                                return 'Please enter number value';
-                              }
-                            } else {
-                              return null;
+                            }
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a value';
                             }
 
+                            if (num.tryParse(value) == null) {
+                              return 'Please enter number value';
+                            }
+                          } else {
                             return null;
-                          },
-                          controller: idNumber,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 153, 147, 147),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: new EdgeInsets.only(left: 12.0),
-                            border: InputBorder.none,
-                            hintText: "",
-                            hintStyle: TextStyle(
-                              color: Color.fromARGB(255, 199, 199, 199),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          }
+
+                          return null;
+                        },
+                        controller: idNumber,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 153, 147, 147),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: new EdgeInsets.only(left: 12.0),
+                          border: InputBorder.none,
+                          hintText: "",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 199, 199, 199),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Passport Number",
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Passport Number",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6A6A6A),
+                      ),
+                    ),
+                    Container(
+                      width: MyUtility(context).width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.black,
+                        ),
+                      ),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (idNumber.text == "") {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a value';
+                            }
+
+                            if (num.tryParse(value) == null) {
+                              return 'Please enter number value';
+                            }
+                          } else {
+                            return null;
+                          }
+
+                          return null;
+                        },
+                        controller: passportNumber,
                         style: TextStyle(
+                          color: Color.fromARGB(255, 153, 147, 147),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: new EdgeInsets.only(left: 12.0),
+                          border: InputBorder.none,
+                          hintText: "",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 199, 199, 199),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "HPCSA number",
+                    textfieldController: hpcsa,
+                    textFieldType: "stringType"),
+                SizedBox(
+                  height: 20,
+                ),
+                ProfileTextField(
+                    customSize: MyUtility(context).width,
+                    description: "Practice number",
+                    textfieldController: practiceNumber,
+                    textFieldType: "stringType"),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 125,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xFF174486),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          updateProfile();
+                        }
+                      },
+                      child: Text(
+                        'Save',
+                        style: TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          color: Color(0xFF6A6A6A),
                         ),
                       ),
-                      Container(
-                        width: MyUtility(context).width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Colors.black,
-                          ),
-                        ),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (idNumber.text == "") {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a value';
-                              }
-
-                              if (num.tryParse(value) == null) {
-                                return 'Please enter number value';
-                              }
-                            } else {
-                              return null;
-                            }
-
-                            return null;
-                          },
-                          controller: passportNumber,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 153, 147, 147),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: new EdgeInsets.only(left: 12.0),
-                            border: InputBorder.none,
-                            hintText: "",
-                            hintStyle: TextStyle(
-                              color: Color.fromARGB(255, 199, 199, 199),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "HPCSA number",
-                      textfieldController: hpcsa,
-                      textFieldType: "stringType"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ProfileTextField(
-                      customSize: MyUtility(context).width,
-                      description: "Practice number",
-                      textfieldController: practiceNumber,
-                      textFieldType: "stringType")
-                ]),
-              ),
+                ),
+              ]),
             ),
           ));
     } else {

@@ -33,7 +33,7 @@ class FontText {
 
   TextStyle get bodySmallBlack => TextStyle(
         color: Colors.black,
-        fontSize: width / 32,
+        fontSize: width / 25,
         fontWeight: FontWeight.normal,
       );
 
