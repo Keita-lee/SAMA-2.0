@@ -80,12 +80,9 @@ class _DashboardMainState extends State<DashboardMain> {
                             openHelpBotPopup();
                           },
                           child: SvgPicture.asset(
-                              width: 40, height: 40, 'images/helpbot.svg'))),
+                              width: 30, height: 30, 'images/helpbot.svg'))),
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 10,
             ),
             Visibility(
               visible: pageIndex == 1,

@@ -69,19 +69,20 @@ class _NavbarState extends State<Navbar> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
+            Row(
               //   crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   'images/sama_logo.png',
-                  height: height / 6,
-                  width: width / 3,
+                  height: height / 9,
+                  width: width / 6,
                   fit: BoxFit.contain,
                 ),
+                SizedBox(width: 10),
                 Text(
                   'Member Portal \n(beta)',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       color: Color(0xFF174486),
                       fontWeight: FontWeight.bold),
                 ),
