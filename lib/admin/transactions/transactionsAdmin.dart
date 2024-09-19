@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sama/admin/ElectionsAdmin/nominations/ui/tabStyle.dart';
+import 'package:sama/admin/transactions/manageProducts/manageProducts.dart';
+import 'package:sama/components/AdminTable.dart';
 import 'package:sama/components/TabButton.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
@@ -69,6 +71,9 @@ class _TransactionsAdminState extends State<TransactionsAdmin> {
               height: 100,
             ),
             FilterRowWidget(),
+            const SizedBox(height: 20.0),
+            Visibility(
+                visible: _activeTabIndex == 0, child: const Manageproducts())
           ],
         ),
       ),

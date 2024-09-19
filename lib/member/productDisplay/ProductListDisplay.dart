@@ -34,6 +34,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   String productType = "";
   String title = "";
   String price = "";
+  Map<String, dynamic> priceList = {};
   String priceInfo = "";
   String description = "";
   String productImage = "";
@@ -161,6 +162,13 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     // await _storage.write(key: 'cart', value: jsonEncode(cartProducts));
   }
 
+  updatePrice(String newPrice) {
+    print('new price $newPrice');
+    setState(() {
+      price = newPrice;
+    });
+  }
+
   @override
   void initState() {
     if (widget.pageIndex != null) {
@@ -259,7 +267,18 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                                   changePageIndex(1, allProduct[index]['type']);
                                   setState(() {
                                     title = allProduct[index]['name'];
-                                    price = allProduct[index]['price'];
+                                    priceList = {
+                                      "firstLicensePrice": allProduct[index]
+                                          ['firstLicensePrice'],
+                                      "secondTierPrice": allProduct[index]
+                                          ['secondTierPrice'],
+                                      "secondTierRange": allProduct[index]
+                                          ['secondTierRange'],
+                                      "thirdTierPrice": allProduct[index]
+                                          ['thirdTierPrice'],
+                                      "thirdTierRange": allProduct[index]
+                                          ['thirdTierRange'],
+                                    };
                                     priceInfo = 'Member Price. Includes VAT';
                                     description =
                                         allProduct[index]['description'];
@@ -284,6 +303,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
               child: ProductFullViewDigital(
                 title: title,
                 price: price,
+                priceList: priceList,
                 priceInfo: priceInfo,
                 description: description,
                 productImage: productImage,
@@ -291,6 +311,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                 buyProduct: addProductToList,
                 productQuantity: productQuantity,
                 getProductQuantity: getProductQuantity,
+                updatePrice: updatePrice,
               ),
             ),
             /*  Visibility(

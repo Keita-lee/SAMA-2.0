@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -10,7 +12,8 @@ import 'package:sama/utils/quillUtils.dart';
 
 class ProductFullViewDigital extends StatefulWidget {
   String title;
-  String price;
+  String? price;
+  Map<String, dynamic> priceList;
   String priceInfo;
 
   String description;
@@ -20,11 +23,13 @@ class ProductFullViewDigital extends StatefulWidget {
   Function(Map, int) buyProduct;
   Function(String, int) getProductQuantity;
   int productQuantity;
-
+  Function(String) updatePrice;
   ProductFullViewDigital({
     super.key,
     required this.title,
-    required this.price,
+    this.price,
+    required this.updatePrice,
+    required this.priceList,
     required this.priceInfo,
     required this.description,
     required this.productImage,
@@ -41,21 +46,91 @@ class ProductFullViewDigital extends StatefulWidget {
 class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
   var myJSON;
   QuillController quillController = QuillController.basic();
-  var product = {};
-
+  Map<String, dynamic> product = {};
+  Map<String, dynamic> priceList = {};
+  final auth = FirebaseAuth.instance;
+  bool productAlreadyPurchased = false;
+  String priceInfo = '';
   @override
   void initState() {
     // myJSON = jsonDecode(widget.description);
     quillController = handleDescription(widget.description, true, false);
     super.initState();
+    checkUser();
+    Map<String, dynamic> tempProducts = product;
     product = {
+      ...tempProducts,
       "name": widget.title,
       "productPrice": 'Member Price. Includes VAT',
       "quantity": widget.productQuantity,
-      "price": widget.price,
       "id": "",
       "imageUrl": widget.productImage,
     };
+  }
+
+  void checkUser() async {
+    // User is signed in
+    if (auth.currentUser != null) {
+      DocumentSnapshot? user = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .get();
+      // User is a member
+      if (user.exists && user.get('userType') != 'Admin') {
+        product['priceList'] = [
+          {'description': 'First License', 'price': '0.00'},
+          {
+            'description': widget.priceList['secondTierRange'],
+            'price': widget.priceList['secondTierPrice']
+          },
+          {
+            'description': widget.priceList['thirdTierRange'],
+            'price': widget.priceList['thirdTierPrice']
+          },
+        ];
+        QuerySnapshot purchases = await FirebaseFirestore.instance
+            .collection('storeHistory')
+            .where('user', isEqualTo: auth.currentUser!.uid)
+            .get();
+
+        String newPrice = '';
+        productAlreadyPurchased =
+            purchases.docs.any((doc) => doc['productName'] == widget.title);
+
+        if (productAlreadyPurchased) {
+          product['priceInfo'] =
+              '${widget.priceList['secondTierRange']} Licenses Price. Incl VAT';
+          product['price'] = widget.priceList['secondTierPrice'];
+        } else {
+          product['priceInfo'] = 'SAMA Member\'s First License is Free.';
+          product['price'] = '0.00';
+        }
+      }
+    }
+    // User is not a member
+    else {
+      try {
+        product['priceList'] = [
+          {
+            'description': 'First License',
+            'price': widget.priceList['firstLicensePrice']
+          },
+          {
+            'description': widget.priceList['secondTierRange'],
+            'price': widget.priceList['secondTierPrice']
+          },
+          {
+            'description': widget.priceList['thirdTierRange'],
+            'price': widget.priceList['thirdTierPrice']
+          },
+        ];
+        product['priceInfo'] = 'SAMA Non-Member First License Price. Incl VAT';
+        product['price'] = widget.priceList['firstLicensePrice'];
+        //widget.updatePrice(newPrice);
+      } catch (e) {
+        print('error: $e');
+      }
+    }
   }
 
   @override
@@ -72,8 +147,9 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
             ),
             ProductFullView(
                 productTitle: widget.title,
-                price: "R ${widget.price}",
-                priceInfo: widget.priceInfo,
+                priceList: product['priceList'],
+                price: "R ${product['price']}",
+                priceInfo: product['priceInfo'],
                 productQuantity: widget.productQuantity,
                 qtyWidget: DigitalQuantityWidget(
                   productQuantity: widget.productQuantity,

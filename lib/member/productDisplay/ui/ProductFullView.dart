@@ -7,6 +7,7 @@ import 'package:sama/member/productDisplay/cart/cartPage.dart';
 
 class ProductFullView extends StatefulWidget {
   final String productTitle;
+  List<Map<String, dynamic>> priceList;
   final String price;
   final String priceInfo;
   final Widget qtyWidget;
@@ -18,6 +19,7 @@ class ProductFullView extends StatefulWidget {
   ProductFullView(
       {super.key,
       required this.productTitle,
+      required this.priceList,
       required this.price,
       required this.priceInfo,
       required this.qtyWidget,
@@ -88,6 +90,25 @@ class _ProductFullViewState extends State<ProductFullView> {
                   widget.productTitle,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ...widget.priceList.map((price) {
+                  final index = widget.priceList.indexOf(price);
+                  String description = '';
+                  if (index == 0) {
+                    description =
+                        '${price['description']}: R ${price['price']}';
+                  } else {
+                    description =
+                        '${price['description']} Licenses: R ${price['price']} ';
+                  }
+                  return Text(
+                    description,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
+                  );
+                }).toList(),
                 const SizedBox(
                   height: 20,
                 ),

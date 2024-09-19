@@ -99,57 +99,67 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         },
       );
 
-  Future<void> createUser(Map<String, dynamic> memberData) async {
-    UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
-        email: memberData['email_sama'], password: 'Cp123456');
+  Future<String?> createUser(Map<String, dynamic> memberData) async {
+    try {
+      UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
+          email: memberData['email_sama'], password: 'Cp123456');
 
-    await firestore.collection('users').doc(userDocRef.user!.uid).set({
-      "id": userDocRef.user!.uid,
-      "title": memberData['title'],
-      "initials": memberData['init'],
-      "landline": '',
-      "profilePic":
-          'https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Fistockphoto-1495088043-612x612.jpg?alt=media&token=6355d1a2-7572-4221-99a3-a2823af52372',
-      "gender": '',
-      "race": '',
-      "dob": '',
-      "passportNumber": '',
-      "practiceNumber": '',
-      "univercityQualification": '',
-      "univercityName": '',
-      "qualificationYear": '',
-      "qualificationMonth": '',
-      "password": '',
-      "userType": "user",
-      "membershipAdded": false,
-      "profilePicView": '',
-      "profileView": '',
-      'firstName': memberData['first_name'],
-      'lastName': memberData['surname'],
-      'mobileNo': memberData['cell_no'],
-      'email': memberData['email_sama'],
-      'samaNo': int.parse(memberData['sama_no']),
-      'idNumber': memberData['id_no'],
-      'hpcsaNumber': memberData['hpc_full_no'],
-      'membershipPaid': memberData['membership_paid'],
-      'samaMember': memberData['sama_member'],
-      'brnchCde': memberData['brnch_cde'],
-      'brnchName': memberData['brnch_name'],
-      'status': 'Active',
-      'loggedIn': true
-    });
+      await firestore.collection('users').doc(userDocRef.user!.uid).set({
+        "id": userDocRef.user!.uid,
+        "title": memberData['title'],
+        "initials": memberData['init'],
+        "landline": '',
+        "profilePic":
+            'https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Fistockphoto-1495088043-612x612.jpg?alt=media&token=6355d1a2-7572-4221-99a3-a2823af52372',
+        "gender": '',
+        "race": '',
+        "dob": '',
+        "passportNumber": '',
+        "practiceNumber": '',
+        "univercityQualification": '',
+        "univercityName": '',
+        "qualificationYear": '',
+        "qualificationMonth": '',
+        "password": '',
+        "userType": "user",
+        "membershipAdded": false,
+        "profilePicView": '',
+        "profileView": '',
+        'firstName': memberData['first_name'],
+        'lastName': memberData['surname'],
+        'mobileNo': memberData['cell_no'],
+        'email': memberData['email_sama'],
+        'samaNo': int.parse(memberData['sama_no']),
+        'idNumber': memberData['id_no'],
+        'hpcsaNumber': memberData['hpc_full_no'],
+        'membershipPaid': memberData['membership_paid'],
+        'samaMember': memberData['sama_member'],
+        'brnchCde': memberData['brnch_cde'],
+        'brnchName': memberData['brnch_name'],
+        'status': 'Active',
+        'loggedIn': true
+      });
+
+      return userDocRef.user!.uid;
+    } catch (e) {
+      print('Error creating user: $e');
+      updateStateText('Record not found. Please try again');
+      return null;
+    }
   }
 
-  Future<void> loginUserFirstTime(String id) async {
+  Future<void> loginUserFirstTime(String? id) async {
     widget.getEmail((email.text).toLowerCase());
     widget.getEmailChangeType('passwordResetPage');
     String randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
     await sendOtp(otp: randomOtp, email: (email.text).toLowerCase());
 
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .update({'loggedIn': true});
+    if (id != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(id)
+          .update({'loggedIn': true});
+    }
 
     setState(() {
       isLoading = false;
@@ -287,8 +297,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       else if (!foundInFirebase && foundOnOracleDb) {
         // updateStateText(
         //     "You are not registered on this site yet. Please register and try again.");
-        await createUser(oracleUser);
-        await loginUserFirstTime(users.docs.first.id);
+        String? id = await createUser(oracleUser);
+        await loginUserFirstTime(id);
         // widget.updateMemberData({
         //   "title": oracleUser['title'] ?? '',
         //   "email": email.text,
@@ -343,9 +353,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
     });
 
     Map<String, dynamic> member = await checkSamaNo(email.text);
-    List data = member['items'];
-    print(data.first);
-    if (data.isEmpty) {
+    if (member.isEmpty) {
       setState(() {
         isLoading = false;
       });
@@ -353,6 +361,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
       return;
     }
+    List data = member['items'];
+    print(data.first);
 
     final users = await FirebaseFirestore.instance
         .collection('users')
@@ -363,8 +373,22 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
     widget.getEmail(data.first['email_sama'].toLowerCase());
 
-    if (data.isNotEmpty &&
-        users.docs.isNotEmpty &&
+    bool foundonOracleDb = data.isNotEmpty;
+    bool foundInFirebase = users.docs.isNotEmpty;
+    print(
+        'foundOnOracleDb: $foundonOracleDb, foundInFirebase: $foundInFirebase');
+
+    if (!foundInFirebase) {
+      setState(() {
+        isLoading = false;
+      });
+      String? id = await createUser(data.first);
+      await loginUserFirstTime(id);
+      return;
+    }
+
+    if (foundonOracleDb &&
+        foundInFirebase &&
         users.docs.first['status'] == 'Active') {
       if (users.docs.first.data()['loggedIn'] == true) {
         widget.changePage(1);
@@ -375,36 +399,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
 
         loginUserFirstTime(users.docs.first.id);
       }
-    } else {
-      await createUser(data.first);
-      loginUserFirstTime(users.docs.first.id);
-      // updateStateText(
-      //     "The SAMA member number ${email.text} is not registered on this site. If you are unsure of your SAMA member number, try your email address instead.");
-      // //openValidateDialog();
-      // widget.updateMemberData({
-      //   "title": data.first['title'] ?? '',
-      //   "email": "",
-      //   "name": '',
-      //   "lastName": '',
-      //   "cell": "",
-      //   "samaNo": email.text,
-      //   "idNo": "",
-      //   "hpcsa": "",
-      // });
-      // setState(() {
-      //   showSamaAccountCreate = true;
-      // });
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => Material(
-      //       child: LoginPages(
-      //         pageIndex: 19,
-      //       ),
-      //     ),
-      //   ),
-      // );
     }
+
     setState(() {
       isLoading = false;
     });

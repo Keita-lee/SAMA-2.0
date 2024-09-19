@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 
 class AdminTable extends StatefulWidget {
-  final String searchResult;
+  final String? searchResult;
   final List<String> columnHeaders;
   final List<Map<String, dynamic>> dataList;
   final List<Widget Function(Map<String, dynamic> data)> actions;
   final String? emptyMessage;
   final Function(int id)? onEdit;
   final Function(int id)? onDelete;
-  bool waiting;
+  bool? waiting;
 
   AdminTable(
       {Key? key,
-      required this.searchResult,
+      this.searchResult,
       required this.columnHeaders,
       required this.dataList,
-      required this.waiting,
+      this.waiting,
       this.emptyMessage,
       this.onEdit,
       this.onDelete,
@@ -78,7 +78,7 @@ class _AdminTableState extends State<AdminTable> {
               ),
             ),
             // Data Rows
-            widget.waiting
+            widget.waiting != null && widget.waiting!
                 ? const Center(
                     child: Padding(
                     padding: EdgeInsets.only(top: 8.0),

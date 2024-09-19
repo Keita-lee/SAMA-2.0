@@ -127,9 +127,9 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                             buttonTextColor: Colors.white,
                             buttonColor: Color.fromRGBO(0, 159, 159, 1),
                             onTap: () {
-                              final Uri a = Uri.parse(widget.downloadLink);
-
-                              launchUrl(a);
+                              // final Uri a = Uri.parse(widget.downloadLink);
+                              // launchUrl(a);
+                              widget.readMore();
                             }),
                       ],
                     ),

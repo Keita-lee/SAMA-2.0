@@ -15,6 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../login/popups/validateDialog.dart';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 class YourOrderCon extends StatefulWidget {
   TextEditingController email;
@@ -129,6 +130,8 @@ class _YourOrderConState extends State<YourOrderCon> {
 
   savePaymentsToHistory() async {
     List<Map<String, dynamic>> products = [];
+    List<String> productCodes = [];
+
     for (int i = 0; i < cartProducts.length; i++) {
       var product = {
         "productImage": cartProducts[i]['productImage'],
@@ -139,6 +142,13 @@ class _YourOrderConState extends State<YourOrderCon> {
         "productType": cartProducts[i]['type'],
         "productId": cartProducts[i]['id'],
       };
+
+      if (cartProducts[i].containsKey('productCode')) {
+        product.putIfAbsent(
+            'productCode', () => cartProducts[i]['productCode']);
+        productCodes.add(cartProducts[i]['productCode']);
+      }
+
       products.add(product);
     }
 
@@ -150,7 +160,7 @@ class _YourOrderConState extends State<YourOrderCon> {
     };
 
     try {
-      await FirebaseFirestore.instance
+      DocumentReference doc = await FirebaseFirestore.instance
           .collection('storeHistory')
           .add(productHistory);
       String name = 'SAMA Customer';
@@ -162,6 +172,10 @@ class _YourOrderConState extends State<YourOrderCon> {
         name = userDoc.get('firstName');
       }
 
+      if (productCodes.isNotEmpty) {
+        addCodingLicenses(productCodes, doc.id);
+      }
+
       sendPaymentConfirmation(
           email: email,
           customerName: name,
@@ -169,6 +183,54 @@ class _YourOrderConState extends State<YourOrderCon> {
           refNo: reference);
     } catch (e) {
       print('could not add user history $e');
+    }
+  }
+
+  addCodingLicenses(List<String> productCodes, String docId) async {
+    var uuid = Uuid();
+
+    for (String code in productCodes) {
+      String licenseKey = uuid.v1();
+      if (code.contains('ICD10')) {
+        await FirebaseFirestore.instance.collection('icd10Licenses').add({
+          "accTxid": docId,
+          "computercode": '',
+          "createdon": '',
+          "expiryData": '',
+          "installcount": '',
+          "installdate": '',
+          "installed": 0,
+          "licensekey": licenseKey,
+          "productCode": code,
+        });
+      } else if (code.contains('MDCM')) {
+        await FirebaseFirestore.instance.collection('emdcmLicenses').add({
+          "accTxid": docId,
+          "computercode": '',
+          "createdon": '',
+          "expiryData": '',
+          "installcount": '',
+          "installdate": '',
+          "installed": 0,
+          "licensekey": licenseKey,
+          "productCode": code,
+          "lastComms": '',
+          "webLastlogin": '',
+          "webSessionid": '',
+        });
+      } else if (code.contains('CCSA')) {
+        await FirebaseFirestore.instance.collection('ccsaLicenses').add({
+          "accTxid": docId,
+          "computercode": '',
+          "createdon": '',
+          "expiryData": '',
+          "installcount": '',
+          "installdate": '',
+          "installed": 0,
+          "licensekey": licenseKey,
+          "productCode": code,
+        });
+      }
     }
   }
 

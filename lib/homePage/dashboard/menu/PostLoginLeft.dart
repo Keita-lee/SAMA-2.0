@@ -152,6 +152,7 @@ enum PermissionNames {
   branchVoting,
   eStore,
   memberManagement,
+  transactions
 }
 
 class _PostLoginLeftState extends State<PostLoginLeft> {
@@ -168,6 +169,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
     {'name': 'Branch Voting', 'permission': false},
     {'name': 'E-store', 'permission': false},
     {'name': 'Member Management', 'permission': false},
+    {'name': 'Transactions', 'permission': false},
   ];
   int? currentOpenDropdown;
 
@@ -411,6 +413,20 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                         },
                       ),
                     ),
+                    Visibility(
+                      visible: permissions[PermissionNames.transactions.index]
+                          ['permission'],
+                      child: HoverItem(
+                        isActive: activeIndex == 17,
+                        menuSize: widget.menuSize,
+                        description: "Transactions",
+                        iconPath: "images/icon_estore.svg",
+                        onPressed: () {
+                          _handleItemClick(17, 17);
+                          widget.changePage(17);
+                        },
+                      ),
+                    ),
                     HoverItem(
                       isActive: activeIndex == 22,
                       menuSize: widget.menuSize,
@@ -427,7 +443,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       child: HoverItem(
                         isActive: activeIndex == 24,
                         menuSize: widget.menuSize,
-                        description: 'Permissions',
+                        description: 'Admin Management',
                         iconPath: "",
                         onPressed: () {
                           _handleItemClick(24, 24);
@@ -590,16 +606,6 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                     },
                   ),
 
-                  // HoverItem(
-                  //   isActive: activeIndex == 11,
-                  //   menuSize: widget.menuSize,
-                  //   description: "Transactions",
-                  //   iconPath: "images/icon_estore.svg",
-                  //   onPressed: () {
-                  //     _handleItemClick(11);
-                  //     widget.changePage(17);
-                  //   },
-                  // ),
                   /*HoverItem(
                     menuSize: widget.menuSize,
                     description: "Announcements",
