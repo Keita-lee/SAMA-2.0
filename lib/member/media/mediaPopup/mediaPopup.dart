@@ -28,7 +28,7 @@ class _MediaPopupState extends State<MediaPopup> {
   QuillController quillController = QuillController.basic();
 
   late YoutubePlayerController _youtubePlayerController;
-
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -58,6 +58,7 @@ class _MediaPopupState extends State<MediaPopup> {
                 showFullscreenButton: true,
               ),
             );
+            isLoading = false;
           } /**/
         });
       }
@@ -117,25 +118,30 @@ class _MediaPopupState extends State<MediaPopup> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-                width: isMobile
-                    ? MyUtility(context).width
-                    : MyUtility(context).width / 2.1,
-                // height: MyUtility(context).height / 2.1,
-                child: YoutubePlayerScaffold(
-                  controller: _youtubePlayerController,
-                  aspectRatio: 16 / 9,
-                  builder: (context, player) {
-                    return Column(
-                      children: [
-                        player,
-                      ],
-                    );
-                  },
-                )),
-          ),
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                  color: Colors.teal,
+                ))
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      width: isMobile
+                          ? MyUtility(context).width
+                          : MyUtility(context).width / 2.1,
+                      // height: MyUtility(context).height / 2.1,
+                      child: YoutubePlayerScaffold(
+                        controller: _youtubePlayerController,
+                        aspectRatio: 16 / 9,
+                        builder: (context, player) {
+                          return Column(
+                            children: [
+                              player,
+                            ],
+                          );
+                        },
+                      )),
+                ),
 
           /*   Padding(
             padding: const EdgeInsets.all(25.0),
