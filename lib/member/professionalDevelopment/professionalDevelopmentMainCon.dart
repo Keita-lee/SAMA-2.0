@@ -37,16 +37,39 @@ class _professionalDevelopmentMainConState
     extends State<professionalDevelopmentMainCon> {
   final _firestore = FirebaseFirestore.instance;
   int pageIndex = 0;
+  bool isLoading = true;
   CourseModel selectedCourse =
       CourseModel(id: '0', imageUrl: '', title: '', cpdPoints: '', level: '');
-
+  List<Map<String, dynamic>> coursesList = [];
   @override
   void initState() {
     _getCourses();
     super.initState();
   }
 
-  Future<void> _getCourses() async {}
+  Future<void> _getCourses() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> coursesSnapshot =
+          await _firestore.collection('cpd').get();
+      if (coursesSnapshot.docs.isNotEmpty) {
+        setState(() {
+          coursesList =
+              coursesSnapshot.docs.map((course) => course.data()).toList();
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        print('no courses found');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('error getting courses: $e');
+    }
+  }
 
   void changePageIndex(int value) {
     setState(() {
@@ -67,7 +90,9 @@ class _professionalDevelopmentMainConState
   Widget build(BuildContext context) {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SizedBox(
-      height: isMobile ? MyUtility(context).height : MyUtility(context).height,
+      height: isMobile
+          ? MyUtility(context).height * 0.7
+          : MyUtility(context).height * 2.2,
       child: Column(
         crossAxisAlignment:
             isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
@@ -85,8 +110,8 @@ class _professionalDevelopmentMainConState
                   ? MyUtility(context).width
                   : MyUtility(context).width * 0.68,
               height: isMobile
-                  ? MyUtility(context).height / 1.5
-                  : MyUtility(context).height,
+                  ? MyUtility(context).height * 0.6
+                  : MyUtility(context).height * 2,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -147,7 +172,7 @@ class _professionalDevelopmentMainConState
                     /*  */
                     const SizedBox(height: 20),
                     Visibility(
-                      visible: pageIndex == 0,
+                      visible: pageIndex == 0 && !isMobile,
                       child: StreamBuilder<QuerySnapshot>(
                           stream: FirebaseFirestore.instance
                               .collection('cpd')
@@ -172,8 +197,8 @@ class _professionalDevelopmentMainConState
                                     ? MyUtility(context).width
                                     : MyUtility(context).width / 1.5,
                                 height: isMobile
-                                    ? MyUtility(context).height
-                                    : MyUtility(context).height / 1.5,
+                                    ? MyUtility(context).height * 1.5
+                                    : MyUtility(context).height * 2,
                                 child: GridView.builder(
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
@@ -206,6 +231,22 @@ class _professionalDevelopmentMainConState
                                     }));
                           }),
                     ),
+                    Visibility(
+                        visible: pageIndex == 0 && isMobile,
+                        child: Column(
+                          children: [
+                            ...coursesList.map((course) {
+                              return professionalDevelopmentDisplayItem(
+                                onPressed: showCourseInfo,
+                                imageUrl: course['cpdImage'],
+                                title: course['title'],
+                                cpdPoints: "3.0 Clinical Point",
+                                level: "Level 2",
+                                subDescription: course['subDescription'],
+                              );
+                            }).toList(),
+                          ],
+                        )),
                     Visibility(
                         visible: pageIndex == 1,
                         child: ProfessionalDevQuiz(
