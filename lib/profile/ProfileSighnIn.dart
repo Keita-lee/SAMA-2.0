@@ -41,6 +41,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
   String profileUrl = "";
   String profileView = "";
   String profilePicView = "";
+  String membership = "";
+  String status = "";
 
   getUserData() async {
     final data = await FirebaseFirestore.instance
@@ -58,6 +60,8 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
         imageUrl = data.get('profilePic');
         profileView = data.get('profileView');
         profilePicView = data.get('profilePicView');
+        membership = data.get('prodCatCde');
+        status = data.get('status');
         print(data.get('profilePic'));
       });
     }
@@ -225,14 +229,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               fontWeight: FontWeight.normal),
                         ),
                         Text(
-                          'Membership :',
+                          'Membership : ${membership}',
                           style: TextStyle(
                               fontSize: 18,
                               color: const Color.fromARGB(255, 116, 116, 116),
                               fontWeight: FontWeight.normal),
                         ),
                         Text(
-                          'Status :',
+                          'Status : ${status}',
                           style: TextStyle(
                               fontSize: 18,
                               color: const Color.fromARGB(255, 116, 116, 116),
@@ -318,6 +322,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                     ],
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         ' ${title}. ${fullName}',
@@ -327,14 +332,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        'Membership :',
+                        'Membership : ${membership}',
                         style: TextStyle(
                             fontSize: 18,
                             color: const Color.fromARGB(255, 116, 116, 116),
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        'Status :',
+                        'Status : ${status}',
                         style: TextStyle(
                             fontSize: 18,
                             color: const Color.fromARGB(255, 116, 116, 116),
