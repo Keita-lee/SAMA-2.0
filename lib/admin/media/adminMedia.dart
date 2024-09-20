@@ -67,7 +67,7 @@ class _AdminMediaState extends State<AdminMedia> {
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return Dialog(
+        return Dialog.fullscreen(
             child: Test(
           id: id,
           closeDialog: () {
