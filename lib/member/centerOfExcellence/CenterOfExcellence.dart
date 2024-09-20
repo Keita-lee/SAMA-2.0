@@ -89,7 +89,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                 visible: userType != "Admin" ? true : false,
                 child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: isMobile ? 8 : 50),
+                        EdgeInsets.symmetric(horizontal: isMobile ? 16 : 50),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

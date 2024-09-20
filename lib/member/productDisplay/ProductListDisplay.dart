@@ -234,7 +234,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                       ),
                       Container(
                         height: isMobile
-                            ? MyUtility(context).height / 1.6
+                            ? MyUtility(context).height / 1.42
                             : MyUtility(context).height * 1.25,
                         width: isMobile
                             ? MyUtility(context).width

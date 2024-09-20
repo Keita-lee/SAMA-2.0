@@ -80,7 +80,7 @@ class _MediaPopupState extends State<MediaPopup> {
         width:
             isMobile ? MyUtility(context).width : MyUtility(context).width / 2,
         height: isMobile
-            ? MyUtility(context).height / 2
+            ? MyUtility(context).height / 1.5
             : MyUtility(context).height / 1.4,
         decoration: BoxDecoration(
             border: Border(
@@ -136,7 +136,15 @@ class _MediaPopupState extends State<MediaPopup> {
                         builder: (context, player) {
                           return Column(
                             children: [
-                              player,
+                              // Adjusted height for a larger video player
+                              SizedBox(
+                                height: isMobile
+                                    ? MyUtility(context).height /
+                                        2 // Increased height for mobile
+                                    : MyUtility(context).height /
+                                        1.3, // Increased height for desktop
+                                child: player,
+                              ),
                             ],
                           );
                         },

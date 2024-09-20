@@ -302,7 +302,7 @@ class _MemberElectionState extends State<MemberElection> {
     ];
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SamaBlueBanner(pageName: 'BRANCH VOTING'),
           SizedBox(
@@ -311,46 +311,58 @@ class _MemberElectionState extends State<MemberElection> {
           Visibility(
             visible: widget.userType != "NonMember",
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'No branch voting in progress',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(0, 159, 158, 1),
+                  Align(
+                    child: Text(
+                      'No branch voting in progress',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 159, 158, 1),
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   SizedBox(
-                    width: MyUtility(context).width / 1.5,
-                    child: Text(
-                      'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
-                      style: GoogleFonts.openSans(fontSize: 16),
+                    width: MyUtility(context).width,
+                    child: Align(
+                      child: Text(
+                        'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(fontSize: 16),
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   SizedBox(
-                    width: MyUtility(context).width / 1.5,
-                    child: Text(
-                      'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
-                      style: GoogleFonts.openSans(fontSize: 16),
+                    width: MyUtility(context).width,
+                    child: Align(
+                      child: Text(
+                        'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(fontSize: 16),
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   SizedBox(
-                    width: MyUtility(context).width / 1.5,
-                    child: Text(
-                      'Once branch voting opens, you will be notified.',
-                      style: GoogleFonts.openSans(fontSize: 16),
+                    width: MyUtility(context).width,
+                    child: Align(
+                      child: Text(
+                        'Once branch voting opens, you will be notified.',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(fontSize: 16),
+                      ),
                     ),
                   ),
                 ],

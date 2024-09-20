@@ -17,7 +17,7 @@ class _ComTypesState extends State<ComTypes> {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SizedBox(
       height: isMobile
-          ? MyUtility(context).height / 1.6
+          ? MyUtility(context).height / 1.3
           : MyUtility(context).height,
       child: SingleChildScrollView(
         child: Column(

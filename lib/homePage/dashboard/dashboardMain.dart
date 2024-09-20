@@ -136,7 +136,7 @@ class _DashboardMainState extends State<DashboardMain> {
                     pageIndex == 0 &&
                     isMobile,
                 child: Container(
-                  height: MyUtility(context).height / 1.7,
+                  height: MyUtility(context).height / 1.27,
                   color: Colors.white,
                   child: SingleChildScrollView(
                     child: Padding(

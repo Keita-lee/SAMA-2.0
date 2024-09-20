@@ -108,7 +108,7 @@ class _MemberMediaState extends State<MemberMedia> {
                         if (isMobile) {
                           return Container(
                               width: MyUtility(context).width,
-                              height: MyUtility(context).height / 1.8,
+                              height: MyUtility(context).height / 1.35,
                               child: ListView.builder(
                                   itemCount: documents.length,
                                   itemBuilder:

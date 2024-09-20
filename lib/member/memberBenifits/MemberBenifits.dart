@@ -154,7 +154,7 @@ class _MemberBenifitsState extends State<MemberBenifits> {
                             height: isMobile
                                 ? MyUtility(context).width < 400
                                     ? MyUtility(context).height / 1.6
-                                    : MyUtility(context).height / 1.7
+                                    : MyUtility(context).height / 1.3
                                 : MyUtility(context).height / 1.8,
                             //color: Colors.transparent,
                             /* child: DraggableScrollbar.rrect(

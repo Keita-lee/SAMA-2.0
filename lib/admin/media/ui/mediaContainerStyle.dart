@@ -75,7 +75,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                 width: isMobile ? width : 350,
                 height: isMobile ? height / 4 : 200,
                 decoration: BoxDecoration(
-                  color: Color(0xFFD1D1D1),
+                  color: Colors.white,
                 ),
                 child: ClipRRect(
                   child: ImageNetwork(
