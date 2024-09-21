@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/components/mobile/Navbar/login_button.dart';
+import 'package:sama/components/mobile/Navbar/register_button.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/homePage/dashboard/ui/onHoverButtons.dart';
 import 'package:sama/login/loginPages.dart';
@@ -7,7 +9,10 @@ import 'package:sama/login/loginPages.dart';
 import '../../components/myutility.dart';
 
 class NonMemberDashboard extends StatefulWidget {
-  const NonMemberDashboard({super.key});
+  final bool? visible; // Changed to nullable
+  final String? userType; // Changed to nullable
+  const NonMemberDashboard(
+      {super.key, this.visible, this.userType}); // Updated constructor
 
   @override
   State<NonMemberDashboard> createState() => _NonMemberDashboardState();
@@ -51,39 +56,7 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                       SizedBox(
                         height: 15,
                       ),
-                      // Login Button
-                      // Visibility(
-                      //   visible: widget.userType == "NonMember",
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(bottom: 10.0, top: 32.0),
-                      //     child: LoginButton(
-                      //         onPressed: () => {
-                      //               Navigator.push(
-                      //                   context,
-                      //                   MaterialPageRoute(
-                      //                       builder: (context) => Material(
-                      //                             child: LoginPages(
-                      //                               pageIndex: 0,
-                      //                             ),
-                      //                           )))
-                      //             }),
-                      //   ),
-                      // ),
-                      // // Register Button
-                      // Visibility(
-                      //   visible: widget.userType == "NonMember",
-                      //   child: RegisterButton(
-                      //       onPressed: () => {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) => Material(
-                      //                           child: LoginPages(
-                      //                             pageIndex: 9,
-                      //                           ),
-                      //                         )))
-                      //           }),
-                      // ),
+
                       Text(
                         'Designed to cater to the diverse needs of healthcare professionals at every stage of their careers. Whether you’re a student, intern, community service doctor, or an experienced practitioner, our platform offers a wealth of resources and support tailored just for you.',
                         style: TextStyle(
@@ -114,56 +87,94 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                       const SizedBox(
                         height: 25,
                       ),
+                      //  Login Button
                       Row(
                         children: [
-                          Spacer(),
-                          InkWell(
-                            onTap: () {},
-                            child: MouseRegion(
-                              onEnter: (event) {
-                                setState(() {
-                                  isHoverd = true;
-                                });
-                              },
-                              onExit: (event) {
-                                setState(() {
-                                  isHoverd = false;
-                                });
-                              },
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: isHoverd
-                                      ? Color.fromRGBO(19, 43, 81, 1)
-                                      : Color(0xFF174486),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'BECOME A MEMBER',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Material(
-                                                child: LoginPages(
-                                                  pageIndex: 9,
-                                                ),
-                                              )));
-                                },
-                              ),
+                          Visibility(
+                            visible: true, // Changed to always visible
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 0),
+                              child: LoginButton(
+                                  onPressed: () => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Material(
+                                                      child: LoginPages(
+                                                        pageIndex: 0,
+                                                      ),
+                                                    )))
+                                      }),
                             ),
-                          )
+                          ),
+                          Spacer(),
+                          // Register Button
+                          Visibility(
+                            visible: true, // Changed to always visible
+                            child: RegisterButton(
+                                onPressed: () => {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Material(
+                                                    child: LoginPages(
+                                                      pageIndex: 9,
+                                                    ),
+                                                  )))
+                                    }),
+                          ),
                         ],
                       ),
+                      // Row(
+                      //   children: [
+                      //     Spacer(),
+                      //     InkWell(
+                      //       onTap: () {},
+                      //       child: MouseRegion(
+                      //         onEnter: (event) {
+                      //           setState(() {
+                      //             isHoverd = true;
+                      //           });
+                      //         },
+                      //         onExit: (event) {
+                      //           setState(() {
+                      //             isHoverd = false;
+                      //           });
+                      //         },
+                      //         child: ElevatedButton(
+                      //           style: ElevatedButton.styleFrom(
+                      //             backgroundColor: isHoverd
+                      //                 ? Color.fromRGBO(19, 43, 81, 1)
+                      //                 : Color(0xFF174486),
+                      //             shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(5),
+                      //             ),
+                      //           ),
+                      //           child: Padding(
+                      //             padding: const EdgeInsets.all(8.0),
+                      //             child: Text(
+                      //               'BECOME A MEMBER',
+                      //               style: const TextStyle(
+                      //                 color: Colors.white,
+                      //                 fontSize: 13,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           onPressed: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) => Material(
+                      //                           child: LoginPages(
+                      //                             pageIndex: 9,
+                      //                           ),
+                      //                         )));
+                      //           },
+                      //         ),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
