@@ -37,10 +37,13 @@ class _WorkExperienceState extends State<WorkExperience> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Start',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    child: Center(
+                      // Centering the text
+                      child: Text(
+                        'Start',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -48,10 +51,13 @@ class _WorkExperienceState extends State<WorkExperience> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text(
-                      'End',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    child: Center(
+                      // Centering the text
+                      child: Text(
+                        'End',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -59,10 +65,13 @@ class _WorkExperienceState extends State<WorkExperience> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Description',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    child: Center(
+                      // Centering the text
+                      child: Text(
+                        'Description',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -97,9 +106,13 @@ class _WorkExperienceState extends State<WorkExperience> {
                     verticalAlignment: TableCellVerticalAlignment.middle,
                     child: Padding(
                       padding: EdgeInsets.all(10),
-                      child: Text(
-                        widget.workExperienceList[index]['workExperienceFrom'],
-                        style: TextStyle(fontSize: 16),
+                      child: Center(
+                        // Centering the text
+                        child: Text(
+                          widget.workExperienceList[index]
+                              ['workExperienceFrom'],
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
@@ -107,9 +120,12 @@ class _WorkExperienceState extends State<WorkExperience> {
                     verticalAlignment: TableCellVerticalAlignment.middle,
                     child: Padding(
                       padding: EdgeInsets.all(10),
-                      child: Text(
-                        widget.workExperienceList[index]['workExperienceTo'],
-                        style: TextStyle(fontSize: 16),
+                      child: Center(
+                        // Centering the text
+                        child: Text(
+                          widget.workExperienceList[index]['workExperienceTo'],
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
@@ -117,10 +133,13 @@ class _WorkExperienceState extends State<WorkExperience> {
                     verticalAlignment: TableCellVerticalAlignment.middle,
                     child: Padding(
                       padding: EdgeInsets.all(10),
-                      child: Text(
-                        widget.workExperienceList[index]
-                            ['workExperienceDescription'],
-                        style: TextStyle(fontSize: 16),
+                      child: Center(
+                        // Centering the text
+                        child: Text(
+                          widget.workExperienceList[index]
+                              ['workExperienceDescription'],
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
                   ),

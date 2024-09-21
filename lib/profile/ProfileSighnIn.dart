@@ -156,7 +156,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
         height: MyUtility(context).height / 1.15,
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -249,9 +249,13 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ProfileDropdownButton(
-                  onOptionSelected: (String) {},
-                  changePageIndex: changePage,
+                child: Align(
+                  // Align widget added
+                  alignment: Alignment.centerLeft, // Align to the left
+                  child: ProfileDropdownButton(
+                    onOptionSelected: (String) {},
+                    changePageIndex: changePage,
+                  ),
                 ),
               ),
               Container(

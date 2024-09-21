@@ -41,7 +41,7 @@ class _MyDatePickerState extends State<MyDatePicker> {
       height: 50,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: Colors.black,
         ),

@@ -322,6 +322,7 @@ class _BioState extends State<Bio> {
               ),
               ProfileTextField(
                 customSize: MyUtility(context).width / 1.1,
+                customHeight: MyUtility(context).height / 4,
                 textFieldType: '',
                 //Controller here
                 textfieldController: workExperienceDescription,

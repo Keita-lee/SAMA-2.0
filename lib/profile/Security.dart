@@ -148,9 +148,11 @@ class _SecurityState extends State<Security> {
                   hintText: "Enter Here",
                   hintStyle: TextStyle(
                     color: Color.fromARGB(255, 199, 199, 199),
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
+                  contentPadding: EdgeInsets.only(
+                      left: 15), // {{ edit_1 }} Added left padding
                 ),
               ),
             ),

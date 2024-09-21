@@ -60,10 +60,10 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: widget.isRounded == null
-                ? BorderRadius.circular(8)
+                ? BorderRadius.circular(5)
                 : BorderRadius.circular(0),
             border: Border.all(
-              color: Colors.grey,
+              color: Colors.black, // Changed border color to black
             ),
           ),
           child: Padding(

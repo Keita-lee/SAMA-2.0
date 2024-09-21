@@ -261,7 +261,7 @@ class _EditProfileState extends State<EditProfile> {
                       Text(
                         "Date of Birth",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           fontSize: 16,
                           color: Color(0xFF6A6A6A),
                         ),
@@ -271,16 +271,22 @@ class _EditProfileState extends State<EditProfile> {
                         height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                           border: Border.all(
-                            color: Colors.black,
+                            color: Color(0xFF6A6A6A),
                           ),
                         ),
                         child: TextField(
                           controller: dob,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color(0xFF6A6A6A),
+                          ),
                           readOnly: true,
                           decoration: const InputDecoration(
-                              hintText: "Click here to select date"),
+                              hintText: "Click here to select date",
+                              border: InputBorder.none),
                           onTap: () => onTapFunction(context: context),
                         ),
                       )
@@ -294,7 +300,7 @@ class _EditProfileState extends State<EditProfile> {
                     Text(
                       "ID number",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 16,
                         color: Color(0xFF6A6A6A),
                       ),
@@ -304,9 +310,9 @@ class _EditProfileState extends State<EditProfile> {
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: Colors.black,
+                          color: Color(0xFF6A6A6A),
                         ),
                       ),
                       child: TextFormField(
@@ -332,9 +338,9 @@ class _EditProfileState extends State<EditProfile> {
                         },
                         controller: idNumber,
                         style: TextStyle(
-                          color: Color.fromARGB(255, 153, 147, 147),
+                          color: Color(0xFF6A6A6A),
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                         decoration: InputDecoration(
                           contentPadding: new EdgeInsets.only(left: 12.0),
@@ -359,7 +365,7 @@ class _EditProfileState extends State<EditProfile> {
                     Text(
                       "Passport Number",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 16,
                         color: Color(0xFF6A6A6A),
                       ),
@@ -369,9 +375,9 @@ class _EditProfileState extends State<EditProfile> {
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: Colors.black,
+                          color: Color(0xFF6A6A6A),
                         ),
                       ),
                       child: TextFormField(
@@ -392,9 +398,9 @@ class _EditProfileState extends State<EditProfile> {
                         },
                         controller: passportNumber,
                         style: TextStyle(
-                          color: Color.fromARGB(255, 153, 147, 147),
+                          color: Color(0xFF6A6A6A),
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                         decoration: InputDecoration(
                           contentPadding: new EdgeInsets.only(left: 12.0),
@@ -426,6 +432,7 @@ class _EditProfileState extends State<EditProfile> {
                     description: "Practice number",
                     textfieldController: practiceNumber,
                     textFieldType: "stringType"),
+                const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -580,16 +587,17 @@ class _EditProfileState extends State<EditProfile> {
                           height: 50,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(5),
                             border: Border.all(
-                              color: Colors.black,
+                              color: Color(0xFF6A6A6A),
                             ),
                           ),
                           child: TextField(
                             controller: dob,
                             readOnly: true,
                             decoration: const InputDecoration(
-                                hintText: "Click here to select date"),
+                                hintText: "Click here to select date",
+                                border: InputBorder.none),
                             onTap: () => onTapFunction(context: context),
                           ),
                         )

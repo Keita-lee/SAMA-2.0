@@ -51,6 +51,39 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                       SizedBox(
                         height: 15,
                       ),
+                      // Login Button
+                      // Visibility(
+                      //   visible: widget.userType == "NonMember",
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(bottom: 10.0, top: 32.0),
+                      //     child: LoginButton(
+                      //         onPressed: () => {
+                      //               Navigator.push(
+                      //                   context,
+                      //                   MaterialPageRoute(
+                      //                       builder: (context) => Material(
+                      //                             child: LoginPages(
+                      //                               pageIndex: 0,
+                      //                             ),
+                      //                           )))
+                      //             }),
+                      //   ),
+                      // ),
+                      // // Register Button
+                      // Visibility(
+                      //   visible: widget.userType == "NonMember",
+                      //   child: RegisterButton(
+                      //       onPressed: () => {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) => Material(
+                      //                           child: LoginPages(
+                      //                             pageIndex: 9,
+                      //                           ),
+                      //                         )))
+                      //           }),
+                      // ),
                       Text(
                         'Designed to cater to the diverse needs of healthcare professionals at every stage of their careers. Whether you’re a student, intern, community service doctor, or an experienced practitioner, our platform offers a wealth of resources and support tailored just for you.',
                         style: TextStyle(

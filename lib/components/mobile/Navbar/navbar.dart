@@ -1,15 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:sama_mobile/MainComponants/Navbar/profile_navbar_options.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sama/components/mobile/components/Themes/custom_colors.dart';
-import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/mobile/Navbar/login_button.dart';
 import 'package:sama/components/mobile/Navbar/register_button.dart';
 import 'package:sama/login/loginPages.dart';
 import 'package:sama/profile/logoutPopup.dart';
-
 import '../../../homePage/PostLoginLandingPage.dart';
 
 class Navbar extends StatefulWidget {
@@ -50,12 +46,12 @@ class _NavbarState extends State<Navbar> {
                 )));
   }
 
-  //Dialog for logout
+  // Dialog for logout
   Future openLogoutDialog() => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            child: LogoutPopup(closeDialog: () => Navigator.pop(context!)));
+            child: LogoutPopup(closeDialog: () => Navigator.pop(context)));
       });
 
   @override
@@ -70,7 +66,6 @@ class _NavbarState extends State<Navbar> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              //   crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   'images/sama_logo.png',
@@ -78,8 +73,8 @@ class _NavbarState extends State<Navbar> {
                   width: width / 6,
                   fit: BoxFit.contain,
                 ),
-                SizedBox(width: 10),
-                Text(
+                const SizedBox(width: 10),
+                const Text(
                   'Member Portal \n(beta)',
                   style: TextStyle(
                       fontSize: 16,
@@ -92,40 +87,41 @@ class _NavbarState extends State<Navbar> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                // const ProfileNavbarOptions(),
-                Visibility(
-                  visible: widget.userType == "NonMember",
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0, top: 32.0),
-                    child: LoginButton(
-                        onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Material(
-                                            child: LoginPages(
-                                              pageIndex: 0,
-                                            ),
-                                          )))
-                            }),
-                  ),
-                ),
-                Visibility(
-                  visible: widget.userType == "NonMember",
-                  child: RegisterButton(
-                      onPressed: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Material(
-                                          child: LoginPages(
-                                            pageIndex: 9,
-                                          ),
-                                        )))
-                          }),
-                ),
+                // Login Button
+                // Visibility(
+                //   visible: widget.userType == "NonMember",
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(bottom: 10.0, top: 32.0),
+                //     child: LoginButton(
+                //         onPressed: () => {
+                //               Navigator.push(
+                //                   context,
+                //                   MaterialPageRoute(
+                //                       builder: (context) => Material(
+                //                             child: LoginPages(
+                //                               pageIndex: 0,
+                //                             ),
+                //                           )))
+                //             }),
+                //   ),
+                // ),
+                // // Register Button
+                // Visibility(
+                //   visible: widget.userType == "NonMember",
+                //   child: RegisterButton(
+                //       onPressed: () => {
+                //             Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) => Material(
+                //                           child: LoginPages(
+                //                             pageIndex: 9,
+                //                           ),
+                //                         )))
+                //           }),
+                // ),
                 const SizedBox(height: 8),
-
+                // Popup Menu
                 Visibility(
                   visible: widget.visible,
                   child: PopupMenuButton<String>(
@@ -161,6 +157,28 @@ class _NavbarState extends State<Navbar> {
                           break;
                         case "View Profile":
                           navigateToPage(3, 3);
+                          break;
+                        case "Register":
+                          // Navigate to the registration page
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                        child: LoginPages(
+                                          pageIndex: 9,
+                                        ),
+                                      )));
+                          break;
+                        case "Login":
+                          // Navigate to the login page
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                        child: LoginPages(
+                                          pageIndex: 0,
+                                        ),
+                                      )));
                           break;
                         case "logout":
                           openLogoutDialog();
@@ -216,57 +234,46 @@ class _NavbarState extends State<Navbar> {
                         );
                       }).toList();
 
-                      // Update the "Back to website" button
-                      /*  menuItems.add(PopupMenuItem<String>(
-                        value: 'Yellow Button',
-                        child: Visibility(
-                          visible: widget.userType != "NonMember",
+                      // Add Register/View Profile button based on userType
+                      menuItems.add(
+                        PopupMenuItem<String>(
+                          value: widget.userType == "NonMember"
+                              ? 'Register'
+                              : 'View Profile',
                           child: Container(
                             width: double.infinity,
                             color: CustomColors.yellow,
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Back to website',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ));*/
-
-                      menuItems.add(
-                        PopupMenuItem<String>(
-                          value: 'View Profile',
-                          child: Visibility(
-                            visible: widget.userType != "NonMember",
-                            child: Container(
-                              width: double.infinity,
-                              color: CustomColors.yellow,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: const Center(
-                                child: Text(
-                                  'VIEW PROFILE',
-                                  style: TextStyle(color: Colors.black),
-                                ),
+                                widget.userType == "NonMember"
+                                    ? 'REGISTER'
+                                    : 'VIEW PROFILE',
+                                style: const TextStyle(color: Colors.black),
                               ),
                             ),
                           ),
                         ),
                       );
+
+                      // Add Login/Logout button based on userType
                       menuItems.add(
                         PopupMenuItem<String>(
-                          value: 'logout',
-                          child: Visibility(
-                            visible: widget.userType != "NonMember",
-                            child: Container(
-                              width: double.infinity,
-                              color: CustomColors.blue,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: const Center(
-                                child: Text(
-                                  'LOGOUT',
-                                  style: TextStyle(color: Colors.white),
+                          value: widget.userType == "NonMember"
+                              ? 'Login'
+                              : 'logout',
+                          child: Container(
+                            width: double.infinity,
+                            color: CustomColors.blue,
+                            // Adjust color for logout if needed
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Center(
+                              child: Text(
+                                widget.userType == "NonMember"
+                                    ? 'LOGIN'
+                                    : 'LOGOUT',
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
