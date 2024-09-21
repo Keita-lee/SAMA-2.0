@@ -137,13 +137,16 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MyUtility(context).width * 0.70,
+        width: MyUtility(context).width * 1.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: MyUtility(context).height * 0.08,
+            Visibility(
+              visible: MyUtility(context).width > 600,
+              child: SizedBox(
+                height: MyUtility(context).height * 0.08,
+              ),
             ),
             ProductFullView(
                 productTitle: widget.title,

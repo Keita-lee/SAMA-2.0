@@ -44,9 +44,9 @@ class _ProductFullViewState extends State<ProductFullView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        Visibility(
+          visible: MyUtility(context).width < 600,
+          child: Column(children: [
             Visibility(
               visible: widget.productImage == "" ? true : false,
               child: Container(
@@ -56,8 +56,8 @@ class _ProductFullViewState extends State<ProductFullView> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                width: MyUtility(context).width / 7,
-                height: 200,
+                width: MyUtility(context).width,
+                height: 175,
               ),
             ),
             Visibility(
@@ -65,10 +65,45 @@ class _ProductFullViewState extends State<ProductFullView> {
               child: ImageNetwork(
                 fitWeb: BoxFitWeb.contain,
                 image: widget.productImage,
-                width: MyUtility(context).width / 7,
-                height: 200,
+                width: MyUtility(context).width,
+                height: 170,
+              ),
+            )
+          ]),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: MyUtility(context).width > 600,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: widget.productImage == "" ? true : false,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("images/imageIcon.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      width: MyUtility(context).width / 7,
+                      height: 200,
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.productImage != "" ? true : false,
+                    child: ImageNetwork(
+                      fitWeb: BoxFitWeb.contain,
+                      image: widget.productImage,
+                      width: MyUtility(context).width / 7,
+                      height: 200,
+                    ),
+                  ),
+                ],
               ),
             ),
+
             /*  Container(
               height: 250,
               width: 320,
@@ -86,10 +121,22 @@ class _ProductFullViewState extends State<ProductFullView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.productTitle,
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
+                (MyUtility(context).width >= 600)
+                    ? SizedBox(
+                        child: Text(
+                          widget.productTitle,
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    : SizedBox(
+                        width: MyUtility(context).width * 0.95,
+                        child: Text(
+                          widget.productTitle,
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -127,77 +174,160 @@ class _ProductFullViewState extends State<ProductFullView> {
                 const SizedBox(
                   height: 30,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    widget.qtyWidget,
-                    SizedBox(
-                      width: MyUtility(context).width * 0.09,
-                    ),
-                    hasAddedToCart == false
-                        ? MyProductButtons(
-                            buttonText: 'Add to Cart',
-                            buttonColor: Color.fromARGB(255, 212, 210, 210),
-                            borderColor: Color.fromARGB(255, 212, 210, 210),
-                            textColor: Colors.black,
-                            onTap: () async {
-                              print(widget.product);
+                if (MediaQuery.of(context).size.width > 600)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      widget.qtyWidget,
+                      SizedBox(
+                        width: MyUtility(context).width * 0.09,
+                      ),
+                      hasAddedToCart == false
+                          ? MyProductButtons(
+                              buttonText: 'Add to Cart',
+                              buttonColor: Color.fromARGB(255, 212, 210, 210),
+                              borderColor: Color.fromARGB(255, 212, 210, 210),
+                              textColor: Colors.black,
+                              onTap: () async {
+                                print(widget.product);
 
-                              await widget.buyProduct(
-                                  widget.product, widget.productQuantity);
-                              setState(() {
-                                hasAddedToCart = true;
-                              });
-                              /*Navigator.push(
+                                await widget.buyProduct(
+                                    widget.product, widget.productQuantity);
+                                setState(() {
+                                  hasAddedToCart = true;
+                                });
+                                /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const CartPage()),
                         );*/
-                            },
-                          )
-                        : MyProductButtons(
-                            buttonText: 'Go to Cart',
-                            buttonColor: Color.fromARGB(255, 212, 210, 210),
-                            borderColor: Color.fromARGB(255, 212, 210, 210),
-                            textColor: Colors.black,
-                            onTap: () async {
-                              widget.changePageIndex(2, "");
-                              /*Navigator.push(
+                              },
+                            )
+                          : MyProductButtons(
+                              buttonText: 'Go to Cart',
+                              buttonColor: Color.fromARGB(255, 212, 210, 210),
+                              borderColor: Color.fromARGB(255, 212, 210, 210),
+                              textColor: Colors.black,
+                              onTap: () async {
+                                widget.changePageIndex(2, "");
+                                /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const CartPage()),
                         );*/
-                            },
+                              },
+                            ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      MyProductButtons(
+                        buttonText: 'Buy Now',
+                        buttonColor: Colors.teal,
+                        borderColor: Colors.teal,
+                        textColor: Colors.white,
+                        onTap: () async {
+                          await widget.buyProduct(
+                              widget.product, widget.productQuantity);
+
+                          widget.changePageIndex(2, "");
+                        },
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      MyProductButtons(
+                        buttonText: 'Back',
+                        buttonColor: Colors.teal,
+                        borderColor: Colors.teal,
+                        textColor: Colors.white,
+                        onTap: () {
+                          widget.changePageIndex(0, "");
+                        },
+                      ),
+                    ],
+                  )
+                else
+                  // For mobile view
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MyUtility(context).width * 0.95,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              widget.qtyWidget,
+                              SizedBox(
+                                width: MyUtility(context).width * 0.09,
+                              ),
+                              hasAddedToCart == false
+                                  ? MyProductButtons(
+                                      buttonText: 'Add to Cart',
+                                      buttonColor:
+                                          Color.fromARGB(255, 212, 210, 210),
+                                      borderColor:
+                                          Color.fromARGB(255, 212, 210, 210),
+                                      textColor: Colors.black,
+                                      onTap: () async {
+                                        await widget.buyProduct(widget.product,
+                                            widget.productQuantity);
+                                        setState(() {
+                                          hasAddedToCart = true;
+                                        });
+                                      },
+                                    )
+                                  : MyProductButtons(
+                                      buttonText: 'Go to Cart',
+                                      buttonColor:
+                                          Color.fromARGB(255, 212, 210, 210),
+                                      borderColor:
+                                          Color.fromARGB(255, 212, 210, 210),
+                                      textColor: Colors.black,
+                                      onTap: () async {
+                                        widget.changePageIndex(2, "");
+                                      },
+                                    ),
+                            ],
                           ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    MyProductButtons(
-                      buttonText: 'Buy Now',
-                      buttonColor: Colors.teal,
-                      borderColor: Colors.teal,
-                      textColor: Colors.white,
-                      onTap: () async {
-                        await widget.buyProduct(
-                            widget.product, widget.productQuantity);
-
-                        widget.changePageIndex(2, "");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    MyProductButtons(
-                      buttonText: 'Back',
-                      buttonColor: Colors.teal,
-                      borderColor: Colors.teal,
-                      textColor: Colors.white,
-                      onTap: () {
-                        widget.changePageIndex(0, "");
-                      },
-                    ),
-                  ],
-                )
+                        ),
+                      ),
+                      const SizedBox(height: 15), // Space between rows
+                      SizedBox(
+                        width: MyUtility(context).width * 0.95,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyProductButtons(
+                              buttonText: 'Buy Now',
+                              buttonColor: Colors.teal,
+                              borderColor: Colors.teal,
+                              textColor: Colors.white,
+                              onTap: () async {
+                                await widget.buyProduct(
+                                    widget.product, widget.productQuantity);
+                                widget.changePageIndex(2, "");
+                              },
+                            ),
+                            const SizedBox(width: 15),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: MyProductButtons(
+                                buttonText: 'Back',
+                                buttonColor: Colors.teal,
+                                borderColor: Colors.teal,
+                                textColor: Colors.white,
+                                onTap: () {
+                                  widget.changePageIndex(0, "");
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
               ],
             ),
           ],
