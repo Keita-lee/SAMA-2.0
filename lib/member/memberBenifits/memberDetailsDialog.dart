@@ -115,7 +115,9 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
             ),
             Container(
               width: MyUtility(context).width,
-              height: MyUtility(context).height / 2.6,
+              height: MyUtility(context).width < 600
+                  ? null // No fixed height
+                  : MyUtility(context).height / 2.6,
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(10.0),
@@ -165,6 +167,12 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           height: 1,
+                        ),
+                      ),
+                      Visibility(
+                        visible: MyUtility(context).width < 600,
+                        child: SizedBox(
+                          height: 10,
                         ),
                       ),
                       Visibility(

@@ -13,10 +13,14 @@ class ForumHeaderStyle extends StatefulWidget {
 class _ForumHeaderStyleState extends State<ForumHeaderStyle> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Container(
-          width: MyUtility(context).width / 1.3,
+          width: isMobile
+              ? MyUtility(context).width
+              : MyUtility(context).width / 1.3,
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 8, 55, 145),
             borderRadius: BorderRadius.only(

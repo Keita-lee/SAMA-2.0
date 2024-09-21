@@ -50,60 +50,65 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
   @override
   Widget build(BuildContext context) {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SamaBlueBanner(pageName: 'COMMUNITIES'),
-        SizedBox(
-          height: 30,
-        ),
-        Visibility(
-            visible: widget.userType == "NonMember",
-            child: Padding(
-                padding: isMobile
-                    ? EdgeInsets.all(5)
-                    : EdgeInsets.symmetric(horizontal: 50),
-                child: PleaseLogin(
-                  pleaseLoginText:
-                      'Access to this content is restricted. Please log in to view or sign up for membership today.',
-                ))),
-        Visibility(
-          visible: widget.userType != "NonMember",
-          child: Padding(
-            padding: isMobile
-                ? EdgeInsets.all(0)
-                : const EdgeInsets.symmetric(horizontal: 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Visibility(
-                    visible: pageIndex == 0 ? true : false,
-                    child: ComTypes(changePageIndex: changePageIndex)),
-                Visibility(
-                    visible: pageIndex == 1 ? true : false,
-                    child: Resources(
-                      changePageIndex: changePageIndex,
-                      resourceType: resourceType,
-                    )),
-                Visibility(
-                    visible: pageIndex == 2 ? true : false,
-                    child: Forums(
-                        changePageIndex: changePageIndex,
-                        resourceType: resourceType,
-                        communityTypeList: communityTypeList)),
-                Visibility(
-                    visible: pageIndex == 3 ? true : false,
-                    child: Topics(
-                        changePageIndex: changePageIndex,
-                        resourceType: resourceType,
-                        communityTypeList: communityTypeList)),
-              ],
+    return Container(
+      height: isMobile ? MyUtility(context).height * 0.87 : null,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SamaBlueBanner(pageName: 'COMMUNITIES'),
+            SizedBox(
+              height: 30,
             ),
-          ),
+            Visibility(
+                visible: widget.userType == "NonMember",
+                child: Padding(
+                    padding: isMobile
+                        ? EdgeInsets.all(0)
+                        : EdgeInsets.symmetric(horizontal: 50),
+                    child: PleaseLogin(
+                      pleaseLoginText:
+                          'Access to this content is restricted. Please log in to view or sign up for membership today.',
+                    ))),
+            Visibility(
+              visible: widget.userType != "NonMember",
+              child: Padding(
+                padding: isMobile
+                    ? EdgeInsets.all(0)
+                    : const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Visibility(
+                        visible: pageIndex == 0 ? true : false,
+                        child: ComTypes(changePageIndex: changePageIndex)),
+                    Visibility(
+                        visible: pageIndex == 1 ? true : false,
+                        child: Resources(
+                          changePageIndex: changePageIndex,
+                          resourceType: resourceType,
+                        )),
+                    Visibility(
+                        visible: pageIndex == 2 ? true : false,
+                        child: Forums(
+                            changePageIndex: changePageIndex,
+                            resourceType: resourceType,
+                            communityTypeList: communityTypeList)),
+                    Visibility(
+                        visible: pageIndex == 3 ? true : false,
+                        child: Topics(
+                            changePageIndex: changePageIndex,
+                            resourceType: resourceType,
+                            communityTypeList: communityTypeList)),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

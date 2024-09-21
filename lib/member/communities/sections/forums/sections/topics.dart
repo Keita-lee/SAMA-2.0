@@ -83,6 +83,7 @@ class _TopicsState extends State<Topics> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -103,13 +104,19 @@ class _TopicsState extends State<Topics> {
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: SizedBox(
-            width: MyUtility(context).width * 0.77,
+            width: isMobile
+                ? MyUtility(context).width
+                : MyUtility(context).width * 0.77,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: isMobile
+                  ? MainAxisAlignment.spaceEvenly
+                  : MainAxisAlignment.end,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: isMobile
+                      ? MainAxisAlignment.spaceEvenly
+                      : MainAxisAlignment.end,
                   children: [
                     CustomSearchBar(
                       onSearch: _onSearch,
@@ -174,7 +181,9 @@ class _TopicsState extends State<Topics> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: MediaQuery.of(context).size.width < 600
+                        ? EdgeInsets.zero
+                        : const EdgeInsets.all(8),
                     child: ForumSectionTypeStyle(
                       title: _filteredDiscussions[i]['subject'],
                       description: _filteredDiscussions[i]['createdBy']['name'],

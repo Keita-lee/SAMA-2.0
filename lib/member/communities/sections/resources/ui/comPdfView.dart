@@ -25,55 +25,60 @@ class _ComPdfViewState extends State<ComPdfView> {
     if (isMobile) {
       return Column(
         children: [
-          Container(
-              width: MyUtility(context).width,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(
-                  color: Color(0xFFD1D1D1),
+          Padding(
+            padding: MyUtility(context).width > 600
+                ? EdgeInsets.zero // No padding
+                : const EdgeInsets.only(left: 8, right: 8),
+            child: Container(
+                width: MyUtility(context).width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: Color(0xFFD1D1D1),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      '${widget.title}',
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      'Tags :${widget.title}',
-                      style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    StyleButton(
-                        buttonColor: Colors.teal,
-                        description: "Download",
-                        height: 55,
-                        width: 125,
-                        onTap: () {
-                          launchUrl(Uri.parse(widget.downloadUrl));
-                        }),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
-              ))
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        '${widget.title}',
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.teal,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Tags :${widget.title}',
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      StyleButton(
+                          buttonColor: Colors.teal,
+                          description: "Download",
+                          height: 55,
+                          width: 125,
+                          onTap: () {
+                            launchUrl(Uri.parse(widget.downloadUrl));
+                          }),
+                      SizedBox(
+                        height: 8,
+                      ),
+                    ],
+                  ),
+                )),
+          )
         ],
       );
     } else {

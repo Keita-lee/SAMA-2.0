@@ -51,44 +51,52 @@ class _ComTextViewState extends State<ComTextView> {
               color: Color(0xFFD1D1D1),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '${widget.title}',
-                style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Tags :${widget.title}',
-                style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Center(
-                child: Container(
-                  width: MyUtility(context).width,
-                  decoration: BoxDecoration(),
-                  child: QuillEditor.basic(
-                    configurations: QuillEditorConfigurations(
-                      controller: quillController,
-                      sharedConfigurations: const QuillSharedConfigurations(),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${widget.title}',
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  'Tags :${widget.title}',
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.center, // Center alignment
+                    child: Container(
+                      width: MyUtility(context).width,
+                      decoration: BoxDecoration(),
+                      child: QuillEditor.basic(
+                        configurations: QuillEditorConfigurations(
+                          controller: quillController,
+                          sharedConfigurations:
+                              const QuillSharedConfigurations(),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );

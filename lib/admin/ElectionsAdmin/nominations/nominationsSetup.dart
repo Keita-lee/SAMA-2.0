@@ -75,7 +75,7 @@ class _NominationSetupState extends State<NominationSetup> {
   Widget build(BuildContext context) {
     return Container(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SamaBlueBanner(pageName: 'ELECTIONS'),
+      SamaBlueBanner(pageName: 'ELECTIONS'),
       //Conditional Container
       /* Container(
         height: 180,
