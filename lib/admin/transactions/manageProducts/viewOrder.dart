@@ -27,6 +27,7 @@ class _ViewOrderState extends State<ViewOrder> {
   final firestore = FirebaseFirestore.instance;
   int activeIndex = 0;
   List<Map<String, dynamic>> licenses = [];
+  Map<String, dynamic> selectedProduct = {};
   void changePageIndex(int index) {
     setState(() {
       activeIndex = index;
@@ -129,30 +130,30 @@ class _ViewOrderState extends State<ViewOrder> {
     }
   }
 
-  void resendLicense(String licenseKey) {
+  void resendLicense(
+      String licenseKey, String productName, String downloadLink) {
     print('resending license: $licenseKey');
     sendLicenses(
-        email: widget.customerData['email'],
-        name: widget.customerData['name'],
-        licenses: 'License key: $licenseKey');
+        email: 'jessedev07@gmail.com',
+        name: widget.customerData['name'].split('\n')[0],
+        title: widget.customerData['title'],
+        link: downloadLink,
+        licenses: 'License key: $licenseKey',
+        product: productName);
   }
 
-  void resetLicense(String licenseKey, String id, String collection) async {
-    print('resetting license: $licenseKey');
-    var uuid = Uuid();
-    String newLicenseKey = uuid.v1();
-
-    await firestore.collection(collection).doc(id).update({
-      'licencekey': newLicenseKey,
-      'computercode': '',
-      'installdate': '',
-      'installcount': 0,
-    });
-
-    sendLicenses(
-        email: widget.customerData['email'],
-        name: widget.customerData['name'],
-        licenses: 'License key: $newLicenseKey');
+  void resetLicense(String licenseKey, String id, String collection,
+      String productName, String downloadLink) async {
+    print('resetting license...');
+    try {
+      await firestore.collection(collection).doc(id).update({
+        'computercode': '',
+        'installdate': '',
+        'installcount': 0,
+      });
+    } catch (e) {
+      print('error resetting license: $e');
+    }
   }
 
   @override
@@ -160,18 +161,18 @@ class _ViewOrderState extends State<ViewOrder> {
     super.initState();
   }
 
-  void redirectToManageLicense(
-      String productType, String productName, String id) async {
+  void redirectToManageLicense(String productType, String productName,
+      String downloadLink, String id) async {
     try {
       if (productType == 'Licensed Product') {
         List<Map<String, dynamic>> newLicenses =
             await getLicenses(productName, id);
-
-        print(newLicenses);
         setState(() {
           licenses = newLicenses;
+          selectedProduct = {'name': productName, 'downloadLink': downloadLink};
         });
       }
+
       changePageIndex(1);
     } catch (e) {
       print('error getting licenses: $e');
@@ -264,8 +265,11 @@ class _ViewOrderState extends State<ViewOrder> {
                             switch (result) {
                               case 'manage':
                                 print('redirecting to manage license: $data');
-                                redirectToManageLicense(data['product type'],
-                                    data['product name'], data['firebaseId']);
+                                redirectToManageLicense(
+                                    data['product type'],
+                                    data['product name'],
+                                    data['download link'],
+                                    data['firebaseId']);
                                 break;
                             }
                           },
@@ -317,7 +321,9 @@ class _ViewOrderState extends State<ViewOrder> {
                                             'Are you sure you want to resend the license to this user?',
                                         onContinue: () {
                                           resendLicense(
-                                              data['product license']);
+                                              data['product license'],
+                                              selectedProduct['name'],
+                                              selectedProduct['downloadLink']);
                                           Navigator.of(context).pop();
                                         },
                                         onCancel: () {
@@ -332,8 +338,13 @@ class _ViewOrderState extends State<ViewOrder> {
                                         content:
                                             'Are you sure you want to reset the license for this product?',
                                         onContinue: () {
-                                          resetLicense(data['product license'],
-                                              data['id'], data['collection']);
+                                          print('resetting license: $data');
+                                          resetLicense(
+                                              data['product license'],
+                                              data['id'],
+                                              data['license collection'],
+                                              selectedProduct['name'],
+                                              selectedProduct['downloadLink']);
                                           Navigator.of(context).pop();
                                         },
                                         onCancel: () {

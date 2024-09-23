@@ -6,11 +6,14 @@ import 'package:http/http.dart' as http;
 
 Future sendLicenses(
     {required String email,
+    required String title,
     required String name,
-    required String licenses}) async {
+    required String link,
+    required String licenses,
+    required String product}) async {
   final serviceId = 'service_igwbojp';
   // TO DO: add template id
-  final templateId = '';
+  final templateId = 'email_prodlicensed';
   final userId = 'Jmk16IabzDvgmXBeJ';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
@@ -21,9 +24,12 @@ Future sendLicenses(
         'template_id': templateId,
         'user_id': userId,
         'template_params': {
-          'licenses': licenses,
+          'app_link': link,
+          'license_list': licenses,
           'member_name': name,
           'user_email': email,
+          'product_name': product,
+          'title': title
         }
       }));
 

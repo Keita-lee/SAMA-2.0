@@ -56,14 +56,14 @@ class _ManageproductsState extends State<Manageproducts> {
               : 'Active';
           String email = customer.exists ? customer['email'] : '';
           String mobile = customer.exists ? customer['mobileNo'] : '';
+          String title = customer.exists ? customer['title'] : '';
 
           tempTransactions.add({
             'firebaseId': transaction.id,
             'products': transaction['products'],
             'date': formattedDate,
             'customer': '$customerName \n$email \n$mobile',
-            'customerEmail': email,
-            'customerMobile': mobile,
+            'customerTitle': title,
             'reference': transaction['paymentRef'],
             'status': status
           });
@@ -135,7 +135,8 @@ class _ManageproductsState extends State<Manageproducts> {
                         'product name': product['productName'],
                         'qty': product['quantity'].toString(),
                         'amount': product['productPrice'],
-                        'product type': product['productType']
+                        'product type': product['productType'],
+                        'download link': product['downloadLink'],
                       })
                   .toList(),
               closeDialog: () => Navigator.pop(context),
@@ -155,7 +156,7 @@ class _ManageproductsState extends State<Manageproducts> {
       setState(() {
         transactionList
             .where((transaction) => transaction['firebaseId'] == id)
-            .first['status'] = status;
+            .first['status'] = 'Inactive';
         isLoading = false;
       });
     } catch (e) {
@@ -179,7 +180,7 @@ class _ManageproductsState extends State<Manageproducts> {
       setState(() {
         transactionList
             .where((transaction) => transaction['firebaseId'] == id)
-            .first['status'] = status;
+            .first['status'] = 'Active';
         isLoading = false;
       });
     } catch (e) {
@@ -209,10 +210,14 @@ class _ManageproductsState extends State<Manageproducts> {
                   switch (result) {
                     case 'view':
                       try {
+                        String email = data['customer'].split('\n')[1];
+                        String mobile = data['customer'].split('\n')[2];
+                        String title = data['customerTitle'];
                         Map<String, dynamic> customer = {
                           'name': data['customer'],
-                          'email': data['customerEmail'],
-                          'mobile': data['customerMobile']
+                          'email': email,
+                          'mobile': mobile,
+                          'title': title
                         };
                         openViewOrder(
                             data['firebaseId'], customer, data['products']);
