@@ -6,6 +6,7 @@ import 'package:sama/components/styleButton.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/member/professionalDevelopment/CourseInfo.dart';
 import 'package:sama/member/professionalDevelopment/professionalDevQuiz.dart';
+import 'package:sama/member/professionalDevelopment/ui/courseInfoContainer.dart';
 import 'package:sama/member/professionalDevelopment/ui/professionalDevelopmentDisplayItem.dart';
 
 class professionalDevelopmentMainCon extends StatefulWidget {
@@ -97,7 +98,7 @@ class _professionalDevelopmentMainConState
         crossAxisAlignment:
             isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
-          const SamaBlueBanner(pageName: 'PROFESSIONAL DEVELOPMENT'),
+          SamaBlueBanner(pageName: 'PROFESSIONAL DEVELOPMENT'),
           Padding(
             padding: isMobile
                 ? EdgeInsets.all(8)
@@ -115,36 +116,6 @@ class _professionalDevelopmentMainConState
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    /*Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StyleButton(
-                            fontSize: 13,
-                            description: 'View All',
-                            height: 40,
-                            width: 110,
-                            buttonTextColor: Colors.white,
-                            buttonColor: Color.fromRGBO(0, 159, 159, 1),
-                            onTap: () {
-                              () {};
-                            }),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        StyleButton(
-                          fontSize: 13,
-                          description: 'My CPD',
-                          height: 40,
-                          width: 110,
-                          buttonTextColor: Colors.white,
-                          buttonColor: Color.fromRGBO(200, 200, 200, 1),
-                          onTap: () {
-                            () {};
-                          },
-                        ),
-                      ],
-                    ),*/
                     const SizedBox(height: 30),
                     Visibility(
                       visible: pageIndex == 0,
@@ -225,6 +196,16 @@ class _professionalDevelopmentMainConState
                                                 level: "Level 2",
                                                 subDescription:
                                                     document['subDescription'],
+                                                course: CourseModel(
+                                                  id: document['id'],
+                                                  imageUrl:
+                                                      document['cpdImage'],
+                                                  title: document['title'],
+                                                  cpdPoints: document[
+                                                      'subDescription'],
+                                                  level: document[
+                                                      'subDescription'],
+                                                ),
                                               ),
                                             )
                                           ]);
@@ -243,6 +224,13 @@ class _professionalDevelopmentMainConState
                                 cpdPoints: "3.0 Clinical Point",
                                 level: "Level 2",
                                 subDescription: course['subDescription'],
+                                course: CourseModel(
+                                  id: course['id'],
+                                  imageUrl: course['cpdImage'],
+                                  title: course['title'],
+                                  cpdPoints: course['subDescription'],
+                                  level: course['subDescription'],
+                                ),
                               );
                             }).toList(),
                           ],
@@ -251,17 +239,38 @@ class _professionalDevelopmentMainConState
                         visible: pageIndex == 1,
                         child: ProfessionalDevQuiz(
                           hasPassed: false,
-                          isResultsScreen: true,
+                          isResultsScreen: false,
                           course: selectedCourse,
                           isQuizInProgress: false,
                         )),
+                    Visibility(
+                      visible: pageIndex == 2,
+                      child: CourseInfo(
+                        course: CourseModel(
+                          id: selectedCourse.id,
+                          imageUrl: selectedCourse.imageUrl,
+                          title: selectedCourse.title,
+                          cpdPoints: selectedCourse.cpdPoints,
+                          level: selectedCourse.level,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
+/*
+
+ final String id;
+  final String imageUrl;
+  final String title;
+  final String cpdPoints;
+  final String level;
+
+ */

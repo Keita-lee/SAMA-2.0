@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_network/image_network.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/professionalDevelopment/ui/gradeRequiredCon.dart';
 
@@ -38,132 +39,134 @@ class _CourseInfoContainerState extends State<CourseInfoContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.68,
-      height: 200,
-      child: Row(
+      //  height: 1000,
+      child: Column(
         children: [
-          Container(
-            width: MyUtility(context).width / 6,
-            height: 200,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(widget.courseImage), fit: BoxFit.cover),
-            ),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+          Row(
             children: [
-              Text.rich(
-                TextSpan(
+              ImageNetwork(
+                fitWeb: BoxFitWeb.contain,
+                image: widget.courseImage,
+                width: MyUtility(context).width / 6,
+                height: MyUtility(context).height / 4,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Accreditation\n',
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        TextSpan(
+                          text: '${widget.accreditationOrg}\n',
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.normal, fontSize: 15),
+                        ),
+                        TextSpan(
+                          text: '${widget.accreditationId}\n',
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.normal, fontSize: 15),
+                        ),
+                        TextSpan(
+                          text: widget.accreditationPoints,
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.normal, fontSize: 15),
+                        ),
+                        TextSpan(
+                          text: '\n\nCertification\n',
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        TextSpan(
+                          text: 'Attempts allowed: ${widget.allowedAttempts}\n',
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.normal, fontSize: 15),
+                        ),
+                        TextSpan(
+                          text: '${widget.passRate}% pass rate',
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.normal, fontSize: 15),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Visibility(
+                visible: widget.isAccessed == true,
+                child: GradeRequiredCon(
+                  requiredCorrectQuestions: 14,
+                  questionAmmount: 20,
+                  requiredGradePercentage: 70,
+                  attemptNumber: '1',
+                  grade: '5',
+                  failedAttemptScorePercentage: 25,
+                  onTapReviewFailed: () {
+                    //ADD LOGIC
+                  },
+                  isQuizInProgress: false,
+                  isAttemptPending: true,
+                  takeQuizFunction: () {},
+                ),
+              ),
+              Visibility(
+                visible: widget.userType != 'NonMember' &&
+                    widget.isAccessed == false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextSpan(
-                      text: 'Accreditation\n',
+                    Spacer(),
+                    StyleButton(
+                        buttonColor: Colors.teal,
+                        description: 'Access',
+                        height: 40,
+                        width: 110,
+                        onTap: () {})
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: widget.userType == 'NonMember' &&
+                    widget.isAccessed == false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Spacer(),
+                    StyleButton(
+                        buttonColor: Colors.teal,
+                        description: 'Login to Access',
+                        height: 40,
+                        width: 110,
+                        onTap: () {}),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    StyleButton(
+                        description: 'Purchase Token',
+                        height: 40,
+                        width: 110,
+                        onTap: () {}),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      widget.nonMemberPrice,
                       style: GoogleFonts.openSans(
                           fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    TextSpan(
-                      text: '${widget.accreditationOrg}\n',
-                      style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.normal, fontSize: 15),
-                    ),
-                    TextSpan(
-                      text: '${widget.accreditationId}\n',
-                      style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.normal, fontSize: 15),
-                    ),
-                    TextSpan(
-                      text: widget.accreditationPoints,
-                      style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.normal, fontSize: 15),
-                    ),
-                    TextSpan(
-                      text: '\n\nCertification\n',
-                      style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    TextSpan(
-                      text: 'Attempts allowed: ${widget.allowedAttempts}\n',
-                      style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.normal, fontSize: 15),
-                    ),
-                    TextSpan(
-                      text: '${widget.passRate}% pass rate',
-                      style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.normal, fontSize: 15),
                     ),
                   ],
                 ),
               ),
             ],
-          ),
-          Spacer(),
-          Visibility(
-            visible: widget.isAccessed == true,
-            child: GradeRequiredCon(
-              requiredCorrectQuestions: 14,
-              questionAmmount: 20,
-              requiredGradePercentage: 70,
-              attemptNumber: '1',
-              grade: '5',
-              failedAttemptScorePercentage: 25,
-              onTapReviewFailed: () {
-                //ADD LOGIC
-              },
-              isQuizInProgress: false,
-              isAttemptPending: true,
-              takeQuizFunction: () {},
-            ),
-          ),
-          Visibility(
-            visible:
-                widget.userType != 'NonMember' && widget.isAccessed == false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Spacer(),
-                StyleButton(
-                    buttonColor: Colors.teal,
-                    description: 'Access',
-                    height: 40,
-                    width: 110,
-                    onTap: () {})
-              ],
-            ),
-          ),
-          Visibility(
-            visible:
-                widget.userType == 'NonMember' && widget.isAccessed == false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Spacer(),
-                StyleButton(
-                    buttonColor: Colors.teal,
-                    description: 'Login to Access',
-                    height: 40,
-                    width: 110,
-                    onTap: () {}),
-                const SizedBox(
-                  height: 10,
-                ),
-                StyleButton(
-                    description: 'Purchase Token',
-                    height: 40,
-                    width: 110,
-                    onTap: () {}),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  widget.nonMemberPrice,
-                  style: GoogleFonts.openSans(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ],
-            ),
           ),
         ],
       ),

@@ -15,8 +15,8 @@ class _CourseInfoState extends State<CourseInfo> {
   @override
   Widget build(BuildContext context) {
     String title = widget.course.title;
-    return SizedBox(
-      width: MyUtility(context).width * 0.68,
+    return Container(
+      width: MyUtility(context).width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -28,10 +28,10 @@ class _CourseInfoState extends State<CourseInfo> {
                 fontSize: 23,
                 fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
+          SizedBox(
             height: 20,
           ),
-          CourseInfoContainer(
+          /**/ CourseInfoContainer(
             isAccessed: false,
             accreditationOrg: 'Health Professions Council of South Africa',
             accreditationId: 'MDB015/MPDP/038/206',
@@ -39,7 +39,7 @@ class _CourseInfoState extends State<CourseInfo> {
             courseImage: 'images/sama_logo.png',
             allowedAttempts: '2',
             passRate: '70',
-            userType: '',
+            userType: 'NonMember',
             nonMemberPrice: 'R1500 inc VAT',
           ),
           const SizedBox(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/professionalDevelopment/ui/myCPDdisplayItem.dart';
 import 'package:sama/member/professionalDevelopment/ui/quizQuestions/professionalDevQuizContent.dart';
 import 'package:sama/member/professionalDevelopment/ui/quizProgressBar.dart';
 import 'package:sama/member/professionalDevelopment/ui/results/quizEndResults.dart';
+import 'package:sama/member/professionalDevelopment/ui/yourQuizAnswers/yourAnswers.dart';
 
 import '../../components/myutility.dart';
 import 'professionalDevelopmentMainCon.dart';
@@ -18,19 +20,55 @@ class ProfessionalDevQuiz extends StatefulWidget {
       {super.key,
       required this.course,
       required this.isQuizInProgress,
-      required this.isResultsScreen, required this.hasPassed});
+      required this.isResultsScreen,
+      required this.hasPassed});
 
   @override
   State<ProfessionalDevQuiz> createState() => _ProfessionalDevQuizState();
 }
 
 class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
+  //var
+  var quizStatus = "READ ISSUE";
+  List questionAnswers = [];
+
+  int questionLength = 0;
+  String passedValue = "FAILED";
+
+// set state of question list
+  getQuestionAnswers(value, questionLengthAmount) {
+    setState(() {
+      questionAnswers = value;
+      questionLength = questionLengthAmount;
+    });
+  }
+
+  getGradeForQuestions() {
+    print(questionAnswers);
+    int correctAmountAnswers = 0;
+    for (int j = 0; j < questionAnswers.length; j++) {
+      if (questionAnswers[j]['questionCorrect'] == true) {
+        print("true");
+        correctAmountAnswers++;
+      }
+    }
+    if (correctAmountAnswers < 0) {
+      correctAmountAnswers = 0;
+    }
+    if ((correctAmountAnswers / questionLength).roundToDouble() * 100 >= 70) {
+      setState(() {
+        passedValue = "PASSED";
+      });
+    }
+    return '${correctAmountAnswers}/ ${questionLength} ( ${(correctAmountAnswers / questionLength).roundToDouble() * 100} % )';
+  }
+
   @override
   Widget build(BuildContext context) {
     String title = widget.course.title;
     return SizedBox(
       width: MyUtility(context).width * 0.68,
-      height: MyUtility(context).height * 0.80,
+      height: MyUtility(context).height,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,9 +98,16 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
             const SizedBox(
               height: 40,
             ),
-            QuizProgressBar(),
             Visibility(
-              visible: widget.isResultsScreen == false,
+                visible: quizStatus == "QUIZ" && questionAnswers.length >= 1,
+                child: QuizProgressBar(
+                    questionAnswers: questionAnswers.length,
+                    questionLength: questionLength)),
+            const SizedBox(
+              height: 40,
+            ),
+            Visibility(
+              visible: quizStatus != "SUBMIT ATTEMPT FINAL",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -72,7 +117,11 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                       height: 50,
                       fontSize: 13,
                       width: 210,
-                      onTap: () {}),
+                      onTap: () {
+                        setState(() {
+                          quizStatus = "READ ISSUE";
+                        });
+                      }),
                   const SizedBox(
                     width: 30,
                   ),
@@ -82,7 +131,11 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                       height: 50,
                       fontSize: 13,
                       width: 210,
-                      onTap: () {}),
+                      onTap: () {
+                        setState(() {
+                          quizStatus = "QUIZ";
+                        });
+                      }),
                   const SizedBox(
                     width: 30,
                   ),
@@ -92,43 +145,11 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                       height: 50,
                       fontSize: 13,
                       width: 210,
-                      onTap: () {}),
-                ],
-              ),
-            ),
-            Visibility(
-              visible: widget.isResultsScreen == true,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  StyleButton(
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      description: 'READ ISSUE',
-                      height: 50,
-                      fontSize: 13,
-                      width: 210,
-                      onTap: () {}),
-                  Visibility(
-                    visible: widget.hasPassed == true,
-                    child: StyleButton(
-                        buttonColor: Color.fromRGBO(239, 81, 34, 1),
-                        description: 'PASSED',
-                        height: 50,
-                        fontSize: 13,
-                        width: 210,
-                        onTap: () {}),
-                  ),
-                  Visibility(
-                    visible: widget.hasPassed == false,
-                    child: StyleButton(
-                      buttonTextColor: Colors.black,
-                        buttonColor: const Color.fromARGB(255, 185, 185, 185),
-                        description: 'FAILED',
-                        height: 50,
-                        fontSize: 14,
-                        width: 210,
-                        onTap: () {}),
-                  ),
+                      onTap: () {
+                        setState(() {
+                          quizStatus = "SUBMIT ATTEMPT";
+                        });
+                      }),
                 ],
               ),
             ),
@@ -136,7 +157,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
               height: 30,
             ),
             Visibility(
-              visible: widget.isQuizInProgress,
+              visible: quizStatus == "READ ISSUE",
               child: StyleButton(
                   buttonColor: Colors.teal,
                   description: 'Click to read issue online',
@@ -154,17 +175,73 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                 onTap: (){},
                 progress: 0.7)*/
 
-             /*QuizEndResults(
-              hasPassed: widget.hasPassed,
-                 dateCompleted: '19 August 2024',
-                 grade: '17/20 (85%)',
-                 cpdPoints: '3.0 Clinical')*/
+            /**/
 
-              
-
-             ProfessionalDevQuizContent(
+            Visibility(
+              visible: quizStatus == "QUIZ",
+              child: ProfessionalDevQuizContent(
+                getQuestionAnswers: getQuestionAnswers,
                 attemptNumber: '1',
-              )
+                cpdId: widget.course.id,
+              ),
+            ),
+            Visibility(
+              visible: quizStatus == "SUBMIT ATTEMPT",
+              child: YourAnswers(
+                  attemptNumber: '1',
+                  questionAnswers: questionAnswers,
+                  finalSubmit: () {
+                    setState(() {
+                      quizStatus = "SUBMIT ATTEMPT FINAL";
+                    });
+                  }),
+            ),
+            Visibility(
+              visible: quizStatus == "SUBMIT ATTEMPT FINAL",
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      StyleButton(
+                          buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                          description: 'READ ISSUE',
+                          height: 50,
+                          fontSize: 13,
+                          width: 210,
+                          onTap: () {}),
+                      Visibility(
+                        visible: passedValue == "PASSED",
+                        child: StyleButton(
+                            buttonColor: Color.fromRGBO(239, 81, 34, 1),
+                            description: 'PASSED',
+                            height: 50,
+                            fontSize: 13,
+                            width: 210,
+                            onTap: () {}),
+                      ),
+                      Visibility(
+                        visible: passedValue != "PASSED",
+                        child: StyleButton(
+                            buttonTextColor: Colors.black,
+                            buttonColor:
+                                const Color.fromARGB(255, 185, 185, 185),
+                            description: 'FAILED',
+                            height: 50,
+                            fontSize: 14,
+                            width: 210,
+                            onTap: () {}),
+                      ),
+                    ],
+                  ),
+                  QuizEndResults(
+                      hasPassed: passedValue == "PASSED",
+                      dateCompleted: CommonService().getTodaysDateText(),
+                      grade: getGradeForQuestions(),
+                      cpdPoints: '3.0 Clinical')
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -12,6 +12,7 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
   final String cpdPoints;
   final String level;
   final String subDescription;
+  final CourseModel course;
 
   const professionalDevelopmentDisplayItem(
       {super.key,
@@ -20,7 +21,8 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
       required this.title,
       required this.cpdPoints,
       required this.level,
-      required this.subDescription});
+      required this.subDescription,
+      required this.course});
 
   @override
   State<professionalDevelopmentDisplayItem> createState() =>
@@ -116,10 +118,10 @@ class _professionalDevelopmentDisplayItemState
                   buttonTextColor: Colors.white,
                   buttonColor: const Color.fromRGBO(0, 159, 159, 1),
                   onTap: () {
-                    final Uri a = Uri.parse(widget.subDescription);
+                    //   final Uri a = Uri.parse(widget.subDescription);
 
-                    launchUrl(a);
-                    // widget.onPressed(widget.course);
+                    //  launchUrl(a);
+                    widget.onPressed(widget.course);
                   },
                 ),
                 const SizedBox(height: 20),
