@@ -241,11 +241,16 @@ class _GetUsernameState extends State<GetUsername> {
                     },
                   ),
                   const SizedBox(height: 30),
-                  Text(
-                    'Return to login\n\n',
-                    style: FontText(context).linksBlue.copyWith(
-                          fontSize: MyUtility(context).width / 25,
-                        ),
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(0);
+                    },
+                    child: Text(
+                      'Return to login\n\n',
+                      style: FontText(context).linksBlue.copyWith(
+                            fontSize: MyUtility(context).width / 25,
+                          ),
+                    ),
                   ),
                 ],
               ),

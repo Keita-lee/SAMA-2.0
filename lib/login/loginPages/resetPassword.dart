@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
@@ -233,16 +234,24 @@ class _ResetPasswordState extends State<ResetPassword> {
                           style: FontText(context).bodyMediumBlack,
                         ),
                         TextSpan(
-                          text: 'Help me retrieve my SAMA password\n\n\n',
+                          text: 'Help me retrieve my SAMA password\n\n',
                           style: FontText(context).linksBlue.copyWith(
                                 fontSize: MyUtility(context).width / 25,
                               ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              widget.changePage(11);
+                            },
                         ),
                         TextSpan(
                           text: 'Return to login\n\n',
                           style: FontText(context).linksBlue.copyWith(
                                 fontSize: MyUtility(context).width / 25,
                               ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              widget.changePage(0);
+                            },
                         ),
                       ],
                     ),

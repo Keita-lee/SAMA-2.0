@@ -100,10 +100,12 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               width: isMobile
                   ? MyUtility(context).width
                   : MyUtility(context).width * 0.70 - 280,
-              height: 110,
+              height: isMobile ? MyUtility(context).height * 0.14 : 110,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: isMobile
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.productName,
@@ -112,12 +114,15 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: isMobile ? TextAlign.center : null,
                   ),
                   SizedBox(height: 20),
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: isMobile
+                          ? MainAxisAlignment.center
+                          : MainAxisAlignment.start,
                       children: [
                         StyleButton(
                             fontSize: isMobile ? 16 : 13,

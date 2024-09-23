@@ -116,7 +116,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
             Container(
               width: MyUtility(context).width,
               height: MyUtility(context).width < 600
-                  ? null // No fixed height
+                  ? MyUtility(context).height * 0.685 // No fixed height
                   : MyUtility(context).height / 2.6,
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),

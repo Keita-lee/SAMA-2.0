@@ -99,14 +99,22 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
             const SizedBox(
               height: 10,
             ),
-            Text(
-              (widget.title),
-              style: TextStyle(
+            Padding(
+              padding: MediaQuery.of(context).size.width > 600
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.only(left: 8, right: 8),
+              child: Text(
+                widget.title,
+                style: TextStyle(
                   fontSize: isMobile ? 18 : 16,
                   height: 1,
                   color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: isMobile ? TextAlign.center : TextAlign.left,
+              ),
             ),
+
             Spacer(),
 
             SizedBox(
