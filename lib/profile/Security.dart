@@ -61,6 +61,19 @@ class _SecurityState extends State<Security> {
         });
 
     updatePassword() {
+      if (password.text.isEmpty || passwordCheck.text.isEmpty) {
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              child: ValidateDialog(
+                description: "Please enter a password.",
+                closeDialog: () => Navigator.pop(context),
+              ),
+            );
+          },
+        );
+      }
       if (password.text != passwordCheck.text) {
         return openValidatePasswordMatchDialog();
       }

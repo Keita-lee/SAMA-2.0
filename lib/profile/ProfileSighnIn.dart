@@ -218,31 +218,34 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                     SizedBox(
                       width: 8,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ' ${title}. ${fullName}',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: const Color.fromARGB(255, 116, 116, 116),
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          'Membership : ${membership}',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: const Color.fromARGB(255, 116, 116, 116),
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          'Status : ${status}',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: const Color.fromARGB(255, 116, 116, 116),
-                              fontWeight: FontWeight.normal),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ' ${title}. ${fullName}',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: const Color.fromARGB(255, 116, 116, 116),
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            'Membership : ${membership}',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: const Color.fromARGB(255, 116, 116, 116),
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            'Status : ${status}',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: const Color.fromARGB(255, 116, 116, 116),
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

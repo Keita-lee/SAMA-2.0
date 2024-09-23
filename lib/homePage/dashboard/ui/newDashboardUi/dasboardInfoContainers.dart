@@ -37,77 +37,83 @@ class DashboardInfoContainers extends StatefulWidget {
 class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: widget.height,
-      width: widget.customWidth != null ? widget.customWidth : 300,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color.fromARGB(255, 190, 190, 190)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-            visible: widget.activeTopBar == null ? true : false,
-            child: Container(
-              width: widget.customWidth != null ? widget.customWidth : 300,
-              height: 10,
+    return Padding(
+      padding: MediaQuery.of(context).size.width > 600
+          ? EdgeInsets.zero // No padding
+          : const EdgeInsets.only(left: 12, right: 12),
+      child: Container(
+        height: widget.height,
+        width: widget.customWidth != null ? widget.customWidth : 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: const Color.fromARGB(255, 190, 190, 190)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: widget.activeTopBar == null ? true : false,
+              child: Container(
+                width: widget.customWidth != null ? widget.customWidth : 300,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: widget.topBarColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
+                ),
+              ),
+            ),
+            Container(
               decoration: BoxDecoration(
-                color: widget.topBarColor,
+                color: widget.extendedTopBarColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
                 ),
               ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: widget.extendedTopBarColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    widget.image,
-                    height: 22,
-                    color: widget.svgColor == null
-                        ? Color.fromRGBO(237, 157, 4, 1)
-                        : widget.svgColor,
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    widget.header,
-                    style: GoogleFonts.openSans(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  /* Visibility(
-                    visible: widget.headerTextButton == true,
-                    child: DashboardTextButton(
-                      decorationColor: Colors.black,
-                      textColor: Colors.black,
-                      text: 'Turn off',
-                      onTap: () {},
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      widget.image,
+                      height: 22,
+                      color: widget.svgColor == null
+                          ? Color.fromRGBO(237, 157, 4, 1)
+                          : widget.svgColor,
                     ),
-                  )*/
-                ],
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      widget.header,
+                      style: GoogleFonts.openSans(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    /* Visibility(
+                      visible: widget.headerTextButton == true,
+                      child: DashboardTextButton(
+                        decorationColor: Colors.black,
+                        textColor: Colors.black,
+                        text: 'Turn off',
+                        onTap: () {},
+                      ),
+                    )*/
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          widget.child
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            widget.child
+          ],
+        ),
       ),
     );
   }
