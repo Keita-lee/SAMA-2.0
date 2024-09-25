@@ -51,7 +51,7 @@ class _MemberCommunitiesState extends State<MemberCommunities> {
   Widget build(BuildContext context) {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-      height: isMobile ? MyUtility(context).height * 0.87 : null,
+      height: isMobile ? MyUtility(context).height * 0.86 : null,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

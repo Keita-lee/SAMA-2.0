@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/commonColors/SamaColors.dart';
+import 'package:sama/components/myutility.dart';
 
 class DashboardTextButton extends StatefulWidget {
   final String text;
@@ -21,13 +22,14 @@ class DashboardTextButton extends StatefulWidget {
 class _DashboardTextButtonState extends State<DashboardTextButton> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return InkWell(
       onTap: widget.onTap,
       child: Text(
         widget.text,
         style: GoogleFonts.openSans(
           color: widget.textColor ?? SamaColors().teal,
-          fontSize: 12,
+          fontSize: isMobile ? 18 : 12,
           decoration: TextDecoration.underline,
           decorationColor: widget.decorationColor ?? SamaColors().teal,
           decorationThickness: 4,

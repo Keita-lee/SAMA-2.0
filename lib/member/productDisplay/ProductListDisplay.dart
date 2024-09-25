@@ -205,36 +205,62 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: MyUtility(context).width -
-                            MyUtility(context).width / 3.5,
-                        child: Row(
-                          children: [
-                            Spacer(),
-                            Visibility(
-                              visible: widget.userType != "NonMember",
-                              child: StyleButton(
-                                  description: "View Purchase History",
-                                  height: 55,
-                                  width: 125,
-                                  onTap: () {
-                                    sendPaymentConfirmation(
-                                        email: "ChrisPotgieter145@gmail.com",
-                                        customerName: "Customer Nme",
-                                        totalPrice: "123",
-                                        refNo: "rft");
-                                    //    changePageIndex(3, "");
-                                  }),
+                      isMobile
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Visibility(
+                                  visible: widget.userType != "NonMember",
+                                  child: InkWell(
+                                    onTap: () {
+                                      sendPaymentConfirmation(
+                                          email: "ChrisPotgieter145@gmail.com",
+                                          customerName: "Customer Nme",
+                                          totalPrice: "123",
+                                          refNo: "rft");
+                                      //    changePageIndex(3, "");
+                                    },
+                                    child: Text(
+                                      'View Purchase History',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             )
-                          ],
-                        ),
-                      ),
+                          : SizedBox(
+                              width: MyUtility(context).width -
+                                  MyUtility(context).width / 3.5,
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  Visibility(
+                                    visible: widget.userType != "NonMember",
+                                    child: StyleButton(
+                                        description: "View Purchase History",
+                                        height: 55,
+                                        width: 125,
+                                        onTap: () {
+                                          sendPaymentConfirmation(
+                                              email:
+                                                  "ChrisPotgieter145@gmail.com",
+                                              customerName: "Customer Nme",
+                                              totalPrice: "123",
+                                              refNo: "rft");
+                                          //    changePageIndex(3, "");
+                                        }),
+                                  )
+                                ],
+                              ),
+                            ),
                       const SizedBox(
                         height: 35,
                       ),
                       Container(
                         height: isMobile
-                            ? MyUtility(context).height / 1.42
+                            ? MyUtility(context).height / 1.45
                             : MyUtility(context).height * 1.25,
                         width: isMobile
                             ? MyUtility(context).width

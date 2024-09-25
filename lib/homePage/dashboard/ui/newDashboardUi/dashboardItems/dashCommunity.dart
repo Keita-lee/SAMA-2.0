@@ -60,7 +60,7 @@ class _DashCommunityState extends State<DashCommunity> {
                       Text(
                         'Coming soon!',
                         style: GoogleFonts.openSans(
-                            fontSize: 12, fontWeight: FontWeight.w600),
+                            fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ])))
       ]);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/Login/popups/validateDialog.dart';
 import 'package:sama/components/email/sendSAMANumber.dart';
+import 'package:sama/components/mobile/Navbar/footer.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -135,45 +136,142 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Container(
-        width: MyUtility(context).width / 1.5,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Validate your email address",
-                style: GoogleFonts.openSans(
-                  fontSize: 20,
-                  color: Color.fromRGBO(0, 159, 158, 1),
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.5,
+        width: isMobile
+            ? MyUtility(context).width
+            : MyUtility(context).width / 1.5,
+        child: Padding(
+          padding: MediaQuery.of(context).size.width > 600
+              ? EdgeInsets.zero
+              : const EdgeInsets.only(left: 8, right: 8),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'images/sama_logo.png',
+                      height: MyUtility(context).height / 9,
+                      width: MyUtility(context).width / 6,
+                      fit: BoxFit.contain,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Member Portal \n(beta)',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF174486),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text.rich(
-                TextSpan(
-                  text: "A ",
+                Visibility(
+                  visible: MyUtility(context).width < 600,
+                  child: SizedBox(
+                    height: 20,
+                  ),
+                ),
+                Text(
+                  "Validate your email address",
+                  style: GoogleFonts.openSans(
+                    fontSize: 20,
+                    color: Color.fromRGBO(0, 159, 158, 1),
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: "A ",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.5,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "one time pin",
+                        style: GoogleFonts.openSans(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            " has been sent sent to your email address, please enter it here ",
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    ProfileTextField(
+                        customSize: MyUtility(context).width * 0.3,
+                        textFieldType: 'intType',
+                        textfieldController: otp),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25, top: 10),
+                      child: StyleButton(
+                        fontSize: 12,
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        description: "VALIDATE",
+                        height: 55,
+                        width: 100,
+                        onTap: () {
+                          validate();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  messageText,
+                  style: GoogleFonts.openSans(
+                    fontSize: 14,
+                    color: Colors.red,
+                  ),
+                ),
+                Text('Did not get an OTP?',
+                    style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      letterSpacing: -0.5,
+                    )),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Please allow a few minutes for this to be sent',
                   style: GoogleFonts.openSans(
                     fontSize: 16,
                     color: Colors.grey[600],
                     fontWeight: FontWeight.w500,
                     letterSpacing: -0.5,
                   ),
+                ),
+                Row(
                   children: [
-                    TextSpan(
-                      text: "one time pin",
-                      style: GoogleFonts.openSans(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    TextSpan(
-                      text:
-                          " has been sent sent to your email address, please enter it here ",
+                    Text(
+                      'if no OTP received after a few minutes ',
                       style: GoogleFonts.openSans(
                         fontSize: 16,
                         color: Colors.grey[600],
@@ -181,122 +279,59 @@ class _ValidateByEmailOtpState extends State<ValidateByEmailOtp> {
                         letterSpacing: -0.5,
                       ),
                     ),
+                    InkWell(
+                      onTap: () {
+                        widget.changePage(11);
+                      },
+                      child: Text(
+                        "click to retry",
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: const Color.fromRGBO(0, 159, 158, 1),
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2.0,
+                          decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  ProfileTextField(
-                      customSize: MyUtility(context).width * 0.3,
-                      textFieldType: 'intType',
-                      textfieldController: otp),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25, top: 10),
-                    child: StyleButton(
-                      fontSize: 12,
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      description: "VALIDATE",
-                      height: 55,
-                      width: 100,
-                      onTap: () {
-                        validate();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                messageText,
-                style: GoogleFonts.openSans(
-                  fontSize: 14,
-                  color: Colors.red,
+                SizedBox(
+                  height: 30,
                 ),
-              ),
-              Text('Did not get an OTP?',
-                  style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    letterSpacing: -0.5,
-                  )),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                'Please allow a few minutes for this to be sent',
-                style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'if no OTP received after a few minutes ',
+                /* GestureDetector(
+                  onTap: () {
+                    widget.changePage(0);
+                  },
+                  child: Text(
+                    "Return to login",
                     style: GoogleFonts.openSans(
                       fontSize: 16,
-                      color: Colors.grey[600],
+                      color: const Color.fromRGBO(0, 159, 158, 1),
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2.0,
+                      decorationColor: Color.fromRGBO(0, 159, 158, 1),
                       fontWeight: FontWeight.w500,
                       letterSpacing: -0.5,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      OpenContructionPopup();
-                    },
-                    child: Text(
-                      "click to retry",
-                      style: GoogleFonts.openSans(
+                ),
+                InkWell(
+                  onTap: () {
+                    OpenContructionPopup();
+                  },
+                  child: Text(
+                    "Need help? CONTACT SAMA",
+                    style: TextStyle(
                         fontSize: 16,
-                        color: const Color.fromRGBO(0, 159, 158, 1),
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2.0,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
+                        color: const Color.fromARGB(255, 8, 55, 145)),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              /* GestureDetector(
-                onTap: () {
-                  widget.changePage(0);
-                },
-                child: Text(
-                  "Return to login",
-                  style: GoogleFonts.openSans(
-                    fontSize: 16,
-                    color: const Color.fromRGBO(0, 159, 158, 1),
-                    decoration: TextDecoration.underline,
-                    decorationThickness: 2.0,
-                    decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  OpenContructionPopup();
-                },
-                child: Text(
-                  "Need help? CONTACT SAMA",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: const Color.fromARGB(255, 8, 55, 145)),
-                ),
-              ),*/
-            ]));
+                ),*/
+                Visibility(
+                    visible: MyUtility(context).width < 600, child: Footer())
+              ]),
+        ));
   }
 }
