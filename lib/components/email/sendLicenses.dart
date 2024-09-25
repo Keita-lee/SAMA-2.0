@@ -12,8 +12,7 @@ Future sendLicenses(
     required String licenses,
     required String product}) async {
   final serviceId = 'service_igwbojp';
-  // TO DO: add template id
-  final templateId = 'email_prodlicensed';
+  final templateId = 'template_license_resend';
   final userId = 'Jmk16IabzDvgmXBeJ';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');

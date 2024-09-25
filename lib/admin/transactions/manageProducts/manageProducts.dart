@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sama/admin/transactions/manageProducts/addTrackingDetails.dart';
 import 'package:sama/admin/transactions/manageProducts/manageLicense.dart';
 import 'package:sama/admin/transactions/manageProducts/viewOrder.dart';
 import 'package:sama/components/AdminTable.dart';
@@ -51,21 +52,42 @@ class _ManageproductsState extends State<Manageproducts> {
           String customerName = customer.exists
               ? '${customer['firstName']} ${customer['lastName']}'
               : '';
+          String trackingNumber = transaction.data().containsKey('trackingNmr')
+              ? transaction['trackingNmr']
+              : '';
           String status = transaction.data().containsKey('status')
               ? transaction['status']
               : 'Active';
+          bool hasPhysicalProducts = false;
+          // check status
+          if (status == 'Active') {
+            for (var product in transaction['products']) {
+              if (product['productType'] == 'Physical Product') {
+                hasPhysicalProducts = true;
+                // Check if the product has a tracking number
+                if (trackingNumber == '') {
+                  // If the product does not have a tracking number, the item has not yet been shipped
+                  status = 'Active Not Shipped';
+                }
+              }
+            }
+          }
+
           String email = customer.exists ? customer['email'] : '';
           String mobile = customer.exists ? customer['mobileNo'] : '';
           String title = customer.exists ? customer['title'] : '';
 
           tempTransactions.add({
             'firebaseId': transaction.id,
-            'products': transaction['products'],
+            'products':
+                List<Map<String, dynamic>>.from(transaction['products']),
             'date': formattedDate,
             'customer': '$customerName \n$email \n$mobile',
             'customerTitle': title,
             'reference': transaction['paymentRef'],
-            'status': status
+            'hasPhysicalProducts': hasPhysicalProducts,
+            'status': status,
+            'trackingNmr': trackingNumber,
           });
         }
         setState(() {
@@ -119,8 +141,8 @@ class _ManageproductsState extends State<Manageproducts> {
     );
   }
 
-  Future openViewOrder(
-          String id, Map<String, dynamic> customerData, List products) =>
+  Future openViewOrder(String id, Map<String, dynamic> customerData,
+          List<Map<String, dynamic>> products) =>
       showDialog(
           context: context,
           builder: (context) {
@@ -129,16 +151,73 @@ class _ManageproductsState extends State<Manageproducts> {
             return Dialog(
                 child: ViewOrder(
               customerData: customerData,
-              products: products
-                  .map((product) => {
-                        'firebaseId': id,
-                        'product name': product['productName'],
-                        'qty': product['quantity'].toString(),
-                        'amount': product['productPrice'],
-                        'product type': product['productType'],
-                        'download link': product['downloadLink'],
-                      })
-                  .toList(),
+              products: products.asMap().entries.map((entry) {
+                int index = entry.key; // The current index
+                var product = entry.value; // The current product
+                print(product);
+
+                Map<String, dynamic> productData = {
+                  'index': index,
+                  'firebaseId': id,
+                  'product name': product['productName'],
+                  'qty': product['quantity'].toString(),
+                  'amount': product['productPrice'],
+                  'product type': product['productType'],
+                  'download link': product['downloadLink'],
+                };
+
+                return productData;
+              }).toList(),
+              closeDialog: () => Navigator.pop(context),
+            ));
+          });
+
+  void updateTracking(String id, String trackingNmr) {
+    var transactionToUpdate = transactionList
+        .firstWhere((transaction) => transaction['firebaseId'] == id);
+    setState(() {
+      transactionToUpdate['trackingNmr'] = trackingNmr;
+      transactionToUpdate['status'] = 'Active';
+    });
+  }
+
+  Future openAddTracking(
+          String id,
+          Map<String, dynamic> customerData,
+          List<Map<String, dynamic>> products,
+          String ref,
+          String trackingNmr) =>
+      showDialog(
+          context: context,
+          builder: (context) {
+            dialogContext = context;
+
+            return Dialog(
+                child: AddTrackingDetails(
+              updateTrackingNumber: updateTracking,
+              trackingNumber: trackingNmr,
+              transactionId: id,
+              orderRef: ref,
+              customerData: customerData,
+              products: products.asMap().entries.map((entry) {
+                int index = entry.key;
+                var product = entry.value;
+                Map<String, dynamic> productData = {
+                  'index': index,
+                  'firebaseId': id,
+                  'product name': product['productName'],
+                  'qty': product['quantity'].toString(),
+                  'amount': product['productPrice'],
+                  'product type': product['productType'],
+                  'download link': product['downloadLink'],
+                };
+
+                if (product.containsKey('trackingNmr')) {
+                  productData.putIfAbsent(
+                      'tracking number', () => product['trackingNmr']);
+                }
+                return productData;
+              }).toList(),
               closeDialog: () => Navigator.pop(context),
             ));
           });
@@ -210,6 +289,8 @@ class _ManageproductsState extends State<Manageproducts> {
                   switch (result) {
                     case 'view':
                       try {
+                        // print(
+                        //     'opening view order: id ${data['firebaseId']} products ${data['products']}}');
                         String email = data['customer'].split('\n')[1];
                         String mobile = data['customer'].split('\n')[2];
                         String title = data['customerTitle'];
@@ -219,8 +300,8 @@ class _ManageproductsState extends State<Manageproducts> {
                           'mobile': mobile,
                           'title': title
                         };
-                        openViewOrder(
-                            data['firebaseId'], customer, data['products']);
+                        openViewOrder(data['firebaseId'], customer,
+                            List<Map<String, dynamic>>.from(data['products']));
                       } catch (e) {
                         print('error opening view order: $e');
                       }
@@ -256,6 +337,29 @@ class _ManageproductsState extends State<Manageproducts> {
                         },
                       );
                       break;
+                    case 'add tracking':
+                      try {
+                        // print(
+                        //     'opening view order: id ${data['firebaseId']} products ${data['products']}}');
+                        String email = data['customer'].split('\n')[1];
+                        String mobile = data['customer'].split('\n')[2];
+                        String title = data['customerTitle'];
+                        Map<String, dynamic> customer = {
+                          'name': data['customer'],
+                          'email': email,
+                          'mobile': mobile,
+                          'title': title
+                        };
+                        openAddTracking(
+                            data['firebaseId'],
+                            customer,
+                            List<Map<String, dynamic>>.from(data['products']),
+                            data['reference'],
+                            data['trackingNmr']);
+                      } catch (e) {
+                        print('error opening view order: $e');
+                      }
+                      break;
                   }
                 },
                 itemBuilder: (BuildContext context) {
@@ -277,7 +381,12 @@ class _ManageproductsState extends State<Manageproducts> {
                     value: 'void',
                     child: Text('Void Order'),
                   ));
-
+                  if (data['hasPhysicalProducts']) {
+                    menuItems.add(const PopupMenuItem<String>(
+                      value: 'add tracking',
+                      child: Text('Add Tracking Number'),
+                    ));
+                  }
                   return menuItems;
                 },
               )

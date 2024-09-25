@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/admin/transactions/manageProducts/addTrackingDetails.dart';
 import 'package:sama/admin/transactions/manageProducts/manageLicense.dart';
 import 'package:sama/components/AdminTable.dart';
 import 'package:sama/components/email/sendLicenses.dart';
@@ -12,11 +13,13 @@ class ViewOrder extends StatefulWidget {
   Map<String, dynamic> customerData;
   List<Map<String, dynamic>> products;
   Function closeDialog;
-  ViewOrder(
-      {super.key,
-      required this.customerData,
-      required this.closeDialog,
-      required this.products});
+
+  ViewOrder({
+    super.key,
+    required this.customerData,
+    required this.closeDialog,
+    required this.products,
+  });
 
   @override
   State<ViewOrder> createState() => _ViewOrderState();
@@ -28,6 +31,8 @@ class _ViewOrderState extends State<ViewOrder> {
   int activeIndex = 0;
   List<Map<String, dynamic>> licenses = [];
   Map<String, dynamic> selectedProduct = {};
+  String selectedTrackingNmr = '';
+
   void changePageIndex(int index) {
     setState(() {
       activeIndex = index;
@@ -138,7 +143,7 @@ class _ViewOrderState extends State<ViewOrder> {
         name: widget.customerData['name'].split('\n')[0],
         title: widget.customerData['title'],
         link: downloadLink,
-        licenses: 'License key: $licenseKey',
+        licenses: licenseKey,
         product: productName);
   }
 
@@ -151,6 +156,12 @@ class _ViewOrderState extends State<ViewOrder> {
         'installdate': '',
         'installcount': 0,
       });
+
+      setState(() {
+        licenses
+            .where((license) => license['licencekey'] == licenseKey)
+            .first['computercode'] = '';
+      });
     } catch (e) {
       print('error resetting license: $e');
     }
@@ -161,22 +172,46 @@ class _ViewOrderState extends State<ViewOrder> {
     super.initState();
   }
 
-  void redirectToManageLicense(String productType, String productName,
-      String downloadLink, String id) async {
+  void redirectToManageLicense(
+      String productName, String downloadLink, String id) async {
     try {
-      if (productType == 'Licensed Product') {
-        List<Map<String, dynamic>> newLicenses =
-            await getLicenses(productName, id);
-        setState(() {
-          licenses = newLicenses;
-          selectedProduct = {'name': productName, 'downloadLink': downloadLink};
-        });
-      }
+      List<Map<String, dynamic>> newLicenses =
+          await getLicenses(productName, id);
+      setState(() {
+        licenses = newLicenses;
+        selectedProduct = {'name': productName, 'downloadLink': downloadLink};
+      });
 
       changePageIndex(1);
     } catch (e) {
       print('error getting licenses: $e');
     }
+  }
+
+  void redirectToManagePhysical(String productName, String trackingNmr,
+      String transactionId, int productId) {
+    try {
+      print(
+          'redirecting to manage physical: firebaseID: $transactionId productId: $productId tracking number: $trackingNmr product name: $productName');
+      setState(() {
+        selectedProduct = {
+          'name': productName,
+          'trackingNmr': trackingNmr,
+          'firebaseId': transactionId,
+          'productId': productId
+        };
+      });
+
+      changePageIndex(2);
+    } catch (e) {
+      print('error getting licenses: $e');
+    }
+  }
+
+  void updateTrackingNumber(String trackingNmr) {
+    setState(() {
+      selectedProduct['trackingNmr'] = trackingNmr;
+    });
   }
 
   @override
@@ -256,31 +291,59 @@ class _ViewOrderState extends State<ViewOrder> {
               Visibility(
                 visible: activeIndex == 0,
                 child: AdminTable(
-                  columnHeaders: const ['Product Name', 'Qty', 'Amount'],
-                  dataList: widget.products as List<Map<String, dynamic>>,
+                  columnHeaders: const [
+                    'Product Name',
+                    'Product Type',
+                    'Qty',
+                    'Amount'
+                  ],
+                  dataList: widget.products,
                   actions: [
                     (data) => PopupMenuButton<String>(
                           icon: const Icon(Icons.more_vert),
                           onSelected: (String result) async {
                             switch (result) {
-                              case 'manage':
+                              case 'manage license':
                                 print('redirecting to manage license: $data');
-                                redirectToManageLicense(
-                                    data['product type'],
+                                redirectToManageLicense(data['product name'],
+                                    data['download link'], data['firebaseId']);
+                                break;
+                              case 'manage product':
+                                try {
+                                  print(
+                                      'redirecting to manage physical poduct: product name ${data['product name']} tracking number: ${data['tracking number']} firebaseId: ${data['firebaseId']} index: ${data['index']}');
+                                  redirectToManagePhysical(
                                     data['product name'],
-                                    data['download link'],
-                                    data['firebaseId']);
+                                    data['tracking number'],
+                                    data['firebaseId'],
+                                    data['index'],
+                                  );
+                                } catch (e) {
+                                  print(e);
+                                }
+
                                 break;
                             }
                           },
                           itemBuilder: (BuildContext context) {
                             List<PopupMenuEntry<String>> menuItems = [];
                             // // Dynamically add menu items based on the user's status
-                            menuItems.add(const PopupMenuItem<String>(
-                              value: 'manage',
-                              child: Text('Manage Product'),
-                            ));
-
+                            if (data['product type'] == 'Licensed Product') {
+                              menuItems.add(
+                                const PopupMenuItem<String>(
+                                  value: 'manage license',
+                                  child: Text('Manage License'),
+                                ),
+                              );
+                            }
+                            if (data['product type'] == 'Physical Product') {
+                              menuItems.add(
+                                const PopupMenuItem<String>(
+                                  value: 'manage product',
+                                  child: Text('Add Tracking Details'),
+                                ),
+                              );
+                            }
                             return menuItems;
                           },
                         )
@@ -288,89 +351,114 @@ class _ViewOrderState extends State<ViewOrder> {
                 ),
               ),
               Visibility(
-                  visible: activeIndex == 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      StyleButton(
-                        description: "BACK",
-                        height: 40,
-                        width: 80,
-                        onTap: () {
-                          changePageIndex(0);
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      AdminTable(
-                        columnHeaders: const [
-                          'Product License',
-                          'Computer Code',
-                          'Expiry Date'
-                        ],
-                        dataList: licenses,
-                        actions: [
-                          (data) => PopupMenuButton<String>(
-                                icon: const Icon(Icons.more_vert),
-                                onSelected: (String result) {
-                                  switch (result) {
-                                    case 'resend':
-                                      showDynamicDialog(
-                                        context: context,
-                                        title: 'Confirmation',
-                                        content:
-                                            'Are you sure you want to resend the license to this user?',
-                                        onContinue: () {
-                                          resendLicense(
-                                              data['product license'],
-                                              selectedProduct['name'],
-                                              selectedProduct['downloadLink']);
-                                          Navigator.of(context).pop();
-                                        },
-                                        onCancel: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                      break;
-                                    case 'reset':
-                                      showDynamicDialog(
-                                        context: context,
-                                        title: 'Confirmation',
-                                        content:
-                                            'Are you sure you want to reset the license for this product?',
-                                        onContinue: () {
-                                          print('resetting license: $data');
-                                          resetLicense(
-                                              data['product license'],
-                                              data['id'],
-                                              data['license collection'],
-                                              selectedProduct['name'],
-                                              selectedProduct['downloadLink']);
-                                          Navigator.of(context).pop();
-                                        },
-                                        onCancel: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                      break;
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  List<PopupMenuEntry<String>> menuItems = [];
-                                  menuItems.add(const PopupMenuItem<String>(
+                  visible: activeIndex != 0,
+                  child: SizedBox(
+                    width: MyUtility(context).width * 0.74,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        StyleButton(
+                          description: "BACK",
+                          height: 40,
+                          width: 80,
+                          onTap: () {
+                            changePageIndex(0);
+                          },
+                        ),
+                      ],
+                    ),
+                  )),
+              Visibility(
+                visible: activeIndex == 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const SizedBox(height: 20.0),
+                    AdminTable(
+                      columnHeaders: const [
+                        'Product License',
+                        'Computer Code',
+                        'Expiry Date'
+                      ],
+                      dataList: licenses,
+                      actions: [
+                        (data) => PopupMenuButton<String>(
+                              icon: const Icon(Icons.more_vert),
+                              onSelected: (String result) {
+                                switch (result) {
+                                  case 'resend':
+                                    showDynamicDialog(
+                                      context: context,
+                                      title: 'Confirmation',
+                                      content:
+                                          'Are you sure you want to resend the license to this user?',
+                                      onContinue: () {
+                                        resendLicense(
+                                            data['product license'],
+                                            selectedProduct['name'],
+                                            selectedProduct['downloadLink']);
+                                        Navigator.of(context).pop();
+                                      },
+                                      onCancel: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
+                                    break;
+                                  case 'reset':
+                                    showDynamicDialog(
+                                      context: context,
+                                      title: 'Confirmation',
+                                      content:
+                                          'Are you sure you want to reset the license for this product?',
+                                      onContinue: () {
+                                        print('resetting license: $data');
+                                        resetLicense(
+                                            data['product license'],
+                                            data['id'],
+                                            data['license collection'],
+                                            selectedProduct['name'],
+                                            selectedProduct['downloadLink']);
+                                        Navigator.of(context).pop();
+                                      },
+                                      onCancel: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
+                                    break;
+                                }
+                              },
+                              itemBuilder: (BuildContext context) {
+                                List<PopupMenuEntry<String>> menuItems = [];
+                                menuItems.add(
+                                  const PopupMenuItem<String>(
                                     value: 'resend',
                                     child: Text('Resend License'),
-                                  ));
-                                  menuItems.add(const PopupMenuItem<String>(
-                                    value: 'reset',
-                                    child: Text('Reset License'),
-                                  ));
-                                  return menuItems;
-                                },
-                              )
-                        ],
-                      ),
-                    ],
-                  )),
+                                  ),
+                                );
+                                if (data['computer code'])
+                                  menuItems.add(
+                                    const PopupMenuItem<String>(
+                                      value: 'reset',
+                                      child: Text('Reset License'),
+                                    ),
+                                  );
+                                return menuItems;
+                              },
+                            )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              // Visibility(
+              //   visible: activeIndex == 2,
+              //   child: AddTrackingDetails(
+              //     licenses: licenses,
+              //     selectedProduct: selectedProduct,
+              //     updateTrackingNumber: updateTrackingNumber,
+              //     customerData: widget.customerData,
+              //   ),
+              // )
             ],
           ),
         ),

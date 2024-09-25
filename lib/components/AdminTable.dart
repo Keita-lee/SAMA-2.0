@@ -35,6 +35,8 @@ class _AdminTableState extends State<AdminTable> {
         return _buildLegendIndicator(Color(0xffd1d1d1), "");
       case 'Active':
         return _buildLegendIndicator(Color(0xff0c6e08), "");
+      case 'Active Not Shipped':
+        return _buildLegendIndicator(Color(0xff0c6e08), "Not yet shipped");
       case 'Inactive':
         return _buildLegendIndicator(Color.fromARGB(255, 175, 0, 0), "");
       default:
