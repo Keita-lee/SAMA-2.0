@@ -335,7 +335,7 @@ class _PostLoginLeftState extends State<PostLoginLeft> {
                       child: HoverItem(
                         isActive: activeIndex == 21,
                         menuSize: widget.menuSize,
-                        description: "Professional Development1",
+                        description: "Professional Development",
                         iconPath: "images/icon_prof_dev.svg",
                         onPressed: () {
                           _handleItemClick(21, 21);

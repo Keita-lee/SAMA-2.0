@@ -133,7 +133,7 @@ class _NewsContainerState extends State<NewsContainer> {
                     color: Color.fromRGBO(0, 159, 158, 1),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: TextButton(
                       onPressed: widget.onPressed,
                       child: Text(

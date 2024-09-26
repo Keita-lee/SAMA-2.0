@@ -137,7 +137,9 @@ class ProfileDropDownField extends StatefulWidget {
       required this.items,
       required this.textfieldController,
       this.isBold,
-      this.onChanged, this.enableSearch, this.focusTap});
+      this.onChanged,
+      this.enableSearch,
+      this.focusTap});
 
   @override
   State<ProfileDropDownField> createState() => _ProfileDropDownFieldState();
@@ -168,7 +170,6 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
           ),
           DropdownMenu<String>(
             enableFilter: false,
-            
             enableSearch: widget.enableSearch ?? true,
             width: widget.customSize,
             controller: widget.textfieldController,
