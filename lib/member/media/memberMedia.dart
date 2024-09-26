@@ -115,30 +115,33 @@ class _MemberMediaState extends State<MemberMedia> {
                                       (BuildContext context, int index) {
                                     final DocumentSnapshot document =
                                         documents[index];
-                                    return MediaContainerStyle(
-                                      view: () {
-                                        openMediaDialog(document['id']);
-                                      },
-                                      onpress: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return MediaPopup(
-                                              id: document["id"],
-                                              closeDialog: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            );
-                                          },
-                                        );
-                                      },
-                                      adminType: "false",
-                                      image: document['mediaImageUrl'],
-                                      duration: "",
-                                      releaseDate: document['releaseDate'],
-                                      category: document['category'],
-                                      title: document['title'],
-                                      id: document['title'],
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: MediaContainerStyle(
+                                        view: () {
+                                          openMediaDialog(document['id']);
+                                        },
+                                        onpress: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return MediaPopup(
+                                                id: document["id"],
+                                                closeDialog: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              );
+                                            },
+                                          );
+                                        },
+                                        adminType: "false",
+                                        image: document['mediaImageUrl'],
+                                        duration: "",
+                                        releaseDate: document['releaseDate'],
+                                        category: document['category'],
+                                        title: document['title'],
+                                        id: document['title'],
+                                      ),
                                     );
                                   }));
                         } else {

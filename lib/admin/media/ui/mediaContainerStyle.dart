@@ -45,8 +45,9 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
     var height = MyUtility(context).height;
 
     return Container(
+      
       width: isMobile ? width : 360,
-      height: isMobile ? height / 2.5 : 340,
+      height: isMobile ? 335 : 340,
       child: Padding(
         padding: isMobile
             ? EdgeInsets.fromLTRB(0, 0, 0, 10)
@@ -65,7 +66,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   ),
                 ),
                 width: isMobile ? width : 300,
-                height: isMobile ? height / 4 : 200,
+                height: isMobile ? 180 : 200,
               ),
             ),
 
@@ -73,7 +74,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
               visible: widget.image != "" ? true : false,
               child: Container(
                 width: isMobile ? width : 350,
-                height: isMobile ? height / 4 : 200,
+                height: isMobile ? 180 : 200,
                 decoration: BoxDecoration(
                   color: Colors.white,
                 ),
@@ -82,7 +83,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                     image: widget.image,
                     fitWeb: BoxFitWeb.contain,
                     width: isMobile ? width : 350,
-                    height: isMobile ? height / 4 : 200,
+                    height: isMobile ? 180 : 200,
                   ),
                 ),
               ),
