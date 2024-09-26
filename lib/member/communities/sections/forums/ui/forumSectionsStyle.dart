@@ -89,7 +89,7 @@ class _ForumSectionTypeStyleState extends State<ForumSectionTypeStyle> {
                             children: [
                               SizedBox(
                                 height: isMobile
-                                    ? MyUtility(context).height * 0.08
+                                    ? null
                                     : MyUtility(context).height * 0.065,
                                 width: isMobile
                                     ? MyUtility(context).width * 0.89
