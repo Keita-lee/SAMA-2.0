@@ -8,6 +8,8 @@ import 'package:sama/member/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 
+import 'CenterofExcellenceArticle.dart';
+
 class CenterOfExcellence extends StatefulWidget {
   Function(int?)? changePage;
   Function(String?, String?)? getArticleId;
@@ -19,6 +21,9 @@ class CenterOfExcellence extends StatefulWidget {
 }
 
 class _CenterOfExcellenceState extends State<CenterOfExcellence> {
+  var pageIndex = 0;
+  String articleId = "";
+  String articleImage = "";
   List allArticles = [];
   String userType = "";
 
@@ -35,15 +40,29 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
     });
   }
 
+  changeIndex(value) {
+    setState(() {
+      pageIndex = value;
+    });
+  }
+
+  closeDialog() {
+    setState(() {
+      changeIndex(0);
+      Navigator.pop(context);
+    });
+  }
+
   //Dialog for benifits
   Future openArticleDialog(id) => showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         dialogContext = context;
         return Dialog(
             child: CenterOfExcellenceDialog(
           id: id,
-          closeDialog: () => Navigator.pop(dialogContext!),
+          closeDialog: () => closeDialog(),
           getAllArticles: getAllArticles,
         ));
       });
@@ -81,152 +100,182 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SamaBlueBanner(pageName: 'CENTRE OF EXCELLENCE'),
+              Visibility(
+                visible: pageIndex == 0,
+                child: SamaBlueBanner(pageName: 'CENTRE OF EXCELLENCE'),
+              ),
               SizedBox(
                 height: 30,
               ),
               Visibility(
-                visible: userType != "Admin" ? true : false,
-                child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: isMobile ? 16 : 50),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Coming Soon !',
-                          style: GoogleFonts.openSans(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.teal),
+                visible: pageIndex == 0,
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible: userType != "Admin" ? true : false,
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: isMobile ? 16 : 50),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Coming Soon !',
+                                style: GoogleFonts.openSans(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.teal),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              SizedBox(
+                                width: isMobile
+                                    ? MyUtility(context).width
+                                    : MyUtility(context).width / 1.5,
+                                child: Align(
+                                  child: Text(
+                                    'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.',
+                                    textAlign: TextAlign
+                                        .center, // Center aligns the text
+                                    style: GoogleFonts.openSans(
+                                      fontSize: MyUtility(context).width < 400
+                                          ? 14
+                                          : 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              Wrap(
+                                children: [
+                                  Align(
+                                    child: Text(
+                                      'To be a contributor, please contact ',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.openSans(
+                                          fontSize:
+                                              MyUtility(context).width < 400
+                                                  ? 14
+                                                  : 16),
+                                    ),
+                                  ),
+                                  Align(
+                                    child: Text(
+                                      'online@samedical.org',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.openSans(
+                                          fontSize:
+                                              MyUtility(context).width < 400
+                                                  ? 14
+                                                  : 16,
+                                          color: Colors
+                                              .teal), // Moved color parameter inside GoogleFonts.openSans
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )),
+                    ),
+                    Visibility(
+                      visible: userType == "Admin" ? true : false,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        child: SizedBox(
+                          width: MyUtility(context).width / 1.5,
+                          child: Text(
+                            'Welcome to the Centre of Excellence, your premier resource for expert insights and practical advice from leading doctors in the medical field. Here, you\'ll find a collection of articles written by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Whether you\'re seeking clinical guidance, professional development tips, or cutting-edge research, our Centre of Excellence is your go-to destination for invaluable expertise and inspiration.',
+                            style: GoogleFonts.openSans(
+                                fontSize:
+                                    MyUtility(context).width < 400 ? 14 : 16),
+                          ),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        SizedBox(
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Visibility(
+                        visible: userType == "Admin" ? true : false,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: MyUtility(context).width -
+                                  MyUtility(context).width / 2.7,
+                            ),
+                            StyleButton(
+                                description: "Add Article",
+                                height: 55,
+                                width: 125,
+                                onTap: () {
+                                  openArticleDialog("");
+                                })
+                          ],
+                        )),
+                    Visibility(
+                      visible: userType == "Admin" ? true : false,
+                      child: Padding(
+                        padding: isMobile
+                            ? EdgeInsets.all(0)
+                            : const EdgeInsets.only(left: 35),
+                        child: Container(
                           width: isMobile
                               ? MyUtility(context).width
-                              : MyUtility(context).width / 1.5,
-                          child: Align(
-                            child: Text(
-                              'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.',
-                              textAlign:
-                                  TextAlign.center, // Center aligns the text
-                              style: GoogleFonts.openSans(
-                                fontSize:
-                                    MyUtility(context).width < 400 ? 14 : 16,
-                              ),
-                            ),
+                              : MyUtility(context).width -
+                                  (MyUtility(context).width * 0.25),
+                          child: Wrap(
+                            alignment: WrapAlignment.start,
+                            children: [
+                              for (var i = 0; i < allArticles.length; i++)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 15, left: 15),
+                                  child: NewsContainer(
+                                      openArticleDialog: openArticleDialog,
+                                      articleId: allArticles[i]['id'],
+                                      userType: userType,
+                                      image: allArticles[i]['image'],
+                                      category: allArticles[i]['category'],
+                                      date: allArticles[i]['date'],
+                                      header: allArticles[i]['title'],
+                                      onPressed: () {
+                                        setState(() {
+                                          changeIndex(2);
+                                          articleId = allArticles[i]['id'];
+                                          articleImage =
+                                              allArticles[i]['image'];
+                                          /*   widget.getArticleId!(
+                                              allArticles[i]['id'],
+                                              allArticles[i]['image']);*/
+                                        });
+
+                                        widget.changePage!(6);
+                                      },
+                                      onArticleEdit: () {
+                                        changeIndex(1);
+                                        openArticleDialog(allArticles[i]['id']);
+                                      }),
+                                ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Wrap(
-                          children: [
-                            Align(
-                              child: Text(
-                                'To be a contributor, please contact ',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.openSans(
-                                    fontSize: MyUtility(context).width < 400
-                                        ? 14
-                                        : 16),
-                              ),
-                            ),
-                            Align(
-                              child: Text(
-                                'online@samedical.org',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.openSans(
-                                    fontSize: MyUtility(context).width < 400
-                                        ? 14
-                                        : 16,
-                                    color: Colors
-                                        .teal), // Moved color parameter inside GoogleFonts.openSans
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )),
-              ),
-              Visibility(
-                visible: userType == "Admin" ? true : false,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: SizedBox(
-                    width: MyUtility(context).width / 1.5,
-                    child: Text(
-                      'Welcome to the Centre of Excellence, your premier resource for expert insights and practical advice from leading doctors in the medical field. Here, you\'ll find a collection of articles written by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Whether you\'re seeking clinical guidance, professional development tips, or cutting-edge research, our Centre of Excellence is your go-to destination for invaluable expertise and inspiration.',
-                      style: GoogleFonts.openSans(
-                          fontSize: MyUtility(context).width < 400 ? 14 : 16),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
               Visibility(
-                  visible: userType == "Admin" ? true : false,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: MyUtility(context).width -
-                            MyUtility(context).width / 2.7,
-                      ),
-                      StyleButton(
-                          description: "Add Article",
-                          height: 55,
-                          width: 125,
-                          onTap: () {
-                            openArticleDialog("");
-                          })
-                    ],
-                  )),
-              Visibility(
-                visible: userType == "Admin" ? true : false,
-                child: Padding(
-                  padding: isMobile
-                      ? EdgeInsets.all(0)
-                      : const EdgeInsets.only(left: 35),
-                  child: Container(
-                    width: isMobile
-                        ? MyUtility(context).width
-                        : MyUtility(context).width -
-                            (MyUtility(context).width * 0.25),
-                    child: Wrap(
-                      alignment: WrapAlignment.start,
-                      children: [
-                        for (var i = 0; i < allArticles.length; i++)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15, left: 15),
-                            child: NewsContainer(
-                                openArticleDialog: openArticleDialog,
-                                articleId: allArticles[i]['id'],
-                                userType: userType,
-                                image: allArticles[i]['image'],
-                                category: allArticles[i]['category'],
-                                date: allArticles[i]['date'],
-                                header: allArticles[i]['title'],
-                                onPressed: () {
-                                  setState(() {
-                                    widget.getArticleId!(allArticles[i]['id'],
-                                        allArticles[i]['image']);
-                                  });
-
-                                  widget.changePage!(6);
-                                },
-                                onArticleEdit: () {
-                                  openArticleDialog(allArticles[i]['id']);
-                                }),
-                          ),
-                      ],
-                    ),
-                  ),
+                visible: pageIndex == 2,
+                child: CenterOfExcellenceArticle(
+                  articleId: articleId,
+                  changePage: widget.changePage!,
+                  articleImage: articleImage,
+                  userType: userType,
                 ),
               ),
               SizedBox(
