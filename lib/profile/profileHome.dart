@@ -31,6 +31,7 @@ class _ProfileHomeState extends State<ProfileHome> {
             height: 25,
           ),
           DashPrivateMessages(changePageIndex: (int) {}),
+          const SizedBox(height: 15,)
         ],
       );
     } else {
@@ -46,6 +47,7 @@ class _ProfileHomeState extends State<ProfileHome> {
             width: 25,
           ),
           DashPrivateMessages(changePageIndex: (int) {}),
+          
         ],
       );
     }

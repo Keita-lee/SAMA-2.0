@@ -231,14 +231,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            'Membership : ${membership}',
+                            ' Membership : ${membership}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: const Color.fromARGB(255, 116, 116, 116),
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            'Status : ${status}',
+                            ' Status : ${status}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: const Color.fromARGB(255, 116, 116, 116),
@@ -554,7 +554,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                       ),
                       Container(
                         child: pages[pageIndex],
-                      )
+                      ),
 
                       /*   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
