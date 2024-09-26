@@ -29,7 +29,7 @@ class ProductListTop extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: MyUtility(context).width * 0.27,
+                width: MyUtility(context).width * 0.38,
                 height: 30,
                 child: Text(
                   'Title',

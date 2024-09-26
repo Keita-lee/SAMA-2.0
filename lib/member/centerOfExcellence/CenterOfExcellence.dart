@@ -79,7 +79,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
             : MyUtility(context).height,
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SamaBlueBanner(pageName: 'CENTRE OF EXCELLENCE'),
               SizedBox(
@@ -176,7 +176,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                     children: [
                       SizedBox(
                         width: MyUtility(context).width -
-                            MyUtility(context).width / 3.5,
+                            MyUtility(context).width / 2.7,
                       ),
                       StyleButton(
                           description: "Add Article",
