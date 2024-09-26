@@ -124,7 +124,9 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
 class ProfileDropDownField extends StatefulWidget {
   double customSize;
   String? description;
+  final bool? focusTap;
   List items;
+  final bool? enableSearch;
   final bool? isBold;
   final TextEditingController textfieldController;
   final Function? onChanged;
@@ -135,7 +137,7 @@ class ProfileDropDownField extends StatefulWidget {
       required this.items,
       required this.textfieldController,
       this.isBold,
-      this.onChanged});
+      this.onChanged, this.enableSearch, this.focusTap});
 
   @override
   State<ProfileDropDownField> createState() => _ProfileDropDownFieldState();
@@ -165,9 +167,12 @@ class _ProfileDropDownFieldState extends State<ProfileDropDownField> {
             height: 10,
           ),
           DropdownMenu<String>(
+            enableFilter: false,
+            
+            enableSearch: widget.enableSearch ?? true,
             width: widget.customSize,
             controller: widget.textfieldController,
-            requestFocusOnTap: true,
+            requestFocusOnTap: widget.focusTap ?? true,
             label: const Text(''),
             onSelected: (value) {
               setState(() {

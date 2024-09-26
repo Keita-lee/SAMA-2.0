@@ -286,6 +286,7 @@ class _BioState extends State<Bio> {
                 height: 10,
               ),
               ProfileDropDownField(
+                focusTap: false,
                 customSize: MyUtility(context).width / 1.1,
                 //Controller here
                 textfieldController: maritalStatus,
