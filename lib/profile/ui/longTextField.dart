@@ -1,16 +1,16 @@
-
 import 'package:flutter/material.dart';
 
 class LongTextField extends StatefulWidget {
   final double textFieldWidth;
   final TextEditingController textEditingController;
   int? lines;
-
+  final bool? isBold;
   LongTextField({
     super.key,
     required this.textFieldWidth,
     required this.textEditingController,
     this.lines,
+    this.isBold,
   });
 
   @override
@@ -36,10 +36,11 @@ class _LongTextFieldState extends State<LongTextField> {
         child: TextFormField(
           maxLines: widget.lines == null ? 1 : widget.lines,
           controller: widget.textEditingController,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight:
+                widget.isBold == false ? FontWeight.normal : FontWeight.bold,
           ),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10, top: 10),
