@@ -77,34 +77,38 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
           .get();
       // User is a member
       if (user.exists && user.get('userType') != 'Admin') {
-        product['priceList'] = [
-          {'description': 'First License', 'price': '0.00'},
-          {
-            'description': widget.priceList['secondTierRange'],
-            'price': widget.priceList['secondTierPrice']
-          },
-          {
-            'description': widget.priceList['thirdTierRange'],
-            'price': widget.priceList['thirdTierPrice']
-          },
-        ];
+        setState(() {
+          product['priceList'] = [
+            {'description': 'First License', 'price': '0.00'},
+            {
+              'description': widget.priceList['secondTierRange'],
+              'price': widget.priceList['secondTierPrice']
+            },
+            {
+              'description': widget.priceList['thirdTierRange'],
+              'price': widget.priceList['thirdTierPrice']
+            },
+          ];
+        });
         QuerySnapshot purchases = await FirebaseFirestore.instance
             .collection('storeHistory')
             .where('user', isEqualTo: auth.currentUser!.uid)
             .get();
 
         String newPrice = '';
-        productAlreadyPurchased =
-            purchases.docs.any((doc) => doc['productName'] == widget.title);
+        setState(() {
+          productAlreadyPurchased =
+              purchases.docs.any((doc) => doc['productName'] == widget.title);
 
-        if (productAlreadyPurchased) {
-          product['priceInfo'] =
-              '${widget.priceList['secondTierRange']} Licenses Price. Incl VAT';
-          product['price'] = widget.priceList['secondTierPrice'];
-        } else {
-          product['priceInfo'] = 'SAMA Member\'s First License is Free.';
-          product['price'] = '0.00';
-        }
+          if (productAlreadyPurchased) {
+            product['priceInfo'] =
+                '${widget.priceList['secondTierRange']} Licenses Price. Incl VAT';
+            product['price'] = widget.priceList['secondTierPrice'];
+          } else {
+            product['priceInfo'] = 'SAMA Member\'s First License is Free.';
+            product['price'] = '0.00';
+          }
+        });
       }
     }
     // User is not a member
