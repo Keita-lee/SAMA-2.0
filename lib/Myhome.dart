@@ -17,15 +17,12 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
-    var width = MyUtility(context).width;
     return Stack(children: <Widget>[
       Center(
-          child: MyUtility(context).width < 600
-              ? Material(child: PageUnderConstruction())
-              : PostLoginLandingPage(
-                  userId: "",
-                  activeIndex: 0,
-                )),
+          child: PostLoginLandingPage(
+        userId: "",
+        activeIndex: 0,
+      )),
     ]);
   }
 }

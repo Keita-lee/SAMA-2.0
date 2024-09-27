@@ -115,9 +115,9 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
             ),
             Container(
               width: MyUtility(context).width,
-              height: MyUtility(context).width < 600
-                  ? MyUtility(context).height * 0.685 // No fixed height
-                  : MyUtility(context).height / 2.6,
+              height: MyUtility(context).height < 800
+                  ? MyUtility(context).height * 0.645 // No fixed height
+                  : MyUtility(context).height * 0.685,
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(10.0),
@@ -365,6 +365,7 @@ class _MemberDetailsDialogState extends State<MemberDetailsDialog> {
                           ),
                         ],
                       ),
+                      //const SizedBox(height: 15,)
                     ],
                   ),
                 ),

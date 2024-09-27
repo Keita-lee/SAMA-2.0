@@ -57,7 +57,6 @@ class _AdminEventsState extends State<AdminEvents> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 EventsHeaderSection(
                   controller: selectCategory,
                   openMediaForm: () {
@@ -97,7 +96,7 @@ class _AdminEventsState extends State<AdminEvents> {
                   height: MyUtility(context).height * 0.4,
                   color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: SingleChildScrollView(
@@ -115,16 +114,16 @@ class _AdminEventsState extends State<AdminEvents> {
                                 if (!snapshot.hasData) {
                                   return const Text('Loading...');
                                 }
-          
+
                                 final List<DocumentSnapshot> documents =
                                     snapshot.data!.docs;
                                 if (documents.isEmpty) {
-                                  return Center(child: Text('No Events listed'));
+                                  return Center(
+                                      child: Text('No Events listed'));
                                 }
-          
+
                                 return Container(
-                                  width: MyUtility(context).width -
-                                      (MyUtility(context).width * 0.25),
+                                  width: MyUtility(context).width * 0.8,
                                   height: 500,
                                   child: Table(
                                     columnWidths: {
@@ -159,11 +158,13 @@ class _AdminEventsState extends State<AdminEvents> {
                                                   fontSize: 20)),
                                         ],
                                       ),
-                                      ...documents.map((DocumentSnapshot document) {
-                                        Map<String, dynamic>? data =
-                                            document.data() as Map<String, dynamic>?;
+                                      ...documents
+                                          .map((DocumentSnapshot document) {
+                                        Map<String, dynamic>? data = document
+                                            .data() as Map<String, dynamic>?;
                                         bool isEven =
-                                            documents.indexOf(document) % 2 == 0;
+                                            documents.indexOf(document) % 2 ==
+                                                0;
                                         return TableRow(
                                           decoration: BoxDecoration(
                                             color: isEven
@@ -177,27 +178,32 @@ class _AdminEventsState extends State<AdminEvents> {
                                           ),
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Text(
                                                 data != null &&
-                                                        data.containsKey('title')
+                                                        data.containsKey(
+                                                            'title')
                                                     ? data['title']
                                                     : 'N/A',
                                                 style: TextStyle(fontSize: 18),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Text(
                                                 data != null &&
-                                                        data.containsKey('_event')
+                                                        data.containsKey(
+                                                            '_event')
                                                     ? data['_event']
                                                     : 'N/A',
                                                 style: TextStyle(fontSize: 18),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Text(
                                                 data != null &&
                                                         data.containsKey('date')
@@ -207,17 +213,20 @@ class _AdminEventsState extends State<AdminEvents> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Text(
                                                 data != null &&
-                                                        data.containsKey('endDate')
+                                                        data.containsKey(
+                                                            'endDate')
                                                     ? data['endDate']
                                                     : 'N/A',
                                                 style: TextStyle(fontSize: 18),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
@@ -227,19 +236,23 @@ class _AdminEventsState extends State<AdminEvents> {
                                                       // Edit action
                                                       showDialog(
                                                         context: context,
-                                                        barrierDismissible: true,
-                                                        barrierColor: Colors.black
+                                                        barrierDismissible:
+                                                            true,
+                                                        barrierColor: Colors
+                                                            .black
                                                             .withOpacity(0.5),
-                                                        builder:
-                                                            (BuildContext context) {
+                                                        builder: (BuildContext
+                                                            context) {
                                                           return Dialog(
                                                             backgroundColor:
-                                                                Colors.transparent,
+                                                                Colors
+                                                                    .transparent,
                                                             insetPadding:
-                                                                EdgeInsets.all(10),
+                                                                EdgeInsets.all(
+                                                                    10),
                                                             child: Container(
-                                                              color:
-                                                                  Colors.transparent,
+                                                              color: Colors
+                                                                  .transparent,
                                                               child: NewEvent(
                                                                 id: document.id,
                                                                 closeDialog: () =>
@@ -254,7 +267,8 @@ class _AdminEventsState extends State<AdminEvents> {
                                                     child: Text('Edit',
                                                         style: TextStyle(
                                                             fontSize: 18,
-                                                            color: Colors.blue)),
+                                                            color:
+                                                                Colors.blue)),
                                                   ),
                                                   SizedBox(
                                                     width: 15,
@@ -267,19 +281,22 @@ class _AdminEventsState extends State<AdminEvents> {
                                                     child: Text('Attendees',
                                                         style: TextStyle(
                                                             fontSize: 18,
-                                                            color: Colors.blue)),
+                                                            color:
+                                                                Colors.blue)),
                                                   ),
                                                   SizedBox(
                                                     width: 15,
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      removeEventsPopup(data!['id']);
+                                                      removeEventsPopup(
+                                                          data!['id']);
                                                     },
                                                     child: Text('Delete',
                                                         style: TextStyle(
                                                             fontSize: 18,
-                                                            color: Colors.blue)),
+                                                            color:
+                                                                Colors.blue)),
                                                   ),
                                                 ],
                                               ),

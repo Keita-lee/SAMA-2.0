@@ -4,6 +4,10 @@ import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/member/Events/MemberEventDetails/MemberEventDetails.dart';
 import 'package:sama/member/Events/MemberEvents/MemberEventsComp/MemberContainer.dart';
+import 'package:sama/member/Events/MemberEvents/MemberEventsComp/desktopViewDetailsPopup.dart';
+import 'package:sama/member/Events/MemberEvents/MemberEventsComp/eventViewDeatilsButton.dart';
+import 'package:sama/member/Events/MemberEvents/MemberEventsComp/mobileEventsDetailsPopUp.dart';
+import 'package:sama/member/Events/MemberEvents/calendarViewEvents.dart';
 
 var id = "";
 
@@ -42,12 +46,16 @@ class _MemberEventsState extends State<MemberEvents> {
     return Container(
       color: Colors.white,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SamaBlueBanner(pageName: 'EVENTS'),
           SizedBox(
-            height: 30,
+            height: isMobile == true ? 30 : 80,
           ),
+            /// NEW CALENDAR VIEW
+          // CalendarViewEvents(),
+           
+         
           Visibility(
             visible: pageIndex == 0 ? true : false,
             child: Padding(

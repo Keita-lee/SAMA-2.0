@@ -107,6 +107,7 @@ class _SetupElection2State extends State<SetupElection2> {
                 width: 15,
               ),
               ProfileDropDownField(
+                enableSearch: false,
                 customSize: MyUtility(context).width -
                     (MyUtility(context).width * 0.75),
                 description: '',

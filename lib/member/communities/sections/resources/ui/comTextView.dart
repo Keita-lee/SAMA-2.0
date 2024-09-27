@@ -87,6 +87,7 @@ class _ComTextViewState extends State<ComTextView> {
                       decoration: BoxDecoration(),
                       child: QuillEditor.basic(
                         configurations: QuillEditorConfigurations(
+                          showCursor: false,
                           controller: quillController,
                           sharedConfigurations:
                               const QuillSharedConfigurations(),

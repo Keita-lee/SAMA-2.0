@@ -231,14 +231,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            'Membership : ${membership}',
+                            ' Membership : ${membership}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: const Color.fromARGB(255, 116, 116, 116),
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            'Status : ${status}',
+                            ' Status : ${status}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: const Color.fromARGB(255, 116, 116, 116),
@@ -290,24 +290,27 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Container(
-                          width: 110,
-                          height: 110,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(0.0),
-                            child: imageUrl != ""
-                                ? ImageNetwork(
-                                    image: imageUrl!,
-                                    height: 110,
-                                    width: 110,
-                                  )
-                                : Container(),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Container(
+                            width: 110,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: imageUrl != ""
+                                  ? ImageNetwork(
+                                      image: imageUrl!,
+                                      height: 110,
+                                      width: 110,
+                                    )
+                                  : Container(),
+                            ),
                           ),
                         ),
                       ),
@@ -326,6 +329,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               fontWeight: FontWeight.normal),
                         ),
                       ),
+                      const SizedBox(height: 5,)
                     ],
                   ),
                   Column(
@@ -339,14 +343,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        'Membership : ${membership}',
+                        ' Membership : ${membership}',
                         style: TextStyle(
                             fontSize: 18,
                             color: const Color.fromARGB(255, 116, 116, 116),
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        'Status : ${status}',
+                        ' Status : ${status}',
                         style: TextStyle(
                             fontSize: 18,
                             color: const Color.fromARGB(255, 116, 116, 116),
@@ -554,7 +558,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                       ),
                       Container(
                         child: pages[pageIndex],
-                      )
+                      ),
 
                       /*   Row(
                       mainAxisAlignment: MainAxisAlignment.start,

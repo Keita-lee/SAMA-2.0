@@ -46,15 +46,15 @@ class _ProductsState extends State<Products> {
         Visibility(
           visible: pageIndex == 0 ? true : false,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
-              width: MyUtility(context).width * 0.60,
+              width: MyUtility(context).width / 1.3,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         'Products',

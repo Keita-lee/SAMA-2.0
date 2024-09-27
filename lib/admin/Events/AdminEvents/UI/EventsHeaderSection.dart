@@ -35,7 +35,7 @@ class _EventsHeaderSectionState extends State<EventsHeaderSection> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: MyUtility(context).width / 1.8,
+            width: MyUtility(context).width / 1.6,
           ),
           // Center(
           //   child: Padding(

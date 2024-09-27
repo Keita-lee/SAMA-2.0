@@ -228,6 +228,8 @@ class _EditProfileState extends State<EditProfile> {
                   height: 20,
                 ),
                 ProfileDropDownField(
+                  enableSearch: false,
+                  focusTap: false,
                   description: "Gender",
                   items: ["Male", "Female"],
                   customSize: MyUtility(context).width,
@@ -237,6 +239,8 @@ class _EditProfileState extends State<EditProfile> {
                   height: 20,
                 ),
                 ProfileDropDownField(
+                  focusTap: false,
+                  enableSearch: false,
                   description: "Race",
                   items: [
                     "White/Caucasian",

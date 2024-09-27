@@ -36,13 +36,14 @@ class _WorkExperienceState extends State<WorkExperience> {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(8),
                     child: Center(
                       // Centering the text
                       child: Text(
                         'Start',
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: isMobile ? 13 : 16,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -50,13 +51,14 @@ class _WorkExperienceState extends State<WorkExperience> {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(8),
                     child: Center(
                       // Centering the text
                       child: Text(
                         'End',
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: isMobile ? 13 : 16,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -64,13 +66,14 @@ class _WorkExperienceState extends State<WorkExperience> {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(8),
                     child: Center(
                       // Centering the text
                       child: Text(
                         'Description',
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: isMobile ? 13 : 16,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -80,8 +83,13 @@ class _WorkExperienceState extends State<WorkExperience> {
                   child: TableCell(
                     verticalAlignment: TableCellVerticalAlignment.middle,
                     child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(''),
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        '',
+                        style: TextStyle(
+                            fontSize: isMobile ? 13 : 16,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),

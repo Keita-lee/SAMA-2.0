@@ -286,6 +286,7 @@ class _BioState extends State<Bio> {
                 height: 10,
               ),
               ProfileDropDownField(
+                focusTap: false,
                 customSize: MyUtility(context).width / 1.1,
                 //Controller here
                 textfieldController: maritalStatus,
@@ -389,6 +390,7 @@ class _BioState extends State<Bio> {
               ),
 
               LongTextField(
+                isBold: false,
                 textFieldWidth: MyUtility(context).width / 1.1,
                 //Text Controller
                 textEditingController: qualification,
@@ -549,6 +551,7 @@ class _BioState extends State<Bio> {
               LongTextField(
                 textFieldWidth: MyUtility(context).width / 1.1,
                 //Text Controller
+                isBold: false,
                 textEditingController: TextEditingController(),
                 lines: 10,
               ),
@@ -1096,11 +1099,14 @@ class _BioState extends State<Bio> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'SAMA leadership motivation- Please outline the specific skills you bring,\nor contributions you hope to make to SAMA:',
-                        style: GoogleFonts.openSans(
-                          fontSize: 18,
-                          height: 1.2,
+                      SizedBox(
+                        width: MyUtility(context).width / 1.7 - 300,
+                        child: Text(
+                          'SAMA leadership motivation- Please outline the specific skills you bring,\nor contributions you hope to make to SAMA:',
+                          style: GoogleFonts.openSans(
+                            fontSize: 18,
+                            height: 1.2,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -1141,7 +1147,7 @@ class _BioState extends State<Bio> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: MyUtility(context).width / 2.5,
+                    width: MyUtility(context).width / 1.7 - 300,
                     child: Text(
                       'Are you currently serving on any other board of directors, committees or leadership positions for another organisations, whether in your private or professional capacity? if so, please list organisation name and your position/role:',
                       style: GoogleFonts.openSans(
@@ -1360,7 +1366,7 @@ class _BioState extends State<Bio> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
-                      width: MyUtility(context).width * 0.05,
+                      width: 120,
                       height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -1399,7 +1405,7 @@ class _BioState extends State<Bio> {
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                  width: MyUtility(context).width * 0.05,
+                  width: 120,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),

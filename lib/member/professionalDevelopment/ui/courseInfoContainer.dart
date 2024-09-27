@@ -104,8 +104,8 @@ class _CourseInfoContainerState extends State<CourseInfoContainer> {
               Visibility(
                 visible: widget.isAccessed == true,
                 child: GradeRequiredCon(
-                  requiredCorrectQuestions: 14,
-                  questionAmmount: 20,
+                  requiredCorrectQuestions: 2,
+                  questionAmmount: 3,
                   requiredGradePercentage: 70,
                   attemptNumber: '1',
                   grade: '5',

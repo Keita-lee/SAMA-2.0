@@ -49,12 +49,12 @@ class _DiscusStyleState extends State<DiscusStyle> {
   Widget build(BuildContext context) {
     // Format the date
     String formattedDate = DateFormat('MMMM d, y, h:mm a').format(parsedDate);
-
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Column(
       children: [
         Container(
-          width: MyUtility(context).width / 1.3,
-          height: 100,
+          width: isMobile ? MyUtility(context).width * 0.95 : MyUtility(context).width / 1.3,
+          height: isMobile ? 135 : 100,
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 241, 241, 241),
             borderRadius: BorderRadius.only(
@@ -116,7 +116,7 @@ class _DiscusStyleState extends State<DiscusStyle> {
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(height: 5),
-                        Row(
+                        Wrap(
                           children: [
                             Text(
                               'Other',
@@ -150,7 +150,7 @@ class _DiscusStyleState extends State<DiscusStyle> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.3,
+          width: isMobile ? MyUtility(context).width * 0.95 : MyUtility(context).width / 1.3,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
