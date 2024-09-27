@@ -4,7 +4,9 @@ import 'package:sama/components/myutility.dart';
 
 class FilterApprovalsRow extends StatefulWidget {
   final Function(String) onSearch;
-  const FilterApprovalsRow({super.key, required this.onSearch});
+  final Function(String) onTypeChanged;
+  const FilterApprovalsRow(
+      {super.key, required this.onSearch, required this.onTypeChanged});
 
   @override
   State<FilterApprovalsRow> createState() => _FilterApprovalsRowState();
@@ -56,12 +58,11 @@ class _FilterApprovalsRowState extends State<FilterApprovalsRow> {
                             vertical: 8, horizontal: 12),
                       ),
                       value: 'All',
-                      onChanged: (String? newValue) {},
-                      items: <String>[
-                        'All',
-                        'New Memberships',
-                        'Online Profiles'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      onChanged: (String? newValue) {
+                        widget.onTypeChanged(newValue!);
+                      },
+                      items: <String>['All', 'New Membership', 'Online Profile']
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),

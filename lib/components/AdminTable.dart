@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sama/components/myutility.dart';
 
 class AdminTable extends StatefulWidget {
-  final String? searchResult;
+  final String searchResult;
+  final String? typeResult;
   final List<String> columnHeaders;
   final List<Map<String, dynamic>> dataList;
   final List<Widget Function(Map<String, dynamic> data)> actions;
@@ -14,7 +15,8 @@ class AdminTable extends StatefulWidget {
 
   AdminTable(
       {Key? key,
-      this.searchResult,
+      required this.searchResult,
+      this.typeResult,
       required this.columnHeaders,
       required this.dataList,
       this.waiting,
@@ -42,6 +44,29 @@ class _AdminTableState extends State<AdminTable> {
       default:
         return _buildLegendIndicator(Color(0xffd1d1d1), "");
     }
+  }
+
+  checkSearchResults(data) {
+    if (widget.searchResult == "") {
+      return true;
+    } else if (widget.searchResult.contains(data['email'])) {
+      return true;
+    } else if (widget.searchResult.contains(data['full name'])) {
+      return true;
+    }
+    return false;
+  }
+
+  checkTypeResults(data) {
+    if (widget.typeResult != null) {
+      if (widget.typeResult == "" || widget.typeResult == "All") {
+        return true;
+      } else if (widget.typeResult!.contains(data['type'])) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -99,31 +124,39 @@ class _AdminTableState extends State<AdminTable> {
                             itemCount: widget.dataList.length,
                             itemBuilder: (BuildContext context, int index) {
                               final data = widget.dataList[index];
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 4.0, horizontal: 12.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    for (var header in widget.columnHeaders)
-                                      Expanded(
-                                        child: header == 'Status'
-                                            ? Center(
-                                                child: statusWidget(
-                                                    data[header.toLowerCase()]))
-                                            : Text(data[header.toLowerCase()] ??
-                                                ''),
-                                      ),
-                                    // Actions column
-                                    Row(
+                              print(data);
+                              return Visibility(
+                                visible: checkSearchResults(data),
+                                child: Visibility(
+                                  visible: checkTypeResults(data),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0, horizontal: 12.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        ...widget.actions
-                                            .map((builder) => builder(data))
-                                            .toList()
+                                        for (var header in widget.columnHeaders)
+                                          Expanded(
+                                            child: header == 'Status'
+                                                ? Center(
+                                                    child: statusWidget(data[
+                                                        header.toLowerCase()]))
+                                                : Text(data[
+                                                        header.toLowerCase()] ??
+                                                    ''),
+                                          ),
+                                        // Actions column
+                                        Row(
+                                          children: [
+                                            ...widget.actions
+                                                .map((builder) => builder(data))
+                                                .toList()
+                                          ],
+                                        ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               );
                             }),

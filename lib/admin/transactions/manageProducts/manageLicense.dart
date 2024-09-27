@@ -124,6 +124,7 @@ class _ManageLicenseState extends State<ManageLicense> {
                 ),
                 const SizedBox(height: 20.0),
                 AdminTable(
+                  searchResult: "",
                   columnHeaders: const ['Product Name', 'Qty', 'Amount'],
                   dataList: widget.licenses,
                   actions: [

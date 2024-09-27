@@ -291,6 +291,7 @@ class _ViewOrderState extends State<ViewOrder> {
               Visibility(
                 visible: activeIndex == 0,
                 child: AdminTable(
+                  searchResult: "",
                   columnHeaders: const [
                     'Product Name',
                     'Product Type',
@@ -375,6 +376,7 @@ class _ViewOrderState extends State<ViewOrder> {
                   children: [
                     const SizedBox(height: 20.0),
                     AdminTable(
+                      searchResult: "",
                       columnHeaders: const [
                         'Product License',
                         'Computer Code',

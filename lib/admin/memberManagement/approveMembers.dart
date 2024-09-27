@@ -18,6 +18,7 @@ class _ApproveMembersState extends State<ApproveMembers> {
   bool _isLoading = true;
   List<Map<String, dynamic>> _membersList = [];
   String _searchText = '';
+  String _typeText = '';
   Future<void> updateMemberStatus(
       String id, currentStatus, String status) async {
     try {
@@ -52,6 +53,12 @@ class _ApproveMembersState extends State<ApproveMembers> {
   void onSearchChanged(String text) {
     setState(() {
       _searchText = text;
+    });
+  }
+
+  void onTypeChanged(String text) {
+    setState(() {
+      _typeText = text;
     });
   }
 
@@ -162,8 +169,7 @@ class _ApproveMembersState extends State<ApproveMembers> {
     return Column(
       children: [
         FilterApprovalsRow(
-          onSearch: onSearchChanged,
-        ),
+            onSearch: onSearchChanged, onTypeChanged: onTypeChanged),
         const SizedBox(
           height: 20,
         ),
@@ -266,7 +272,8 @@ class _ApproveMembersState extends State<ApproveMembers> {
                   },
                 )
           ],
-          searchResult: '',
+          searchResult: _searchText,
+          typeResult: _typeText,
         ),
       ],
     );
