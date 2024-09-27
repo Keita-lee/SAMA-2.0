@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 
 class FilterDropButton extends StatefulWidget {
-  
-  const FilterDropButton({super.key, });
+  final Function(String) onTypeChanged;
+
+  FilterDropButton({super.key, required this.onTypeChanged});
 
   @override
   State<FilterDropButton> createState() => _FilterDropButtonState();
 }
 
 class _FilterDropButtonState extends State<FilterDropButton> {
-  
-
-
-  
   String? _selectedValue;
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
@@ -34,8 +31,12 @@ class _FilterDropButtonState extends State<FilterDropButton> {
                 borderRadius: BorderRadius.circular(6),
                 value: _selectedValue,
                 hint: Text('Filter by Product Type'),
-                items:
-                    <String>['Digital Product', 'Coding Product'].map((String value) {
+                items: <String>[
+                  'All',
+                  'Digital Product',
+                  'Coding Product',
+                  'Licensed Product'
+                ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -44,6 +45,7 @@ class _FilterDropButtonState extends State<FilterDropButton> {
                 onChanged: (String? newValue) {
                   setState(() {
                     _selectedValue = newValue;
+                    widget.onTypeChanged(newValue!);
                   });
                 },
               ),

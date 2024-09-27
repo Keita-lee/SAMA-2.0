@@ -27,11 +27,26 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   var pageIndex = 0;
   var productId = "";
+  var searchText = "";
+  final search = TextEditingController();
+  var productTypeText = "";
   final GlobalKey _menuKey = GlobalKey();
   changePageIndex(value, id) {
     setState(() {
       pageIndex = value;
       productId = id;
+    });
+  }
+
+  void onSearchChanged() {
+    setState(() {
+      searchText = search.text;
+    });
+  }
+
+  void onTypeChanged(String text) {
+    setState(() {
+      productTypeText = text;
     });
   }
 
@@ -89,7 +104,7 @@ class _ProductsState extends State<Products> {
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: TextFormField(
-                            controller: TextEditingController(),
+                            controller: search,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -109,10 +124,12 @@ class _ProductsState extends State<Products> {
                         description: "Search Products",
                         height: 55,
                         width: 160,
-                        onTap: () {},
+                        onTap: () {
+                          onSearchChanged();
+                        },
                       ),
                       Spacer(),
-                      FilterDropButton(),
+                      FilterDropButton(onTypeChanged: onTypeChanged),
                       const SizedBox(
                         width: 20,
                       ),
@@ -181,7 +198,10 @@ class _ProductsState extends State<Products> {
                   Column(
                     children: [
                       ProductListTop(),
-                      ProductListView(changePageIndex: changePageIndex)
+                      ProductListView(
+                          changePageIndex: changePageIndex,
+                          searchText: searchText,
+                          productTypeText: productTypeText)
                     ],
                   ),
                 ],

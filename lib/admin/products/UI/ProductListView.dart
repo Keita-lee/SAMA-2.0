@@ -10,7 +10,13 @@ class ProductListView extends StatefulWidget {
     int,
     String,
   ) changePageIndex;
-  ProductListView({super.key, required this.changePageIndex});
+  String searchText;
+  String productTypeText;
+  ProductListView(
+      {super.key,
+      required this.changePageIndex,
+      required this.searchText,
+      required this.productTypeText});
 
   @override
   State<ProductListView> createState() => _ProductListViewState();
@@ -25,6 +31,27 @@ class _ProductListViewState extends State<ProductListView> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Product deleted successfully')),
     );
+  }
+
+  checkSearchResults(data) {
+    if (widget.searchText == "") {
+      return true;
+    } else if ((widget.searchText).toLowerCase().contains((data['name']))) {
+      return true;
+    }
+    return false;
+  }
+
+  checkTypeResults(data) {
+    if (widget.productTypeText != null) {
+      if (widget.productTypeText == "" || widget.productTypeText == "All") {
+        return true;
+      } else if (widget.productTypeText!.contains(data['type'])) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -54,25 +81,31 @@ class _ProductListViewState extends State<ProductListView> {
               final DocumentSnapshot document = documents[index];
               final data = document.data() as Map<String, dynamic>?;
 
-              return ProductListItem(
-                itemColor: (index % 2 == 0)
-                    ? Colors.white
-                    : const Color.fromARGB(38, 158, 158, 158),
-                title: data?["name"] ?? '',
-                type: data?["type"] ?? '',
-                isActive: data?['isActive'] == "Active" ? true : false,
-                onTapDelete: () {
-                  deleteProduct(document.id);
-                },
-                onTapEdit: () {
-                  if (data?["type"] == "Physical Product") {
-                    widget.changePageIndex(3, document.id);
-                  } else if (data?["type"] == "Digital Product") {
-                    widget.changePageIndex(4, document.id);
-                  } else {
-                    widget.changePageIndex(5, document.id);
-                  }
-                },
+              return Visibility(
+                visible: checkSearchResults(data),
+                child: Visibility(
+                  visible: checkTypeResults(data),
+                  child: ProductListItem(
+                    itemColor: (index % 2 == 0)
+                        ? Colors.white
+                        : const Color.fromARGB(38, 158, 158, 158),
+                    title: data?["name"] ?? '',
+                    type: data?["type"] ?? '',
+                    isActive: data?['isActive'] == "Active" ? true : false,
+                    onTapDelete: () {
+                      deleteProduct(document.id);
+                    },
+                    onTapEdit: () {
+                      if (data?["type"] == "Physical Product") {
+                        widget.changePageIndex(3, document.id);
+                      } else if (data?["type"] == "Digital Product") {
+                        widget.changePageIndex(4, document.id);
+                      } else {
+                        widget.changePageIndex(5, document.id);
+                      }
+                    },
+                  ),
+                ),
               );
             },
           ),
