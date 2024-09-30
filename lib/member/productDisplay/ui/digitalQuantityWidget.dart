@@ -81,7 +81,8 @@ class _DigitalQuantityWidgetState extends State<DigitalQuantityWidget> {
       } else {
         if (upperBound == 'unlimited') {
           return;
-        } else if (_amount > int.parse(upperBound)) {
+        } else if (_amount > int.parse(upperBound) &&
+            currentActivePriceIndex + 1 < widget.priceList!.length) {
           currentActivePriceIndex++;
           widget.utils!.updateActivePriceIndex(currentActivePriceIndex);
         }
