@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/productDisplay/cart/cartPage.dart';
+import 'package:sama/member/productDisplay/models/cartProduct.dart';
 import 'package:sama/member/productDisplay/productFullViewCoding.dart';
 import 'package:sama/member/productDisplay/productFullViewDigital.dart';
 import 'package:sama/member/productDisplay/purchaseHistory/purchaseHistory.dart';
@@ -26,19 +28,20 @@ class ProductListDisplay extends StatefulWidget {
 }
 
 class _ProductListDisplayState extends State<ProductListDisplay> {
-  //var
-  List allProduct = [];
+  final auth = FirebaseAuth.instance;
+  List<Map<String, dynamic>> allProduct = [];
   List cartProducts = [];
   String userType = "";
   int pageIndex = 0;
   String productType = "";
   String title = "";
   String price = "";
-  Map<String, dynamic> priceList = {};
+  List<Map<String, dynamic>> priceList = [];
   String priceInfo = "";
   String description = "";
   String productImage = "";
-
+  bool isLoading = false;
+  String id = '';
   var productQuantity = 1;
   var total = 0.0;
 
@@ -102,17 +105,18 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     setState(() {
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i]['isActive'] == "Active") {
-          allProduct.add(data.docs[i]);
+          allProduct.add({id: data.docs[i].id, ...data.docs[i].data()});
         }
       }
     });
   }
 
   // Add a product to the cart list
-  addProductToList(product, quantity) async {
+  addProductToList(Map<String, dynamic> product, int quantity,
+      double totalProductPrice) async {
     print(product);
     print(quantity);
-    await addProduct(product, quantity, getProductQuantity);
+    await addProduct(product, quantity, getProductQuantity, totalProductPrice);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -169,6 +173,57 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     });
   }
 
+  List<Map<String, dynamic>> setPrices(Map<String, dynamic> productData) {
+    List<Map<String, dynamic>> productPriceList = [];
+    print(productData);
+    bool isMember = auth.currentUser != null;
+    setState(() {
+      isLoading = true;
+    });
+    if (productData['type'] == 'Licensed Product') {
+      if (isMember) {
+        productPriceList.add(
+            {'description': 'First License', 'price': productData['price']});
+      } else {
+        productPriceList.add({
+          'description': 'First License',
+          'price': productData['firstLicensePrice']
+        });
+      }
+
+      if (productData['secondTierPrice'] != '') {
+        productPriceList.add({
+          'description': productData['secondTierRange'],
+          'price': productData['secondTierPrice']
+        });
+      }
+      if (productData['thirdTierPrice'] != '') {
+        productPriceList.add({
+          'description': productData['thirdTierRange'],
+          'price': productData['thirdTierPrice']
+        });
+      }
+    } else {
+      if (isMember) {
+        productPriceList.add(
+            {'description': 'First License', 'price': productData['price']});
+        productPriceList.add({
+          'description': 'Second License and more',
+          'price': productData['nonMemberPrice']
+        });
+      } else {
+        productPriceList.add({
+          'description': 'License Price',
+          'price': productData['nonMemberPrice']
+        });
+      }
+    }
+
+    print(productPriceList);
+
+    return productPriceList;
+  }
+
   @override
   void initState() {
     if (widget.pageIndex != null) {
@@ -178,6 +233,28 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     }
     getAllProducts();
     super.initState();
+  }
+
+  void onReadMoreClick(Map<String, dynamic> productData) async {
+    List<Map<String, dynamic>> newPriceList = setPrices(productData);
+    setState(() {
+      priceList = newPriceList;
+      title = productData['name'];
+      priceInfo = 'Member Price. Includes VAT';
+      description = productData['description'];
+      productImage = productData['imageUrl'];
+      pageIndex = 1;
+      productType = productData['type'];
+      id = productData['id'];
+    });
+
+    print(priceList);
+  }
+
+  void resetQuanitity() {
+    setState(() {
+      productQuantity = 1;
+    });
   }
 
   @override
@@ -289,33 +366,10 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                                 productDescription: allProduct[index]
                                     ['description'],
                                 productImage: allProduct[index]['imageUrl'],
-                                readMore: () {
-                                  changePageIndex(1, allProduct[index]['type']);
-                                  setState(() {
-                                    title = allProduct[index]['name'];
-                                    priceList = {
-                                      "firstLicensePrice": allProduct[index]
-                                          ['firstLicensePrice'],
-                                      "secondTierPrice": allProduct[index]
-                                          ['secondTierPrice'],
-                                      "secondTierRange": allProduct[index]
-                                          ['secondTierRange'],
-                                      "thirdTierPrice": allProduct[index]
-                                          ['thirdTierPrice'],
-                                      "thirdTierRange": allProduct[index]
-                                          ['thirdTierRange'],
-                                    };
-                                    priceInfo = 'Member Price. Includes VAT';
-                                    description =
-                                        allProduct[index]['description'];
-                                    productImage =
-                                        allProduct[index]['imageUrl'];
-                                  });
+                                readMore: () async {
+                                  onReadMoreClick(allProduct[index]);
                                 },
-                                buyProduct: () {
-                                  addProductToList(allProduct[index], "");
-                                  changePageIndex(2, allProduct[index]['type']);
-                                },
+                                buyProduct: () {},
                               ),
                             );
                           },
@@ -325,10 +379,12 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                   ),
                 )), //&& productType == "Digital Product"
             Visibility(
-              visible: pageIndex == 1 ? true : false,
+              visible: pageIndex == 1,
               child: ProductFullViewDigital(
                 title: title,
                 price: price,
+                productType: productType,
+                productId: id,
                 priceList: priceList,
                 priceInfo: priceInfo,
                 description: description,
@@ -337,6 +393,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                 buyProduct: addProductToList,
                 productQuantity: productQuantity,
                 getProductQuantity: getProductQuantity,
+                resetQuantity: resetQuanitity,
                 updatePrice: updatePrice,
               ),
             ),

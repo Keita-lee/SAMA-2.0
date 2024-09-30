@@ -92,14 +92,19 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
             ),
           ),
           Container(
-            width: MyUtility(context).width * 0.11,
+            width: MyUtility(context).width * 0.05,
             child: Center(
-              child: DigitalQuantityWidget(
-                productQuantity: widget.qtyWidget,
-                getProductQuantity: widget.manageProductList,
-                title: widget.productName,
-                canDelete: true,
-                deleteProduct: widget.delete,
+              // child: DigitalQuantityWidget(
+              //   productQuantity: widget.qtyWidget,
+              //   getProductQuantity: widget.manageProductList,
+              //   title: widget.productName,
+              //   canDelete: true,
+              //   deleteProduct: widget.delete,
+              // ),
+              child: Text(
+                widget.qtyWidget.toString(),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -111,6 +116,19 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
+            ),
+          ),
+          SizedBox(
+            width: MyUtility(context).width * 0.05,
+            child: Center(
+              child: IconButton(
+                  onPressed: () {
+                    widget.delete(widget.productName);
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  )),
             ),
           ),
         ],

@@ -5,6 +5,7 @@ import 'package:sama/admin/transactions/manageProducts/addTrackingDetails.dart';
 import 'package:sama/admin/transactions/manageProducts/manageLicense.dart';
 import 'package:sama/admin/transactions/manageProducts/viewOrder.dart';
 import 'package:sama/components/AdminTable.dart';
+import 'package:sama/utils/invoiceUtil.dart';
 import 'package:intl/intl.dart';
 
 class Manageproducts extends StatefulWidget {
@@ -360,6 +361,24 @@ class _ManageproductsState extends State<Manageproducts> {
                         print('error opening view order: $e');
                       }
                       break;
+                    case 'invoice':
+                      try {
+                        String email = data['customer'].split('\n')[1];
+                        String mobile = data['customer'].split('\n')[2];
+                        String title = data['customerTitle'];
+                        Map<String, dynamic> customer = {
+                          'name': data['customer'],
+                          'email': email,
+                          'mobile': mobile,
+                          'title': title
+                        };
+                        createInvoice(
+                            List<Map<String, dynamic>>.from(data['products']),
+                            customer);
+                      } catch (e) {
+                        print('error opening view order: $e');
+                      }
+                      break;
                   }
                 },
                 itemBuilder: (BuildContext context) {
@@ -381,12 +400,17 @@ class _ManageproductsState extends State<Manageproducts> {
                     value: 'void',
                     child: Text('Void Order'),
                   ));
+                  menuItems.add(const PopupMenuItem<String>(
+                    value: 'invoice',
+                    child: Text('Download Invoice'),
+                  ));
                   if (data['hasPhysicalProducts']) {
                     menuItems.add(const PopupMenuItem<String>(
                       value: 'add tracking',
                       child: Text('Add Tracking Number'),
                     ));
                   }
+
                   return menuItems;
                 },
               )

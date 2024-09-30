@@ -2,6 +2,8 @@ import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/email/sendDigitalProducts.dart';
+import 'package:sama/components/email/sendLicenses.dart';
 import 'package:sama/components/email/sendPaymentConfirmation.dart';
 import 'package:sama/member/productDisplay/cart/ui/payStackCon.dart';
 import 'package:sama/member/productDisplay/checkout/yourOrderTable/yourOrderTable.dart';
@@ -19,6 +21,7 @@ import 'package:uuid/uuid.dart';
 
 class YourOrderCon extends StatefulWidget {
   TextEditingController email;
+  String name;
   final GlobalKey<FormState> formKey;
   Function(int, String) changePageIndex;
   List products;
@@ -30,14 +33,15 @@ class YourOrderCon extends StatefulWidget {
       required this.products,
       required this.total,
       required this.changePageIndex,
-      required this.email});
+      required this.email,
+      required this.name});
 
   @override
   State<YourOrderCon> createState() => _YourOrderConState();
 }
 
 class _YourOrderConState extends State<YourOrderCon> {
-  var total = 0.0;
+  double total = 0.0;
   String email = "";
   bool loadingState = false;
   List cartProducts = [];
@@ -130,8 +134,10 @@ class _YourOrderConState extends State<YourOrderCon> {
 
   savePaymentsToHistory() async {
     List<Map<String, dynamic>> products = [];
-    List<String> productCodes = [];
+    List<Map<String, dynamic>> productCodes = [];
+    List<Map<String, dynamic>> digitalProducts = [];
 
+    String title = '';
     for (int i = 0; i < cartProducts.length; i++) {
       var product = {
         "productImage": cartProducts[i]['productImage'],
@@ -140,13 +146,27 @@ class _YourOrderConState extends State<YourOrderCon> {
         "quantity": cartProducts[i]['quantity'],
         "downloadLink": cartProducts[i]['downloadLink'] ?? '',
         "productType": cartProducts[i]['type'],
-        "productId": cartProducts[i]['id'],
       };
 
-      if (cartProducts[i].containsKey('productCode')) {
+      if (cartProducts[i]['type'] == 'Licensed Product') {
         product.putIfAbsent(
             'productCode', () => cartProducts[i]['productCode']);
-        productCodes.add(cartProducts[i]['productCode']);
+        productCodes.add({
+          'code': cartProducts[i]['productCode'],
+          'quantity': cartProducts[i]['quantity'],
+          'name': cartProducts[i]['productName']
+        });
+      } else if (cartProducts[i]['type'] == 'Digital Product') {
+        DocumentSnapshot digitalProductSnapshot = await FirebaseFirestore
+            .instance
+            .collection('store')
+            .doc(cartProducts[i]['id'])
+            .get();
+
+        digitalProducts.add({
+          'name': digitalProductSnapshot.get('name'),
+          'downloadLink': digitalProductSnapshot.get('downloadLink'),
+        });
       }
 
       products.add(product);
@@ -156,24 +176,40 @@ class _YourOrderConState extends State<YourOrderCon> {
       "paymentRef": reference,
       "products": products,
       "date": DateTime.now(),
-      "user": FirebaseAuth.instance.currentUser?.uid ?? '0'
+      "user": FirebaseAuth.instance.currentUser?.uid ?? email,
     };
 
     try {
       DocumentReference doc = await FirebaseFirestore.instance
           .collection('storeHistory')
           .add(productHistory);
-      String name = 'SAMA Customer';
+      String name = widget.name;
       if (FirebaseAuth.instance.currentUser != null) {
         DocumentSnapshot userDoc = await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .get();
-        name = userDoc.get('firstName');
+        name = '${userDoc.get('lastName')} ${userDoc.get('firstName')}';
+        title = userDoc.get('title');
       }
 
       if (productCodes.isNotEmpty) {
-        addCodingLicenses(productCodes, doc.id);
+        for (var code in productCodes) {
+          addCodingLicenses(code['code'], code['quanitity'], doc.id, name,
+              code['name'], title);
+        }
+      }
+
+      if (digitalProducts.isNotEmpty) {
+        for (var product in digitalProducts) {
+          sendDigitalProduct(
+            email: email == '' ? widget.email.text : email,
+            name: name,
+            title: title,
+            link: product['downloadLink'],
+            product: product['name'],
+          );
+        }
       }
 
       sendPaymentConfirmation(
@@ -186,12 +222,15 @@ class _YourOrderConState extends State<YourOrderCon> {
     }
   }
 
-  addCodingLicenses(List<String> productCodes, String docId) async {
-    var uuid = Uuid();
-
-    for (String code in productCodes) {
+  addCodingLicenses(String productCode, int quantity, String docId, String name,
+      String productName, String title) async {
+    var uuid = const Uuid();
+    String licenseString = '';
+    String link = '';
+    for (int i = 1; i <= quantity; i++) {
       String licenseKey = uuid.v1();
-      if (code.contains('ICD10')) {
+      licenseString += 'license $i: $licenseKey\n';
+      if (productCode.contains('ICD10')) {
         await FirebaseFirestore.instance.collection('icd10Licenses').add({
           "accTxid": docId,
           "computercode": '',
@@ -201,9 +240,10 @@ class _YourOrderConState extends State<YourOrderCon> {
           "installdate": '',
           "installed": 0,
           "licensekey": licenseKey,
-          "productCode": code,
+          "productCode": productCode,
         });
-      } else if (code.contains('MDCM')) {
+        link = 'https://www.samedical.org/downloads/icd10/setup.exe';
+      } else if (productCode.contains('MDCM')) {
         await FirebaseFirestore.instance.collection('emdcmLicenses').add({
           "accTxid": docId,
           "computercode": '',
@@ -213,12 +253,13 @@ class _YourOrderConState extends State<YourOrderCon> {
           "installdate": '',
           "installed": 0,
           "licensekey": licenseKey,
-          "productCode": code,
+          "productCode": productCode,
           "lastComms": '',
           "webLastlogin": '',
           "webSessionid": '',
         });
-      } else if (code.contains('CCSA')) {
+        link = 'https://www.samedical.org/downloads/emdcm/setup.exe';
+      } else if (productCode.contains('CCSA')) {
         await FirebaseFirestore.instance.collection('ccsaLicenses').add({
           "accTxid": docId,
           "computercode": '',
@@ -228,10 +269,20 @@ class _YourOrderConState extends State<YourOrderCon> {
           "installdate": '',
           "installed": 0,
           "licensekey": licenseKey,
-          "productCode": code,
+          "productCode": productCode,
         });
+        link = 'https://www.samedical.org/downloads/ccsa/setup.exe';
       }
     }
+
+    sendLicenses(
+      email: email == '' ? widget.email.text : email,
+      name: name,
+      title: title,
+      link: link,
+      licenses: licenseString,
+      product: productName,
+    );
   }
 
   afterPaymentMade() {
@@ -292,7 +343,7 @@ class _YourOrderConState extends State<YourOrderCon> {
                 YourOrderTable(
                     orderProduct: cartProducts,
                     getTotal: getTotals,
-                    total: total.toString()),
+                    total: total.toStringAsFixed(2)),
               ],
             ),
           ),

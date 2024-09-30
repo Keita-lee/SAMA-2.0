@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
@@ -10,35 +12,60 @@ class ProductFullView extends StatefulWidget {
   List<Map<String, dynamic>> priceList;
   final String price;
   final String priceInfo;
+  final String cartInfo;
   final Widget qtyWidget;
   final String productImage;
   Function(int, String) changePageIndex;
-  Function(Map, int) buyProduct;
+  Function buyProduct;
   final int productQuantity;
+  int priceIndex;
   Map product;
+  Function reset;
   ProductFullView(
       {super.key,
       required this.productTitle,
       required this.priceList,
       required this.price,
       required this.priceInfo,
+      required this.cartInfo,
       required this.qtyWidget,
       required this.productImage,
       required this.changePageIndex,
       required this.buyProduct,
       required this.productQuantity,
-      required this.product});
+      required this.product,
+      required this.priceIndex,
+      required this.reset});
 
   @override
   State<ProductFullView> createState() => _ProductFullViewState();
 }
 
 class _ProductFullViewState extends State<ProductFullView> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   bool hasAddedToCart = false;
+  bool hasAlreadyPurchased = false;
+  String priceInfo = '';
+
   @override
   void initState() {
     print(widget.productQuantity);
+    // checkIsMember();
   }
+
+  // void checkIsMember() async {
+  //   if (auth.currentUser != null) {
+  //     setState(() {
+  //       priceInfo = hasAlreadyPurchased
+  //           ? 'You have already purchased this product'
+  //           : 'SAMA member first license price';
+  //     });
+  //   } else {
+  //     setState(() {
+  //       priceInfo = 'Login to get special discounts on your first license';
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -150,12 +177,28 @@ class _ProductFullViewState extends State<ProductFullView> {
                     description =
                         '${price['description']} Licenses: R ${price['price']} ';
                   }
-                  return Text(
-                    description,
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold),
-                  );
+                  return index == widget.priceIndex
+                      ? Text(
+                          description,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal),
+                        )
+                      : Text(
+                          description,
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        );
                 }).toList(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  widget.cartInfo,
+                  style: const TextStyle(
+                      fontSize: 14, height: 1, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -169,7 +212,10 @@ class _ProductFullViewState extends State<ProductFullView> {
                 ),
                 Text(
                   widget.priceInfo,
-                  style: const TextStyle(fontSize: 12, height: 1),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      height: 1,
+                      color: Color.fromRGBO(239, 81, 34, 1)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -191,8 +237,8 @@ class _ProductFullViewState extends State<ProductFullView> {
                               onTap: () async {
                                 print(widget.product);
 
-                                await widget.buyProduct(
-                                    widget.product, widget.productQuantity);
+                                widget.buyProduct();
+
                                 setState(() {
                                   hasAddedToCart = true;
                                 });
@@ -226,10 +272,8 @@ class _ProductFullViewState extends State<ProductFullView> {
                         borderColor: Colors.teal,
                         textColor: Colors.white,
                         onTap: () async {
-                          await widget.buyProduct(
-                              widget.product, widget.productQuantity);
-
-                          widget.changePageIndex(2, "");
+                          await widget.buyProduct();
+                          widget.changePageIndex(2, '');
                         },
                       ),
                       const SizedBox(
@@ -241,6 +285,7 @@ class _ProductFullViewState extends State<ProductFullView> {
                         borderColor: Colors.teal,
                         textColor: Colors.white,
                         onTap: () {
+                          widget.reset();
                           widget.changePageIndex(0, "");
                         },
                       ),

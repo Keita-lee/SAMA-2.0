@@ -19,6 +19,8 @@ class Checkout extends StatefulWidget {
 class _CheckoutState extends State<Checkout> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -50,6 +52,8 @@ class _CheckoutState extends State<Checkout> {
                 BillingDetailsForm(
                   formKey: _formKey,
                   emailController: emailController,
+                  firstNameController: firstNameController,
+                  lastNameController: lastNameController,
                 ),
                 const SizedBox(
                   width: 20,
@@ -60,6 +64,8 @@ class _CheckoutState extends State<Checkout> {
                   total: widget.total,
                   changePageIndex: widget.changePageIndex,
                   email: emailController,
+                  name:
+                      '${firstNameController.text} ${firstNameController.text}',
                 )
               ],
             ),

@@ -8,10 +8,16 @@ import '../../../../components/myutility.dart';
 
 class BillingDetailsForm extends StatefulWidget {
   final TextEditingController emailController;
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
   final GlobalKey<FormState> formKey;
 
   const BillingDetailsForm(
-      {super.key, required this.formKey, required this.emailController});
+      {super.key,
+      required this.formKey,
+      required this.emailController,
+      required this.firstNameController,
+      required this.lastNameController});
 
   @override
   State<BillingDetailsForm> createState() => _BillingDetailsFormState();
@@ -19,8 +25,8 @@ class BillingDetailsForm extends StatefulWidget {
 
 class _BillingDetailsFormState extends State<BillingDetailsForm> {
   // form controllers
-  final firstName = TextEditingController();
-  final lastName = TextEditingController();
+  // final firstName = TextEditingController();
+  // final lastName = TextEditingController();
   final companyName = TextEditingController();
   final street = TextEditingController();
   final addres = TextEditingController();
@@ -68,7 +74,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                           description: 'First Name',
                           customSize: MyUtility(context).width * 0.20,
                           textFieldType: 'stringType',
-                          textfieldController: firstName),
+                          textfieldController: widget.firstNameController),
                       const SizedBox(
                         width: 30,
                       ),
@@ -78,7 +84,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                           description: 'Last Name',
                           customSize: MyUtility(context).width * 0.20,
                           textFieldType: 'stringType',
-                          textfieldController: lastName)
+                          textfieldController: widget.lastNameController)
                     ],
                   ),
                   const SizedBox(

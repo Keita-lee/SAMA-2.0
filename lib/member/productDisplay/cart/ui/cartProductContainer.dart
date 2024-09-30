@@ -44,11 +44,11 @@ class _CartProductContainerState extends State<CartProductContainer> {
                   width: 15,
                 ),
                 Container(
-                  width: MyUtility(context).width * 0.30,
+                  width: MyUtility(context).width * 0.3,
                   child: Text('Product'),
                 ),
                 Container(
-                  width: MyUtility(context).width * 0.115,
+                  width: MyUtility(context).width * 0.05,
                   child: Center(
                     child: Text('Qty'),
                   ),

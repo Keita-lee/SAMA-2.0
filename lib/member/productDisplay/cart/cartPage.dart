@@ -44,10 +44,7 @@ class _CartPageState extends State<CartPage> {
   double total = 0;
   List productList = [];
 
-  manageProductList(
-    productName,
-    quantity,
-  ) async {
+  manageProductList(productName, quantity) async {
     List<Map<String, dynamic>> cart =
         await updateProductQuantity(productName, quantity);
 
@@ -130,7 +127,7 @@ class _CartPageState extends State<CartPage> {
               ),
               CartTotalContainer(
                   products: productList,
-                  cartTotal: 'R $total',
+                  cartTotal: 'R ${total.toStringAsFixed(2)}',
                   changePageIndex: widget.changePageIndex)
             ],
           ),
