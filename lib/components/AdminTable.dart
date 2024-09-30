@@ -66,7 +66,7 @@ class _AdminTableState extends State<AdminTable> {
       }
     }
 
-    return false;
+    return true;
   }
 
   @override

@@ -12,7 +12,7 @@ import 'package:sama/utils/cartUtils.dart';
 import 'package:sama/utils/quillUtils.dart';
 
 class PriceUtils {
-  Function(double) addToTotalPrice;
+  Function(String) addToTotalPrice;
   Function subtractFromPrice;
   Function(int) updateActivePriceIndex;
 
@@ -32,7 +32,7 @@ class ProductFullViewDigital extends StatefulWidget {
   String productImage;
 
   Function(int, String) changePageIndex;
-  Function(Map<String, dynamic>, int, double) buyProduct;
+  Function(Map<String, dynamic>, int, List<String>) buyProduct;
   Function(String, int) getProductQuantity;
   int productQuantity;
   Function(String) updatePrice;
@@ -65,7 +65,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
   QuillController quillController = QuillController.basic();
   Map<String, dynamic> product = {};
   Map<String, dynamic> priceList = {};
-  List<double> totalPriceData = [];
+  List<String> totalPriceData = [];
   final auth = FirebaseAuth.instance;
   bool productAlreadyPurchased = false;
   String priceInfo = '';
@@ -95,6 +95,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
       "id": widget.productId,
       "imageUrl": widget.productImage,
       "productType": widget.productType,
+      "priceList": widget.priceList
     };
   }
 
@@ -122,7 +123,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
                       'You already have $quantity of this product in you cart';
                   isLoading = false;
                 });
-                totalPriceData.add(double.parse(widget.priceList[i]['price']));
+                totalPriceData.add(widget.priceList[i]['price']);
                 break;
               }
             } else if (quantity >= int.parse(lowerBound) &&
@@ -134,14 +135,13 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
                     'You already have $quantity of this product in you cart';
                 isLoading = false;
               });
-              totalPriceData.add(double.parse(widget.priceList[i]['price']));
+              totalPriceData.add(widget.priceList[i]['price']);
               break;
             }
           }
         }
       } else {
-        totalPriceData
-            .add(double.parse(widget.priceList[activePriceIndex]['price']));
+        totalPriceData.add(widget.priceList[activePriceIndex]['price']);
         setState(() {
           isLoading = false;
         });
@@ -174,7 +174,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
     });
   }
 
-  void addToTotalPrice(double price) {
+  void addToTotalPrice(String price) {
     print('price $price');
     setState(() {
       totalPriceData.add(price);
@@ -297,9 +297,7 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
   // }
 
   void buyProduct() async {
-    double totalPrice =
-        totalPriceData.reduce((value, element) => value + element);
-    widget.buyProduct(product, widget.productQuantity, totalPrice);
+    widget.buyProduct(product, widget.productQuantity, totalPriceData);
   }
 
   @override
@@ -342,7 +340,8 @@ class _ProductFullViewDigitalState extends State<ProductFullViewDigital> {
                     priceIndex: activePriceIndex,
                     //price: "R ${product['price']}",
                     price: totalPriceData
-                        .reduce((value, element) => value + element)
+                        .map((s) => double.parse(s))
+                        .reduce((val, acc) => val + acc)
                         .toStringAsFixed(2),
                     priceInfo: auth.currentUser != null
                         ? priceInfo

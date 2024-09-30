@@ -44,47 +44,61 @@ class _CartPageState extends State<CartPage> {
   double total = 0;
   List productList = [];
 
-  manageProductList(productName, quantity) async {
+  manageProductList(String productName, int quantity, String? newPrice) async {
     List<Map<String, dynamic>> cart =
-        await updateProductQuantity(productName, quantity);
+        await updateProductQuantity(productName, quantity, newPrice);
 
     // var productIndex = (cart).indexWhere((item) => item["name"] == productName);
     // cart[productIndex]['quantity'] = quantity;
     // cart[productIndex]['total'] =
     //     '${double.parse(cart[productIndex]['price']) * quantity}';
-
+    total = 0.0;
     setState(() {
-      total = 0;
       for (int i = 0; i < cart.length; i++) {
+        double newProductTotal = 0.0;
+        List<String> cartTotal = List.from(cart[i]['total']);
         print('total ${cart[i]['total']}');
-        total = total + double.parse(cart[i]['total']);
+        newProductTotal += cartTotal
+            .map((s) => double.parse(s))
+            .reduce((val, acc) => val + acc);
+        total += newProductTotal;
+        cart[i]['total'] = total.toStringAsFixed(2);
       }
       widget.getTotal(total, cart);
       productList = cart;
     });
+    print('total in cartPage: $total');
   }
 
   @override
   void initState() {
     getCartProducts();
-
     super.initState();
-    //
   }
 
   getCartProducts() async {
-    List cart = await getCart();
-    var newTotal = 0.0;
-    for (int i = 0; i < cart.length; i++) {
-      print(cart[i]['total']);
-      newTotal += double.parse(cart[i]['total']);
-    }
-    total = newTotal;
-    widget.getTotal(total, cart);
+    try {
+      List cart = await getCart();
+      double newTotal = 0.0;
+      for (int i = 0; i < cart.length; i++) {
+        double newProductTotal = 0.0;
+        List<String> cartTotal = List.from(cart[i]['total']);
+        print('total ${cart[i]['total']}');
+        newProductTotal = cartTotal
+            .map((s) => double.parse(s))
+            .reduce((val, acc) => val + acc);
+        newTotal += newProductTotal;
+        cart[i]['total'] = newProductTotal.toStringAsFixed(2);
+      }
+      total = newTotal;
+      widget.getTotal(total, cart);
 
-    setState(() {
-      productList = cart;
-    });
+      setState(() {
+        productList = cart;
+      });
+    } catch (e) {
+      print('error: $e');
+    }
   }
 
   void deleteProduct(String productName) async {

@@ -113,7 +113,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
 
   // Add a product to the cart list
   addProductToList(Map<String, dynamic> product, int quantity,
-      double totalProductPrice) async {
+      List<String> totalProductPrice) async {
     print(product);
     print(quantity);
     await addProduct(product, quantity, getProductQuantity, totalProductPrice);
@@ -240,7 +240,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
     setState(() {
       priceList = newPriceList;
       title = productData['name'];
-      priceInfo = 'Member Price. Includes VAT';
+      priceInfo = 'Price Includes VAT';
       description = productData['description'];
       productImage = productData['imageUrl'];
       pageIndex = 1;
@@ -362,7 +362,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
                                 downloadLink: allProduct[index]['downloadLink'],
                                 productName: allProduct[index]['name'],
                                 price: allProduct[index]['price'],
-                                priceInfo: 'Member Price. Includes VAT',
+                                priceInfo: 'Price. Includes VAT',
                                 productDescription: allProduct[index]
                                     ['description'],
                                 productImage: allProduct[index]['imageUrl'],

@@ -5,7 +5,7 @@ import 'package:sama/components/myutility.dart';
 import '../../ui/digitalQuantityWidget.dart';
 
 class CartItemDisplay extends StatefulWidget {
-  final Function(String, int) manageProductList;
+  final Function(String, int, String?) manageProductList;
   final String productImage;
   final String productName;
   final String productPrice;
@@ -80,7 +80,7 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
                       ),
                     ),
                     Text(
-                      widget.productPrice,
+                      'Price includes VAT',
                       style: const TextStyle(
                           color: Color.fromRGBO(0, 159, 158, 1),
                           fontSize: 15,
@@ -92,20 +92,20 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
             ),
           ),
           Container(
-            width: MyUtility(context).width * 0.05,
+            width: MyUtility(context).width * 0.115,
             child: Center(
-              // child: DigitalQuantityWidget(
-              //   productQuantity: widget.qtyWidget,
-              //   getProductQuantity: widget.manageProductList,
-              //   title: widget.productName,
-              //   canDelete: true,
-              //   deleteProduct: widget.delete,
-              // ),
-              child: Text(
-                widget.qtyWidget.toString(),
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              child: DigitalQuantityWidget(
+                productQuantity: widget.qtyWidget,
+                getProductQuantityCheckout: widget.manageProductList,
+                title: widget.productName,
+                canDelete: true,
+                deleteProduct: widget.delete,
               ),
+              // child: Text(
+              //   widget.qtyWidget.toString(),
+              //   style:
+              //       const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              // ),
             ),
           ),
           SizedBox(
@@ -118,19 +118,19 @@ class _CartItemDisplayState extends State<CartItemDisplay> {
               ),
             ),
           ),
-          SizedBox(
-            width: MyUtility(context).width * 0.05,
-            child: Center(
-              child: IconButton(
-                  onPressed: () {
-                    widget.delete(widget.productName);
-                  },
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  )),
-            ),
-          ),
+          // SizedBox(
+          //   width: MyUtility(context).width * 0.05,
+          //   child: Center(
+          //     child: IconButton(
+          //         onPressed: () {
+          //           widget.delete(widget.productName);
+          //         },
+          //         icon: const Icon(
+          //           Icons.delete,
+          //           color: Colors.red,
+          //         )),
+          //   ),
+          // ),
         ],
       ),
     );
