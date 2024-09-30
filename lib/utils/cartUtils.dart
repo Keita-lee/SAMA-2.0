@@ -24,7 +24,7 @@ Future<List<Map<String, dynamic>>> getCart() async {
 }
 
 Future<void> addProduct(product, quantity,
-    Function(String, int) getProductQuantity, double totalPrice) async {
+    Function(String, int) getProductQuantity, List<String> totalPrice) async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonCart = prefs.getString('cart');
@@ -33,24 +33,14 @@ Future<void> addProduct(product, quantity,
         : [];
 
     print('cart $cartProducts');
-
-    // var productSelected = {
-    //   "name": product['name'],
-    //   "productPrice": 'Member Price. Includes VAT',
-    //   "quantity": quantity != "" ? quantity : 1,
-    //   "price": '${double.parse(product['price'])}',
-    //   "total":
-    //       '${double.parse(product['price']) * (quantity != "" ? quantity : 1)}',
-    //   "id": product['id'],
-    //   "productImage": product['imageUrl'],
-    // };
     print('product : $product, quantity : $quantity, totalPrice : $totalPrice');
+
     var productSelected = {
       "name": product['name'],
       "productPrice": 'Member Price. Includes VAT',
       "quantity": quantity != "" ? quantity : 1,
       // "price": '${double.parse(product['price'])}',
-      "total": totalPrice.toStringAsFixed(2),
+      "total": totalPrice,
       "priceList": product['priceList'],
       "id": product['id'],
       "productImage": product['imageUrl'],
@@ -67,9 +57,10 @@ Future<void> addProduct(product, quantity,
         cartProducts[productIndex]['quantity'] =
             cartProducts[productIndex]['quantity'] + 1;
 
-        cartProducts[productIndex]['total'] =
-            (double.parse(cartProducts[productIndex]['total']) + totalPrice)
-                .toStringAsFixed(2);
+        // add to total
+        for (String price in totalPrice) {
+          cartProducts[productIndex]['total'].add(price);
+        }
 
         getProductQuantity(product['name'], 0);
       } else {
@@ -78,9 +69,10 @@ Future<void> addProduct(product, quantity,
 
         print(cartProducts[productIndex]['quantity']);
 
-        cartProducts[productIndex]['total'] =
-            (double.parse(cartProducts[productIndex]['total']) + totalPrice)
-                .toStringAsFixed(2);
+        // add to total
+        for (String price in totalPrice) {
+          cartProducts[productIndex]['total'].add(price);
+        }
 
         getProductQuantity(
             product['name'], cartProducts[productIndex]['quantity']);
@@ -110,40 +102,50 @@ Future<int> getProductQuantity(String productName) async {
 }
 
 Future<List<Map<String, dynamic>>> updateProductQuantity(
-    productName, quantity) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  List<Map<String, dynamic>> cartProducts = await getCart();
-  var total = 0.0;
-  var productIndex =
-      (cartProducts).indexWhere((item) => item["name"] == productName);
+    String productName, int quantity, String? newPrice) async {
+  try {
+    print('updating product list.');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<Map<String, dynamic>> cartProducts = await getCart();
+    var productIndex =
+        (cartProducts).indexWhere((item) => item["name"] == productName);
 
-  cartProducts[productIndex]['quantity'] = quantity;
+    cartProducts[productIndex]['quantity'] = quantity;
+    List productTotal = cartProducts[productIndex]['total'];
+    if (newPrice != null) {
+      productTotal.add(newPrice);
+    } else {
+      productTotal.removeLast();
+    }
 
-  cartProducts[productIndex]['total'] =
-      '${double.parse(cartProducts[productIndex]['price']) * quantity}';
-  print('cart: $cartProducts');
-  // Store the updated cart in SharedPreferences
-  await prefs.setString('cart', jsonEncode(cartProducts));
-  print(
-      'updating product list. Quanitity ${cartProducts[productIndex]['quantity']}, total ${cartProducts[productIndex]['total']}');
+    cartProducts[productIndex]['total'] = productTotal;
 
-  return cartProducts;
+    print('cart: $cartProducts');
+
+    // Store the updated cart in SharedPreferences
+    await prefs.setString('cart', jsonEncode(cartProducts));
+    print(
+        'updating product list. Quanitity ${cartProducts[productIndex]['quantity']}, total ${cartProducts[productIndex]['total']}');
+
+    return cartProducts;
+  } catch (e) {
+    print('error updating cart :$e');
+    return [];
+  }
 }
 
 Future<List<Map<String, dynamic>>> updateProductTotal(
     productName, quantity, totalPrice) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   List<Map<String, dynamic>> cartProducts = await getCart();
-  var total = 0.0;
+
   var productIndex =
       (cartProducts).indexWhere((item) => item["name"] == productName);
 
   cartProducts[productIndex]['quantity'] = quantity;
 
-  cartProducts[productIndex]['total'] =
-      (double.parse(cartProducts[productIndex]['total']) +
-              double.parse(totalPrice))
-          .toStringAsFixed(2);
+  cartProducts[productIndex]['total'].add(totalPrice);
+
   print('cart: $cartProducts');
   // Store the updated cart in SharedPreferences
   await prefs.setString('cart', jsonEncode(cartProducts));

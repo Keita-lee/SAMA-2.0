@@ -8,7 +8,7 @@ import 'cartItemDisplay.dart';
 class CartProductContainer extends StatefulWidget {
   final List productItems;
   final Function(String) delete;
-  final Function(String, int) manageProductList;
+  final Function(String, int, String?) manageProductList;
   CartProductContainer(
       {super.key,
       required this.productItems,
@@ -48,7 +48,7 @@ class _CartProductContainerState extends State<CartProductContainer> {
                   child: Text('Product'),
                 ),
                 Container(
-                  width: MyUtility(context).width * 0.05,
+                  width: MyUtility(context).width * 0.11,
                   child: Center(
                     child: Text('Qty'),
                   ),

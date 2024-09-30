@@ -40,6 +40,7 @@ class _CreateadminState extends State<Createadmin> {
     {'name': 'Branch Voting', 'permission': false},
     {'name': 'E-store', 'permission': false},
     {'name': 'Member Management', 'permission': false},
+    {'name': 'Transactions', 'permission': false},
   ];
   BuildContext? dialogContext;
   List<Map<String, dynamic>> tempPermissions = [];
@@ -84,6 +85,7 @@ class _CreateadminState extends State<Createadmin> {
       {'name': 'Branch Voting', 'permission': false},
       {'name': 'E-store', 'permission': false},
       {'name': 'Member Management', 'permission': false},
+      {'name': 'Transactions', 'permission': false},
     ];
     firstNameController.text = '';
     lastNameController.text = '';
@@ -110,6 +112,8 @@ class _CreateadminState extends State<Createadmin> {
           'lastName': lastNameController.text,
           'email': emailController.text,
           'permissions': permissions,
+          'profilePic':
+              'https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Ff06c0480-70e4-11ef-9d61-8de8b2f04cfc.png?alt=media&token=899ec27c-337d-42f3-b6a6-02526cc29066',
         });
         setState(() {
           isLoading = false;
@@ -179,6 +183,7 @@ class _CreateadminState extends State<Createadmin> {
         {'name': 'Branch Voting', 'permission': true},
         {'name': 'E-store', 'permission': true},
         {'name': 'Member Management', 'permission': true},
+        {'name': 'Transactions', 'permission': true},
       ];
     });
   }
