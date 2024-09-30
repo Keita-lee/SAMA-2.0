@@ -1,24 +1,20 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:sama/components/passwordStrengthMeter.dart';
 import 'package:sama/components/styleButton.dart';
-import 'package:sama/homePage/PostLoginLandingPage.dart';
 
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/profileTextField.dart';
-import 'package:sama/login/loginPages/membershipSignUp.dart';
 import 'package:sama/login/popups/validateDialog.dart';
-import 'package:sama/login/registerFinished.dart';
-import 'package:sama/profile/EditProfile.dart';
-import 'package:sama/components/constants.dart' as constants;
 
-import '../../../components/email/payments/debitOrder.dart';
-import '../../../components/email/payments/eftPayment.dart';
-import '../../../components/email/payments/onlinePayment.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class NonMemberSignUp extends StatefulWidget {
   Function closeDialog;
@@ -47,7 +43,9 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
   String userId = "";
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  sendUpdatedEmail() async {}
+  bool loadingState = false;
+  List cartProducts = [];
+  String reference = "";
 
   Future messageDialog(String message) => showDialog(
       context: context,
@@ -58,54 +56,95 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
                 closeDialog: () => Navigator.pop(context!)));
       });
 
+  //Update user cpd
+  updateUserCpd(userId) async {
+    var userCpdData = {
+      "dateCreate": DateTime.now(),
+      "cpdAssessments": [],
+      "userId": userId,
+      "paymentRef": reference,
+    };
+
+    final snapShot = await FirebaseFirestore.instance
+        .collection('cpdUserData')
+        .doc(userId)
+        .get();
+
+    if (snapShot.exists) {
+    } else {
+      await FirebaseFirestore.instance
+          .collection('cpdUserData')
+          .doc(userId)
+          .set(userCpdData);
+    }
+
+//check if user exist
+  }
+
+//Send payment
+  Future<void> sendPayment() async {
+    if (!_formKey.currentState!.validate()) return;
+    final response = await http.post(
+      Uri.parse('https://api.paystack.co/transaction/initialize'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization':
+            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': email.text,
+        'amount': "${1500 * 100}",
+        "currency": "ZAR",
+      }),
+    );
+    if (response.statusCode == 200) {
+      final decode =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      setState(() {
+        loadingState = true;
+        reference = decode['data']['reference'];
+        afterPaymentMade();
+      });
+
+      launchUrl(Uri.parse(decode['data']['authorization_url']));
+    } else {
+      print('error ${response.statusCode} ${response.body}');
+      throw Exception('Failed .');
+    }
+  }
+
+  checkPaymentMade() {
+    return http.get(
+      Uri.parse('https://api.paystack.co/transaction/verify/${reference}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+      },
+    );
+  }
+
+  afterPaymentMade() {
+    var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      final response = await checkPaymentMade();
+
+      final decode =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+      if (decode['data']['status'] == "success" && loadingState == true) {
+        setState(() {
+          loadingState = false;
+          createProfile();
+        });
+      }
+    });
+  }
+
   createProfile() async {
     if (!_formKey.currentState!.validate()) return;
     if (password.text != passwordCheck.text) {
       return messageDialog("Passwords do not match.");
     }
-    /*  var userData = {
-      "paymentDetails": "",
-      "bankAccHolder": "",
-      "bankAccNo": "",
-      "bankAccType": "",
-      "bankBranchCde": "",
-      "bankBranchName": "",
-      "bankDisclaimer": "",
-      "bankName": "",
-      "bankPaymAnnual": "",
-      "bankPaymMonthly": "",
-      "prodCatCde": "",
-      "samaMember": "NonMember",
-      "title": "",
-      "initials": "",
-      "firstName": firstName.text,
-      "lastName": lastName.text,
-      "email": (email.text).toLowerCase(),
-      "mobileNo": mobileNo.text,
-      "landline": landline.text, //
-      "profilePic":
-          "https://firebasestorage.googleapis.com/v0/b/sama-959a2.appspot.com/o/images%2Fistockphoto-1495088043-612x612.jpg?alt=media&token=6355d1a2-7572-4221-99a3-a2823af52372",
-      "gender": "",
-      "race": "",
-      "dob": "",
-      "idNumber": idNumber.text,
-      "passportNumber": "",
-      "hpcsaNumber": "",
-      "practiceNumber": "",
-
-      "univercityQualification": "",
-      "univercityName": "",
-      "qualificationYear": "",
-      "qualificationMonth": "",
-      "password": password.text,
-      "userType": "NonMember",
-      "profilePicView": "",
-      "profileView": "",
-      "id": "",
-
-      "status": "Pending",
-      "regionCde": ""
-    };*/
 
     try {
       UserCredential userDocRef = await _auth.createUserWithEmailAndPassword(
@@ -130,7 +169,7 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
         "qualificationYear": '',
         "qualificationMonth": '',
         "password": '',
-        "userType": "nonMember",
+        "userType": "NonMember",
         "membershipAdded": false,
         "profilePicView": '',
         "profileView": '',
@@ -147,6 +186,7 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
       });
       await messageDialog(
           'Non member Register success, please login to access cpd');
+      await updateUserCpd(userDocRef.user!.uid);
       await _auth.signOut();
       await widget.closeDialog();
     } catch (error) {
@@ -323,6 +363,17 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
+                            Visibility(
+                              visible: loadingState,
+                              child: Text(
+                                'Awaiting Payment ....',
+                                style: TextStyle(
+                                    color: Color.fromRGBO(0, 159, 158, 1),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22,
+                                    letterSpacing: 1.1),
+                              ),
+                            ),
                             Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 10),
@@ -333,7 +384,7 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
                                 width: 130,
                                 onTap: () {
                                   if (_formKey.currentState!.validate()) {
-                                    createProfile();
+                                    sendPayment();
                                   }
                                 },
                               ),

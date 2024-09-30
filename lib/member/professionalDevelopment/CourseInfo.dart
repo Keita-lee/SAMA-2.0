@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/login/loginPages/nonMemberSignup.dart';
+import 'package:sama/login/popups/validateDialog.dart';
 import 'package:sama/member/professionalDevelopment/professionalDevelopmentMainCon.dart';
 import 'package:sama/member/professionalDevelopment/ui/courseInfoContainer.dart';
 
 import '../../components/styleButton.dart';
+import '../../components/yesNoDialog.dart';
 import 'ui/gradeRequiredCon.dart';
 
 class CourseInfo extends StatefulWidget {
@@ -25,6 +28,8 @@ class CourseInfo extends StatefulWidget {
 }
 
 class _CourseInfoState extends State<CourseInfo> {
+  var cpdAssessments = [];
+
   Future openMemberSignUp() => showDialog(
       context: context,
       builder: (context) {
@@ -33,6 +38,83 @@ class _CourseInfoState extends State<CourseInfo> {
           closeDialog: () => Navigator.pop(context),
         ));
       });
+
+//Add Cpd to user List
+  accessCpd() async {
+    var cpdDetails = {
+      "cpdId": widget.course.id,
+      "attempts": 2,
+      "passed": false
+    };
+
+    setState(() {
+      cpdAssessments.add(cpdDetails);
+    });
+
+    final snapShot = await FirebaseFirestore.instance
+        .collection('cpdUserData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"cpdAssessments": cpdAssessments});
+  }
+
+  //Dialog for password Validate
+  Future accessDialog() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: YesNoDialog(
+          description: "Are you certain you want to access this CPD?",
+          closeDialog: () => Navigator.pop(context!),
+          callFunction: accessCpd,
+        ));
+      });
+
+//check if cpd of memberExist
+  checkIfMemberHasCpd() async {
+    final snapShot = await FirebaseFirestore.instance
+        .collection('cpdUserData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (widget.userType == "NonMember") {
+//Check Time of Member
+    } else {
+      var userCpdData = {
+        "dateCreate": DateTime.now(),
+        "cpdAssessments": [],
+        "userId": FirebaseAuth.instance.currentUser!.uid,
+        "paymentRef": "",
+      };
+
+      if (snapShot.exists) {
+        setState(() {
+          cpdAssessments.addAll(snapShot.get('cpdAssessments'));
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection('cpdUserData')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set(userCpdData);
+      }
+    }
+  }
+
+  checkIfAlreadyAddedCpd() {
+    var cpdIndex = (cpdAssessments)
+        .indexWhere((item) => item["cpdId"] == widget.course.id);
+
+    if (cpdIndex != -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @override
+  void initState() {
+    checkIfMemberHasCpd();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +267,8 @@ class _CourseInfoState extends State<CourseInfo> {
                 ),
               ),
               Visibility(
-                visible: FirebaseAuth.instance.currentUser != null,
+                visible: FirebaseAuth.instance.currentUser != null &&
+                    checkIfAlreadyAddedCpd(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -194,7 +277,9 @@ class _CourseInfoState extends State<CourseInfo> {
                         description: 'Access',
                         height: 40,
                         width: 110,
-                        onTap: () {})
+                        onTap: () {
+                          accessDialog();
+                        })
                   ],
                 ),
               ),

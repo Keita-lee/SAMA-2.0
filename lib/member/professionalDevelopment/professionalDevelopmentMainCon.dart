@@ -8,6 +8,7 @@ import 'package:sama/member/professionalDevelopment/CourseInfo.dart';
 import 'package:sama/member/professionalDevelopment/professionalDevQuiz.dart';
 import 'package:sama/member/professionalDevelopment/ui/courseInfoContainer.dart';
 import 'package:sama/member/professionalDevelopment/ui/professionalDevelopmentDisplayItem.dart';
+import 'package:sama/member/professionalDevelopment/ui/userCpdList.dart';
 
 class professionalDevelopmentMainCon extends StatefulWidget {
   final String userType;
@@ -292,7 +293,8 @@ class _professionalDevelopmentMainConState
                         userType: 'nonMember',
                         isAccessed: false,
                       ),
-                    )
+                    ),
+                    Visibility(visible: pageIndex == 3, child: UserCpdList()),
                   ],
                 ),
               ),
