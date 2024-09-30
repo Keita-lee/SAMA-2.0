@@ -39,7 +39,7 @@ class _CourseInfoContainerState extends State<CourseInfoContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.68,
-      //  height: 1000,
+      height: 500,
       child: Column(
         children: [
           Row(

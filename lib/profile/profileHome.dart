@@ -7,7 +7,8 @@ import '../homePage/dashboard/ui/newDashboardUi/dashboardItems/dashPrivateMessah
 import '../homePage/dashboard/ui/newDashboardUi/dashboardItems/dashProfessionalDev.dart';
 
 class ProfileHome extends StatefulWidget {
-  const ProfileHome({super.key});
+  String userType;
+  ProfileHome({super.key, required this.userType});
 
   @override
   State<ProfileHome> createState() => _ProfileHomeState();
@@ -26,12 +27,17 @@ class _ProfileHomeState extends State<ProfileHome> {
           const SizedBox(
             height: 25,
           ),
-          DashCommunity(),
+          Visibility(
+              visible: widget.userType != "NonMember", child: DashCommunity()),
           const SizedBox(
             height: 25,
           ),
-          DashPrivateMessages(changePageIndex: (int) {}),
-          const SizedBox(height: 15,)
+          Visibility(
+              visible: widget.userType != "NonMember",
+              child: DashPrivateMessages(changePageIndex: (int) {})),
+          const SizedBox(
+            height: 15,
+          )
         ],
       );
     } else {
@@ -42,12 +48,16 @@ class _ProfileHomeState extends State<ProfileHome> {
           const SizedBox(
             width: 25,
           ),
-          DashCommunity(),
+          Visibility(
+            visible: widget.userType != "NonMember",
+            child: DashCommunity(),
+          ),
           const SizedBox(
             width: 25,
           ),
-          DashPrivateMessages(changePageIndex: (int) {}),
-          
+          Visibility(
+              visible: widget.userType != "NonMember",
+              child: DashPrivateMessages(changePageIndex: (int) {})),
         ],
       );
     }

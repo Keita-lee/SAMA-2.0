@@ -25,7 +25,9 @@ import 'bio.dart';
 
 class ProfileSighnIn extends StatefulWidget {
   String profileImage;
-  ProfileSighnIn({super.key, required this.profileImage});
+  String userType;
+  ProfileSighnIn(
+      {super.key, required this.profileImage, required this.userType});
 
   @override
   State<ProfileSighnIn> createState() => _ProfileSighnInState();
@@ -96,7 +98,7 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
     }
 
     var pages = [
-      ProfileHome(),
+      ProfileHome(userType: widget.userType),
       EditProfile(),
       Bio(),
       // Notifications(),
@@ -231,14 +233,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            ' Membership : ${membership}',
+                            ' Membership : ${widget.userType == "NonMember" ? "NonMember" : membership}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: const Color.fromARGB(255, 116, 116, 116),
                                 fontWeight: FontWeight.normal),
                           ),
                           Text(
-                            ' Status : ${status}',
+                            ' Status : ${widget.userType == "NonMember" ? "NonMember" : status}',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: const Color.fromARGB(255, 116, 116, 116),
@@ -329,7 +331,9 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                               fontWeight: FontWeight.normal),
                         ),
                       ),
-                      const SizedBox(height: 5,)
+                      const SizedBox(
+                        height: 5,
+                      )
                     ],
                   ),
                   Column(
@@ -343,14 +347,14 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        ' Membership : ${membership}',
+                        ' Membership : ${widget.userType == "NonMember" ? "NonMember" : membership}',
                         style: TextStyle(
                             fontSize: 18,
                             color: const Color.fromARGB(255, 116, 116, 116),
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        ' Status : ${status}',
+                        ' Status : ${widget.userType == "NonMember" ? "NonMember" : status}',
                         style: TextStyle(
                             fontSize: 18,
                             color: const Color.fromARGB(255, 116, 116, 116),
@@ -387,13 +391,16 @@ class _ProfileSighnInState extends State<ProfileSighnIn> {
                 SizedBox(
                   width: 15,
                 ),
-                StyleButton(
-                    description: "MY BIOGRAPHY",
-                    height: 35,
-                    width: 85,
-                    onTap: () {
-                      changePage(2);
-                    }),
+                Visibility(
+                  visible: widget.userType != "NonMember",
+                  child: StyleButton(
+                      description: "MY BIOGRAPHY",
+                      height: 35,
+                      width: 85,
+                      onTap: () {
+                        changePage(2);
+                      }),
+                ),
                 SizedBox(
                   width: 15,
                 ),
