@@ -12,8 +12,14 @@ import 'package:sama/login/popups/validateDialog.dart';
 class Createadmin extends StatefulWidget {
   final Function(int) changePageIndex;
   final Map<String, dynamic> memberData;
+  final Function(Map<String, dynamic>) updateMember;
+  final Function getMembersData;
   const Createadmin(
-      {super.key, required this.changePageIndex, required this.memberData});
+      {super.key,
+      required this.changePageIndex,
+      required this.memberData,
+      required this.updateMember,
+      required this.getMembersData});
 
   @override
   State<Createadmin> createState() => _CreateadminState();
@@ -120,23 +126,25 @@ class _CreateadminState extends State<Createadmin> {
         });
 
         openDialog('Admin created successfully');
+        widget.getMembersData();
       }
       // update admin
       else {
-        await firestore
-            .collection('users')
-            .doc(widget.memberData['firebaseId'])
-            .update({
-          'id': widget.memberData['firebaseId'],
-          'userType': 'Admin',
+        Map<String, dynamic> newData = {
+          ...widget.memberData,
           'firstName': firstNameController.text,
           'lastName': lastNameController.text,
           'email': emailController.text,
-          'permissions': permissions,
-        });
+          'permissions': permissions
+        };
+        await firestore
+            .collection('users')
+            .doc(widget.memberData['firebaseId'])
+            .update(newData);
         setState(() {
           isLoading = false;
         });
+        widget.updateMember(newData);
         openDialog('Admin updated successfully');
       }
     } catch (e) {

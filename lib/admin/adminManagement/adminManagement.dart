@@ -21,6 +21,7 @@ class _AdminManagementState extends State<AdminManagement> {
   String _searchText = '';
   bool _isLoading = true;
   Map<String, dynamic> selectedMember = {};
+  BuildContext? dialogContext;
   void onSearchChanged(String text) {
     setState(() {
       _searchText = text;
@@ -72,6 +73,65 @@ class _AdminManagementState extends State<AdminManagement> {
         _isLoading = false;
       });
       print('error fetching member ${currentID}: $e');
+    }
+  }
+
+  void deleteMember(String id) async {
+    try {
+      await _firestore.collection('users').doc(id).delete();
+      _getMembersData();
+      Navigator.pop(dialogContext!);
+    } catch (e) {
+      print('error deleting member: $e');
+    }
+  }
+
+  void showDynamicDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required VoidCallback onContinue,
+    required VoidCallback onCancel,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        dialogContext = context;
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Color(0xFF174486)),
+              ),
+              onPressed: onCancel,
+            ),
+            ElevatedButton(
+                child: Text(
+                  'Continue',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: const ButtonStyle(
+                    backgroundColor:
+                        WidgetStatePropertyAll<Color>(Color(0xFF174486))),
+                onPressed: onContinue),
+          ],
+        );
+      },
+    );
+  }
+
+  void updateMemberData(Map<String, dynamic> newMembersList) {
+    List<Map<String, dynamic>> tempList = List.from(membersList);
+    int index = tempList.indexWhere(
+        (member) => member['firebaseId'] == newMembersList['firebaseId']);
+    if (index != -1) {
+      tempList[index] = newMembersList;
+      setState(() {
+        membersList = tempList;
+      });
     }
   }
 
@@ -167,7 +227,19 @@ class _AdminManagementState extends State<AdminManagement> {
                         ),
                       ),
                   (data) => IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDynamicDialog(
+                              context: context,
+                              title: 'Delete Admin',
+                              content:
+                                  'Are you sure you want to delete this admin?',
+                              onContinue: () {
+                                deleteMember(data['firebaseId']);
+                              },
+                              onCancel: () {
+                                Navigator.of(context).pop();
+                              });
+                        },
                         icon: const Icon(Icons.delete, size: 24.0),
                       ),
                 ],
@@ -177,7 +249,9 @@ class _AdminManagementState extends State<AdminManagement> {
               visible: _activeTabIndex == 1 || _activeTabIndex == 2,
               child: Createadmin(
                   memberData: selectedMember,
-                  changePageIndex: changeActiveIndex),
+                  changePageIndex: changeActiveIndex,
+                  updateMember: updateMemberData,
+                  getMembersData: _getMembersData),
             ),
           ],
         ),

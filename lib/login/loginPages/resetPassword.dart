@@ -70,6 +70,32 @@ class _ResetPasswordState extends State<ResetPassword> {
       setState(() {
         isLoading = true;
       });
+      // check if user exist in firebase and is Admin
+      QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email.text)
+          .get();
+
+      if (userSnapshot.docs.isNotEmpty) {
+        if (userSnapshot.docs.first['userType'] == 'Admin') {
+          //Mobile OTP send
+          if (_character == SingingCharacter.mobile) {
+            // redirect to ValidateByMobileOtp screen to validate otp
+            widget.changePage(3);
+          } else {
+            String randomOtp =
+                Random().nextInt(999999).toString().padLeft(6, '0');
+            await sendOtp(otp: randomOtp, email: email.text);
+            // redirect to ValidateByEmailOtp screen to validate otp
+            widget.changePage(14);
+          }
+          setState(() {
+            isLoading = false;
+          });
+        }
+        return;
+      }
+
       final OracleDbManager oracleDbManager = OracleDbManager();
 
       // check if sama number is on oracle db
