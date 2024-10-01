@@ -39,7 +39,7 @@ class _QuizAnswerState extends State<QuizAnswer> {
         });
       }
     }
-    print(check);
+
     return check;
   }
 

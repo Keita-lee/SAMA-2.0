@@ -16,6 +16,11 @@ class CourseInfoContainer extends StatefulWidget {
   final String userType;
   final String nonMemberPrice;
   final bool isAccessed;
+  final int questionLength;
+  final int attemptsLeft;
+  final String grade;
+  final VoidCallback takeQuiz;
+  final String quizStatus;
 
   const CourseInfoContainer({
     super.key,
@@ -28,6 +33,11 @@ class CourseInfoContainer extends StatefulWidget {
     required this.userType,
     required this.nonMemberPrice,
     required this.isAccessed,
+    required this.questionLength,
+    required this.attemptsLeft,
+    required this.grade,
+    required this.takeQuiz,
+    required this.quizStatus,
   });
 
   @override
@@ -39,7 +49,7 @@ class _CourseInfoContainerState extends State<CourseInfoContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.68,
-      height: 500,
+      //    height: 500,
       child: Column(
         children: [
           Row(
@@ -104,18 +114,22 @@ class _CourseInfoContainerState extends State<CourseInfoContainer> {
               Visibility(
                 visible: widget.isAccessed == true,
                 child: GradeRequiredCon(
-                  requiredCorrectQuestions: 2,
-                  questionAmmount: 3,
+                  requiredCorrectQuestions:
+                      (widget.questionLength * 0.7).toInt(),
+                  questionAmmount: widget.questionLength,
                   requiredGradePercentage: 70,
-                  attemptNumber: '1',
-                  grade: '5',
+                  attemptNumber: '${widget.attemptsLeft}',
+                  grade: widget.grade,
                   failedAttemptScorePercentage: 25,
                   onTapReviewFailed: () {
                     //ADD LOGIC
                   },
                   isQuizInProgress: false,
                   isAttemptPending: true,
-                  takeQuizFunction: () {},
+                  quizStatus: widget.quizStatus,
+                  takeQuizFunction: () {
+                    widget.takeQuiz();
+                  },
                 ),
               ),
               Visibility(

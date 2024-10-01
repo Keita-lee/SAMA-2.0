@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/banner/samaBlueBanner.dart';
 import 'package:sama/components/myutility.dart';
@@ -118,38 +119,41 @@ class _professionalDevelopmentMainConState
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
-                    Row(
-                      children: [
-                        StyleButton(
-                          fontSize: 13,
-                          description: 'View All',
-                          height: 40,
-                          width: 110,
-                          buttonTextColor: Colors.white,
-                          buttonColor: pageIndex == 0
-                              ? const Color.fromRGBO(0, 159, 159, 1)
-                              : Colors.grey,
-                          onTap: () {
-                            changePageIndex(0);
-                          },
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        StyleButton(
-                          fontSize: 13,
-                          description: 'My CPD',
-                          height: 40,
-                          width: 110,
-                          buttonTextColor: Colors.white,
-                          buttonColor: pageIndex == 3
-                              ? const Color.fromRGBO(0, 159, 159, 1)
-                              : Colors.grey,
-                          onTap: () {
-                            changePageIndex(3);
-                          },
-                        ),
-                      ],
+                    Visibility(
+                      visible: FirebaseAuth.instance.currentUser != null,
+                      child: Row(
+                        children: [
+                          StyleButton(
+                            fontSize: 13,
+                            description: 'View All',
+                            height: 40,
+                            width: 110,
+                            buttonTextColor: Colors.white,
+                            buttonColor: pageIndex == 0
+                                ? const Color.fromRGBO(0, 159, 159, 1)
+                                : Colors.grey,
+                            onTap: () {
+                              changePageIndex(0);
+                            },
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          StyleButton(
+                            fontSize: 13,
+                            description: 'My CPD',
+                            height: 40,
+                            width: 110,
+                            buttonTextColor: Colors.white,
+                            buttonColor: pageIndex == 3
+                                ? const Color.fromRGBO(0, 159, 159, 1)
+                                : Colors.grey,
+                            onTap: () {
+                              changePageIndex(3);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 12,
@@ -294,7 +298,11 @@ class _professionalDevelopmentMainConState
                         isAccessed: false,
                       ),
                     ),
-                    Visibility(visible: pageIndex == 3, child: UserCpdList()),
+                    Visibility(
+                        visible: pageIndex == 3,
+                        child: UserCpdList(
+                            changePageIndex: changePageIndex,
+                            setSelectedCourse: setSelectedCourse)),
                   ],
                 ),
               ),

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
@@ -6,6 +8,7 @@ import 'package:sama/member/professionalDevelopment/ui/quizQuestions/professiona
 import 'package:sama/member/professionalDevelopment/ui/quizProgressBar.dart';
 import 'package:sama/member/professionalDevelopment/ui/results/quizEndResults.dart';
 import 'package:sama/member/professionalDevelopment/ui/yourQuizAnswers/yourAnswers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/myutility.dart';
 import 'professionalDevelopmentMainCon.dart';
@@ -34,6 +37,9 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
 
   int questionLength = 0;
   String passedValue = "FAILED";
+  String journalLink = "";
+  String grade = "";
+  int attemptsLeft = 0;
 
 // set state of question list
   getQuestionAnswers(value, questionLengthAmount) {
@@ -55,12 +61,54 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
     if (correctAmountAnswers < 0) {
       correctAmountAnswers = 0;
     }
-    if ((correctAmountAnswers / questionLength).roundToDouble() * 100 >= 70) {
+    if ((correctAmountAnswers / questionLength) * 100 >= 70) {
       setState(() {
         passedValue = "PASSED";
       });
     }
-    return '${correctAmountAnswers}/ ${questionLength} ( ${(correctAmountAnswers / questionLength).roundToDouble() * 100} % )';
+    print(
+        "ANSWERSSSSSSSSSSS - ${(correctAmountAnswers / questionLength)} ${questionLength}");
+    return '${correctAmountAnswers}/ ${questionLength} ( ${((correctAmountAnswers / questionLength) * 100).toStringAsFixed(2)} % )';
+  }
+
+  getAttempsOnQuiz() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('cpdUserData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (doc.exists) {
+      setState(() {
+        var cpdIndex = (doc.get('cpdAssessments'))
+            .indexWhere((item) => item["cpdId"] == widget.course.id);
+
+        if (cpdIndex != -1) {
+          attemptsLeft = doc.get('cpdAssessments')[cpdIndex]['attempts'];
+          grade = doc.get('cpdAssessments')[cpdIndex]['grade'];
+        }
+      });
+    }
+  }
+
+  //get all cpd questions from firestore
+  getCpdInformation() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('cpd')
+        .doc(widget.course.id)
+        .get();
+
+    if (doc.exists) {
+      setState(() {
+        questionLength = (doc.get('questions')).length;
+        journalLink = doc.get('journalLink');
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getCpdInformation();
+    getAttempsOnQuiz();
+    super.initState();
   }
 
   @override
@@ -94,6 +142,15 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
               passRate: '70',
               userType: '',
               nonMemberPrice: 'R1500 inc VAT',
+              questionLength: questionLength,
+              attemptsLeft: attemptsLeft,
+              grade: grade,
+              takeQuiz: () {
+                setState(() {
+                  quizStatus = "QUIZ";
+                });
+              },
+              quizStatus: quizStatus,
             ),
             const SizedBox(
               height: 40,
@@ -164,7 +221,11 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                   height: 50,
                   fontSize: 12,
                   width: 310,
-                  onTap: () {}),
+                  onTap: () {
+                    final Uri url = Uri.parse(journalLink);
+
+                    launchUrl(url);
+                  }),
             ),
             /*MyCPDdisplayItem(
                 image: '',
@@ -181,14 +242,14 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
               visible: quizStatus == "QUIZ",
               child: ProfessionalDevQuizContent(
                 getQuestionAnswers: getQuestionAnswers,
-                attemptNumber: '1',
+                attemptNumber: attemptsLeft == 2 ? '1' : '2',
                 cpdId: widget.course.id,
               ),
             ),
             Visibility(
               visible: quizStatus == "SUBMIT ATTEMPT",
               child: YourAnswers(
-                  attemptNumber: '1',
+                  attemptNumber: attemptsLeft == 2 ? '1' : '2',
                   questionAnswers: questionAnswers,
                   finalSubmit: () {
                     setState(() {
