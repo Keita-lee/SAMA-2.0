@@ -44,13 +44,15 @@ class _YourOrderTableState extends State<YourOrderTable> {
       });
 
   getUserEmail() async {
-    final data = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
+    if (FirebaseAuth.instance.currentUser != null) {
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
-    if (data.exists) {
-      email = data.get('email');
+      if (data.exists) {
+        email = data.get('email');
+      }
     }
   }
 
@@ -208,7 +210,7 @@ class _YourOrderTableState extends State<YourOrderTable> {
   void initState() {
     print(widget.orderProduct);
     getUserEmail();
-
+    print('checkout products: ${widget.orderProduct}');
     //widget.getTotal(getTotal());
     super.initState();
   }

@@ -52,17 +52,20 @@ class _CartPageState extends State<CartPage> {
     // cart[productIndex]['quantity'] = quantity;
     // cart[productIndex]['total'] =
     //     '${double.parse(cart[productIndex]['price']) * quantity}';
-    total = 0.0;
+
     setState(() {
+      total = 0.0;
       for (int i = 0; i < cart.length; i++) {
         double newProductTotal = 0.0;
         List<String> cartTotal = List.from(cart[i]['total']);
         print('total ${cart[i]['total']}');
-        newProductTotal += cartTotal
-            .map((s) => double.parse(s))
-            .reduce((val, acc) => val + acc);
-        total += newProductTotal;
-        cart[i]['total'] = total.toStringAsFixed(2);
+        if (cart[i]['total'].isNotEmpty) {
+          newProductTotal += cartTotal
+              .map((s) => double.parse(s))
+              .reduce((val, acc) => val + acc);
+          total += newProductTotal;
+          cart[i]['total'] = newProductTotal.toStringAsFixed(2);
+        }
       }
       widget.getTotal(total, cart);
       productList = cart;
@@ -84,11 +87,13 @@ class _CartPageState extends State<CartPage> {
         double newProductTotal = 0.0;
         List<String> cartTotal = List.from(cart[i]['total']);
         print('total ${cart[i]['total']}');
-        newProductTotal = cartTotal
-            .map((s) => double.parse(s))
-            .reduce((val, acc) => val + acc);
-        newTotal += newProductTotal;
-        cart[i]['total'] = newProductTotal.toStringAsFixed(2);
+        if (cart[i]['total'].isNotEmpty) {
+          newProductTotal = cartTotal
+              .map((s) => double.parse(s))
+              .reduce((val, acc) => val + acc);
+          newTotal += newProductTotal;
+          cart[i]['total'] = newProductTotal.toStringAsFixed(2);
+        }
       }
       total = newTotal;
       widget.getTotal(total, cart);

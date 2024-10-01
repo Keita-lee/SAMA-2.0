@@ -46,6 +46,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   var total = 0.0;
 
   changePageIndex(value, type) {
+    print(cartProducts);
     setState(() {
       pageIndex = value;
       productType = type;
@@ -77,6 +78,7 @@ class _ProductListDisplayState extends State<ProductListDisplay> {
   }
 
   getTotal(value, cart) async {
+    print('total value: $value');
     setState(() {
       cartProducts = cart;
       total = value;

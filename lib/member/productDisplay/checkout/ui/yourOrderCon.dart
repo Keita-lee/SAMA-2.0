@@ -341,9 +341,9 @@ class _YourOrderConState extends State<YourOrderCon> {
                 ),
                 //List here
                 YourOrderTable(
-                    orderProduct: cartProducts,
+                    orderProduct: widget.products,
                     getTotal: getTotals,
-                    total: total.toStringAsFixed(2)),
+                    total: widget.total.toStringAsFixed(2)),
               ],
             ),
           ),
