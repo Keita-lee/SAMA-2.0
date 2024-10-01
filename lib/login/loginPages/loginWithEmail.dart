@@ -264,7 +264,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
       //If admin by pass all validators
       if (foundInFirebase) {
         if (users.docs[0].data().containsKey('userType')) {
-          if (users.docs[0]['userType'] == "Admin") {
+          if (users.docs[0]['userType'] == "Admin" ||
+              users.docs[0]['userType'] == "NonMember") {
             return await widget.changePage(1);
           }
         }

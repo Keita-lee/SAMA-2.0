@@ -196,7 +196,9 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
         changePage: changePage,
       ),
       MemberBenifits(),
-      Profile(),
+      Profile(
+        userType: userType,
+      ),
       CenterOfExcellenceList(),
       MemberBenefitsList(),
       CenterOfExcellenceArticle(
@@ -376,7 +378,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                 child: SamaTopTabBar()),*/
                               Spacer(),
                               Visibility(
-                                visible: userType == 'NonMember',
+                                visible: userType == 'NonMember' &&
+                                    FirebaseAuth.instance.currentUser == null,
                                 child: Row(
                                   children: [
                                     OnHoverButtons(
@@ -483,7 +486,8 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                 ],
                               ),
                               Visibility(
-                                visible: userType != "NonMember",
+                                visible:
+                                    FirebaseAuth.instance.currentUser != null,
                                 child: Row(
                                   children: [
                                     IconButton(

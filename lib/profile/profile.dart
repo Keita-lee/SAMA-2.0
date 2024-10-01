@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sama/profile/ProfileSighnIn.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  String userType;
+  Profile({super.key, required this.userType});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -36,6 +37,7 @@ class _ProfileState extends State<Profile> {
     return Column(
       children: [
         ProfileSighnIn(
+          userType: widget.userType,
           profileImage: profileUrl,
         ),
       ],

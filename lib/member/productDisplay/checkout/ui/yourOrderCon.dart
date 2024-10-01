@@ -118,7 +118,7 @@ class _YourOrderConState extends State<YourOrderCon> {
     } else {
       print('error ${response.statusCode} ${response.body}');
       throw Exception('Failed .');
-    } /* */
+    }
   }
 
   checkPaymentMade() {

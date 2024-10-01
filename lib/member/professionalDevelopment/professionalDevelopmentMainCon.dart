@@ -8,6 +8,7 @@ import 'package:sama/member/professionalDevelopment/CourseInfo.dart';
 import 'package:sama/member/professionalDevelopment/professionalDevQuiz.dart';
 import 'package:sama/member/professionalDevelopment/ui/courseInfoContainer.dart';
 import 'package:sama/member/professionalDevelopment/ui/professionalDevelopmentDisplayItem.dart';
+import 'package:sama/member/professionalDevelopment/ui/userCpdList.dart';
 
 class professionalDevelopmentMainCon extends StatefulWidget {
   final String userType;
@@ -83,7 +84,7 @@ class _professionalDevelopmentMainConState
   }
 
   void showCourseInfo(CourseModel course) {
-    changePageIndex(1);
+    changePageIndex(2);
     setSelectedCourse(course);
   }
 
@@ -117,6 +118,42 @@ class _professionalDevelopmentMainConState
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        StyleButton(
+                          fontSize: 13,
+                          description: 'View All',
+                          height: 40,
+                          width: 110,
+                          buttonTextColor: Colors.white,
+                          buttonColor: pageIndex == 0
+                              ? const Color.fromRGBO(0, 159, 159, 1)
+                              : Colors.grey,
+                          onTap: () {
+                            changePageIndex(0);
+                          },
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        StyleButton(
+                          fontSize: 13,
+                          description: 'My CPD',
+                          height: 40,
+                          width: 110,
+                          buttonTextColor: Colors.white,
+                          buttonColor: pageIndex == 3
+                              ? const Color.fromRGBO(0, 159, 159, 1)
+                              : Colors.grey,
+                          onTap: () {
+                            changePageIndex(3);
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
                     Visibility(
                       visible: pageIndex == 0,
                       child: SizedBox(
@@ -253,8 +290,11 @@ class _professionalDevelopmentMainConState
                           cpdPoints: selectedCourse.cpdPoints,
                           level: selectedCourse.level,
                         ),
+                        userType: 'nonMember',
+                        isAccessed: false,
                       ),
-                    )
+                    ),
+                    Visibility(visible: pageIndex == 3, child: UserCpdList()),
                   ],
                 ),
               ),

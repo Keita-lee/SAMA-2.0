@@ -70,7 +70,7 @@ class _PleaseLoginState extends State<PleaseLogin> {
                     SizedBox(
                       width: isMobile
                           ? MyUtility(context).width / 1.5
-                          : MyUtility(context).width / 1.3,
+                          : MyUtility(context).width / 2,
                       child: Text(
                         widget.pleaseLoginText,
                         style: TextStyle(
