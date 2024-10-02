@@ -83,6 +83,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             // redirect to ValidateByMobileOtp screen to validate otp
             widget.changePage(3);
           } else {
+            widget.getEmail(email.text);
             String randomOtp =
                 Random().nextInt(999999).toString().padLeft(6, '0');
             await sendOtp(otp: randomOtp, email: email.text);

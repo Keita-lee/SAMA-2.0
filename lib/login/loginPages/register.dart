@@ -162,7 +162,9 @@ class _RegisterState extends State<Register> {
       "membershipAdded": false,
       "id": "",
       "profilePicView": "",
-      "profileView": ""
+      "profileView": "",
+      "status": "Pending",
+      "loggedIn": false,
     };
 
     final doc = FirebaseFirestore.instance.collection('users').doc(id);

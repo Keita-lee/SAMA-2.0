@@ -45,9 +45,12 @@ class _ViewAllMembersState extends State<ViewAllMembers> {
         return;
       } else {
         setState(() {
-          membersList = members.docs.map((member) {
+          membersList = members.docs
+              .where((member) => member.data().containsKey('status'))
+              .map((member) {
             index++;
             currentID = member.id;
+
             return {
               "firebaseId": member.id,
               "id": index.toString(),

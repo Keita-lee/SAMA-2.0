@@ -133,8 +133,8 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                   ProfileTextField(
                       isRounded: false,
                       isBold: false,
-                      hintText: 'Street Number',
-                      description: 'Street Address',
+                      hintText: 'Address Line 1',
+                      description: 'Streed Address',
                       customSize: MyUtility(context).width * 0.42,
                       textFieldType: 'stringType',
                       textfieldController: street),
@@ -144,7 +144,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                   ProfileTextField(
                       isRounded: false,
                       isBold: false,
-                      hintText: 'Street Name',
+                      hintText: 'Address Line 2',
                       customSize: MyUtility(context).width * 0.42,
                       textFieldType: 'stringType',
                       textfieldController: addres),
@@ -174,7 +174,7 @@ class _BillingDetailsFormState extends State<BillingDetailsForm> {
                         "Mpumalanga",
                         "North West",
                         "Northern Cape",
-                        "Western Cape[n 2]"
+                        "Western Cape"
                       ],
                       textfieldController: state),
                   const SizedBox(
