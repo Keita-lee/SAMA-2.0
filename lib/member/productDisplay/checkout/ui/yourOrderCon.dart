@@ -101,7 +101,7 @@ class _YourOrderConState extends State<YourOrderCon> {
         'email': FirebaseAuth.instance.currentUser != null
             ? email
             : widget.email.text,
-        'amount': "${total * 100}",
+        'amount': "${widget.total * 100}",
         "currency": "ZAR",
       }),
     );
@@ -215,7 +215,7 @@ class _YourOrderConState extends State<YourOrderCon> {
       sendPaymentConfirmation(
           email: email,
           customerName: name,
-          totalPrice: total.toString(),
+          totalPrice: widget.total.toStringAsFixed(2),
           refNo: reference);
     } catch (e) {
       print('could not add user history $e');

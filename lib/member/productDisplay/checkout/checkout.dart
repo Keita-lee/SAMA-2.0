@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/member/productDisplay/checkout/ui/billingDetailsForm.dart';
 import 'package:sama/member/productDisplay/checkout/ui/yourOrderCon.dart';
@@ -18,9 +20,39 @@ class Checkout extends StatefulWidget {
 
 class _CheckoutState extends State<Checkout> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (auth.currentUser != null) {
+      _getDetails();
+    }
+  }
+
+  void _getDetails() async {
+    try {
+      User user = auth.currentUser!;
+
+      QuerySnapshot userDetails = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: user.email)
+          .get();
+      if (userDetails.docs.isNotEmpty) {
+        setState(() {
+          firstNameController.text = userDetails.docs[0]['firstName'];
+          lastNameController.text = userDetails.docs[0]['lastName'];
+          emailController.text = user.email!;
+        });
+      }
+    } catch (e) {
+      print('error getting user details: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
