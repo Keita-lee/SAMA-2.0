@@ -32,6 +32,8 @@ class ProfessionalDevQuiz extends StatefulWidget {
 }
 
 var assessmentFinished = false;
+var lastAttempt = true;
+var allowedToTry = true;
 
 class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   //var
@@ -95,6 +97,8 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
         .get();
     if (doc.exists) {
       setState(() {
+        lastAttempt = true;
+        allowedToTry = true;
         cpdAssessments.addAll(doc.get('cpdAssessments'));
         var cpdIndex = (doc.get('cpdAssessments'))
             .indexWhere((item) => item["cpdId"] == widget.course.id);
@@ -103,18 +107,44 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
           attemptsLeft = doc.get('cpdAssessments')[cpdIndex]['attempts'];
           grade = doc.get('cpdAssessments')[cpdIndex]['grade'];
           reviewList = doc.get('cpdAssessments')[cpdIndex]['reviewList'];
-
-          for (var i = 0;
-              i < (doc.get('cpdAssessments')[cpdIndex]['reviewList']).length;
-              i++) {
-            if (reviewList[i]['passedValue'] == "PASSED") {
+          var reviewLength =
+              (doc.get('cpdAssessments')[cpdIndex]['reviewList']).length;
+          if (reviewLength >= 1) {
+            if (reviewLength == 2) {
               setState(() {
-                assessmentFinished = true;
-                finishedQuizDate = reviewList[i]['dateAttempt'];
-                quizStatus = "";
-                finishedGrade = reviewList[i]['grade'];
+                DateTime a = DateTime.now();
+                DateTime b = DateTime.parse(doc.get('cpdAssessments')[cpdIndex]
+                    ['reviewList'][reviewLength - 1]['dateAttempt']); /* */
+
+                Duration difference = a.difference(b);
+                print(difference.inDays);
+                if (difference.inDays < 29) {
+                  setState(() {
+                    quizStatus = "LAST ATTEMPT";
+                    lastAttempt = false;
+                  });
+                }
               });
             }
+
+            for (var i = 0; i < reviewLength; i++) {
+              if (reviewList[i]['passedValue'] == "PASSED") {
+                setState(() {
+                  assessmentFinished = true;
+                  finishedQuizDate = reviewList[i]['dateAttempt'];
+                  quizStatus = "";
+                  finishedGrade = reviewList[i]['grade'];
+                });
+              }
+            }
+          }
+
+          if (reviewLength == 3) {
+            setState(() {
+              quizStatus = "LAST ATTEMPT";
+              lastAttempt = false;
+              allowedToTry = false;
+            });
           }
         }
       });
@@ -139,7 +169,8 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   //update user cpd attemps
   updateCpdAttempts() async {
     var reviewData = {
-      "attempt": "${attemptsLeft == 2 ? '1' : '2'}",
+      "attempt":
+          "${attemptsLeft == 0 ? 'final Attempt' : attemptsLeft == 2 ? '1' : '2'}",
       "passedValue": passedValue,
       "grade": getGradeForQuestions(),
       "dateAttempt": CommonService().getTodaysDateText(),
@@ -239,31 +270,57 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                   const SizedBox(
                     width: 30,
                   ),
-                  StyleButton(
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      description: '2. QUIZ',
-                      height: 50,
-                      fontSize: 13,
-                      width: 210,
-                      onTap: () {
-                        setState(() {
-                          quizStatus = "QUIZ";
-                        });
-                      }),
+                  Visibility(
+                    visible: lastAttempt,
+                    child: StyleButton(
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        description: '2. QUIZ',
+                        height: 50,
+                        fontSize: 13,
+                        width: 210,
+                        onTap: () {
+                          setState(() {
+                            quizStatus = "QUIZ";
+                          });
+                        }),
+                  ),
                   const SizedBox(
                     width: 30,
                   ),
-                  StyleButton(
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      description: '3. SUBMIT ATTEMPT',
-                      height: 50,
-                      fontSize: 13,
-                      width: 210,
-                      onTap: () {
-                        setState(() {
-                          quizStatus = "SUBMIT ATTEMPT";
-                        });
-                      }),
+                  Visibility(
+                    visible: lastAttempt,
+                    child: StyleButton(
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        description: '3. SUBMIT ATTEMPT',
+                        height: 50,
+                        fontSize: 13,
+                        width: 210,
+                        onTap: () {
+                          setState(() {
+                            quizStatus = "SUBMIT ATTEMPT";
+                          });
+                        }),
+                  ),
+                  Visibility(
+                    visible: !lastAttempt && allowedToTry,
+                    child: StyleButton(
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        description: 'Please wait 30 days to try again',
+                        height: 50,
+                        fontSize: 13,
+                        width: 300,
+                        onTap: () {}),
+                  ),
+                  Visibility(
+                    visible: !allowedToTry,
+                    child: StyleButton(
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        description: 'Assessment Failed cannot try again',
+                        height: 50,
+                        fontSize: 13,
+                        width: 300,
+                        onTap: () {}),
+                  ),
                 ],
               ),
             ),
