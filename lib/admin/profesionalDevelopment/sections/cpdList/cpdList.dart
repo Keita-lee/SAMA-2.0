@@ -12,7 +12,8 @@ class CpdList extends StatefulWidget {
     int,
     String,
   ) changePageIndex;
-  CpdList({super.key, required this.changePageIndex});
+  String searchText;
+  CpdList({super.key, required this.changePageIndex, required this.searchText});
 
   @override
   State<CpdList> createState() => _CpdListState();
@@ -22,6 +23,15 @@ class _CpdListState extends State<CpdList> {
   //Remove cpd from db
   removeArticle(cpdId) {
     FirebaseFirestore.instance.collection('cpd').doc(cpdId).delete();
+  }
+
+  checkSearchResults(data) {
+    if (widget.searchText == "") {
+      return true;
+    } else if ((widget.searchText).contains((data['title']))) {
+      return true;
+    }
+    return false;
   }
 
   //Dialog for cpd delete
@@ -66,21 +76,28 @@ class _CpdListState extends State<CpdList> {
               child: ListView.builder(
                 itemCount: documents.length,
                 itemBuilder: (BuildContext context, int index) {
+                  documents.sort((b, a) =>
+                      a["latestRelease"].compareTo(b["latestRelease"]));
+
                   final DocumentSnapshot document = documents[index];
+                  /*    */
                   final data = document.data() as Map<String, dynamic>?;
 
-                  return CpdListItem(
-                    itemColor: (index % 2 == 1)
-                        ? Colors.white
-                        : const Color.fromARGB(38, 158, 158, 158),
-                    title: data?["title"] ?? '',
-                    isActive: data?['status'] == "Active" ? true : false,
-                    onTapDelete: () {
-                      removeCpdpopup(document.id);
-                    },
-                    onTapEdit: () {
-                      widget.changePageIndex(1, document.id);
-                    },
+                  return Visibility(
+                    visible: checkSearchResults(data),
+                    child: CpdListItem(
+                      itemColor: (index % 2 == 1)
+                          ? Colors.white
+                          : const Color.fromARGB(38, 158, 158, 158),
+                      title: data?["title"] ?? '',
+                      isActive: data?['status'] == "Active" ? true : false,
+                      onTapDelete: () {
+                        removeCpdpopup(document.id);
+                      },
+                      onTapEdit: () {
+                        widget.changePageIndex(1, document.id);
+                      },
+                    ),
                   );
                 },
               ),

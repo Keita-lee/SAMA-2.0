@@ -44,7 +44,9 @@ class _CourseInfoState extends State<CourseInfo> {
     var cpdDetails = {
       "cpdId": widget.course.id,
       "attempts": 2,
-      "passed": false
+      "passed": false,
+      "grade": "Pending",
+      "reviewList": []
     };
 
     setState(() {

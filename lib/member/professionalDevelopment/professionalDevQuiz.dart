@@ -6,6 +6,7 @@ import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/professionalDevelopment/ui/myCPDdisplayItem.dart';
 import 'package:sama/member/professionalDevelopment/ui/quizQuestions/professionalDevQuizContent.dart';
 import 'package:sama/member/professionalDevelopment/ui/quizProgressBar.dart';
+import 'package:sama/member/professionalDevelopment/ui/quizQuestions/quizReview.dart';
 import 'package:sama/member/professionalDevelopment/ui/results/quizEndResults.dart';
 import 'package:sama/member/professionalDevelopment/ui/yourQuizAnswers/yourAnswers.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -40,6 +41,9 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   String journalLink = "";
   String grade = "";
   int attemptsLeft = 0;
+  int attemptNumber = 0;
+  List reviewList = [];
+  List cpdAssessments = [];
 
 // set state of question list
   getQuestionAnswers(value, questionLengthAmount) {
@@ -66,9 +70,18 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
         passedValue = "PASSED";
       });
     }
-    print(
-        "ANSWERSSSSSSSSSSS - ${(correctAmountAnswers / questionLength)} ${questionLength}");
+
     return '${correctAmountAnswers}/ ${questionLength} ( ${((correctAmountAnswers / questionLength) * 100).toStringAsFixed(2)} % )';
+  }
+
+  getPreviousListData(questionAnswersValue, attemptNumberValue) {
+    setState(() {
+      print("TEST");
+      print(questionAnswersValue);
+      questionAnswers.addAll(questionAnswersValue);
+      attemptNumber = attemptNumberValue;
+      quizStatus = "REVIEWQUIZ";
+    });
   }
 
   getAttempsOnQuiz() async {
@@ -78,12 +91,14 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
         .get();
     if (doc.exists) {
       setState(() {
+        cpdAssessments.addAll(doc.get('cpdAssessments'));
         var cpdIndex = (doc.get('cpdAssessments'))
             .indexWhere((item) => item["cpdId"] == widget.course.id);
 
         if (cpdIndex != -1) {
           attemptsLeft = doc.get('cpdAssessments')[cpdIndex]['attempts'];
           grade = doc.get('cpdAssessments')[cpdIndex]['grade'];
+          reviewList = doc.get('cpdAssessments')[cpdIndex]['reviewList'];
         }
       });
     }
@@ -102,6 +117,27 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
         journalLink = doc.get('journalLink');
       });
     }
+  }
+
+  //update user cpd attemps
+  updateCpdAttempts() async {
+    var reviewData = {
+      "attempt": "${attemptsLeft == 2 ? '1' : '2'}",
+      "passedValue": passedValue,
+      "grade": getGradeForQuestions(),
+      "dateAttempt": CommonService().getTodaysDateText(),
+      "answerList": questionAnswers,
+    };
+
+    var cpdIndex = (cpdAssessments)
+        .indexWhere((item) => item["cpdId"] == widget.course.id);
+    cpdAssessments[cpdIndex]['attempts'] = attemptsLeft - 1;
+    cpdAssessments[cpdIndex]['reviewList'].add(reviewData);
+
+    final doc = await FirebaseFirestore.instance
+        .collection('cpdUserData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"cpdAssessments": cpdAssessments});
   }
 
   @override
@@ -151,6 +187,8 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                 });
               },
               quizStatus: quizStatus,
+              reviewList: reviewList,
+              reviewQuiz: getPreviousListData,
             ),
             const SizedBox(
               height: 40,
@@ -198,7 +236,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                   ),
                   StyleButton(
                       buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      description: '1. SUBMIT ATTEMPT',
+                      description: '3. SUBMIT ATTEMPT',
                       height: 50,
                       fontSize: 13,
                       width: 210,
@@ -254,6 +292,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                   finalSubmit: () {
                     setState(() {
                       quizStatus = "SUBMIT ATTEMPT FINAL";
+                      updateCpdAttempts();
                     });
                   }),
             ),
@@ -299,10 +338,16 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                       hasPassed: passedValue == "PASSED",
                       dateCompleted: CommonService().getTodaysDateText(),
                       grade: getGradeForQuestions(),
-                      cpdPoints: '3.0 Clinical')
+                      cpdPoints: '3.0 Clinical'),
                 ],
               ),
             ),
+            Visibility(
+                visible: quizStatus == "REVIEWQUIZ",
+                child: QuizReview(
+                  questionAnswers: questionAnswers,
+                  attempt: attemptNumber,
+                ))
           ],
         ),
       ),
