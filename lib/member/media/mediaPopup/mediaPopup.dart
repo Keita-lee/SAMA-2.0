@@ -97,14 +97,19 @@ class _MediaPopupState extends State<MediaPopup> {
             padding: const EdgeInsets.all(25.0),
             child: Row(
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF174486),
-                      fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF174486),
+                        fontWeight: FontWeight.bold),
+                    maxLines: 2, // Limit to 2 lines
+                    overflow:
+                        TextOverflow.ellipsis, // Add ellipsis if text overflows
+                  ),
                 ),
-                Spacer(),
+                SizedBox(width: 10),
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(

@@ -39,6 +39,7 @@ class Footer extends StatelessWidget {
               Text('SAMA Privacy', style: FontText(context).linksBlue),
               _verticalDivider(),
               Text('PAIA Policy', style: FontText(context).linksBlue),
+              _verticalDivider(),
               Text('Solution by Vertopia', style: FontText(context).linksBlue),
             ],
           ),
@@ -49,9 +50,9 @@ class Footer extends StatelessWidget {
 
   Widget _verticalDivider() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Container(
-        height: 12,
+        height: 15,
         width: 2,
         color: Colors.grey[500],
       ),

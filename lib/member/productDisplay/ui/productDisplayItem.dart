@@ -100,7 +100,7 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
               width: isMobile
                   ? MyUtility(context).width
                   : MyUtility(context).width * 0.70 - 280,
-              height: isMobile ? MyUtility(context).height * 0.14 : 110,
+              height: isMobile ? MyUtility(context).height * 0.16 : 110,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: isMobile
@@ -111,33 +111,31 @@ class _ProductDisplayItemState extends State<ProductDisplayItem> {
                     widget.productName,
                     maxLines: null,
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: isMobile ? TextAlign.center : null,
                   ),
                   SizedBox(height: 20),
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: isMobile
-                          ? MainAxisAlignment.center
-                          : MainAxisAlignment.start,
-                      children: [
-                        StyleButton(
-                            fontSize: isMobile ? 16 : 13,
-                            description: 'View Options',
-                            height: isMobile ? 65 : 40,
-                            width: 110,
-                            buttonTextColor: Colors.white,
-                            buttonColor: Color.fromRGBO(0, 159, 159, 1),
-                            onTap: () {
-                              // final Uri a = Uri.parse(widget.downloadLink);
-                              // launchUrl(a);
-                              widget.readMore();
-                            }),
-                      ],
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: isMobile
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.start,
+                    children: [
+                      StyleButton(
+                          fontSize: isMobile ? 16 : 13,
+                          description: 'View Options',
+                          height: isMobile ? 45 : 40,
+                          width: 110,
+                          buttonTextColor: Colors.white,
+                          buttonColor: Color.fromRGBO(0, 159, 159, 1),
+                          onTap: () {
+                            // final Uri a = Uri.parse(widget.downloadLink);
+                            // launchUrl(a);
+                            widget.readMore();
+                          }),
+                    ],
                   )
                 ],
               ),
