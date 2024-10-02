@@ -51,18 +51,18 @@ class _professionalDevelopmentDisplayItemState
           Visibility(
             visible: image == "" ? true : false,
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("images/imageIcon.png"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
               width: isMobile
                   ? MyUtility(context).width
-                  : MyUtility(context).width * 0.2,
+                  : MyUtility(context).width * 0.3,
               height: isMobile
-                  ? MyUtility(context).height / 3
-                  : MyUtility(context).width * 0.18,
+                  ? MyUtility(context).height / 3.5
+                  : MyUtility(context).height / 3,
             ),
           ),
           Visibility(
@@ -72,10 +72,10 @@ class _professionalDevelopmentDisplayItemState
               image: image,
               width: isMobile
                   ? MyUtility(context).width
-                  : MyUtility(context).width * 0.2,
+                  : MyUtility(context).width / 10,
               height: isMobile
                   ? MyUtility(context).height / 3.5
-                  : MyUtility(context).height / 4,
+                  : MyUtility(context).height / 2.8,
             ),
           ),
           SizedBox(

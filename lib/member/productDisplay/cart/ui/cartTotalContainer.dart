@@ -60,7 +60,7 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization':
-            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+            'Bearer sk_live_6392de84124560ae3210d60d6c9d44e1afa71cdf',
       },
       body: jsonEncode(<String, dynamic>{
         'email': email,
@@ -89,7 +89,7 @@ class _CartTotalContainerState extends State<CartTotalContainer> {
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization':
-            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+            'Bearer sk_live_6392de84124560ae3210d60d6c9d44e1afa71cdf',
       },
     );
   }
