@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_network/image_network.dart';
 import 'package:sama/components/myutility.dart';
@@ -17,11 +20,13 @@ class CourseInfo extends StatefulWidget {
   final CourseModel course;
   String userType;
   bool isAccessed;
+  String? introduction;
   CourseInfo(
       {super.key,
       required this.course,
       required this.userType,
-      required this.isAccessed});
+      required this.isAccessed,
+      this.introduction});
 
   @override
   State<CourseInfo> createState() => _CourseInfoState();
@@ -29,6 +34,8 @@ class CourseInfo extends StatefulWidget {
 
 class _CourseInfoState extends State<CourseInfo> {
   var cpdAssessments = [];
+  var myJSON;
+  QuillController quillController = QuillController.basic();
 
   Future openMemberSignUp() => showDialog(
       context: context,
@@ -116,6 +123,11 @@ class _CourseInfoState extends State<CourseInfo> {
   @override
   void initState() {
     checkIfMemberHasCpd();
+    myJSON = jsonDecode(widget.course.introduction);
+    quillController = QuillController(
+        readOnly: true,
+        document: Document.fromJson(myJSON),
+        selection: TextSelection.collapsed(offset: 0));
     super.initState();
   }
 
@@ -297,6 +309,15 @@ class _CourseInfoState extends State<CourseInfo> {
                 color: Color(0xFF3D3D3D),
                 fontSize: 23,
                 fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: QuillEditor.basic(
+              configurations: QuillEditorConfigurations(
+                controller: quillController,
+                sharedConfigurations: const QuillSharedConfigurations(),
+              ),
+            ),
           ),
         ],
       ),

@@ -26,14 +26,15 @@ class CourseModel {
   final String title;
   final String cpdPoints;
   final String level;
+  final String introduction;
 
-  CourseModel({
-    required this.id,
-    required this.imageUrl,
-    required this.title,
-    required this.cpdPoints,
-    required this.level,
-  });
+  CourseModel(
+      {required this.id,
+      required this.imageUrl,
+      required this.title,
+      required this.cpdPoints,
+      required this.level,
+      required this.introduction});
 }
 
 class _professionalDevelopmentMainConState
@@ -41,8 +42,14 @@ class _professionalDevelopmentMainConState
   final _firestore = FirebaseFirestore.instance;
   int pageIndex = 0;
   bool isLoading = true;
-  CourseModel selectedCourse =
-      CourseModel(id: '0', imageUrl: '', title: '', cpdPoints: '', level: '');
+  String introduction = "";
+  CourseModel selectedCourse = CourseModel(
+      id: '0',
+      imageUrl: '',
+      title: '',
+      cpdPoints: '',
+      level: '',
+      introduction: '');
   List<Map<String, dynamic>> coursesList = [];
   @override
   void initState() {
@@ -246,6 +253,8 @@ class _professionalDevelopmentMainConState
                                                       'subDescription'],
                                                   level: document[
                                                       'subDescription'],
+                                                  introduction:
+                                                      document['introduction'],
                                                 ),
                                               ),
                                             )
@@ -271,6 +280,7 @@ class _professionalDevelopmentMainConState
                                   title: course['title'],
                                   cpdPoints: course['subDescription'],
                                   level: course['subDescription'],
+                                  introduction: course['introduction'],
                                 ),
                               );
                             }).toList(),
@@ -288,14 +298,15 @@ class _professionalDevelopmentMainConState
                       visible: pageIndex == 2,
                       child: CourseInfo(
                         course: CourseModel(
-                          id: selectedCourse.id,
-                          imageUrl: selectedCourse.imageUrl,
-                          title: selectedCourse.title,
-                          cpdPoints: selectedCourse.cpdPoints,
-                          level: selectedCourse.level,
-                        ),
+                            id: selectedCourse.id,
+                            imageUrl: selectedCourse.imageUrl,
+                            title: selectedCourse.title,
+                            cpdPoints: selectedCourse.cpdPoints,
+                            level: selectedCourse.level,
+                            introduction: selectedCourse.introduction),
                         userType: 'nonMember',
                         isAccessed: false,
+                        introduction: "",
                       ),
                     ),
                     Visibility(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sama/components/mobile/components/Themes/custom_colors.dart';
+import 'package:sama/components/myutility.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +8,7 @@ class FontText {
   BuildContext context;
   FontText(this.context);
   double get width => MediaQuery.of(context).size.width;
+  bool get isMobile => MediaQuery.of(context).size.width < 600 ? true : false;
   TextStyle get headingLarge => TextStyle(
         color: Colors.black,
         fontSize: width / 20,
@@ -45,7 +47,7 @@ class FontText {
 
   TextStyle get regularWhite => TextStyle(
         color: Colors.white,
-        fontSize: width / 26,
+        fontSize: isMobile ? width / 26 : 16,
         fontWeight: FontWeight.normal,
       );
 

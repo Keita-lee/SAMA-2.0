@@ -15,16 +15,17 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
   final CourseModel course;
   final String? startAssessment;
 
-  const professionalDevelopmentDisplayItem(
-      {super.key,
-      required this.onPressed,
-      required this.imageUrl,
-      required this.title,
-      required this.cpdPoints,
-      required this.level,
-      required this.subDescription,
-      required this.course,
-      this.startAssessment});
+  const professionalDevelopmentDisplayItem({
+    super.key,
+    required this.onPressed,
+    required this.imageUrl,
+    required this.title,
+    required this.cpdPoints,
+    required this.level,
+    required this.subDescription,
+    required this.course,
+    this.startAssessment,
+  });
 
   @override
   State<professionalDevelopmentDisplayItem> createState() =>

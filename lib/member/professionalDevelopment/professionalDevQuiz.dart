@@ -31,6 +31,8 @@ class ProfessionalDevQuiz extends StatefulWidget {
   State<ProfessionalDevQuiz> createState() => _ProfessionalDevQuizState();
 }
 
+var assessmentFinished = false;
+
 class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   //var
   var quizStatus = "READ ISSUE";
@@ -44,6 +46,8 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   int attemptNumber = 0;
   List reviewList = [];
   List cpdAssessments = [];
+  String finishedQuizDate = "";
+  String finishedGrade = "";
 
 // set state of question list
   getQuestionAnswers(value, questionLengthAmount) {
@@ -99,6 +103,19 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
           attemptsLeft = doc.get('cpdAssessments')[cpdIndex]['attempts'];
           grade = doc.get('cpdAssessments')[cpdIndex]['grade'];
           reviewList = doc.get('cpdAssessments')[cpdIndex]['reviewList'];
+
+          for (var i = 0;
+              i < (doc.get('cpdAssessments')[cpdIndex]['reviewList']).length;
+              i++) {
+            if (reviewList[i]['passedValue'] == "PASSED") {
+              setState(() {
+                assessmentFinished = true;
+                finishedQuizDate = reviewList[i]['dateAttempt'];
+                quizStatus = "";
+                finishedGrade = reviewList[i]['grade'];
+              });
+            }
+          }
         }
       });
     }
@@ -144,6 +161,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   void initState() {
     getCpdInformation();
     getAttempsOnQuiz();
+
     super.initState();
   }
 
@@ -202,7 +220,8 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
               height: 40,
             ),
             Visibility(
-              visible: quizStatus != "SUBMIT ATTEMPT FINAL",
+              visible: quizStatus != "SUBMIT ATTEMPT FINAL" &&
+                  assessmentFinished == false,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -347,7 +366,15 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                 child: QuizReview(
                   questionAnswers: questionAnswers,
                   attempt: attemptNumber,
-                ))
+                )),
+            Visibility(
+              visible: assessmentFinished,
+              child: QuizEndResults(
+                  hasPassed: true,
+                  dateCompleted: finishedQuizDate,
+                  grade: finishedGrade,
+                  cpdPoints: '3.0 Clinical'),
+            ),
           ],
         ),
       ),

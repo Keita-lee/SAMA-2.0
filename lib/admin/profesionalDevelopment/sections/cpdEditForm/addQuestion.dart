@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/admin/profesionalDevelopment/sections/cpdEditForm/ui/answerStyle.dart';
 import 'package:sama/components/styleButton.dart';
+import 'package:sama/login/popups/validateDialog.dart';
 
 import '../../../../components/utility.dart';
 import '../../../products/UI/myProductTextField.dart';
@@ -36,12 +37,27 @@ class _AddQuestionState extends State<AddQuestion> {
     });
   }
 
+//Popup for message
+  Future messageDialog(String message) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: ValidateDialog(
+                description: message,
+                closeDialog: () => Navigator.pop(context!)));
+      });
+
 //Add or edit answer in array
   addToAnswerList(value) {
-    setState(() {
-      answerOptions.add({"answerValue": answer.text, "answerTrueFalse": false});
-      answer.text = "";
-    });
+    if (answer.text == "") {
+      messageDialog("No value added");
+    } else {
+      setState(() {
+        answerOptions
+            .add({"answerValue": answer.text, "answerTrueFalse": false});
+        answer.text = "";
+      });
+    }
   }
 
   editAnswerDetails() {
@@ -51,11 +67,15 @@ class _AddQuestionState extends State<AddQuestion> {
   }
 
   saveEditAnswerSelected() {
-    setState(() {
-      editAnswer = false;
-      answerOptions[answerIndex]["answerValue"] = answer.text;
-      answer.text = "";
-    });
+    if (answer.text == "") {
+      messageDialog("No value added");
+    } else {
+      setState(() {
+        editAnswer = false;
+        answerOptions[answerIndex]["answerValue"] = answer.text;
+        answer.text = "";
+      });
+    }
   }
 
   removeAnswer() {

@@ -35,7 +35,21 @@ class GradeRequiredCon extends StatefulWidget {
   State<GradeRequiredCon> createState() => _GradeRequiredConState();
 }
 
+var assessmentFinished = false;
+
 class _GradeRequiredConState extends State<GradeRequiredCon> {
+  @override
+  void initState() {
+    for (var i = 0; i < widget.reviewList.length; i++) {
+      if (widget.reviewList[i]['passedValue'] == "PASSED") {
+        setState(() {
+          assessmentFinished = true;
+        });
+      }
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -100,7 +114,7 @@ class _GradeRequiredConState extends State<GradeRequiredCon> {
                             int.parse(widget.reviewList[i]['attempt']));
                       },
                       child: Text(
-                        'Review',
+                        'Review1',
                         style: GoogleFonts.openSans(
                             color: Colors.black,
                             decorationThickness: 2,
@@ -113,8 +127,11 @@ class _GradeRequiredConState extends State<GradeRequiredCon> {
                     const SizedBox(
                       height: 7,
                     ),
-                    SimpleQuizTextStyle(
-                        text: 'Attempt ${widget.attemptNumber}: In Progress'),
+                    Visibility(
+                      visible: assessmentFinished,
+                      child: SimpleQuizTextStyle(
+                          text: 'Attempt ${widget.attemptNumber}: In Progress'),
+                    ),
                   ],
                 ),
               /* Visibility(
@@ -155,7 +172,7 @@ class _GradeRequiredConState extends State<GradeRequiredCon> {
               Visibility(
                   visible: widget.attemptNumber == "1" &&
                       widget.quizStatus == "QUIZ",
-                  child: SimpleQuizTextStyle(text: 'Attempt 1 : In Progress')),
+                  child: SimpleQuizTextStyle(text: 'Attempt 2 : In Progress')),
               Visibility(
                 visible: widget.isAttemptPending,
                 child: Column(
@@ -163,11 +180,15 @@ class _GradeRequiredConState extends State<GradeRequiredCon> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Visibility(
-                      visible: widget.quizStatus != "QUIZ",
+                      visible:
+                          widget.quizStatus != "QUIZ" && assessmentFinished,
                       child: SimpleQuizTextStyle(
                           text: 'Attempts: ${widget.attemptNumber}'),
                     ),
-                    SimpleQuizTextStyle(text: 'Grade: ${widget.grade}'),
+                    Visibility(
+                        visible: assessmentFinished,
+                        child: SimpleQuizTextStyle(
+                            text: 'Grade: ${widget.grade}')),
                     const SizedBox(
                       height: 40,
                     ),

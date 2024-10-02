@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sama/components/mobile/components/Themes/font_text.dart';
+import 'package:sama/components/myutility.dart';
 
 class StyleButton extends StatefulWidget {
   String? description;
@@ -30,6 +31,7 @@ class StyleButton extends StatefulWidget {
 class _StyleButtonState extends State<StyleButton> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600 ? true : false;
     return InkWell(
       onTap: () {
         widget.onTap!();
@@ -37,8 +39,9 @@ class _StyleButtonState extends State<StyleButton> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             //elevation: 10,
-            minimumSize:
-                Size(widget.width! * 0.8, widget.height! * 0.8), // Reduced size
+            minimumSize: isMobile
+                ? Size(widget.width! * 0.8, widget.height! * 0.8)
+                : Size(widget.width!, widget.height!), // Reduced size
             backgroundColor: widget.buttonColor != null
                 ? widget.buttonColor
                 : Color.fromARGB(255, 8, 55, 145),

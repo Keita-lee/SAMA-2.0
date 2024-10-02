@@ -76,6 +76,7 @@ class _UserCpdListState extends State<UserCpdList> {
                   title: cpdAssessmentsList[i]['title'],
                   cpdPoints: cpdAssessmentsList[i]['subDescription'],
                   level: cpdAssessmentsList[i]['subDescription'],
+                  introduction: cpdAssessmentsList[i]['introduction'],
                 ),
                 onPressed: (CourseModel) {
                   widget.setSelectedCourse(CourseModel);
