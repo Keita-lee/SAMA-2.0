@@ -21,24 +21,27 @@ class CourseInfoContainer extends StatefulWidget {
   final String grade;
   final VoidCallback takeQuiz;
   final String quizStatus;
+  final List reviewList;
+  final Function(List, int) reviewQuiz;
 
-  const CourseInfoContainer({
-    super.key,
-    required this.courseImage,
-    required this.accreditationOrg,
-    required this.accreditationId,
-    required this.accreditationPoints,
-    required this.passRate,
-    required this.allowedAttempts,
-    required this.userType,
-    required this.nonMemberPrice,
-    required this.isAccessed,
-    required this.questionLength,
-    required this.attemptsLeft,
-    required this.grade,
-    required this.takeQuiz,
-    required this.quizStatus,
-  });
+  const CourseInfoContainer(
+      {super.key,
+      required this.courseImage,
+      required this.accreditationOrg,
+      required this.accreditationId,
+      required this.accreditationPoints,
+      required this.passRate,
+      required this.allowedAttempts,
+      required this.userType,
+      required this.nonMemberPrice,
+      required this.isAccessed,
+      required this.questionLength,
+      required this.attemptsLeft,
+      required this.grade,
+      required this.takeQuiz,
+      required this.quizStatus,
+      required this.reviewList,
+      required this.reviewQuiz});
 
   @override
   State<CourseInfoContainer> createState() => _CourseInfoContainerState();
@@ -121,15 +124,14 @@ class _CourseInfoContainerState extends State<CourseInfoContainer> {
                   attemptNumber: '${widget.attemptsLeft}',
                   grade: widget.grade,
                   failedAttemptScorePercentage: 25,
-                  onTapReviewFailed: () {
-                    //ADD LOGIC
-                  },
+                  onTapReviewFailed: widget.reviewQuiz,
                   isQuizInProgress: false,
                   isAttemptPending: true,
                   quizStatus: widget.quizStatus,
                   takeQuizFunction: () {
                     widget.takeQuiz();
                   },
+                  reviewList: widget.reviewList,
                 ),
               ),
               Visibility(

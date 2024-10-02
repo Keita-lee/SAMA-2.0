@@ -260,12 +260,12 @@ class _CpdEditFormState extends State<CpdEditForm> {
                                     width: 8,
                                   ),
                                   MyProductTextField(
-                                    hintText: 'Non Member Price',
-                                    textfieldController: nonMemberPrice,
+                                    hintText: 'Journal Link',
+                                    textfieldController: journalLink,
                                     textFieldWidth:
                                         MyUtility(context).width * 0.28,
                                     topPadding: 0,
-                                    header: 'Non Member Price',
+                                    header: 'Journal Link',
                                   ),
                                 ],
                               ),
@@ -309,7 +309,7 @@ class _CpdEditFormState extends State<CpdEditForm> {
                           ),
                           Container(
                             width: MyUtility(context).width * 0.60,
-                            height: 100,
+                            height: 200,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
@@ -326,7 +326,7 @@ class _CpdEditFormState extends State<CpdEditForm> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          /*SizedBox(
                             height: 15,
                           ),
                           MyProductTextField(
@@ -335,7 +335,7 @@ class _CpdEditFormState extends State<CpdEditForm> {
                             textFieldWidth: MyUtility(context).width * 0.75,
                             topPadding: 0,
                             header: 'Link',
-                          ),
+                          ),*/
                           SizedBox(
                             height: 15,
                           ),

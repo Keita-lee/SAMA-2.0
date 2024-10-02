@@ -17,13 +17,20 @@ class ProfessionalDevAdmin extends StatefulWidget {
 class _ProfessionalDevAdminState extends State<ProfessionalDevAdmin> {
   var pageIndex = 0;
   var cpdItemId = "";
-
+  final search = TextEditingController();
+  var searchText = "";
   //change page index state
   changePageIndex(value, id) {
     print(id);
     setState(() {
       pageIndex = value;
       cpdItemId = id;
+    });
+  }
+
+  void onSearchChanged() {
+    setState(() {
+      searchText = search.text;
     });
   }
 
@@ -78,7 +85,7 @@ class _ProfessionalDevAdminState extends State<ProfessionalDevAdmin> {
                                     BorderRadius.all(Radius.circular(5))),
                             child: Center(
                               child: TextFormField(
-                                controller: TextEditingController(),
+                                controller: search,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -98,10 +105,15 @@ class _ProfessionalDevAdminState extends State<ProfessionalDevAdmin> {
                               description: "Search",
                               height: 55,
                               width: 125,
-                              onTap: () {}),
+                              onTap: () {
+                                onSearchChanged();
+                              }),
                         ],
                       ),
-                      CpdList(changePageIndex: changePageIndex),
+                      CpdList(
+                        changePageIndex: changePageIndex,
+                        searchText: searchText,
+                      ),
                     ],
                   )),
                 )),
