@@ -41,7 +41,7 @@ class FontText {
 
   TextStyle get bodyRegularBlack => TextStyle(
         color: Colors.black,
-        fontSize: width / 26,
+        fontSize: isMobile ? width / 26 : 16,
         fontWeight: FontWeight.normal,
       );
 
