@@ -76,7 +76,11 @@ class _CpdListState extends State<CpdList> {
               child: ListView.builder(
                 itemCount: documents.length,
                 itemBuilder: (BuildContext context, int index) {
+                  documents.sort((b, a) =>
+                      a["latestRelease"].compareTo(b["latestRelease"]));
+
                   final DocumentSnapshot document = documents[index];
+                  /*    */
                   final data = document.data() as Map<String, dynamic>?;
 
                   return Visibility(

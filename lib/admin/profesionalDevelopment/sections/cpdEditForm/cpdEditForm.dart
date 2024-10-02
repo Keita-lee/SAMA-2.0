@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:intl/intl.dart';
 import 'package:sama/admin/profesionalDevelopment/sections/cpdEditForm/addQuestion.dart';
 import 'package:sama/components/styleButton.dart';
 
 import '../../../../Login/popups/validateDialog.dart';
 import '../../../../components/myutility.dart';
+import '../../../../components/profileTextField.dart';
 import '../../../../components/yesNoDialog.dart';
 import '../../../media/ui/addMediaImage.dart';
 import '../../../products/UI/myProductTextField.dart';
@@ -28,6 +30,7 @@ class _CpdEditFormState extends State<CpdEditForm> {
   final title = TextEditingController();
   final introduction = TextEditingController();
   final journalLink = TextEditingController();
+  final latestRelease = TextEditingController();
 
   final nonMemberPrice = TextEditingController();
   final subDescription = TextEditingController();
@@ -68,6 +71,18 @@ class _CpdEditFormState extends State<CpdEditForm> {
     });
   }
 
+//Select a date popup
+  onTapFunction({required BuildContext context}) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      lastDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      initialDate: DateTime.now(),
+    );
+    if (pickedDate == null) return;
+    latestRelease.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+  }
+
 //Save to DB
   saveQuestionnaire(status) async {
     var cpdDetails = {
@@ -79,7 +94,8 @@ class _CpdEditFormState extends State<CpdEditForm> {
       "nonMemberPrice": nonMemberPrice.text,
       "subDescription": subDescription.text,
       "cpdImage": cpdImage,
-      "journalLink": journalLink.text
+      "journalLink": journalLink.text,
+      "latestRelease": latestRelease.text
     };
 
     if (widget.cpdId == "") {
@@ -123,6 +139,7 @@ class _CpdEditFormState extends State<CpdEditForm> {
             document: Document.fromJson(myJSON),
             selection: TextSelection.collapsed(offset: 0));
         questions = cpdData.get("questions");
+        latestRelease.text = cpdData.get("latestRelease");
       });
     }
   }
@@ -267,6 +284,51 @@ class _CpdEditFormState extends State<CpdEditForm> {
                                     topPadding: 0,
                                     header: 'Journal Link',
                                   ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  SizedBox(
+                                    width: MyUtility(context).width * 0.28,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Release Date",
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Container(
+                                            width: MyUtility(context).width *
+                                                0.195,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            child: TextField(
+                                              controller: latestRelease,
+                                              readOnly: true,
+                                              decoration: const InputDecoration(
+                                                  hintText:
+                                                      "Click here to select date"),
+                                              onTap: () => onTapFunction(
+                                                  context: context),
+                                            ),
+                                          )
+                                        ]),
+                                  )
                                 ],
                               ),
                             ],
