@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sama/components/mobile/components/Themes/custom_colors.dart';
+import 'package:sama/components/utility.dart';
 
 class LoginButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -17,11 +18,11 @@ class LoginButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      child: const Text(
+      child: Text(
         'LOGIN',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 16,
+          fontSize: MyUtility(context).width < 400 ? 12 : 16,
           fontWeight: FontWeight.bold,
         ),
       ),

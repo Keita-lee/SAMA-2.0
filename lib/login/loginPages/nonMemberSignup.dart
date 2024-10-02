@@ -59,6 +59,7 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
   //Update user cpd
   updateUserCpd(userId) async {
     var userCpdData = {
+      "grade": "Pending",
       "dateCreate": DateTime.now(),
       "cpdAssessments": [],
       "userId": userId,

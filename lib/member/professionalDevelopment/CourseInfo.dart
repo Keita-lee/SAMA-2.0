@@ -80,6 +80,7 @@ class _CourseInfoState extends State<CourseInfo> {
 //Check Time of Member
     } else {
       var userCpdData = {
+        "grade": "Pending",
         "dateCreate": DateTime.now(),
         "cpdAssessments": [],
         "userId": FirebaseAuth.instance.currentUser!.uid,
@@ -249,7 +250,7 @@ class _CourseInfoState extends State<CourseInfo> {
                 ],
               ),
               //   Spacer(),
-              Visibility(
+              /*    Visibility(
                 visible: widget.isAccessed == true,
                 child: GradeRequiredCon(
                   requiredCorrectQuestions: 2,
@@ -263,9 +264,9 @@ class _CourseInfoState extends State<CourseInfo> {
                   },
                   isQuizInProgress: false,
                   isAttemptPending: true,
-                  takeQuizFunction: () {},
+                  takeQuizFunction: () {}, quizStatus: widget.quiz,
                 ),
-              ),
+              ),*/
               Visibility(
                 visible: FirebaseAuth.instance.currentUser != null &&
                     checkIfAlreadyAddedCpd(),

@@ -13,6 +13,7 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
   final String level;
   final String subDescription;
   final CourseModel course;
+  final String? startAssessment;
 
   const professionalDevelopmentDisplayItem(
       {super.key,
@@ -22,7 +23,8 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
       required this.cpdPoints,
       required this.level,
       required this.subDescription,
-      required this.course});
+      required this.course,
+      this.startAssessment});
 
   @override
   State<professionalDevelopmentDisplayItem> createState() =>
@@ -112,7 +114,8 @@ class _professionalDevelopmentDisplayItemState
                 ),
                 StyleButton(
                   fontSize: 13,
-                  description: 'Read More',
+                  description:
+                      widget.startAssessment != null ? 'Start' : 'Read More',
                   height: 40,
                   width: 110,
                   buttonTextColor: Colors.white,

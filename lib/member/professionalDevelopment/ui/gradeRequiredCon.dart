@@ -14,6 +14,7 @@ class GradeRequiredCon extends StatefulWidget {
   final Function() onTapReviewFailed;
   final Function() takeQuizFunction;
   final bool isAttemptPending;
+  final String quizStatus;
   const GradeRequiredCon(
       {super.key,
       required this.requiredCorrectQuestions,
@@ -25,7 +26,8 @@ class GradeRequiredCon extends StatefulWidget {
       required this.onTapReviewFailed,
       required this.isQuizInProgress,
       required this.isAttemptPending,
-      required this.takeQuizFunction});
+      required this.takeQuizFunction,
+      required this.quizStatus});
 
   @override
   State<GradeRequiredCon> createState() => _GradeRequiredConState();
@@ -79,7 +81,7 @@ class _GradeRequiredConState extends State<GradeRequiredCon> {
             const SizedBox(
               height: 7,
             ),
-            Visibility(
+            /* Visibility(
               visible: widget.isQuizInProgress == true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,26 +111,40 @@ class _GradeRequiredConState extends State<GradeRequiredCon> {
                       text: 'Attempt ${widget.attemptNumber}: In Progress'),
                 ],
               ),
-            ),
+            ),*/
+            Visibility(
+                visible:
+                    widget.attemptNumber == "2" && widget.quizStatus == "QUIZ",
+                child: SimpleQuizTextStyle(text: 'Attempt 1 : In Progress')),
+            Visibility(
+                visible:
+                    widget.attemptNumber == "1" && widget.quizStatus == "QUIZ",
+                child: SimpleQuizTextStyle(text: 'Attempt 1 : In Progress')),
             Visibility(
               visible: widget.isAttemptPending,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SimpleQuizTextStyle(
-                      text: 'Attempt ${widget.attemptNumber}: Pending'),
-                  SimpleQuizTextStyle(text: 'Grade: Pending'),
+                  Visibility(
+                    visible: widget.quizStatus != "QUIZ",
+                    child: SimpleQuizTextStyle(
+                        text: 'Attempts: ${widget.attemptNumber}'),
+                  ),
+                  SimpleQuizTextStyle(text: 'Grade: ${widget.grade}'),
                   const SizedBox(
                     height: 40,
                   ),
-                  StyleButton(
-                      buttonColor: Color.fromRGBO(24, 69, 126, 1),
-                      description: 'TAKE QUIZ',
-                      fontSize: 12,
-                      height: 50,
-                      width: 200,
-                      onTap: widget.takeQuizFunction)
+                  Visibility(
+                    visible: widget.quizStatus == "READ ISSUE",
+                    child: StyleButton(
+                        buttonColor: Color.fromRGBO(24, 69, 126, 1),
+                        description: 'TAKE QUIZ',
+                        fontSize: 12,
+                        height: 50,
+                        width: 200,
+                        onTap: widget.takeQuizFunction),
+                  )
                 ],
               ),
             )

@@ -260,11 +260,12 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                 Visibility(
                   visible: eventsImage == "" ? false : true,
                   child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0), // {{ edit_1 }}
                     child: FittedBox(
                       fit: BoxFit.contain,
                       child: ImageNetwork(
                         image: eventsImage,
-                        width: MyUtility(context).width / 2,
+                        width: MyUtility(context).width,
                         height: MyUtility(context).height / 4,
                         fitWeb: BoxFitWeb.cover,
                       ),
@@ -452,6 +453,8 @@ class _MemberEventDetailsState extends State<MemberEventDetails> {
                           Visibility(
                             visible: eventsImage == "" ? false : true,
                             child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(10.0), // {{ edit_1 }}
                               child: FittedBox(
                                 fit: BoxFit.contain,
                                 child: ImageNetwork(

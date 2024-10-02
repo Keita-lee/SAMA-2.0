@@ -6,7 +6,12 @@ import 'package:sama/member/professionalDevelopment/professionalDevelopmentMainC
 import 'package:sama/member/professionalDevelopment/ui/professionalDevelopmentDisplayItem.dart';
 
 class UserCpdList extends StatefulWidget {
-  const UserCpdList({super.key});
+  Function(int) changePageIndex;
+  final Function(CourseModel) setSelectedCourse;
+  UserCpdList(
+      {super.key,
+      required this.changePageIndex,
+      required this.setSelectedCourse});
 
   @override
   State<UserCpdList> createState() => _UserCpdListState();
@@ -14,7 +19,21 @@ class UserCpdList extends StatefulWidget {
 
 class _UserCpdListState extends State<UserCpdList> {
   //var
-  var cpdAssessments = [];
+  var cpdAssessmentsList = [];
+  var cpdAssessmentUserDetails = [];
+
+//build cpd assesment list
+  buildCpdList(cpdId) async {
+    final snapShot =
+        await FirebaseFirestore.instance.collection('cpd').doc(cpdId).get();
+
+    if (snapShot.exists) {
+      setState(() {
+        cpdAssessmentsList.add(snapShot.data());
+      });
+    }
+  }
+
   getUserCpd() async {
     final snapShot = await FirebaseFirestore.instance
         .collection('cpdUserData')
@@ -23,7 +42,10 @@ class _UserCpdListState extends State<UserCpdList> {
 
     if (snapShot.exists) {
       setState(() {
-        //cpdAssessments.addAll(snapShot.get('cpdAssessments'));
+        //cpdAssessmentUserDetails.addAll(snapShot.get('cpdAssessments'));
+        for (var i = 0; i < (snapShot.get('cpdAssessments')).length; i++) {
+          buildCpdList((snapShot.get('cpdAssessments'))[i]['cpdId']);
+        }
       });
     }
   }
@@ -39,24 +61,27 @@ class _UserCpdListState extends State<UserCpdList> {
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     return Wrap(
       children: [
-        for (var i = 0; i < cpdAssessments.length; i++)
+        for (var i = 0; i < cpdAssessmentsList.length; i++)
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: professionalDevelopmentDisplayItem(
-              imageUrl: cpdAssessments[i]['cpdImage'],
-              title: cpdAssessments[i]['title'],
-              cpdPoints: "3.0 Clinical Point",
-              level: "Level 2",
-              subDescription: cpdAssessments[i]['subDescription'],
-              course: CourseModel(
-                id: cpdAssessments[i]['id'],
-                imageUrl: cpdAssessments[i]['cpdImage'],
-                title: cpdAssessments[i]['title'],
-                cpdPoints: cpdAssessments[i]['subDescription'],
-                level: cpdAssessments[i]['subDescription'],
-              ),
-              onPressed: (CourseModel) {},
-            ),
+                imageUrl: cpdAssessmentsList[i]['cpdImage'],
+                title: cpdAssessmentsList[i]['title'],
+                cpdPoints: "3.0 Clinical Point",
+                level: "Level 2",
+                subDescription: cpdAssessmentsList[i]['subDescription'],
+                course: CourseModel(
+                  id: cpdAssessmentsList[i]['id'],
+                  imageUrl: cpdAssessmentsList[i]['cpdImage'],
+                  title: cpdAssessmentsList[i]['title'],
+                  cpdPoints: cpdAssessmentsList[i]['subDescription'],
+                  level: cpdAssessmentsList[i]['subDescription'],
+                ),
+                onPressed: (CourseModel) {
+                  widget.setSelectedCourse(CourseModel);
+                  widget.changePageIndex(1);
+                },
+                startAssessment: ""),
           )
       ],
     );

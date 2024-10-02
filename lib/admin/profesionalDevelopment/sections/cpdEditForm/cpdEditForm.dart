@@ -78,7 +78,8 @@ class _CpdEditFormState extends State<CpdEditForm> {
       "status": status,
       "nonMemberPrice": nonMemberPrice.text,
       "subDescription": subDescription.text,
-      "cpdImage": cpdImage
+      "cpdImage": cpdImage,
+      "journalLink": journalLink.text
     };
 
     if (widget.cpdId == "") {
