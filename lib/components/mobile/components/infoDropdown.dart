@@ -105,14 +105,14 @@ class _InfoDropdownState extends State<InfoDropdown> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  widget.title,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
+                                // Text(
+                                //   widget.title,
+                                //   style: const TextStyle(
+                                //     fontSize: 14,
+                                //     color: Colors.grey,
+                                //     fontWeight: FontWeight.w500,
+                                //   ),
+                                // ),
                                 Icon(
                                   Icons.arrow_drop_down,
                                   size: 30,

@@ -21,7 +21,7 @@ class FontText {
 
   TextStyle get bodySmallGrey => TextStyle(
         color: const Color.fromARGB(255, 139, 139, 139),
-        fontSize: width / 28,
+        fontSize: width / 30,
         fontWeight: FontWeight.normal,
       );
 
@@ -33,7 +33,19 @@ class FontText {
 
   TextStyle get bodySmallBlack => TextStyle(
         color: Colors.black,
-        fontSize: width / 25,
+        fontSize: width / 30,
+        fontWeight: FontWeight.normal,
+      );
+
+  TextStyle get bodyRegularBlack => TextStyle(
+        color: Colors.black,
+        fontSize: width / 26,
+        fontWeight: FontWeight.normal,
+      );
+
+  TextStyle get regularWhite => TextStyle(
+        color: Colors.white,
+        fontSize: width / 26,
         fontWeight: FontWeight.normal,
       );
 
@@ -47,6 +59,14 @@ class FontText {
         color: CustomColors.lightBlue,
         fontSize: width / 20,
         fontWeight: FontWeight.w600,
+      );
+
+  TextStyle get mediumlinksBlue => TextStyle(
+        color: CustomColors.lightBlue,
+        fontSize: width / 30,
+        fontWeight: FontWeight.normal,
+        decoration: TextDecoration.underline,
+        decorationColor: CustomColors.lightBlue, // Add this line
       );
 
   TextStyle get linksBlue => TextStyle(

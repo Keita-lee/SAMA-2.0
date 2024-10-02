@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/components/email/sendOtp.dart';
 import 'package:sama/components/mobile/Navbar/navbar.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/profileTextField.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/styleTextfield.dart';
@@ -269,40 +270,25 @@ class _RegisterState extends State<Register> {
               onDropdownChanged: (value) {},
               visible: false,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have a profile?",
-                  style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                      fontSize: 16,
-                    ),
-                    color: Colors.grey[600],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Already have a profile?",
+                      style: FontText(context).bodySmallGrey),
+                  SizedBox(
+                    width: 15,
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    widget.changePage(0);
-                  },
-                  child: Text(
-                    "Click to login",
-                    style: GoogleFonts.openSans(
-                      decorationThickness: 2,
-                      height: 1.1,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                      textStyle: TextStyle(
-                        fontSize: 16,
-                      ),
-                      color: Color.fromRGBO(0, 159, 158, 1),
-                    ),
-                  ),
-                )
-              ],
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(0);
+                    },
+                    child: Text("Click to login",
+                        style: FontText(context).mediumlinksBlue),
+                  )
+                ],
+              ),
             ),
             ProfileTextField(
               isBold: false,

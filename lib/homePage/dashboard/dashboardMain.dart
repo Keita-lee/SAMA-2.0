@@ -69,19 +69,22 @@ class _DashboardMainState extends State<DashboardMain> {
               width: isMobile
                   ? MyUtility(context).width
                   : MyUtility(context).width / 1.31,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  //Spacer(),
-                  Visibility(
-                      visible: widget.userType != "NonMember",
-                      child: InkWell(
-                          onTap: () {
-                            openHelpBotPopup();
-                          },
-                          child: SvgPicture.asset(
-                              width: 30, height: 30, 'images/helpbot.svg'))),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    //Spacer(),
+                    Visibility(
+                        visible: widget.userType != "NonMember",
+                        child: InkWell(
+                            onTap: () {
+                              openHelpBotPopup();
+                            },
+                            child: SvgPicture.asset(
+                                width: 30, height: 30, 'images/helpbot.svg'))),
+                  ],
+                ),
               ),
             ),
             Visibility(

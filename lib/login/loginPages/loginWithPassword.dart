@@ -26,6 +26,7 @@ class LoginWithPassword extends StatefulWidget {
 class _LoginWithPasswordState extends State<LoginWithPassword> {
   bool showNonMemberBorder = false;
   bool showForgotPasswordBorder = false;
+  bool showForgotSamaBorder = false;
   // Text controllers
   final password = TextEditingController(text: ''); //REMOVE AFTER TEST
 
@@ -153,31 +154,50 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Need help?\n\n',
-                          style: FontText(context).bodyMediumBlack,
-                        ),
-                        TextSpan(
-                          text: 'Reset my password\n\n\n',
-                          style: FontText(context).linksBlue.copyWith(
-                                fontSize: MyUtility(context).width / 25,
-                              ),
-                        ),
-                        TextSpan(
-                          text:
-                              'Are you a member and don\'t have a profile?\n\n',
-                          style: FontText(context).bodyMediumBlack,
-                        ),
-                        TextSpan(
-                          text: 'Create one here\n\n',
-                          style: FontText(context).linksBlue.copyWith(
-                                fontSize: MyUtility(context).width / 25,
-                              ),
-                        ),
-                      ],
+                  Text(
+                    'Need help?',
+                    style: FontText(context).bodyMediumBlack,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(2);
+                    },
+                    child: Text(
+                      "Reset my password ",
+                      style: GoogleFonts.openSans(
+                        decoration: showForgotPasswordBorder == true
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        decorationThickness: 2,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.5,
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Are you a member and don\'t have a profile?',
+                    style: FontText(context).bodyMediumBlack,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      widget.changePage(9);
+                    },
+                    child: Text(
+                      "Create one here",
+                      style: GoogleFonts.openSans(
+                        decoration: showForgotSamaBorder == true
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
+                        decorationThickness: 2,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.5,
+                        fontSize: 16,
+                        color: const Color.fromRGBO(0, 159, 158, 1),
+                      ),
                     ),
                   ),
                 ],

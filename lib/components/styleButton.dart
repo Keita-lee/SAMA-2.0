@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 class StyleButton extends StatefulWidget {
   String? description;
@@ -15,8 +16,8 @@ class StyleButton extends StatefulWidget {
       {super.key,
       required this.description,
       this.buttonTextColor,
-      required this.height,
-      required this.width,
+      required this.height, // Adjust this value
+      required this.width, // Adjust this value
       required this.onTap,
       this.fontSize,
       this.buttonColor,
@@ -37,7 +38,7 @@ class _StyleButtonState extends State<StyleButton> {
         style: ElevatedButton.styleFrom(
             //elevation: 10,
             minimumSize:
-                Size(widget.width!, widget.height!), // Size(width, height)
+                Size(widget.width! * 0.8, widget.height! * 0.8), // Reduced size
             backgroundColor: widget.buttonColor != null
                 ? widget.buttonColor
                 : Color.fromARGB(255, 8, 55, 145),
@@ -52,15 +53,7 @@ class _StyleButtonState extends State<StyleButton> {
                   color: Colors.white,
                 ),
               )
-            : Text(
-                widget.description!,
-                style: TextStyle(
-                  color: widget.buttonTextColor == null
-                      ? Color.fromARGB(255, 255, 255, 255)
-                      : widget.buttonTextColor,
-                  fontSize: widget.fontSize == null ? 16 : widget.fontSize,
-                ),
-              ),
+            : Text(widget.description!, style: FontText(context).regularWhite),
         onPressed: widget.onTap,
       ),
     );

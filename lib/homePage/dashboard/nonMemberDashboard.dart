@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/mobile/Navbar/login_button.dart';
 import 'package:sama/components/mobile/Navbar/register_button.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/homePage/dashboard/ui/onHoverButtons.dart';
 import 'package:sama/login/loginPages.dart';
@@ -41,44 +42,29 @@ class _NonMemberDashboardState extends State<NonMemberDashboard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'Welcome to our all-encompassing medical portal',
-                        style: TextStyle(
-                            fontSize: MyUtility(context).width < 400 ? 18 : 20,
-                            color: Colors.teal,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      Text('Welcome to our all-encompassing medical portal',
+                          style: FontText(context).mediumBlue),
                       SizedBox(
                         height: 15,
                       ),
 
                       Text(
-                        'Designed to cater to the diverse needs of healthcare professionals at every stage of their careers. Whether you’re a student, intern, community service doctor, or an experienced practitioner, our platform offers a wealth of resources and support tailored just for you.',
-                        style: TextStyle(
-                            fontSize: MyUtility(context).width < 400 ? 12 : 16,
-                            color: const Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.bold),
-                      ),
+                          'Designed to cater to the diverse needs of healthcare professionals at every stage of their careers. Whether you’re a student, intern, community service doctor, or an experienced practitioner, our platform offers a wealth of resources and support tailored just for you.',
+                          style: FontText(context).bodySmallBlack),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
-                        'By signing up, you’ll gain exclusive access to a comprehensive library of educational materials, expert articles, and best practices to enhance your knowledge and skills. Our portal also provides a unique opportunity to connect with a vibrant community of peers and mentors, offering invaluable networking and collaboration opportunities.',
-                        style: TextStyle(
-                            fontSize: MyUtility(context).width < 400 ? 12 : 16,
-                            color: const Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.bold),
-                      ),
+                          'By signing up, you’ll gain exclusive access to a comprehensive library of educational materials, expert articles, and best practices to enhance your knowledge and skills. Our portal also provides a unique opportunity to connect with a vibrant community of peers and mentors, offering invaluable networking and collaboration opportunities.',
+                          style: FontText(context).bodySmallBlack),
+
                       SizedBox(
                         height: 15,
                       ),
                       Text(
-                        'For those who are just exploring, we invite you to browse our selection of free resources, including insightful articles and introductory guides that provide a glimpse into the rich content available to our members. Don’t miss out on the full range of benefits our platform has to offer. Join us today and elevate your career in the medical field with the support and expertise you need to succeed.',
-                        style: TextStyle(
-                            fontSize: MyUtility(context).width < 400 ? 12 : 16,
-                            color: const Color.fromARGB(255, 116, 116, 116),
-                            fontWeight: FontWeight.bold),
-                      ),
+                          'For those who are just exploring, we invite you to browse our selection of free resources, including insightful articles and introductory guides that provide a glimpse into the rich content available to our members. Don’t miss out on the full range of benefits our platform has to offer. Join us today and elevate your career in the medical field with the support and expertise you need to succeed.',
+                          style: FontText(context).bodySmallBlack),
+
                       const SizedBox(
                         height: 11,
                       ),
