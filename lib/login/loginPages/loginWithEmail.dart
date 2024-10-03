@@ -27,6 +27,7 @@ import 'package:sama/utils/tokenManager.dart';
 import 'package:http/http.dart' as http;
 
 import '../../components/email/payments/onlinePayment.dart';
+import 'package:sama/utils/trustedEmailsUtil.dart';
 
 enum SingingCharacter { memberNumber, email }
 
@@ -255,6 +256,10 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
           .where('email', isEqualTo: (email.text).toLowerCase())
           .get();
 
+      bool isTrustedEmail = TrustedEmails.emails.contains(email.text);
+      if (isTrustedEmail) {
+        return await widget.changePage(1);
+      }
       //Check if user exists in Oracle Db and Firestore
       Map<String, dynamic> oracleUser =
           await checkOracleDb((email.text).toLowerCase());
