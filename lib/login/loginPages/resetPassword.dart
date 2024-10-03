@@ -66,6 +66,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   //Check if email exists and continue
   checkEmail() async {
+    print(email.text);
     try {
       setState(() {
         isLoading = true;

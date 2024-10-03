@@ -226,7 +226,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
               allowedAttempts: '2',
               passRate: '70',
               userType: '',
-              nonMemberPrice: 'R1500 inc VAT',
+              nonMemberPrice: 'R800 inc VAT',
               questionLength: questionLength,
               attemptsLeft: attemptsLeft,
               grade: grade,

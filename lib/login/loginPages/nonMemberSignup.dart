@@ -94,7 +94,7 @@ class _NonMemberSignUpState extends State<NonMemberSignUp> {
       },
       body: jsonEncode(<String, dynamic>{
         'email': email.text,
-        'amount': "${1500 * 100}",
+        'amount': "${800 * 100}",
         "currency": "ZAR",
       }),
     );

@@ -827,7 +827,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
             Row(
               children: [
                 Text(
-                  'Dont have a profile? ',
+                  'Never logged in before? ',
                   style: GoogleFonts.openSans(
                     fontSize: 16,
                     color: Colors.grey[600],
@@ -860,7 +860,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   ),
                 ),
                 Text(
-                  ' as a member or create a free account',
+                  'to create a profile.',
                   style: GoogleFonts.openSans(
                     fontSize: 16,
                     color: Colors.grey[600],
