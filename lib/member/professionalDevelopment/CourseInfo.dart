@@ -169,10 +169,10 @@ class _CourseInfoState extends State<CourseInfo> {
                 fitWeb: BoxFitWeb.contain,
                 image: widget.course.imageUrl,
                 width: MyUtility(context).width / 6,
-                height: MyUtility(context).height / 4,
+                height: MyUtility(context).height / 2.5,
               ),
               const SizedBox(
-                width: 15,
+                width: 25,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +210,7 @@ class _CourseInfoState extends State<CourseInfo> {
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                             TextSpan(
-                              text: 'Attempts allowed:2\n',
+                              text: 'Attempts allowed:3\n',
                               style: GoogleFonts.openSans(
                                   fontWeight: FontWeight.normal, fontSize: 15),
                             ),
@@ -225,22 +225,27 @@ class _CourseInfoState extends State<CourseInfo> {
                       SizedBox(
                         width: 25,
                       ),
-                      Visibility(
-                        visible: FirebaseAuth.instance.currentUser == null,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            //    Spacer(),
-                            StyleButton(
-                                buttonColor: Colors.teal,
-                                description: 'Get Cpd Access',
-                                height: 40,
-                                width: 110,
-                                onTap: () {
-                                  openMemberSignUp();
-                                }),
-                            /*   const SizedBox(
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Visibility(
+                    visible: FirebaseAuth.instance.currentUser == null,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        //    Spacer(),
+                        StyleButton(
+                            buttonColor: Colors.teal,
+                            description: 'Get Cpd Access',
+                            height: 40,
+                            width: 110,
+                            onTap: () {
+                              openMemberSignUp();
+                            }),
+                        /*   const SizedBox(
                               height: 10,
                             ),
                             StyleButton(
@@ -248,18 +253,16 @@ class _CourseInfoState extends State<CourseInfo> {
                                 height: 40,
                                 width: 110,
                                 onTap: () {}),*/
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ],
+                        Text(
+                          "",
+                          style: GoogleFonts.openSans(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

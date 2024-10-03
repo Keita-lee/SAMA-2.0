@@ -39,100 +39,108 @@ class _professionalDevelopmentDisplayItemState
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     String image = widget.imageUrl;
     String title = widget.title;
-    String points = widget.cpdPoints;
+    String points = widget.subDescription;
     String level = widget.level;
 
     return SizedBox(
       width: isMobile ? MyUtility(context).width : MyUtility(context).width / 5,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-            visible: image == "" ? true : false,
-            child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("images/imageIcon.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              width: isMobile
-                  ? MyUtility(context).width
-                  : MyUtility(context).width * 0.2,
-              height: isMobile
-                  ? MyUtility(context).height / 3
-                  : MyUtility(context).width * 0.18,
-            ),
-          ),
-          Visibility(
-            visible: image != "" ? true : false,
-            child: ImageNetwork(
-              fitWeb: BoxFitWeb.contain,
-              image: image,
-              width: isMobile
-                  ? MyUtility(context).width
-                  : MyUtility(context).width * 0.2,
-              height: isMobile
-                  ? MyUtility(context).height / 3.5
-                  : MyUtility(context).height / 4,
-            ),
-          ),
-          SizedBox(
-            height: isMobile ? 2 : 20,
-          ),
-          SizedBox(
-            width: isMobile
-                ? MyUtility(context).width
-                : MyUtility(context).width * 0.70 - 280,
-            height: 200,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  maxLines: null,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: image == "" ? true : false,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/imageIcon.png"),
+                    fit: BoxFit.contain,
                   ),
                 ),
-                Text(
-                  points,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(146, 146, 147, 1)),
-                ),
-                Text(
-                  level,
-                  maxLines: null,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(146, 146, 147, 1)),
-                ),
-                StyleButton(
-                  fontSize: 13,
-                  description:
-                      widget.startAssessment != null ? 'Start' : 'Read More',
-                  height: 40,
-                  width: 110,
-                  buttonTextColor: Colors.white,
-                  buttonColor: const Color.fromRGBO(0, 159, 159, 1),
-                  onTap: () {
-                    //   final Uri a = Uri.parse(widget.subDescription);
-
-                    //  launchUrl(a);
-                    widget.onPressed(widget.course);
-                  },
-                ),
-                const SizedBox(height: 20),
-              ],
+                width: isMobile
+                    ? MyUtility(context).width
+                    : MyUtility(context).width / 10,
+                height: isMobile
+                    ? MyUtility(context).height / 3.5
+                    : MyUtility(context).height / 3.2,
+              ),
             ),
-          ),
-        ],
+            Visibility(
+              visible: image != "" ? true : false,
+              child: ImageNetwork(
+                fitWeb: BoxFitWeb.contain,
+                image: image,
+                width: isMobile
+                    ? MyUtility(context).width
+                    : MyUtility(context).width / 10,
+                height: isMobile
+                    ? MyUtility(context).height / 3.5
+                    : MyUtility(context).height / 3.2,
+              ),
+            ),
+            SizedBox(
+              height: isMobile ? 2 : 20,
+            ),
+            SizedBox(
+              width: isMobile
+                  ? MyUtility(context).width
+                  : MyUtility(context).width * 0.70 - 280,
+              height: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    child: Text(
+                      title,
+                      maxLines: null,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    points,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(146, 146, 147, 1)),
+                  ),
+                  Text(
+                    level,
+                    maxLines: null,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(146, 146, 147, 1)),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StyleButton(
+                    fontSize: 13,
+                    description:
+                        widget.startAssessment != null ? 'Start' : 'Read More',
+                    height: 40,
+                    width: 110,
+                    buttonTextColor: Colors.white,
+                    buttonColor: const Color.fromRGBO(0, 159, 159, 1),
+                    onTap: () {
+                      //   final Uri a = Uri.parse(widget.subDescription);
+
+                      //  launchUrl(a);
+                      widget.onPressed(widget.course);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

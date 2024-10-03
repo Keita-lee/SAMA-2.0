@@ -231,6 +231,7 @@ class _professionalDevelopmentMainConState
                                           documents[index];
                                       return Wrap(
                                           direction: Axis.horizontal,
+                                          alignment: WrapAlignment.start,
                                           children: [
                                             Padding(
                                               padding:
