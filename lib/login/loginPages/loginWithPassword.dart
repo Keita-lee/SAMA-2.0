@@ -73,6 +73,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         openValidateDialog('Wrong password provided for that user.');
         print('Wrong password provided for that user.');
       } else {
+        print(e);
         openValidateDialog('No user found');
       }
     } catch (e) {
