@@ -38,12 +38,7 @@ class _BugReportState extends State<BugReport> {
         await FirebaseFirestore.instance.collection("bugs").add(reportData);
 
     await sendReportIssueEmail(
-        email: 'info@barefootbytes.com',
-        reportType: 'Bug in system - ${page.text}',
-        description: issue.text);
-
-    await sendReportIssueEmail(
-        email: 'kevin@vertopia.net',
+        email: 'samasupport@vertopia.net',
         reportType: 'Bug in system - ${page.text}',
         description: issue.text);
 

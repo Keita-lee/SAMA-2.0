@@ -37,7 +37,7 @@ var allowedToTry = true;
 
 class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
   //var
-  var quizStatus = "READ ISSUE";
+  var quizStatus = "";
   List questionAnswers = [];
 
   int questionLength = 0;
@@ -201,7 +201,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
     String title = widget.course.title;
     return SizedBox(
       width: MyUtility(context).width * 0.68,
-      height: MyUtility(context).height,
+      // height: MyUtility(context).height,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +222,7 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
               accreditationOrg: 'Health Professions Council of South Africa',
               accreditationId: 'MDB015/MPDP/038/206',
               accreditationPoints: '3 Clinical',
-              courseImage: 'images/sama_logo.png',
+              courseImage: widget.course.imageUrl,
               allowedAttempts: '2',
               passRate: '70',
               userType: '',
@@ -341,17 +341,6 @@ class _ProfessionalDevQuizState extends State<ProfessionalDevQuiz> {
                     launchUrl(url);
                   }),
             ),
-            /*MyCPDdisplayItem(
-                image: '',
-                productName: 'South African Medical Journal',
-                productDetails: '- July 2024 Vol 144 No 7',
-                points: '3.0 Clinical Points',
-                difficultyLevel: 'Level 2',
-                onTap: (){},
-                progress: 0.7)*/
-
-            /**/
-
             Visibility(
               visible: quizStatus == "QUIZ",
               child: ProfessionalDevQuizContent(

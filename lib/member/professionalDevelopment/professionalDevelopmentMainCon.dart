@@ -242,7 +242,7 @@ class _professionalDevelopmentMainConState
                                                 imageUrl: document['cpdImage'],
                                                 title: document['title'],
                                                 cpdPoints: "3.0 Clinical Point",
-                                                level: "Level 2",
+                                                level: "",
                                                 subDescription:
                                                     document['subDescription'],
                                                 course: CourseModel(
@@ -273,7 +273,7 @@ class _professionalDevelopmentMainConState
                                 imageUrl: course['cpdImage'],
                                 title: course['title'],
                                 cpdPoints: "3.0 Clinical Point",
-                                level: "Level 2",
+                                level: "",
                                 subDescription: course['subDescription'],
                                 course: CourseModel(
                                   id: course['id'],

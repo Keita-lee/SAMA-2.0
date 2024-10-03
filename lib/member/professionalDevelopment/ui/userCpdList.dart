@@ -68,7 +68,7 @@ class _UserCpdListState extends State<UserCpdList> {
                 imageUrl: cpdAssessmentsList[i]['cpdImage'],
                 title: cpdAssessmentsList[i]['title'],
                 cpdPoints: "3.0 Clinical Point",
-                level: "Level 2",
+                level: "",
                 subDescription: cpdAssessmentsList[i]['subDescription'],
                 course: CourseModel(
                   id: cpdAssessmentsList[i]['id'],

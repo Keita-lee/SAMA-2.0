@@ -123,7 +123,7 @@ class _professionalDevelopmentDisplayItemState
                   StyleButton(
                     fontSize: 13,
                     description:
-                        widget.startAssessment != null ? 'Start' : 'Read More',
+                        widget.startAssessment != null ? 'Access' : 'Read More',
                     height: 40,
                     width: 110,
                     buttonTextColor: Colors.white,

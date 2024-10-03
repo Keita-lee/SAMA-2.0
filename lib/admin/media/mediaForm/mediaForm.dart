@@ -13,6 +13,7 @@ import 'package:sama/components/styleButtonYellow.dart';
 import 'package:sama/components/yesNoDialog.dart';
 
 import '../../../components/dateSelecter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class MediaForm extends StatefulWidget {
   Function closeDialog;
@@ -40,7 +41,7 @@ class _MediaFormState extends State<MediaForm> {
   final selectedCategory = TextEditingController();
   var myJSON;
   QuillController quillController = QuillController.basic();
-
+  late YoutubePlayerController _youtubePlayerController;
   List<String> categories = [
     'Webinar',
     'SAMA News',
@@ -69,7 +70,8 @@ class _MediaFormState extends State<MediaForm> {
 
   // get YouTube thumbnail from YouTube link
   String getYouTubeThumbnailUrl(String url) {
-    final videoId = Uri.parse(url).queryParameters['v'];
+    //final videoId = Uri.parse(url).queryParameters['v'];
+    var videoId = YoutubePlayerController.convertUrlToId(url);
     return 'https://img.youtube.com/vi/$videoId/0.jpg';
   }
 
@@ -87,7 +89,7 @@ class _MediaFormState extends State<MediaForm> {
       "category": selectedCategory.text,
       // "description": jsonEncode(quillController.document.toDelta().toJson()),
       "urlLink": urlLink.text,
-      "mediaImageUrl": mediaImageUrl,
+      "mediaImageUrl": getYouTubeThumbnailUrl(urlLink.text),
       "releaseDate": date.text,
       "id": widget.id,
     };

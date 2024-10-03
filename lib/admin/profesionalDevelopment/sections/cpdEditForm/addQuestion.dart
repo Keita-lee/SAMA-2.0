@@ -147,7 +147,7 @@ class _AddQuestionState extends State<AddQuestion> {
                   hintText: 'Write a answer to add',
                   textfieldController: answer,
                   textFieldWidth: MyUtility(context).width * 0.50,
-                  topPadding: 0,
+                  topPadding: 8,
                   header: 'Add answer',
                 ),
                 Spacer(),
@@ -161,31 +161,35 @@ class _AddQuestionState extends State<AddQuestion> {
                         addToAnswerList("");
                       }),
                 ),
-                Visibility(
-                  visible: editAnswer,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: StyleButton(
-                        description: " + ",
-                        height: 55,
-                        width: 45,
-                        onTap: () {
-                          saveEditAnswerSelected();
-                        }),
-                  ),
-                ),
-                Visibility(
-                  visible: editAnswer,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: StyleButton(
-                        description: " - ",
-                        height: 55,
-                        width: 45,
-                        onTap: () {
-                          removeAnswer();
-                        }),
-                  ),
+                Column(
+                  children: [
+                    Visibility(
+                      visible: editAnswer,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: StyleButton(
+                            description: "Update",
+                            height: 55,
+                            width: 65,
+                            onTap: () {
+                              saveEditAnswerSelected();
+                            }),
+                      ),
+                    ),
+                    Visibility(
+                      visible: editAnswer,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: StyleButton(
+                            description: "Remove",
+                            height: 55,
+                            width: 65,
+                            onTap: () {
+                              removeAnswer();
+                            }),
+                      ),
+                    )
+                  ],
                 )
               ],
             ),

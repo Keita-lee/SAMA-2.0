@@ -165,35 +165,39 @@ class _ProfessionalDevQuizContentState
           const SizedBox(
             height: 40,
           ),
-          QuizQuestion(
-            questionNumber: '${questionIndex + 1}',
-            question: questions[questionIndex]['questionToBeAsked'],
-          ),
+          if (questionIndex >= 1)
+            QuizQuestion(
+              questionNumber: '${questionIndex + 1}',
+              question: questions[questionIndex]['questionToBeAsked'],
+            ),
+          /**/
           const SizedBox(
             height: 20,
           ),
-          for (int j = 0;
-              j < questions[questionIndex]['answerOptions'].length;
-              j++)
-            QuizAnswer(
-              questionToBeAsked: questions[questionIndex]['questionToBeAsked'],
-              questionAnswers: questionAnswers,
-              questionLetter: '${myMapName[j + 1]}',
-              question: questions[questionIndex]['answerOptions'][j]
-                  ['answerValue'],
-              addToQuestionAnswers: () {
-                addToQuestionAnswers({
-                  "letter": myMapName[j + 1],
-                  "questionNumber": questionIndex + 1,
-                  "question": questions[questionIndex]['questionToBeAsked'],
-                  "answerValue": questions[questionIndex]['answerOptions'][j]
-                      ['answerValue'],
-                  "questionCorrect": questions[questionIndex]['answerOptions']
-                      [j]['answerTrueFalse'],
-                });
-              },
-              questionNumber: questionIndex + 1,
-            ),
+          if (questions[questionIndex]['answerOptions'].length >= 1)
+            for (int j = 0;
+                j < questions[questionIndex]['answerOptions'].length;
+                j++)
+              QuizAnswer(
+                questionToBeAsked: questions[questionIndex]
+                    ['questionToBeAsked'],
+                questionAnswers: questionAnswers,
+                questionLetter: '${myMapName[j + 1]}',
+                question: questions[questionIndex]['answerOptions'][j]
+                    ['answerValue'],
+                addToQuestionAnswers: () {
+                  addToQuestionAnswers({
+                    "letter": myMapName[j + 1],
+                    "questionNumber": questionIndex + 1,
+                    "question": questions[questionIndex]['questionToBeAsked'],
+                    "answerValue": questions[questionIndex]['answerOptions'][j]
+                        ['answerValue'],
+                    "questionCorrect": questions[questionIndex]['answerOptions']
+                        [j]['answerTrueFalse'],
+                  });
+                },
+                questionNumber: questionIndex + 1,
+              ),
           /* */
           const SizedBox(
             height: 40,
@@ -218,7 +222,7 @@ class _ProfessionalDevQuizContentState
                   fontSize: 13,
                   description: questionIndex != (questionsAmount - 1)
                       ? 'Next'
-                      : "Complete Quiz",
+                      : "Back to Question 1",
                   height: 40,
                   width: 130,
                   buttonTextColor: Colors.white,

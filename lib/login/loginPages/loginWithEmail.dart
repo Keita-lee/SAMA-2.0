@@ -778,7 +778,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                 });
               },
               child: Text(
-                "Help me retrieve my SAMA Number (Coming Soon)",
+                "Help me retrieve my SAMA Number",
                 style: GoogleFonts.openSans(
                   decoration: showForgotSamaBorder == true
                       ? TextDecoration.underline
@@ -802,7 +802,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                 });
               },
               child: Text(
-                "Reset my password (Coming Soon)",
+                "Reset my password",
                 style: GoogleFonts.openSans(
                   decoration: showForgotPasswordBorder == true
                       ? TextDecoration.underline

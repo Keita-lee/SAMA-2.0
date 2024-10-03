@@ -76,7 +76,7 @@ class _DashboardMainState extends State<DashboardMain> {
                   children: [
                     //Spacer(),
                     Visibility(
-                        visible: widget.userType != "NonMember",
+                        visible: widget.userType == "user",
                         child: InkWell(
                             onTap: () {
                               openHelpBotPopup();
@@ -92,8 +92,7 @@ class _DashboardMainState extends State<DashboardMain> {
               child: Chat(),
             ),
             Visibility(
-              visible:
-                  widget.userType != "NonMember" && pageIndex == 0 && !isMobile,
+              visible: widget.userType == "user" && pageIndex == 0 && !isMobile,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -135,9 +134,8 @@ class _DashboardMainState extends State<DashboardMain> {
               ),
             ),
             Visibility(
-                visible: widget.userType != "NonMember" &&
-                    pageIndex == 0 &&
-                    isMobile,
+                visible:
+                    widget.userType == "user" && pageIndex == 0 && isMobile,
                 child: Container(
                   height: MyUtility(context).height / 1.27,
                   color: Colors.white,
