@@ -874,7 +874,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
               height: 15,
             ),
             const Text(
-              'v1.0.1.1g',
+              'v1.0.1.2',
               style: TextStyle(
                   fontSize: 12, color: Color.fromARGB(255, 122, 122, 122)),
             )
