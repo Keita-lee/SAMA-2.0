@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/service/commonService.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/components/utility.dart';
@@ -182,33 +183,24 @@ class _MemberContainerState extends State<MemberContainer> {
                   child: SizedBox(
                     child: Text(
                       '${CommonService().getDateInText(widget.dateFrom)} - ${CommonService().getDateInText(widget.dateTill)}',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Color(0xFF3D3D3D),
-                        fontWeight: FontWeight.normal,
-                      ),
+                      style: FontText(context).bodySmallBlack,
                     ),
                   ),
                 ),
-                SizedBox(
-                  child: Container(
-                    height: 30,
-                    child: Text(
-                      widget.eventName,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color.fromRGBO(0, 159, 158, 1),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                Center(
+                  // {{ edit_1 }}
+                  child: Text(
+                    // {{ edit_2 }}
+                    widget.eventName,
+                    textAlign: TextAlign.center, // {{ edit_3 }}
+                    style: FontText(context).mediumBlue,
                   ),
-                ),
-                Text(
-                  widget.location,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF3D3D3D),
-                    fontWeight: FontWeight.normal,
+                ), // {{ edit_3 }}
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    widget.location,
+                    style: FontText(context).bodySmallBlack,
                   ),
                 ),
                 StyleButton(

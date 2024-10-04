@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_network/image_network.dart';
 import 'package:intl/intl.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:sama/member/media/mediaPopup/ui/youtubeVideoPlayer.dart';
@@ -45,7 +46,6 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
     var height = MyUtility(context).height;
 
     return Container(
-      
       width: isMobile ? width : 360,
       height: isMobile ? 335 : 340,
       child: Padding(
@@ -91,11 +91,7 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
 
             Text(
               "${widget.releaseDate}",
-              style: TextStyle(
-                  fontSize: isMobile ? 16 : 12,
-                  letterSpacing: 1.2,
-                  color: Color.fromARGB(148, 158, 158, 158),
-                  fontWeight: FontWeight.w600),
+              style: FontText(context).bodyMediumGrey,
             ),
             const SizedBox(
               height: 10,
@@ -106,20 +102,15 @@ class _MediaContainerStyleState extends State<MediaContainerStyle> {
                   : const EdgeInsets.only(left: 8, right: 8),
               child: Text(
                 widget.title,
-                style: TextStyle(
-                  fontSize: isMobile ? 18 : 16,
-                  height: 1,
-                  color: Color(0xFF3D3D3D),
-                  fontWeight: FontWeight.bold,
-                ),
+                style: FontText(context).bodyMediumBlack,
                 textAlign: isMobile ? TextAlign.center : TextAlign.left,
               ),
             ),
 
-            Spacer(),
+            // Spacer(),
 
             SizedBox(
-              height: 10,
+              height: 15,
             ),
 
             Visibility(

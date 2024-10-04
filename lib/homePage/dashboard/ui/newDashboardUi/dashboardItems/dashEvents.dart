@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/myutility.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
@@ -69,8 +70,7 @@ class _DashEventsState extends State<DashEvents> {
             children: [
               Text(
                 'Latest',
-                style: GoogleFonts.openSans(
-                    fontSize: 12, fontWeight: FontWeight.w600),
+                style: FontText(context).bodySmallBlack,
               ),
               const SizedBox(
                 height: 8,

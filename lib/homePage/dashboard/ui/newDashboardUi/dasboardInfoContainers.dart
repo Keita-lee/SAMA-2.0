@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/utility.dart';
 import 'package:sama/homePage/dashboard/ui/newDashboardUi/dashboardTextButton.dart';
 
 class DashboardInfoContainers extends StatefulWidget {
@@ -17,7 +18,7 @@ class DashboardInfoContainers extends StatefulWidget {
   final double? customWidth;
   const DashboardInfoContainers(
       {super.key,
-      required this.height,
+      double? height, // Change to optional
       required this.topBarColor,
       required this.image,
       required this.header,
@@ -27,7 +28,8 @@ class DashboardInfoContainers extends StatefulWidget {
       this.activeTopBar,
       this.borderColor,
       this.headerTextButton,
-      this.customWidth});
+      this.customWidth})
+      : height = height ?? 120; // Default height to 120 if not specified
 
   @override
   State<DashboardInfoContainers> createState() =>
@@ -44,16 +46,12 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
       child: Container(
         height: widget.height,
         width: widget.customWidth != null ? widget.customWidth : 300,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: const Color.fromARGB(255, 190, 190, 190)),
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-              visible: widget.activeTopBar == null ? true : false,
+              visible: (widget.activeTopBar == null ? true : false) &&
+                  MyUtility(context).width > 600, // Combined condition
               child: Container(
                 width: widget.customWidth != null ? widget.customWidth : 300,
                 height: 10,
@@ -67,13 +65,16 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                color: widget.extendedTopBarColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  topRight: Radius.circular(8),
-                ),
-              ),
+              // Remove decoration when width is less than 600
+              decoration: MyUtility(context).width > 600
+                  ? BoxDecoration(
+                      color: widget.extendedTopBarColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
+                      ),
+                    )
+                  : null, // No decoration when width is less than 600
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -108,9 +109,10 @@ class _DashboardInfoContainersState extends State<DashboardInfoContainers> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            if (MyUtility(context).width > 600)
+              const SizedBox(
+                height: 20,
+              ),
             widget.child
           ],
         ),

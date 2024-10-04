@@ -11,43 +11,43 @@ class FontText {
   bool get isMobile => MediaQuery.of(context).size.width < 600 ? true : false;
   TextStyle get headingLarge => TextStyle(
         color: Colors.black,
-        fontSize: width / 20,
+        fontSize: isMobile ? width / 20 : 26,
         fontWeight: FontWeight.w600,
       );
 
   TextStyle get bodyMediumBlack => TextStyle(
         color: const Color.fromARGB(255, 53, 53, 53),
-        fontSize: width / 25,
+        fontSize: isMobile ? width / 25 : 16,
         fontWeight: FontWeight.bold,
       );
 
   TextStyle get bodySmallGrey => TextStyle(
         color: const Color.fromARGB(255, 139, 139, 139),
-        fontSize: width / 30,
+        fontSize: isMobile ? width / 30 : 14,
         fontWeight: FontWeight.normal,
       );
 
   TextStyle get bodyMediumGrey => TextStyle(
         color: const Color.fromARGB(255, 139, 139, 139),
-        fontSize: width / 25,
+        fontSize: isMobile ? width / 25 : 16,
         fontWeight: FontWeight.bold,
       );
 
   TextStyle get bodySmallBlack => TextStyle(
         color: Colors.black,
-        fontSize: width / 30,
+        fontSize: isMobile ? width / 30 : 14,
         fontWeight: FontWeight.normal,
       );
 
   TextStyle get bodyRegularBlack => TextStyle(
         color: Colors.black,
-        fontSize: isMobile ? width / 26 : 16,
+        fontSize: isMobile ? width / 27 : 16,
         fontWeight: FontWeight.normal,
       );
 
   TextStyle get regularWhite => TextStyle(
         color: Colors.white,
-        fontSize: isMobile ? width / 26 : 16,
+        fontSize: isMobile ? width / 27 : 16,
         fontWeight: FontWeight.normal,
       );
 
@@ -59,13 +59,13 @@ class FontText {
 
   TextStyle get mediumBlue => TextStyle(
         color: CustomColors.lightBlue,
-        fontSize: width / 20,
+        fontSize: isMobile ? width / 20 : 24,
         fontWeight: FontWeight.w600,
       );
 
   TextStyle get mediumlinksBlue => TextStyle(
         color: CustomColors.lightBlue,
-        fontSize: width / 30,
+        fontSize: isMobile ? width / 27 : 14,
         fontWeight: FontWeight.normal,
         decoration: TextDecoration.underline,
         decorationColor: CustomColors.lightBlue, // Add this line
@@ -73,7 +73,7 @@ class FontText {
 
   TextStyle get linksBlue => TextStyle(
         color: CustomColors.lightBlue,
-        fontSize: width / 38,
+        fontSize: isMobile ? width / 34 : 14,
         fontWeight: FontWeight.normal,
         decoration: TextDecoration.underline,
         decorationColor: CustomColors.lightBlue, // Add this line

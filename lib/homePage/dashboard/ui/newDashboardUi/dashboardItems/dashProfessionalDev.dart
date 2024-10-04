@@ -26,7 +26,7 @@ class _DashProfessionalDevState extends State<DashProfessionalDev> {
         children: [
           DashboardInfoContainers(
               customWidth: MyUtility(context).width,
-              height: 125,
+              height: 75,
               activeTopBar: false,
               topBarColor: SamaColors().yellow,
               image: 'images/icon_prof_dev.svg',

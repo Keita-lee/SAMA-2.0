@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sama/admin/centerOfExcellence/CenterOfExcellenceDialog.dart';
 import 'package:sama/components/banner/samaBlueBanner.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/member/centerOfExcellence/ui/NewsContainer.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
@@ -121,10 +122,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                             children: [
                               Text(
                                 'Coming Soon !',
-                                style: GoogleFonts.openSans(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.teal),
+                                style: FontText(context).mediumBlue,
                               ),
                               SizedBox(
                                 height: 15,
@@ -138,11 +136,7 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                                     'We are excited to announce the upcoming launch of the Centre of Excellence, your future premier resource for expert insights and practical advice from leading doctors in the medical field. Our platform will soon offer a collection of articles penned by experienced professionals, sharing their knowledge and best practices to help you excel in your career. Stay tuned for clinical guidance, professional development tips, and cutting-edge research that will make our Centre of Excellence your go-to destination for invaluable expertise and inspiration.',
                                     textAlign: TextAlign
                                         .center, // Center aligns the text
-                                    style: GoogleFonts.openSans(
-                                      fontSize: MyUtility(context).width < 400
-                                          ? 14
-                                          : 16,
-                                    ),
+                                    style: FontText(context).bodySmallBlack,
                                   ),
                                 ),
                               ),
@@ -155,24 +149,15 @@ class _CenterOfExcellenceState extends State<CenterOfExcellence> {
                                     child: Text(
                                       'To be a contributor, please contact ',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.openSans(
-                                          fontSize:
-                                              MyUtility(context).width < 400
-                                                  ? 14
-                                                  : 16),
+                                      style: FontText(context).bodySmallBlack,
                                     ),
                                   ),
                                   Align(
                                     child: Text(
                                       'online@samedical.org',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.openSans(
-                                          fontSize:
-                                              MyUtility(context).width < 400
-                                                  ? 14
-                                                  : 16,
-                                          color: Colors
-                                              .teal), // Moved color parameter inside GoogleFonts.openSans
+                                      style: FontText(context)
+                                          .linksBlue, // Moved color parameter inside GoogleFonts.openSans
                                     ),
                                   ),
                                 ],

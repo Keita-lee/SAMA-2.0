@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
 import '../../../../../components/myutility.dart';
@@ -22,7 +23,7 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         DashboardInfoContainers(
             customWidth: MyUtility(context).width,
-            height: 125,
+            height: 75,
             headerTextButton: true,
             topBarColor: SamaColors().lightBlue,
             image: "images/icon_chat.svg",
@@ -34,8 +35,7 @@ class _DashPrivateMessagesState extends State<DashPrivateMessages> {
                     children: [
                       Text(
                         'Coming soon!',
-                        style: GoogleFonts.openSans(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                        style: FontText(context).bodySmallBlack,
                       ),
                     ])))
       ]);

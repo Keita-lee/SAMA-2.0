@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
 import '../../../../../components/myutility.dart';
@@ -57,7 +58,7 @@ class _DashMediaWebState extends State<DashMediaWeb> {
         children: [
           DashboardInfoContainers(
               customWidth: MyUtility(context).width,
-              height: 125,
+              height: 110,
               topBarColor: SamaColors().teal,
               image: "images/icon_media.svg",
               header: 'Media & Webinars',
@@ -68,8 +69,7 @@ class _DashMediaWebState extends State<DashMediaWeb> {
                       children: [
                         Text(
                           'Latest',
-                          style: GoogleFonts.openSans(
-                              fontSize: 12, fontWeight: FontWeight.w600),
+                          style: FontText(context).bodySmallBlack,
                         ),
                         const SizedBox(
                           height: 8,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/styleButton.dart';
 
 import '../../admin/products/UI/myProductTextField.dart';
@@ -52,10 +53,7 @@ class _HelpBotState extends State<HelpBot> {
                 children: [
                   Text(
                     "How can we help you?",
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: FontText(context).bodyMediumBlack,
                   ),
                   Spacer(),
                   MouseRegion(

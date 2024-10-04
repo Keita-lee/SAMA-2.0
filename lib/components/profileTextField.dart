@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 class ProfileTextField extends StatefulWidget {
   double customSize;
@@ -41,19 +40,19 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
       children: [
         Visibility(
           visible: widget.description == null ? false : true,
-          child: Text(widget.description == null ? '' : widget.description!,
-              style: FontText(context).bodyRegularBlack
-              // style: GoogleFonts.openSans(
-              //   fontWeight:
-              //       widget.isBold == null ? FontWeight.w500 : FontWeight.normal,
-              //   fontSize: widget.fontSize == null ? 16 : widget.fontSize,
-              //   letterSpacing: -0.5,
-              //   color: Color(0xFF6A6A6A),
-              // ),
-              ),
+          child: Text(
+            widget.description == null ? '' : widget.description!,
+            style: GoogleFonts.openSans(
+              fontWeight:
+                  widget.isBold == null ? FontWeight.w500 : FontWeight.normal,
+              fontSize: widget.fontSize == null ? 16 : widget.fontSize,
+              letterSpacing: -0.5,
+              color: Color(0xFF6A6A6A),
+            ),
+          ),
         ),
         const SizedBox(
-          height: 5,
+          height: 10,
         ),
         Container(
           width: widget.customSize,

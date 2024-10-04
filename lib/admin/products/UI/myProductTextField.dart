@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/utility.dart';
 
 class MyProductTextField extends StatefulWidget {
@@ -32,10 +33,7 @@ class _MyProductTextFieldState extends State<MyProductTextField> {
         children: [
           Text(
             widget.header,
-            style: const  TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+            style: FontText(context).bodyMediumBlack,
           ),
           const SizedBox(
             height: 10,
@@ -56,21 +54,13 @@ class _MyProductTextFieldState extends State<MyProductTextField> {
               child: TextFormField(
                 maxLines: widget.lines == null ? 1 : widget.lines,
                 controller: widget.textfieldController,
-                style: const  TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: FontText(context).bodyMediumBlack,
                 decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.only(left: 10, top: widget.topPadding),
                   border: InputBorder.none,
                   hintText: " ${widget.hintText}",
-                  hintStyle: const  TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  hintStyle: FontText(context).bodySmallGrey,
                 ),
               ),
             ),

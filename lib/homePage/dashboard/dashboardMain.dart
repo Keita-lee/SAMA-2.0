@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/mobile/components/infoDropdown.dart';
 import 'package:sama/homePage/dashboard/ui/EventDate.dart';
 import 'package:sama/homePage/dashboard/ui/GeneralInfoContainer.dart';
@@ -162,10 +163,9 @@ class _DashboardMainState extends State<DashboardMain> {
                                     SizedBox(
                                       width: MyUtility(context).width - 25,
                                       child: Text(
-                                        'Our Member Portal is currently in beta. While we’re excited for you to explore, please note that some features are still being developed. We appreciate your patience and feedback as we work to enhance your experience.',
-                                        style:
-                                            GoogleFonts.openSans(fontSize: 16),
-                                      ),
+                                          'Our Member Portal is currently in beta. While we’re excited for you to explore, please note that some features are still being developed. We appreciate your patience and feedback as we work to enhance your experience.',
+                                          style:
+                                              FontText(context).bodySmallBlack),
                                     ),
                                     SizedBox(
                                       height: 8,

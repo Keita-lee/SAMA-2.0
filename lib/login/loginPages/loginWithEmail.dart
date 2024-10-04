@@ -492,8 +492,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                     child: StyleButton(
                       waiting: isLoading,
                       description: "PROCEED",
-                      height: 55,
-                      width: 100,
+                      height: 45,
+                      width: 85,
                       onTap: () {
                         if (email.text.contains("@")) {
                           checkEmail();
@@ -513,12 +513,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                   const SizedBox(height: 30),
                   Text(
                     "Need help?",
-                    style: GoogleFonts.openSans(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -0.5,
-                    ),
+                    style: FontText(context).bodyMediumBlack,
                   ),
                   SizedBox(
                     height: 10,
@@ -527,20 +522,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                     onTap: () {
                       widget.changePage(11);
                     },
-                    child: Text(
-                      "Help me retrieve my SAMA Number ",
-                      style: GoogleFonts.openSans(
-                        decoration: showForgotSamaBorder == true
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                        decorationThickness: 2,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.5,
-                        fontSize: 16,
-                        color: const Color.fromRGBO(0, 159, 158, 1),
-                      ),
-                    ),
+                    child: Text("Help me retrieve my SAMA Number ",
+                        style: FontText(context).mediumlinksBlue),
                   ),
                   SizedBox(
                     height: 10,
@@ -549,32 +532,15 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                     onTap: () {
                       widget.changePage(2);
                     },
-                    child: Text(
-                      "Reset my password ",
-                      style: GoogleFonts.openSans(
-                        decoration: showForgotPasswordBorder == true
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                        decorationThickness: 2,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.5,
-                        fontSize: 16,
-                        color: const Color.fromRGBO(0, 159, 158, 1),
-                      ),
-                    ),
+                    child: Text("Reset my password ",
+                        style: FontText(context).mediumlinksBlue),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
                     "Are you a member and dont have a profile ?",
-                    style: GoogleFonts.openSans(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -0.5,
-                    ),
+                    style: FontText(context).bodyMediumBlack,
                   ),
                   SizedBox(
                     height: 10,
@@ -583,20 +549,8 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                     onTap: () {
                       widget.changePage(9);
                     },
-                    child: Text(
-                      "Create one here",
-                      style: GoogleFonts.openSans(
-                        decoration: showForgotSamaBorder == true
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                        decorationThickness: 2,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.5,
-                        fontSize: 16,
-                        color: const Color.fromRGBO(0, 159, 158, 1),
-                      ),
-                    ),
+                    child: Text("Create one here",
+                        style: FontText(context).mediumlinksBlue),
                   ),
                 ],
               ),

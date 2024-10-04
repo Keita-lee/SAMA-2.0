@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sama/components/mobile/components/Themes/custom_colors.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
+import 'package:sama/components/utility.dart';
 
 class InfoDropdown extends StatefulWidget {
   final String title;
@@ -28,7 +30,7 @@ class _InfoDropdownState extends State<InfoDropdown> {
     final dropdownWidth = screenWidth - 20; // 10 pixels padding on each side
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         children: [
           GestureDetector(
@@ -40,8 +42,9 @@ class _InfoDropdownState extends State<InfoDropdown> {
             child: Visibility(
               visible: !_isExpanded,
               child: Container(
+                height: MediaQuery.of(context).size.height < 800 ? 45 : 60,
                 width: dropdownWidth,
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
@@ -62,13 +65,8 @@ class _InfoDropdownState extends State<InfoDropdown> {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: Text(
-                        widget.title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: Text(widget.title,
+                          style: FontText(context).bodyMediumBlack),
                     ),
                     Icon(
                       _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
@@ -100,8 +98,8 @@ class _InfoDropdownState extends State<InfoDropdown> {
                               _isExpanded = !_isExpanded;
                             });
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -120,8 +118,11 @@ class _InfoDropdownState extends State<InfoDropdown> {
                               ],
                             ),
                           )),
-                      SizedBox(
-                        height: 15,
+                      Visibility(
+                        visible: MyUtility(context).width > 600,
+                        child: const SizedBox(
+                          height: 15,
+                        ),
                       ),
                       Container(
                         child: widget.content,

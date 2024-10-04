@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
 import '../../../../../components/myutility.dart';
@@ -48,7 +49,7 @@ class _DashCommunityState extends State<DashCommunity> {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         DashboardInfoContainers(
             customWidth: MyUtility(context).width,
-            height: 125,
+            height: 75,
             topBarColor: SamaColors().lightBlue,
             image: "images/icon_categories.svg",
             header: 'Community Discussions',
@@ -59,8 +60,7 @@ class _DashCommunityState extends State<DashCommunity> {
                     children: [
                       Text(
                         'Coming soon!',
-                        style: GoogleFonts.openSans(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                        style: FontText(context).bodySmallBlack,
                       ),
                     ])))
       ]);

@@ -301,179 +301,204 @@ class _MemberElectionState extends State<MemberElection> {
       )
     ];
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SamaBlueBanner(pageName: 'BRANCH VOTING'),
-          SizedBox(
-            height: 30,
-          ),
-          Visibility(
-            visible: widget.userType != "NonMember",
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    child: Text(
-                      'No branch voting in progress',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(0, 159, 158, 1),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: MyUtility(context).width,
-                    child: Align(
-                      child: Text(
-                        'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: MyUtility(context).width,
-                    child: Align(
-                      child: Text(
-                        'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: MyUtility(context).width,
-                    child: Align(
-                      child: Text(
-                        'Once branch voting opens, you will be notified.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SamaBlueBanner(pageName: 'BRANCH VOTING'),
+            SizedBox(
+              height: 30,
             ),
-          ),
-          Visibility(
-              visible: widget.userType == "NonMember",
+            Visibility(
+              visible: widget.userType != "NonMember",
               child: Padding(
-                  padding: isMobile
-                      ? EdgeInsets.all(8)
-                      : const EdgeInsets.symmetric(horizontal: 50),
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: MyUtility(context).width * 0.745,
+                  height: MyUtility(context).height,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 25),
-                        child: PleaseLogin(
-                          pleaseLoginText:
-                              'Access to this content is restricted. Please log in to view or sign up for membership today.',
+                      Align(
+                        child: Text(
+                          'No branch voting in progress',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(0, 159, 158, 1),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width,
+                        child: Align(
+                          child: Text(
+                            'As a member of the South African Medical Association (SAMA) you have the right to nominate and vote for SAMA members that are eligible to serve as council members, in your branch, in accordance with the Articles of Association of the South African Medical Association.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.openSans(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width,
+                        child: Align(
+                          child: Text(
+                            'Branch elections have been made easy and effective, in accordance with Section 63 of the South African Companies Act, using online, automated application controls that ensure that valid votes are processed accurately and completely.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.openSans(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width,
+                        child: Align(
+                          child: Text(
+                            'Once branch voting opens, you will be notified.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.openSans(fontSize: 16),
+                          ),
                         ),
                       ),
                     ],
-                  ))), /*
-          Visibility(
-            visible: widget.userType != "NonMember",
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+                visible: widget.userType == "NonMember",
+                child: Padding(
+                    padding: isMobile
+                        ? EdgeInsets.all(8)
+                        : const EdgeInsets.symmetric(horizontal: 50),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ElectionTabStyle(
-                          changePage: () {
-                            setState(() {
-                              pageIndex = 0;
-                            });
-                          },
-                          tabIndexNumber: 0,
-                          description: "Overview",
-                          customWidth: 150,
-                          customColor1: Color.fromARGB(255, 211, 210, 210),
-                          customColor2: Color.fromARGB(255, 0, 159, 158),
-                          pageIndex: pageIndex,
-                        ),
-                        ElectionTabStyle(
-                          changePage: () {
-                            setState(() {
-                              pageIndex = 1;
-                            });
-                          },
-                          tabIndexNumber: 1,
-                          description: "Nominations",
-                          customWidth: 150,
-                          customColor1: Color.fromARGB(255, 211, 210, 210),
-                          customColor2: Color.fromARGB(255, 0, 159, 158),
-                          pageIndex: pageIndex,
-                        ),
-                        /* ElectionTabStyle(
-                                changePage: () {
-                  setState(() {
-                    pageIndex = 2;
-                  });
-                                },
-                                tabIndexNumber: 2,
-                                description: "Acceptance Round",
-                                customWidth: 180,
-                                customColor1: Color.fromARGB(255, 211, 210, 210),
-                                customColor2: Color.fromARGB(255, 0, 159, 158),
-                                pageIndex: pageIndex,
-                              ),*/
-                        ElectionTabStyle(
-                          changePage: () {
-                            setState(() {
-                              pageIndex = 3;
-                            });
-                          },
-                          tabIndexNumber: 3,
-                          description: "Voting",
-                          customWidth: 150,
-                          customColor1: Color.fromARGB(255, 211, 210, 210),
-                          customColor2: Color.fromARGB(255, 0, 159, 158),
-                          pageIndex: pageIndex,
-                        ),
-                        ElectionTabStyle(
-                          changePage: () {
-                            setState(() {
-                              pageIndex = 4;
-                            });
-                          },
-                          tabIndexNumber: 4,
-                          description: "Chairperson",
-                          customWidth: 150,
-                          customColor1: Color.fromARGB(255, 211, 210, 210),
-                          customColor2: Color.fromARGB(255, 0, 159, 158),
-                          pageIndex: pageIndex,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: PleaseLogin(
+                            pleaseLoginText:
+                                'Access to this content is restricted. Please log in to view or sign up for membership today.',
+                          ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Visibility(
-                      visible: pageIndex == 0 ? true : false,
-                      child: Container(
+                    ))), /*
+            Visibility(
+              visible: widget.userType != "NonMember",
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ElectionTabStyle(
+                            changePage: () {
+                              setState(() {
+                                pageIndex = 0;
+                              });
+                            },
+                            tabIndexNumber: 0,
+                            description: "Overview",
+                            customWidth: 150,
+                            customColor1: Color.fromARGB(255, 211, 210, 210),
+                            customColor2: Color.fromARGB(255, 0, 159, 158),
+                            pageIndex: pageIndex,
+                          ),
+                          ElectionTabStyle(
+                            changePage: () {
+                              setState(() {
+                                pageIndex = 1;
+                              });
+                            },
+                            tabIndexNumber: 1,
+                            description: "Nominations",
+                            customWidth: 150,
+                            customColor1: Color.fromARGB(255, 211, 210, 210),
+                            customColor2: Color.fromARGB(255, 0, 159, 158),
+                            pageIndex: pageIndex,
+                          ),
+                          /* ElectionTabStyle(
+                                  changePage: () {
+                    setState(() {
+                      pageIndex = 2;
+                    });
+                                  },
+                                  tabIndexNumber: 2,
+                                  description: "Acceptance Round",
+                                  customWidth: 180,
+                                  customColor1: Color.fromARGB(255, 211, 210, 210),
+                                  customColor2: Color.fromARGB(255, 0, 159, 158),
+                                  pageIndex: pageIndex,
+                                ),*/
+                          ElectionTabStyle(
+                            changePage: () {
+                              setState(() {
+                                pageIndex = 3;
+                              });
+                            },
+                            tabIndexNumber: 3,
+                            description: "Voting",
+                            customWidth: 150,
+                            customColor1: Color.fromARGB(255, 211, 210, 210),
+                            customColor2: Color.fromARGB(255, 0, 159, 158),
+                            pageIndex: pageIndex,
+                          ),
+                          ElectionTabStyle(
+                            changePage: () {
+                              setState(() {
+                                pageIndex = 4;
+                              });
+                            },
+                            tabIndexNumber: 4,
+                            description: "Chairperson",
+                            customWidth: 150,
+                            customColor1: Color.fromARGB(255, 211, 210, 210),
+                            customColor2: Color.fromARGB(255, 0, 159, 158),
+                            pageIndex: pageIndex,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Visibility(
+                        visible: pageIndex == 0 ? true : false,
+                        child: Container(
+                            width: MyUtility(context).width / 1.4,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(
+                                  color: Color(0xFFD1D1D1),
+                                )),
+                            child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: ElectionStatus(
+                                    startDate: currentStartDate,
+                                    endDate: currentEndDate,
+                                    status: votingStatus,
+                                    statusClosingDate: votingClosingDate,
+                                    branch: branch))),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
                           width: MyUtility(context).width / 1.4,
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -482,37 +507,18 @@ class _MemberElectionState extends State<MemberElection> {
                                 color: Color(0xFFD1D1D1),
                               )),
                           child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: ElectionStatus(
-                                  startDate: currentStartDate,
-                                  endDate: currentEndDate,
-                                  status: votingStatus,
-                                  statusClosingDate: votingClosingDate,
-                                  branch: branch))),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                        width: MyUtility(context).width / 1.4,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(
-                              color: Color(0xFFD1D1D1),
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: electionPages[pageIndex],
-                        )),
-                    SizedBox(
-                      height: 15,
-                    ),
-                  ]),
+                            padding: const EdgeInsets.all(15.0),
+                            child: electionPages[pageIndex],
+                          )),
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ]),
+              ),
             ),
-          ),
-        */
-        ],
+          */
+          ],
+        ),
       ),
     );
   }

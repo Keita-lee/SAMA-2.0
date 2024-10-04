@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sama/components/banner/samaBlueBanner.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/myutility.dart';
 import 'package:sama/components/styleButton.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,7 +102,7 @@ class _professionalDevelopmentMainConState
     bool isMobile = MyUtility(context).width < 600 ? true : false;
     return SizedBox(
       height: isMobile
-          ? MyUtility(context).height * 0.7
+          ? /*MyUtility(context).height*/ null
           : MyUtility(context).height * 2.2,
       child: Column(
         crossAxisAlignment:
@@ -120,7 +121,7 @@ class _professionalDevelopmentMainConState
                   ? MyUtility(context).width
                   : MyUtility(context).width * 0.68,
               height: isMobile
-                  ? MyUtility(context).height * 0.6
+                  ? MyUtility(context).height * 0.745
                   : MyUtility(context).height * 2,
               child: SingleChildScrollView(
                 child: Column(
@@ -172,17 +173,13 @@ class _professionalDevelopmentMainConState
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'CPD Compliance',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(0, 159, 158, 1),
-                              ),
+                              style: FontText(context).mediumBlue,
                             ),
                             Text(
                               'Continuing Professional Development (CPD) is essential for healthcare professionals in South Africa to comply with HPCSA guidelines. Professionals must earn 60 CEUs within 24 months, including specific points for ethics. The SA Medical Association (SAMA) is accredited to review and approve CPD activities, with recent updates streamlining the tracking of CPD points automatically to HPCSA profiles. SAMA offers tools for both local and international members to manage their CPD compliance effectively, ensuring they maintain the necessary qualifications and professional integrity. Free for members.',
-                              style: GoogleFonts.openSans(fontSize: 16),
+                              style: FontText(context).bodySmallBlack,
                             ),
                           ],
                         ),

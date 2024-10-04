@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/utility.dart';
 
 class TextFieldStyling extends StatefulWidget {
@@ -35,20 +36,12 @@ class _TextFieldStylingState extends State<TextFieldStyling> {
             child: TextFormField(
               obscureText: widget.obscure != null ? true : false,
               controller: widget.textfieldController,
-              style: TextStyle(
-                color: Color.fromARGB(255, 153, 147, 147),
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: FontText(context).bodySmallBlack,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 10),
                 border: InputBorder.none,
                 hintText: " ${widget.hintText}",
-                hintStyle: TextStyle(
-                  color: Color.fromARGB(255, 199, 199, 199),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
+                hintStyle: FontText(context).bodySmallGrey,
               ),
             ),
           ),

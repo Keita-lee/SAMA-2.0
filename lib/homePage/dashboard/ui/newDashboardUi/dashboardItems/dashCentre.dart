@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 import '../../../../../commonColors/SamaColors.dart';
 import '../../../../../components/myutility.dart';
@@ -23,7 +24,7 @@ class _DashCentreState extends State<DashCentre> {
     if (isMobile) {
       return DashboardInfoContainers(
           customWidth: MyUtility(context).width,
-          height: 150,
+          height: 110,
           topBarColor: SamaColors().teal,
           image: "images/icon_centre_of.svg",
           header: 'Centre of Excellence',
@@ -34,19 +35,17 @@ class _DashCentreState extends State<DashCentre> {
                 children: [
                   Text(
                     'Coming soon!',
-                    style: GoogleFonts.openSans(
-                        fontSize: 12, fontWeight: FontWeight.w600),
+                    style: FontText(context).bodySmallBlack,
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   Text(
                     'Become a contributor',
-                    style: GoogleFonts.openSans(
-                        fontSize: 12, fontWeight: FontWeight.w600),
+                    style: FontText(context).bodySmallBlack,
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 5,
                   ),
                   DashboardTextButton(
                       text: 'Learn more',

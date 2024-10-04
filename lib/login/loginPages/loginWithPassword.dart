@@ -115,29 +115,15 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                   Text.rich(
                     TextSpan(
                       text: "Enter your ",
-                      style: GoogleFonts.openSans(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                        letterSpacing: -0.5,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: FontText(context).bodySmallGrey,
                       children: [
                         TextSpan(
                           text: "password ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            letterSpacing: -0.5,
-                          ),
+                          style: FontText(context).bodySmallBlack,
                         ),
                         TextSpan(
                           text: "to continue",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                            letterSpacing: -0.5,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: FontText(context).bodySmallGrey,
                         ),
                       ],
                     ),
@@ -147,7 +133,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                     alignment: Alignment.centerRight,
                     child: StyleButton(
                       description: "LOGIN",
-                      height: 55,
+                      height: 45,
                       width: 85,
                       onTap: () {
                         login();
@@ -159,28 +145,25 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                     'Need help?',
                     style: FontText(context).bodyMediumBlack,
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   InkWell(
                     onTap: () {
                       widget.changePage(2);
                     },
-                    child: Text(
-                      "Reset my password ",
-                      style: GoogleFonts.openSans(
-                        decoration: showForgotPasswordBorder == true
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                        decorationThickness: 2,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.5,
-                        fontSize: 16,
-                        color: const Color.fromRGBO(0, 159, 158, 1),
-                      ),
-                    ),
+                    child: Text("Reset my password ",
+                        style: FontText(context).mediumlinksBlue),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Text(
                     'Are you a member and don\'t have a profile?',
                     style: FontText(context).bodyMediumBlack,
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   InkWell(
                     onTap: () {
@@ -188,17 +171,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                     },
                     child: Text(
                       "Create one here",
-                      style: GoogleFonts.openSans(
-                        decoration: showForgotSamaBorder == true
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        decorationColor: Color.fromRGBO(0, 159, 158, 1),
-                        decorationThickness: 2,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.5,
-                        fontSize: 16,
-                        color: const Color.fromRGBO(0, 159, 158, 1),
-                      ),
+                      style: FontText(context).mediumlinksBlue,
                     ),
                   ),
                 ],

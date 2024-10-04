@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 
 import '../../../../../components/myutility.dart';
 import '../../../../../components/styleButton.dart';
@@ -57,10 +58,7 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
                   ),
                   Text(
                     '${widget.title}',
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.teal,
-                        fontWeight: FontWeight.bold),
+                    style: FontText(context).mediumBlue,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -68,7 +66,7 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
                   ),
                   Text(
                     '${widget.description}',
-                    style: const TextStyle(fontSize: 16, color: Colors.grey),
+                    style: FontText(context).bodySmallGrey,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -105,7 +103,7 @@ class _ComTypeStyleState extends State<ComTypeStyle> {
               )));
     } else {
       return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(2.0),
         child: Container(
           width: MyUtility(context).width / 1.3,
           height: 245,

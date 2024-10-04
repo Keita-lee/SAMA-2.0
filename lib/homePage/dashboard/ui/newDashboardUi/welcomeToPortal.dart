@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sama/components/mobile/components/Themes/font_text.dart';
 import 'package:sama/components/myutility.dart';
 
 class WelcomeToPortal extends StatefulWidget {
@@ -36,13 +37,8 @@ class _WelcomeToPortalState extends State<WelcomeToPortal> {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  'Welcome to the \nSAMA Member Potral',
-                  style: GoogleFonts.openSans(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal),
-                ),
+                Text('Welcome to the \nSAMA Member Potral',
+                    style: FontText(context).mediumBlue),
               ],
             ),
             const SizedBox(
@@ -52,7 +48,7 @@ class _WelcomeToPortalState extends State<WelcomeToPortal> {
               width: MyUtility(context).width - 25,
               child: Text(
                 'Here, you can access valuable resources, connect with fellow professionals, and explore opportunities to contribute to our shared mission of advancing healthcare in South Africa. Enjoy all the benefits of your membership and connect with our community!',
-                style: GoogleFonts.openSans(fontSize: 16),
+                style: FontText(context).bodySmallBlack,
               ),
             ),
           ],
