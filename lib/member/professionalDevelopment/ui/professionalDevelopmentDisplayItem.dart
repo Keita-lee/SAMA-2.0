@@ -14,7 +14,6 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
   final String subDescription;
   final CourseModel course;
   final String? startAssessment;
-
   const professionalDevelopmentDisplayItem({
     super.key,
     required this.onPressed,
@@ -26,7 +25,6 @@ class professionalDevelopmentDisplayItem extends StatefulWidget {
     required this.course,
     this.startAssessment,
   });
-
   @override
   State<professionalDevelopmentDisplayItem> createState() =>
       _professionalDevelopmentDisplayItemState();
@@ -41,13 +39,12 @@ class _professionalDevelopmentDisplayItemState
     String title = widget.title;
     String points = widget.subDescription;
     String level = widget.level;
-
     return SizedBox(
       width: isMobile ? MyUtility(context).width : MyUtility(context).width / 5,
       child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Visibility(
               visible: image == "" ? true : false,
@@ -88,11 +85,11 @@ class _professionalDevelopmentDisplayItemState
                   : MyUtility(context).width * 0.70 - 280,
               height: 200,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 80,
+                    height: 65,
                     child: Text(
                       title,
                       maxLines: null,
@@ -130,7 +127,6 @@ class _professionalDevelopmentDisplayItemState
                     buttonColor: const Color.fromRGBO(0, 159, 159, 1),
                     onTap: () {
                       //   final Uri a = Uri.parse(widget.subDescription);
-
                       //  launchUrl(a);
                       widget.onPressed(widget.course);
                     },
