@@ -129,6 +129,7 @@ class _CpdEditFormState extends State<CpdEditForm> {
 
     if (cpdData.exists) {
       setState(() {
+        journalLink.text = cpdData.get("journalLink");
         nonMemberPrice.text = cpdData.get("nonMemberPrice");
         cpdImage = cpdData.get("cpdImage");
         subDescription.text = cpdData.get("subDescription");

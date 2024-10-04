@@ -325,7 +325,7 @@ class _PostLoginLandingPageState extends State<PostLoginLandingPage> {
                                   userType == "Admin"
                                       ? 'Admin Portal'
                                       : userType == "NonMember"
-                                          ? "Non Member Portal"
+                                          ? "Member Portal BETA"
                                           : 'Member Portal BETA',
                                   style: TextStyle(
                                       fontSize: 18,
